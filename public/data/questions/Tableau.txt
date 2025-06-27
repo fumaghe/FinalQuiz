@@ -1,0 +1,40 @@
+
+Che cos'è Tableau?
+A) Un linguaggio di programmazione
+B) Una piattaforma di business intelligence e data visualization
+C) Un database relazionale
+D) Un sistema operativo
+Risposta Corretta: B
+Spiegazione: Tableau è una potente piattaforma di business intelligence che permette di creare visualizzazioni interattive e dashboard per l'analisi dei dati.
+
+Quale tipo di grafico è più appropriato per mostrare la relazione tra due variabili continue?
+A) Grafico a barre
+B) Grafico a torta
+C) Scatter plot
+D) Istogramma
+Risposta Corretta: C
+Spiegazione: Lo scatter plot (grafico a dispersione) è ideale per visualizzare la correlazione e la relazione tra due variabili quantitative continue.
+
+Che cosa sono le "dimensioni" in Tableau?
+A) Variabili numeriche per calcoli
+B) Campi qualitativi che categorizzano i dati
+C) Le dimensioni del grafico
+D) I filtri applicati ai dati
+Risposta Corretta: B
+Spiegazione: Le dimensioni sono campi qualitativi che contengono valori discreti e sono utilizzati per categorizzare, segmentare e rivelare dettagli nei dati.
+
+Qual è la differenza tra "misure" e "dimensioni" in Tableau?
+A) Non c'è differenza
+B) Le misure sono quantitative, le dimensioni sono qualitative
+C) Le misure sono qualitative, le dimensioni sono quantitative
+D) Dipende dal tipo di data source
+Risposta Corretta: B
+Spiegazione: Le misure sono campi quantitativi che possono essere aggregati (somma, media, ecc.), mentre le dimensioni sono campi qualitativi utilizzati per la categorizzazione.
+
+Che cos'è un "calculated field" in Tableau?
+A) Un campo importato dal database
+B) Un campo creato attraverso una formula personalizzata
+C) Un campo utilizzato solo per i filtri
+D) Un campo temporale
+Risposta Corretta: B
+Spiegazione: Un calculated field è un nuovo campo creato utilizzando una formula che può combinare altri campi, funzioni e operatori per calcoli personalizzati.

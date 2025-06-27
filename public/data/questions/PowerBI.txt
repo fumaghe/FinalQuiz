@@ -1,0 +1,40 @@
+
+Che cos'è Microsoft Power BI?
+A) Un linguaggio di programmazione
+B) Una suite di business analytics per analizzare dati e condividere insights
+C) Un database relazionale
+D) Un sistema operativo
+Risposta Corretta: B
+Spiegazione: Power BI è una suite di business analytics che fornisce insights attraverso tutta l'organizzazione, permettendo di connettersi a centinaia di data source.
+
+Quale linguaggio è utilizzato per creare misure personalizzate in Power BI?
+A) SQL
+B) Python
+C) DAX
+D) JavaScript
+Risposta Corretta: C
+Spiegazione: DAX (Data Analysis Expressions) è il linguaggio di formule utilizzato in Power BI, Analysis Services e PowerPivot per creare calcoli personalizzati.
+
+Che cos'è Power Query in Power BI?
+A) Un tipo di visualizzazione
+B) Uno strumento per la trasformazione e preparazione dei dati
+C) Un database interno
+D) Un sistema di autenticazione
+Risposta Corretta: B
+Spiegazione: Power Query è uno strumento di preparazione dati che permette di scoprire, connettersi, combinare e raffinare dati da diverse sorgenti.
+
+Qual è la differenza principale tra importazione e DirectQuery in Power BI?
+A) Non c'è differenza
+B) Import carica i dati in memoria, DirectQuery interroga direttamente la sorgente
+C) DirectQuery è più veloce
+D) Import è sempre migliore
+Risposta Corretta: B
+Spiegazione: Import mode carica tutti i dati nel modello Power BI per performance migliori, mentre DirectQuery invia query direttamente alla sorgente dati mantenendo i dati aggiornati.
+
+Che cos'è un "gateway" in Power BI?
+A) Un tipo di grafico
+B) Un bridge per connettere dati on-premises al cloud Power BI
+C) Un filtro avanzato
+D) Un sistema di sicurezza
+Risposta Corretta: B
+Spiegazione: Un gateway funge da ponte per trasferire in modo sicuro dati tra sorgenti on-premises e servizi cloud Power BI, mantenendo connessioni sicure.

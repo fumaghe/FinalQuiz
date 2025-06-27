@@ -1,0 +1,40 @@
+
+Che cos'è un Data Lake?
+A) Un database relazionale ottimizzato
+B) Un repository centralizzato per archiviare dati strutturati e non strutturati
+C) Un algoritmo di machine learning
+D) Un tipo di visualizzazione dati
+Risposta Corretta: B
+Spiegazione: Un Data Lake è un sistema di storage centralizzato che permette di archiviare tutti i dati strutturati e non strutturati a qualsiasi scala.
+
+Qual è la principale differenza tra Data Lake e Data Warehouse?
+A) I Data Lake sono più costosi
+B) I Data Lake memorizzano dati grezzi, i Data Warehouse dati processati
+C) Non c'è differenza
+D) I Data Warehouse sono più recenti
+Risposta Corretta: B
+Spiegazione: I Data Lake memorizzano dati nel loro formato nativo grezzo, mentre i Data Warehouse contengono dati strutturati e processati per specifici scopi analitici.
+
+Quale formato di file è comunemente utilizzato nei Data Lake per dati strutturati?
+A) .txt
+B) .docx
+C) .parquet
+D) .exe
+Risposta Corretta: C
+Spiegazione: Parquet è un formato colonnare open-source ottimizzato per performance e compressione, molto utilizzato negli ecosistemi big data e Data Lake.
+
+Che cos'è il "schema-on-read" nei Data Lake?
+A) I dati devono avere uno schema predefinito
+B) Lo schema viene applicato quando i dati vengono letti
+C) I dati non possono avere uno schema
+D) Lo schema viene ignorato
+Risposta Corretta: B
+Spiegazione: Schema-on-read significa che la struttura dei dati viene interpretata al momento della lettura, offrendo flessibilità nell'archiviazione di dati diversi.
+
+Quale sfida principale presentano i Data Lake?
+A) Costi elevati
+B) Rischio di diventare "data swamp" senza governance
+C) Supportano solo dati strutturati
+D) Sono troppo lenti
+Risposta Corretta: B
+Spiegazione: Senza proper governance, catalogazione e qualità dei dati, i Data Lake possono diventare "data swamp" difficili da navigare e utilizzare.

@@ -1,0 +1,40 @@
+
+Che cos'è Git?
+A) Un linguaggio di programmazione
+B) Un sistema di controllo versione distribuito
+C) Un editor di testo
+D) Un database
+Risposta Corretta: B
+Spiegazione: Git è un sistema di controllo versione distribuito che traccia le modifiche ai file e coordina il lavoro tra più persone.
+
+Quale comando Git è utilizzato per creare un nuovo repository?
+A) git create
+B) git new
+C) git init
+D) git start
+Risposta Corretta: C
+Spiegazione: Il comando "git init" inizializza un nuovo repository Git in una directory, creando la sottodirectory .git con tutti i file necessari.
+
+Che cosa fa il comando "git add"?
+A) Aggiunge un nuovo file al repository
+B) Prepara le modifiche per il commit
+C) Invia le modifiche al repository remoto
+D) Scarica modifiche dal repository remoto
+Risposta Corretta: B
+Spiegazione: "git add" sposta le modifiche dalla working directory alla staging area, preparandole per essere incluse nel prossimo commit.
+
+Qual è la differenza tra "git pull" e "git fetch"?
+A) Non c'è differenza
+B) git pull scarica e merge, git fetch solo scarica
+C) git fetch scarica e merge, git pull solo scarica
+D) Uno è per file, l'altro per directory
+Risposta Corretta: B
+Spiegazione: "git fetch" scarica le modifiche dal repository remoto senza mergiarle, mentre "git pull" scarica e automaticamente mergia le modifiche nel branch corrente.
+
+Che cos'è un "branch" in Git?
+A) Una copia completa del repository
+B) Una linea di sviluppo indipendente
+C) Un tipo di file speciale
+D) Un comando per cancellare file
+Risposta Corretta: B
+Spiegazione: Un branch è un puntatore mobile a un commit specifico che permette di sviluppare feature o correzioni in parallelo senza influenzare il codice principale.

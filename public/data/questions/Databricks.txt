@@ -1,0 +1,40 @@
+
+Che cos'è Databricks?
+A) Un linguaggio di programmazione
+B) Una piattaforma unificata per analytics e AI basata su Apache Spark
+C) Un database NoSQL
+D) Un sistema di versioning
+Risposta Corretta: B
+Spiegazione: Databricks è una piattaforma cloud unificata che combina data engineering, data science e analytics, costruita sopra Apache Spark.
+
+Quale linguaggio di programmazione NON è nativamente supportato in Databricks?
+A) Python
+B) Scala
+C) R
+D) PHP
+Risposta Corretta: D
+Spiegazione: Databricks supporta nativamente Python, Scala, R e SQL, ma non PHP. PHP non è progettato per il big data processing.
+
+Che cos'è un "notebook" in Databricks?
+A) Un file di configurazione
+B) Un documento interattivo che combina codice, visualizzazioni, e testo
+C) Un tipo di database
+D) Un algoritmo di machine learning
+Risposta Corretta: B
+Spiegazione: Un notebook Databricks è un documento collaborativo e interattivo dove si può scrivere codice, creare visualizzazioni e aggiungere documentazione.
+
+Che cos'è Delta Lake?
+A) Un data warehouse tradizionale
+B) Un layer di storage che porta affidabilità ai data lake
+C) Un algoritmo di clustering
+D) Un tipo di visualizzazione
+Risposta Corretta: B
+Spiegazione: Delta Lake è un layer di storage open-source che porta transazioni ACID, gestione dei metadati scalabile e unified streaming e batch data processing ai data lake.
+
+Quale vantaggio principale offre Databricks rispetto al processing tradizionale dei dati?
+A) È gratuito
+B) Scala automaticamente e gestisce l'infrastruttura
+C) Funziona solo con piccoli datasets
+D) Supporta solo SQL
+Risposta Corretta: B
+Spiegazione: Databricks offre auto-scaling, gestione automatica dell'infrastruttura e ottimizzazioni delle performance, semplificando il lavoro con big data.

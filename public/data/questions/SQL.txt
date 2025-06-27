@@ -1,0 +1,40 @@
+
+Quale comando SQL è utilizzato per recuperare dati da una tabella?
+A) INSERT
+B) SELECT
+C) UPDATE
+D) DELETE
+Risposta Corretta: B
+Spiegazione: Il comando SELECT è utilizzato per interrogare e recuperare dati da una o più tabelle in un database relazionale.
+
+Che cos'è una PRIMARY KEY in SQL?
+A) Una chiave che può essere nulla
+B) Una chiave che identifica univocamente ogni riga in una tabella
+C) Una chiave utilizzata solo per l'ordinamento
+D) Una chiave temporanea
+Risposta Corretta: B
+Spiegazione: La PRIMARY KEY è un vincolo che identifica univocamente ogni riga in una tabella e non può contenere valori NULL.
+
+Quale operatore SQL è utilizzato per filtrare righe che soddisfano una condizione specifica?
+A) GROUP BY
+B) ORDER BY
+C) WHERE
+D) HAVING
+Risposta Corretta: C
+Spiegazione: La clausola WHERE è utilizzata per filtrare le righe in base a condizioni specifiche prima che vengano processate.
+
+Che cosa fa il comando JOIN in SQL?
+A) Elimina righe duplicate
+B) Ordina i risultati
+C) Combina righe da due o più tabelle
+D) Conta il numero di righe
+Risposta Corretta: C
+Spiegazione: JOIN è utilizzato per combinare righe di due o più tabelle basandosi su una relazione tra le colonne delle tabelle.
+
+Quale funzione aggregata SQL restituisce il valore massimo di una colonna?
+A) SUM()
+B) AVG()
+C) COUNT()
+D) MAX()
+Risposta Corretta: D
+Spiegazione: La funzione MAX() restituisce il valore più alto presente in una colonna numerica o la stringa con il valore lessicografico più alto.

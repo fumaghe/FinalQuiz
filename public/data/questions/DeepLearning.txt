@@ -1,0 +1,40 @@
+
+Che cos'è il Deep Learning?
+A) Un tipo di database
+B) Un sottoinsieme del machine learning basato su reti neurali artificiali
+C) Un linguaggio di programmazione
+D) Un sistema operativo
+Risposta Corretta: B
+Spiegazione: Il Deep Learning è un sottoinsieme del machine learning che utilizza reti neurali artificiali con molteplici layer per modellare e comprendere dati complessi.
+
+Che cos'è un neurone artificiale?
+A) Una cellula biologica
+B) Un'unità computazionale che riceve input, li processa e produce un output
+C) Un tipo di processore
+D) Un algoritmo specifico
+Risposta Corretta: B
+Spiegazione: Un neurone artificiale è l'unità base di una rete neurale che riceve input multipli, applica pesi e una funzione di attivazione per produrre un output.
+
+Quale funzione di attivazione è comunemente utilizzata negli hidden layers delle reti neurali moderne?
+A) Sigmoid
+B) Tanh
+C) ReLU
+D) Linear
+Risposta Corretta: C
+Spiegazione: ReLU (Rectified Linear Unit) è ampiamente utilizzata perché è computazionalmente efficiente e aiuta a mitigare il problema del vanishing gradient.
+
+Che cos'è il backpropagation?
+A) Un tipo di rete neurale
+B) Un algoritmo per calcolare gradienti e aggiornare i pesi nella rete
+C) Una funzione di attivazione
+D) Un dataset
+Risposta Corretta: B
+Spiegazione: Backpropagation è l'algoritmo fondamentale per training delle reti neurali che calcola i gradienti dell'errore rispetto ai pesi e li propaga all'indietro attraverso la rete.
+
+Quale architettura di deep learning è principalmente utilizzata per il processing di immagini?
+A) RNN
+B) LSTM
+C) CNN
+D) GAN
+Risposta Corretta: C
+Spiegazione: Le Convolutional Neural Networks (CNN) sono specificamente progettate per processare dati con struttura grid-like come le immagini, utilizzando convoluzioni per rilevare feature locali.

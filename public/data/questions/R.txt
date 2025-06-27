@@ -1,0 +1,40 @@
+
+Che cos'è R?
+A) Un database
+B) Un linguaggio di programmazione per statistical computing
+C) Un sistema operativo
+D) Un browser web
+Risposta Corretta: B
+Spiegazione: R è un linguaggio di programmazione e ambiente software specializzato per statistical computing e graphics, ampiamente utilizzato da statistici e data scientist.
+
+Quale operatore è utilizzato per l'assegnazione in R?
+A) =
+B) <-
+C) :=
+D) Tutte le precedenti
+Risposta Corretta: D
+Spiegazione: In R si possono utilizzare diversi operatori per l'assegnazione: <- (preferito), = e := (in alcuni contesti specifici come data.table).
+
+Che cos'è un data frame in R?
+A) Una struttura grafica
+B) Una tabella bidimensionale simile a un foglio di calcolo
+C) Un tipo di plot
+D) Una funzione speciale
+Risposta Corretta: B
+Spiegazione: Un data frame è una struttura dati bidimensionale in R che può contenere colonne di diversi tipi di dati, simile a una tabella o foglio di calcolo.
+
+Quale pacchetto R è parte del "tidyverse" per la manipolazione dei dati?
+A) base
+B) stats
+C) dplyr
+D) utils
+Risposta Corretta: C
+Spiegazione: dplyr è un pacchietto del tidyverse che fornisce un grammar of data manipulation, offrendo funzioni intuitive per filtrare, selezionare, mutare e riassumere dati.
+
+Come si installa un pacchetto in R?
+A) library(package_name)
+B) install.packages("package_name")
+C) require(package_name)
+D) import package_name
+Risposta Corretta: B
+Spiegazione: install.packages() è la funzione utilizzata per installare pacchetti da CRAN. Dopo l'installazione, si usa library() o require() per caricare il pacchetto.

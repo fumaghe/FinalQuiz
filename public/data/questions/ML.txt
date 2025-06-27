@@ -1,0 +1,40 @@
+
+Che cos'è il Machine Learning?
+A) Un tipo di hardware
+B) Un sottocampo dell'AI che permette ai computer di imparare senza essere esplicitamente programmati
+C) Un linguaggio di programmazione
+D) Un database speciale
+Risposta Corretta: B
+Spiegazione: Il Machine Learning è una branca dell'intelligenza artificiale che utilizza algoritmi statistici per permettere ai computer di migliorare automaticamente attraverso l'esperienza.
+
+Quale tipo di apprendimento non richiede dati etichettati?
+A) Supervised Learning
+B) Unsupervised Learning
+C) Reinforcement Learning
+D) Semi-supervised Learning
+Risposta Corretta: B
+Spiegazione: L'unsupervised learning lavora con dati non etichettati, cercando di trovare pattern nascosti o strutture nei dati, come clustering o dimensionality reduction.
+
+Che cos'è l'overfitting in Machine Learning?
+A) Un modello troppo semplice
+B) Un modello che memorizza i dati di training ma non generalizza bene
+C) Un errore di sintassi
+D) Un tipo di algoritmo
+Risposta Corretta: B
+Spiegazione: L'overfitting si verifica quando un modello impara troppo specificamente dai dati di training, risultando in poor performance sui dati nuovi (test set).
+
+Quale metrica è comunemente utilizzata per valutare modelli di classificazione binaria?
+A) Mean Squared Error
+B) R-squared
+C) Accuracy
+D) Mean Absolute Error
+Risposta Corretta: C
+Spiegazione: L'accuracy è una metrica fondamentale per la classificazione che misura la percentuale di predizioni corrette sul totale delle predizioni.
+
+Che cos'è la cross-validation?
+A) Un tipo di algoritmo
+B) Una tecnica per valutare le performance di un modello dividendo i dati in fold
+C) Un metodo di data cleaning
+D) Una libreria Python
+Risposta Corretta: B
+Spiegazione: La cross-validation è una tecnica di validazione che divide i dati in k-fold per valutare come il modello generalizza su dati indipendenti, riducendo il rischio di overfitting.

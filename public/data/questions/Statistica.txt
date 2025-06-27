@@ -1,0 +1,40 @@
+
+Che cos'è la media aritmetica?
+A) Il valore più frequente in un dataset
+B) La somma di tutti i valori divisa per il numero di valori
+C) Il valore centrale in un dataset ordinato
+D) La differenza tra il valore massimo e minimo
+Risposta Corretta: B
+Spiegazione: La media aritmetica è calcolata sommando tutti i valori del dataset e dividendo per il numero totale di osservazioni.
+
+Qual è la differenza tra popolazione e campione?
+A) Non c'è differenza
+B) La popolazione include tutti gli elementi, il campione solo una parte
+C) Il campione è sempre più grande della popolazione
+D) La popolazione è teorica, il campione è pratico
+Risposta Corretta: B
+Spiegazione: La popolazione comprende tutti gli elementi di interesse, mentre il campione è un sottoinsieme rappresentativo della popolazione.
+
+Che cos'è la deviazione standard?
+A) La media dei valori
+B) Una misura di dispersione dei dati intorno alla media
+C) Il valore massimo meno il valore minimo
+D) La mediana dei valori
+Risposta Corretta: B
+Spiegazione: La deviazione standard misura quanto i dati si discostano dalla media, fornendo un'indicazione della variabilità del dataset.
+
+In una distribuzione normale, che percentuale di dati si trova entro una deviazione standard dalla media?
+A) 50%
+B) 68%
+C) 95%
+D) 99%
+Risposta Corretta: B
+Spiegazione: Nella regola empirica (68-95-99.7), circa il 68% dei dati si trova entro una deviazione standard dalla media.
+
+Che cos'è il p-value in un test statistico?
+A) La probabilità che l'ipotesi nulla sia vera
+B) La probabilità di osservare risultati almeno estremi quanto quelli ottenuti, assumendo vera l'ipotesi nulla
+C) La probabilità di errore nel campionamento
+D) La percentuale di confidenza del test
+Risposta Corretta: B
+Spiegazione: Il p-value rappresenta la probabilità di ottenere risultati uguali o più estremi di quelli osservati, sotto l'assunzione che l'ipotesi nulla sia vera.

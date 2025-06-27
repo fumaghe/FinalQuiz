@@ -1,0 +1,40 @@
+
+Che cosa significa NoSQL?
+A) No Structured Query Language
+B) Not Only SQL
+C) New Object SQL
+D) Non SQL Database
+Risposta Corretta: B
+Spiegazione: NoSQL significa "Not Only SQL" e si riferisce a database progettati per gestire e processare large sets di dati distribuiti con strutture flessibili.
+
+Quale tipo di database NoSQL è MongoDB?
+A) Key-Value
+B) Column-family
+C) Document
+D) Graph
+Risposta Corretta: C
+Spiegazione: MongoDB è un database document-oriented che memorizza dati in documenti simili a JSON con schemi dinamici, offrendo flessibilità nella struttura dei dati.
+
+Quando è appropriato utilizzare un database NoSQL invece di uno relazionale?
+A) Mai
+B) Sempre
+C) Quando si hanno dati non strutturati o si richiede scalabilità orizzontale
+D) Solo per piccole applicazioni
+Risposta Corretta: C
+Spiegazione: I database NoSQL sono ideali per dati non strutturati o semi-strutturati, quando si richiede alta scalabilità, performance elevate e schema flessibili.
+
+Che cos'è la "denormalizzazione" nei database NoSQL?
+A) Un errore da evitare
+B) La rimozione di tutti i dati
+C) La duplicazione intenzionale di dati per migliorare le performance
+D) La compressione dei dati
+Risposta Corretta: C
+Spiegazione: La denormalizzazione in NoSQL comporta la duplicazione strategica di dati per ottimizzare le query e le performance, contrariamente ai principi di normalizzazione dei database relazionali.
+
+Quale caratteristica è tipica dei database "eventually consistent"?
+A) I dati sono sempre immediatamente coerenti
+B) I dati raggiungono la coerenza dopo un certo tempo
+C) I dati non sono mai coerenti
+D) La coerenza non è importante
+Risposta Corretta: B
+Spiegazione: L'eventual consistency garantisce che tutti i nodi raggiungeranno lo stesso stato eventualmente, anche se non immediatamente, permettendo alta disponibilità e performance.

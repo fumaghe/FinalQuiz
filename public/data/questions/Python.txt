@@ -1,0 +1,40 @@
+
+Che tipo di linguaggio di programmazione è Python?
+A) Solo compilato
+B) Solo interpretato
+C) Interpretato e ad alto livello
+D) Assembly
+Risposta Corretta: C
+Spiegazione: Python è un linguaggio interpretato, ad alto livello e general-purpose, noto per la sua sintassi leggibile e la filosofia che enfatizza la leggibilità del codice.
+
+Quale operatore è utilizzato per l'elevamento a potenza in Python?
+A) ^
+B) **
+C) pow
+D) exp
+Risposta Corretta: B
+Spiegazione: In Python, l'operatore ** è utilizzato per l'elevamento a potenza. Ad esempio, 2**3 restituisce 8.
+
+Che cos'è una lista in Python?
+A) Una struttura dati immutable
+B) Una collezione ordinata e modificabile di elementi
+C) Solo per numeri
+D) Una stringa speciale
+Risposta Corretta: B
+Spiegazione: Una lista in Python è una collezione ordinata e modificabile (mutable) che può contenere elementi di diversi tipi di dati.
+
+Quale libreria Python è comunemente utilizzata per l'analisi dei dati?
+A) os
+B) sys
+C) pandas
+D) random
+Risposta Corretta: C
+Spiegazione: Pandas è una libreria Python fondamentale per l'analisi e manipolazione dei dati, offrendo strutture dati e strumenti di analisi ad alte performance.
+
+Che cosa fa il metodo "split()" su una stringa Python?
+A) Cancella la stringa
+B) Divide la stringa in una lista di sottostringhe
+C) Inverte la stringa
+D) Converte in maiuscolo
+Risposta Corretta: B
+Spiegazione: Il metodo split() divide una stringa in una lista, utilizzando un delimitatore specificato (spazio per default).
