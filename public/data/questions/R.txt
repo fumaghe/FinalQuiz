@@ -1,40 +1,800 @@
 
-Che cos'è R?
-A) Un database
-B) Un linguaggio di programmazione per statistical computing
-C) Un sistema operativo
-D) Un browser web
-Risposta Corretta: B
-Spiegazione: R è un linguaggio di programmazione e ambiente software specializzato per statistical computing e graphics, ampiamente utilizzato da statistici e data scientist.
-
-Quale operatore è utilizzato per l'assegnazione in R?
-A) =
-B) <-
-C) :=
-D) Tutte le precedenti
-Risposta Corretta: D
-Spiegazione: In R si possono utilizzare diversi operatori per l'assegnazione: <- (preferito), = e := (in alcuni contesti specifici come data.table).
-
-Che cos'è un data frame in R?
-A) Una struttura grafica
-B) Una tabella bidimensionale simile a un foglio di calcolo
-C) Un tipo di plot
-D) Una funzione speciale
-Risposta Corretta: B
-Spiegazione: Un data frame è una struttura dati bidimensionale in R che può contenere colonne di diversi tipi di dati, simile a una tabella o foglio di calcolo.
-
-Quale pacchetto R è parte del "tidyverse" per la manipolazione dei dati?
-A) base
-B) stats
-C) dplyr
-D) utils
+Quale simbolo si usa per scrivere un commento in R?
+A) //
+B) /* */
+C) #
+D) --
 Risposta Corretta: C
-Spiegazione: dplyr è un pacchietto del tidyverse che fornisce un grammar of data manipulation, offrendo funzioni intuitive per filtrare, selezionare, mutare e riassumere dati.
+Spiegazione: In R il simbolo # introduce un commento che prosegue fino a fine riga.
 
-Come si installa un pacchetto in R?
-A) library(package_name)
-B) install.packages("package_name")
-C) require(package_name)
-D) import package_name
+Quale delle seguenti è una forma valida per ottenere aiuto su una funzione?
+A) help(sum)
+B) ?sum
+C) !!sum
+D) //sum
 Risposta Corretta: B
-Spiegazione: install.packages() è la funzione utilizzata per installare pacchetti da CRAN. Dopo l'installazione, si usa library() o require() per caricare il pacchetto.
+Spiegazione: In R ?sum apre la pagina di help relativa alla funzione sum.
+
+Quale delle seguenti istruzioni cerca aiuto in tutti i pacchetti installati?
+A) help.search("mean")
+B) ?mean
+C) ??mean
+D) help("mean")
+Risposta Corretta: C
+Spiegazione: ??mean esegue una ricerca full-text in tutte le pagine di help disponibili.
+
+Quale operatore esegue la divisione intera in R?
+A) /
+B) %/%
+C) //
+D) %%
+Risposta Corretta: B
+Spiegazione: %/% restituisce il quoziente intero della divisione tra due numeri.
+
+Quale operatore calcola la potenza in R?
+A) pow()
+B) **
+C) ^
+D) ^^
+Risposta Corretta: C
+Spiegazione: In R ^ eleva un numero alla potenza specificata.
+
+Cosa restituisce 45 %/% 7?
+A) 6.4286
+B) 6
+C) 3
+D) 7
+Risposta Corretta: B
+Spiegazione: %/% fa divisione intera: 45 diviso 7 dà 6.
+
+Quale risultato dà 45/7?
+A) 6
+B) 6.4286
+C) 7
+D) 6.7143
+Risposta Corretta: D
+Spiegazione: / calcola la divisione reale: 45/7 ≈ 6.4286… (circa 6.4286).
+
+Quale parentesi serve a modificare l’ordine delle operazioni?
+A) []
+B) {}
+C) ()
+D) <>
+Risposta Corretta: C
+Spiegazione: Le tonde () in R definiscono la priorità delle operazioni aritmetiche.
+
+Quale operatore confronta uguaglianza tra due valori?
+A) =
+B) ==
+C) ===
+D) !=
+Risposta Corretta: B
+Spiegazione: In R == verifica se i due operandi sono uguali.
+
+Quale operatore logico in R è “e”?
+A) &
+B) &&
+C) AND
+D) &&&
+Risposta Corretta: A
+Spiegazione: & è l’operatore logico “AND” vettoriale; && è versione scalare.
+
+Quale operatore logico in R è “o”?
+A) OR
+B) |
+C) ||
+D) ∨
+Risposta Corretta: B
+Spiegazione: | è l’operatore logico “OR” vettoriale; || è versione scalare.
+
+Quale funzione serve a creare un vettore di elementi?
+A) vector()
+B) seq()
+C) list()
+D) c()
+Risposta Corretta: D
+Spiegazione: c(…) concatena valori in un unico vettore.
+
+Cosa restituisce length(c(1,3,5,7))?
+A) 3
+B) 4
+C) 5
+D) 7
+Risposta Corretta: B
+Spiegazione: length() restituisce il numero di elementi di un vettore: qui 4.
+
+Quale funzione stampa l’oggetto sullo schermo?
+A) show()
+B) display()
+C) print()
+D) echo()
+Risposta Corretta: C
+Spiegazione: print(x) visualizza il contenuto di x nella console.
+
+Quale funzione unisce stringhe con spazio?
+A) paste0()
+B) paste()
+C) strcat()
+D) concat()
+Risposta Corretta: B
+Spiegazione: paste("a","b") restituisce "a b" separando i parametri con uno spazio.
+
+Quale comando assegna il valore 10 all’oggetto x?
+A) x ← 10
+B) x = 10
+C) assign("x",10)
+D) tutte le precedenti
+Risposta Corretta: D
+Spiegazione: In R si può usare <-, = o assign() per assegnare valori.
+
+Quale dei seguenti è un tipo vettoriale logico?
+A) TRUE
+B) 1
+C) "A"
+D) NA
+Risposta Corretta: A
+Spiegazione: TRUE (o FALSE) è di tipo logico in R.
+
+Quale funzione indica il tipo di dato di un oggetto?
+A) typeof()
+B) datatype()
+C) type()
+D) mode()
+Risposta Corretta: A
+Spiegazione: typeof(x) restituisce il tipo interno di x.
+
+Quale funzione mostra la modalità di un oggetto?
+A) mode()
+B) type()
+C) class()
+D) typeof()
+Risposta Corretta: A
+Spiegazione: mode(x) riporta “numeric”, “character”, “logical”, ecc.
+
+Quale funzione verifica se un oggetto è numerico?
+A) is.number()
+B) is.numeric()
+C) is.num()
+D) is.numberic()
+Risposta Corretta: B
+Spiegazione: is.numeric(x) torna TRUE se x è di tipo numerico.
+
+Quale funzione converte un vettore in carattere?
+A) toChar()
+B) as.character()
+C) as.char()
+D) coerceChar()
+Risposta Corretta: B
+Spiegazione: as.character(x) trasforma x in vettore di stringhe.
+
+Cosa succede se provo 3 * as.character(3) senza riconversione?
+A) 9
+B) Errore di argomento non numerico
+C) NA
+D) "333"
+Risposta Corretta: B
+Spiegazione: L’operatore * non accetta argomenti carattere e lancia un errore.
+
+Quale funzione toglie valori NA prima di un calcolo?
+A) dropNA()
+B) removeNA()
+C) na.omit()
+D) na.rm=TRUE
+Risposta Corretta: D
+Spiegazione: Molte funzioni (es. mean()) hanno argomento na.rm=TRUE per ignorare NA.
+
+Cosa restituisce mean(c(1,2,NA,4), na.rm=TRUE)?
+A) NA
+B) 7
+C) 2.3333
+D) 1.75
+Risposta Corretta: C
+Spiegazione: Media di 1,2,4 è (1+2+4)/3 ≈ 2.3333.
+
+Come si crea un fattore con livelli ordinati?
+A) factor(x, ordered=TRUE)
+B) factor(x, levels=…)
+C) ordered(x)
+D) tutte le precedenti
+Risposta Corretta: D
+Spiegazione: Si possono usare ordered(), o factor(..., levels=…, ordered=TRUE).
+
+Cosa restituisce as.integer(factor(c("b","a","b","c"), levels=c("a","b","c")))?
+A) 1,2,1,3
+B) NA
+C) "a","b","a","c"
+D) Errore
+Risposta Corretta: A
+Spiegazione: I livelli sono numerati secondo levels, quindi a→1, b→2, c→3.
+
+Di che tipo è un oggetto creato da factor()?
+A) integer
+B) character
+C) factor
+D) list
+Risposta Corretta: C
+Spiegazione: factor() crea un oggetto di classe factor, internamente integer con livelli.
+
+Quale funzione trasforma una matrice in vettore?
+A) unmatrix()
+B) flatten()
+C) as.vector()
+D) as.list()
+Risposta Corretta: C
+Spiegazione: as.vector(mat) restituisce tutti gli elementi della matrice come vettore.
+
+Quale argomento di matrix() imposta il riempimento per righe?
+A) byrow=TRUE
+B) rowwise=TRUE
+C) fill="row"
+D) rows=TRUE
+Risposta Corretta: A
+Spiegazione: matrix(data, nrow, ncol, byrow=TRUE) riempie riga per riga.
+
+Quale funzione aggiunge nomi alle righe di una matrice?
+A) setrownames()
+B) rownames()
+C) dimnames()
+D) rnames()
+Risposta Corretta: B
+Spiegazione: rownames(mat) <- c("r1","r2") assegna nomi alle righe.
+
+Quale funzione fornisce dimensioni di una matrice?
+A) size()
+B) shape()
+C) dim()
+D) length()
+Risposta Corretta: C
+Spiegazione: dim(mat) restituisce vettore c(nrow, ncol).
+
+Quale funzione trasforma un vettore in matrice?
+A) as.data.frame()
+B) matrix()
+C) as.matrix()
+D) toMatrix()
+Risposta Corretta: C
+Spiegazione: as.matrix(v) tenta di trasformare v in matrice di adatte dimensioni.
+
+Cosa restituisce t(mat)?
+A) Matrice trasposta
+B) Vettore con gli stessi elementi
+C) Matrice invertita
+D) Errore
+Risposta Corretta: A
+Spiegazione: t() calcola la trasposizione di una matrice.
+
+Quale funzione mostra struttura e attributi di un oggetto?
+A) show()
+B) glimpse()
+C) str()
+D) summary()
+Risposta Corretta: C
+Spiegazione: str(obj) dà dimensioni, tipo, attributi, esempi di contenuto.
+
+Quale funzione elenca tutti gli attributi di un vettore?
+A) metadata()
+B) attributes()
+C) info()
+D) details()
+Risposta Corretta: B
+Spiegazione: attributes(x) restituisce lista di attributi (es. names, dim).
+
+Come si legge il nome dei singoli elementi di un vettore?
+A) names(x)
+B) attr(x,"labels")
+C) labels(x)
+D) names(x)<-NULL
+Risposta Corretta: A
+Spiegazione: names(x) restituisce o imposta i nomi degli elementi di x.
+
+Cosa succede se as.numeric("abc")?
+A) 0
+B) NA con warning
+C) "abc"
+D) Errore fatale
+Risposta Corretta: B
+Spiegazione: Non è possibile convertire “abc” in numero, si ottiene NA e un warning.
+
+Quale funzione verifica la presenza di NA in un vettore?
+A) is.na()
+B) isna()
+C) na.detect()
+D) hasNA()
+Risposta Corretta: A
+Spiegazione: is.na(x) ritorna vettore logico che indica quali elementi sono NA
+
+Quale funzione crea un oggetto factor senza ordine?
+A) as.ordered()
+B) factor(x)
+C) ordered(x)
+D) levels(x)
+Risposta Corretta: B
+Spiegazione: factor(x) crea fattore nominale; ordered() crea fattore ordinato.
+
+Quale funzione converte un fattore in interi?
+A) as.numeric()
+B) as.integer()
+C) both A and B
+D) neither
+Risposta Corretta: C
+Spiegazione: Sia as.numeric(f) sia as.integer(f) restituiscono i codici interni dei livelli.
+
+Cosa stampa mode(TRUE)?
+A) "logical"
+B) "numeric"
+C) "character"
+D) "integer"
+Risposta Corretta: A
+Spiegazione: TRUE è di tipo logico.
+
+Cosa stampa typeof(3L)?
+A) "double"
+B) "integer"
+C) "numeric"
+D) "logical"
+Risposta Corretta: B
+Spiegazione: Il suffisso L crea un intero, quindi typeof(3L) è "integer".
+
+Quale funzione restituisce i nomi delle dimensioni di una matrice?
+A) dimnames()
+B) names()
+C) attributes()
+D) dims()
+Risposta Corretta: A
+Spiegazione: dimnames(mat) restituisce lista con rownames e colnames.
+
+Quale funzione ricrea una matrice da un vettore con dimensioni specificate?
+A) vec2mat()
+B) matrix()
+C) reshape()
+D) array()
+Risposta Corretta: B
+Spiegazione: matrix(v, nrow, ncol) dispone v in matrice.
+
+Quale funzione indica se un oggetto è factor?
+A) is.factor()
+B) is.factorial()
+C) is.factoriality()
+D) factor.test()
+Risposta Corretta: A
+Spiegazione: is.factor(x) restituisce TRUE se x è di classe factor.
+
+Quale comando mostra il primo elemento di un vettore v?
+A) head(v)
+B) v[1]
+C) v$1
+D) both A and B
+Risposta Corretta: D
+Spiegazione: v[1] seleziona il primo elemento; head(v,1) mostra il primo.
+
+Quale funzione raggruppa più comandi in un unico blocco in uno script?
+A) { }
+B) [ ]
+C) ( )
+D) < >
+Risposta Corretta: A
+Spiegazione: In R le parentesi graffe { expr1; expr2; } definiscono un blocco di più istruzioni.
+
+Quale funzione trasforma un vettore in lista?
+A) as.list()
+B) list()
+C) to.list()
+D) vector2list()
+Risposta Corretta: A
+Spiegazione: as.list(x) converte ogni elemento di x in un elemento di lista.
+
+Quale funzione genera un vettore con numeri casuali da una distribuzione normale?
+A) runif()
+B) rnorm()
+C) sample()
+D) rnormus()
+Risposta Corretta: B
+Spiegazione: rnorm(n, mean, sd) crea n valori da N(mean, sd²).
+
+Come si imposta il seed per i generatori casuali in R?
+A) set.seed(n)
+B) seed(n)
+C) RNGseed(n)
+D) rsample(n)
+Risposta Corretta: A
+Spiegazione: set.seed(n) rende riproducibili le sequenze casuali.
+
+Quale funzione estrae un campione casuale senza reinserimento da un vettore v?
+A) sample(v, size)
+B) draw(v, size)
+C) random(v, size)
+D) select(v, size)
+Risposta Corretta: A
+Spiegazione: sample(v, k) seleziona k elementi da v senza reinserimento.
+
+Cosa restituisce seq(1, 5, by=2)?
+A) 1,2,3,4,5
+B) 1,3,5
+C) 1,5
+D) 1,2,4,5
+Risposta Corretta: B
+Spiegazione: seq(from, to, by) genera 1,3,5.
+
+Come si crea una sequenza di 10 numeri equidistanti tra 0 e 1?
+A) seq(0,1,by=0.1)
+B) seq(0,1,length=10)
+C) seq(0,1,n=10)
+D) seq(0,1,each=10)
+Risposta Corretta: B
+Spiegazione: length.out o length specifica il numero di valori.
+
+Quale funzione unisce due vettori elemento per elemento?
+A) merge()
+B) cbind()
+C) rbind()
+D) pbind()
+Risposta Corretta: B
+Spiegazione: cbind(a,b) crea una matrice le colonne di a e b come colonne.
+
+Quale funzione unisce due vettori come righe di una matrice?
+A) merge()
+B) cbind()
+C) rbind()
+D) bind()
+Risposta Corretta: C
+Spiegazione: rbind(a,b) mette a e b come righe.
+
+Quale funzione controlla se un oggetto esiste nell’ambiente corrente?
+A) exists("x")
+B) has("x")
+C) defined("x")
+D) present("x")
+Risposta Corretta: A
+Spiegazione: exists("nome") restituisce TRUE se esiste un oggetto con quel nome.
+
+Quale funzione rimuove un oggetto dall’ambiente?
+A) delete("x")
+B) rm(x)
+C) remove.object(x)
+D) drop(x)
+Risposta Corretta: B
+Spiegazione: rm(x) elimina l’oggetto x.
+
+Come si salva l’intero workspace su disco?
+A) save.image("file.RData")
+B) save.all("file.RData")
+C) save(workspace,"file.RData")
+D) store("file.RData")
+Risposta Corretta: A
+Spiegazione: save.image() salva tutti gli oggetti correnti.
+
+Come si carica un file .RData nella sessione?
+A) load("file.RData")
+B) read("file.RData")
+C) import("file.RData")
+D) attach("file.RData")
+Risposta Corretta: A
+Spiegazione: load() ripristina gli oggetti dal file.
+
+Quale funzione legge un file CSV in un data frame base R?
+A) read.table()
+B) read.csv()
+C) read.csv2()
+D) scan()
+Risposta Corretta: B
+Spiegazione: read.csv("file.csv") importa CSV con separatore ,.
+
+Qual è la differenza principale tra read.csv e read.csv2 in base R?
+A) Delimiter diverso (, vs ;)
+B) Decimali vs migliaia
+C) Quote vs no quote
+D) Nessuna
+Risposta Corretta: A
+Spiegazione: read.csv2 usa ; come separatore e , come decimale.
+
+Quale funzione converte un data frame in tibble (tidyverse)?
+A) as.tibble()
+B) as.data.frame()
+C) tibblify()
+D) as_tbl()
+Risposta Corretta: A
+Spiegazione: tibble::as_tibble(df) restituisce un tibble.
+
+Quale pacchetto fornisce la pipe %>%?
+A) base
+B) dplyr
+C) magrittr
+D) tidyr
+Risposta Corretta: C
+Spiegazione: %>% è definito in magrittr e re-esportato da dplyr.
+
+Come si installa un pacchetto da CRAN?
+A) install.packages("nome")
+B) install("nome")
+C) require("nome")
+D) library("nome")
+Risposta Corretta: A
+Spiegazione: install.packages() scarica e installa pacchetto.
+
+Come si carica un pacchetto in memoria?
+A) install.packages("nome")
+B) library(nome)
+C) import(nome)
+D) use("nome")
+Risposta Corretta: B
+Spiegazione: library(dplyr) rende disponibili funzioni del pacchetto.
+
+Quale funzione controlla se un pacchetto è già installato?
+A) is.installed("nome")
+B) require("nome")
+C) library("nome", logical.return=TRUE)
+D) installed.packages()
+Risposta Corretta: C
+Spiegazione: Con logical.return=TRUE library() ritorna TRUE/FALSE anziché errore.
+
+Cosa fa str(df) se df è un data frame?
+A) Ritorna numero di righe
+B) Mostra struttura, nomi variabili, tipi e primi valori
+C) Mostra solo nomi colonne
+D) Converte in tibble
+Risposta Corretta: B
+Spiegazione: str() è utilissimo per overview rapida di un oggetto.
+
+Quale funzione mostra statistiche descrittive di base per ogni colonna di un data frame?
+A) summary(df)
+B) describe(df)
+C) stats(df)
+D) skim(df)
+Risposta Corretta: A
+Spiegazione: summary() riporta min, 1st Qu., mediana, media, 3rd Qu., max.
+
+Quale pacchetto fornisce la funzione glimpse()?
+A) base
+B) tidyverse
+C) dplyr
+D) tibble
+Risposta Corretta: C
+Spiegazione: dplyr::glimpse() dà una panoramica simile a str().
+
+Come si selezionano colonne “a” e “b” da df usando tidyverse?
+A) df[c("a","b")]
+B) select(df, a, b)
+C) df %>% select(a, b)
+D) sia B che C
+Risposta Corretta: D
+Spiegazione: Con dplyr::select() si specificano le colonne da mantenere.
+
+Come si filtra df per colonna x>5 in dplyr?
+A) df %>% filter(x>5)
+B) subset(df, x>5)
+C) df[x>5,]
+D) tutte le precedenti
+Risposta Corretta: D
+Spiegazione: Ci sono più modi: filter(), subset(), subsetting base.
+
+Quale funzione ordina df in base a colonna x decrescente?
+A) arrange(df, -x)
+B) arrange(df, desc(x))
+C) df[order(-df$x),]
+D) sia B che C
+Risposta Corretta: D
+Spiegazione: In dplyr si usa desc(), in base R order() con segno meno.
+
+Cosa fa mutate(df, y = x*2)?
+A) Sovrascrive df
+B) Aggiunge colonna y calcolata da x
+C) Modifica colonna x
+D) Elimina colonna y
+Risposta Corretta: B
+Spiegazione: mutate() crea o modifica colonne in un data frame.
+
+Quale funzione crea un sommario raggruppato per “g”?
+A) group_by(df, g) %>% summarise()
+B) summarise(df, by=g)
+C) df %>% group(g)
+D) aggregate(df, by=list(g))
+Risposta Corretta: A
+Spiegazione: Con group_by() e summarise() si ottiene aggregazione per gruppo.
+
+In base R, come fai un aggregate di media di x per g?
+A) tapply(x, g, mean)
+B) aggregate(x ~ g, data=df, mean)
+C) by(x, g, mean)
+D) tutte le precedenti
+Risposta Corretta: D
+Spiegazione: Ci sono più funzioni: tapply(), aggregate(), by().
+
+Quale funzione mappa una funzione su ogni colonna di un data frame?
+A) lapply(df, f)
+B) apply(df, 2, f)
+C) sapply(df, f)
+D) tutte le precedenti
+Risposta Corretta: D
+Spiegazione: lapply() e sapply() trattano df come lista di colonne, apply() con MARGIN=2 uguale.
+
+Quale funzione mappa su ogni riga?
+A) apply(df, 1, f)
+B) lapply(df, f)
+C) rowapply(df, f)
+D) map(df, f)
+Risposta Corretta: A
+Spiegazione: apply(df, 1, f) applica f a ciascuna riga.
+
+Quale funzione riporta il nome del file R in esecuzione?
+A) commandArgs()
+B) sys.frame()
+C) getSrcFilename()
+D) sys.calls()
+Risposta Corretta: A
+Spiegazione: commandArgs(trailingOnly=FALSE) mostra argomenti di invocazione.
+
+Quale funzione legge input da console in R?
+A) readline()
+B) read()
+C) scanf()
+D) input()
+Risposta Corretta: A
+Spiegazione: readline(prompt="> ") legge una riga di testo da utente.
+
+Come definisci una funzione in R che prende x e ritorna x²?
+A) f <- function(x) x^2
+B) f(x) = x^2
+C) def f(x): x^2
+D) func(x) {x^2}
+Risposta Corretta: A
+Spiegazione: Sintassi base: f <- function(args) expr.
+
+Cosa restituisce formals(f) se f è una funzione?
+A) Corpo di f
+B) Elenco degli argomenti di f
+C) Namespace di f
+D) Documentazione di f
+Risposta Corretta: B
+Spiegazione: formals() mostra argomenti e valori predefiniti.
+
+Quale funzione restituisce il corpo di una funzione?
+A) body(f)
+B) formals(f)
+C) args(f)
+D) source(f)
+Risposta Corretta: A
+Spiegazione: body(f) dà il corpo come espressione.
+
+Quale ambiente è restituito da environment(f)?
+A) Global
+B) Locale di f
+C) Parent frame
+D) Namespace di pacchetto
+Risposta Corretta: B
+Spiegazione: environment(f) è l’ambiente in cui f è stata definita.
+
+Quale comando interrompe l’esecuzione di una funzione?
+A) stop()
+B) error()
+C) halt()
+D) break()
+Risposta Corretta: A
+Spiegazione: stop("msg") genera un errore e interrompe.
+
+Quale funzione cattura gli errori senza terminare tutto?
+A) try()
+B) catch()
+C) onError()
+D) handle()
+Risposta Corretta: A
+Spiegazione: try(expr) tenta di eseguire expr e prosegue se fallisce.
+
+Quale funzione valuta una stringa come codice R?
+A) eval()
+B) parse()
+C) source()
+D) both A and B
+Risposta Corretta: D
+Spiegazione: parse(text="x<-1") crea espressione, eval() la esegue; source() esegue file.
+
+Quale funzione legge un file di script R?
+A) source("file.R")
+B) readR("file.R")
+C) run("file.R")
+D) exec("file.R")
+Risposta Corretta: A
+Spiegazione: source() esegue tutte le righe dello script.
+
+Come scali un vettore x in [0,1]?
+A) (x-min(x))/(max(x)-min(x))
+B) scale(x,center=FALSE)
+C) rescale(x)
+D) all of the above with opportune opzioni
+Risposta Corretta: D
+Spiegazione: La formula A, scale(x) con args, o scales::rescale() fanno la normalizzazione.
+
+Quale funzione calcola le frequenze di un vettore fattore f?
+A) freq(f)
+B) table(f)
+C) count(f)
+D) tally(f)
+Risposta Corretta: B
+Spiegazione: table() conta occorrenze di ciascun livello.
+
+Quale funzione trasforma una tabella in data frame?
+A) as.data.frame(table(f))
+B) data.frame(table(f))
+C) both A and B
+D) table2df(table(f))
+Risposta Corretta: C
+Spiegazione: as.data.frame() o data.frame() costruiscono df dalla tabella.
+
+Come si uniscono due data frame df1 e df2 per colonne comuni?
+A) merge(df1,df2)
+B) df1[df2]
+C) bind(df1,df2)
+D) rbind(df1,df2)
+Risposta Corretta: A
+Spiegazione: merge() usa colonne comuni per join interno di default.
+
+Quale argomento di merge imposta join esterno completo?
+A) all=TRUE
+B) full=TRUE
+C) outer=TRUE
+D) complete=TRUE
+Risposta Corretta: A
+Spiegazione: merge(df1,df2, all=TRUE) restituisce tutte le righe di entrambi.
+
+Quale funzione ordina un vettore y in base a x?
+A) order(y)
+B) y[order(x)]
+C) sort(y,x)
+D) arrange(y~x)
+Risposta Corretta: B
+Spiegazione: order(x) restituisce indici di ordinamento, che si applicano a y.
+
+Come torni alla directory di lavoro precedente?
+A) setwd("..")
+B) getwd()
+C) previouswd()
+D) parentwd()
+Risposta Corretta: A
+Spiegazione: setwd("..") imposta working dir alla cartella superiore.
+
+Quale funzione scrive un data frame df in CSV?
+A) write.table(df,"f.csv")
+B) write.csv(df,"f.csv")
+C) save.csv(df,"f.csv")
+D) export.csv(df,"f.csv")
+Risposta Corretta: B
+Spiegazione: write.csv() usa separatore , e include header.
+
+Quale opzione di write.csv disabilita le virgolette attorno a valori testo?
+A) quote=FALSE
+B) quotes=FALSE
+C) q=FALSE
+D) noquote=TRUE
+Risposta Corretta: A
+Spiegazione: write.csv(..., quote=FALSE) scrive senza virgolette.
+
+Quale funzione disegna un grafico a dispersione base R?
+A) scatter()
+B) plot(x,y)
+C) points(x,y)
+D) ggplot()
+Risposta Corretta: B
+Spiegazione: plot(x,y) genera uno scatter plot.
+
+In base R, quale funzione aggiunge una curva di regressione lineare a un plot?
+A) abline(lm(yx))
+B) add.reg(x,y)
+C) lines(lm(yx))
+D) regline(x,y)
+Risposta Corretta: A
+Spiegazione: abline(model) traccia la retta passante per intercept e slope di lm.
+
+Quale tipo di connessione in Tableau mantiene i dati sempre aggiornati in tempo reale?
+A) Estratto (Extract)
+B) Collegamento live (Live)
+C) Pubblicato (Published)
+D) Offline
+Risposta Corretta: B
+Spiegazione: La connessione Live interroga direttamente la fonte dati ogni volta che si aggiorna la vista.
+
+Come si crea un estratto in Tableau?
+A) File → Converti in estratto
+B) Data → Extract Data
+C) Data Source → Extract
+D) Analysis → Create Extract
+Risposta Corretta: C
+Spiegazione: Nella scheda Data Source si trova il pulsante Extract per salvare un subset locale.

@@ -1,40 +1,800 @@
 
-Che cos'è Tableau?
-A) Un linguaggio di programmazione
-B) Una piattaforma di business intelligence e data visualization
-C) Un database relazionale
-D) Un sistema operativo
+Quale tipo di connessione in Tableau mantiene i dati sempre aggiornati in tempo reale?
+A) Estratto (Extract)
+B) Collegamento live (Live)
+C) Pubblicato (Published)
+D) Offline
 Risposta Corretta: B
-Spiegazione: Tableau è una potente piattaforma di business intelligence che permette di creare visualizzazioni interattive e dashboard per l'analisi dei dati.
+Spiegazione: La connessione Live interroga direttamente la fonte dati ogni volta che si aggiorna la vista.
 
-Quale tipo di grafico è più appropriato per mostrare la relazione tra due variabili continue?
-A) Grafico a barre
-B) Grafico a torta
-C) Scatter plot
-D) Istogramma
+Come si crea un estratto in Tableau?
+A) File → Converti in estratto
+B) Data → Extract Data
+C) Data Source → Extract
+D) Analysis → Create Extract
 Risposta Corretta: C
-Spiegazione: Lo scatter plot (grafico a dispersione) è ideale per visualizzare la correlazione e la relazione tra due variabili quantitative continue.
+Spiegazione: Nella scheda Data Source si trova il pulsante Extract per salvare un subset locale.
 
-Che cosa sono le "dimensioni" in Tableau?
-A) Variabili numeriche per calcoli
-B) Campi qualitativi che categorizzano i dati
-C) Le dimensioni del grafico
-D) I filtri applicati ai dati
+Quale icona indica un campo Dimension in Tableau?
+A) Cerchio verde
+B) Quadrato blu
+C) Diamante arancione
+D) Triangolo rosso
 Risposta Corretta: B
-Spiegazione: Le dimensioni sono campi qualitativi che contengono valori discreti e sono utilizzati per categorizzare, segmentare e rivelare dettagli nei dati.
+Spiegazione: Le dimensioni discrete sono visualizzate come pillole blu.
 
-Qual è la differenza tra "misure" e "dimensioni" in Tableau?
-A) Non c'è differenza
-B) Le misure sono quantitative, le dimensioni sono qualitative
-C) Le misure sono qualitative, le dimensioni sono quantitative
-D) Dipende dal tipo di data source
-Risposta Corretta: B
-Spiegazione: Le misure sono campi quantitativi che possono essere aggregati (somma, media, ecc.), mentre le dimensioni sono campi qualitativi utilizzati per la categorizzazione.
+Quale icona indica un campo Measure in Tableau?
+A) Cerchio verde
+B) Quadrato blu
+C) Diamante arancione
+D) Triangolo rosso
+Risposta Corretta: A
+Spiegazione: Le misure continue sono rappresentate come pillole verdi.
 
-Che cos'è un "calculated field" in Tableau?
-A) Un campo importato dal database
-B) Un campo creato attraverso una formula personalizzata
-C) Un campo utilizzato solo per i filtri
-D) Un campo temporale
+Cosa fa il pannello “Show Me” in Tableau?
+A) Cambia tema del dashboard
+B) Suggerisce visualizzazioni basate sui campi selezionati
+C) Salva il work­book
+D) Esporta dati in Excel
 Risposta Corretta: B
-Spiegazione: Un calculated field è un nuovo campo creato utilizzando una formula che può combinare altri campi, funzioni e operatori per calcoli personalizzati.
+Spiegazione: Show Me propone i tipi di grafico possibili con i campi selezionati.
+
+Quale scaffale ospita la suddivisione delle righe?
+A) Columns
+B) Rows
+C) Marks
+D) Filters
+Risposta Corretta: B
+Spiegazione: Shelf Rows definisce la disposizione orizzontale delle righe nella vista.
+
+Come si crea una gerarchia di date in Tableau?
+A) Drag di un campo data su un altro
+B) Clic destro su campo → Create → Hierarchy
+C) Menu Data → New Hierarchy
+D) Click doppio sul campo
+Risposta Corretta: B
+Spiegazione: Con il menu contestuale si definisce una nuova gerarchia.
+
+In un grafico a barre, quale marca si usa per colorare le barre?
+A) Label
+B) Size
+C) Color
+D) Tooltip
+Risposta Corretta: C
+Spiegazione: Shelf Color imposta il riempimento delle barre.
+
+Quale tipo di calcolo utilizza il contesto di riga corrente per aggregazioni?
+A) Campo calcolato
+B) Table calculation
+C) LOD expression
+D) Parameter
+Risposta Corretta: B
+Spiegazione: Le table calculations (es. running total) si basano sulla disposizione della vista.
+
+Quale espressione LOD fissa l’aggregazione a livello di dimensione indipendentemente dalla vista?
+A) { INCLUDE [Category] : SUM([Sales]) }
+B) { EXCLUDE [Region] : SUM([Sales]) }
+C) { FIXED [Product] : SUM([Sales]) }
+D) WINDOW_SUM([Sales])
+Risposta Corretta: C
+Spiegazione: FIXED calcola a livello di Product senza dipendere da filtri di vista.
+
+Quale comando crea un gruppo di membri di dimensione?
+A) Clic destro → Create → Set
+B) Clic destro → Create → Group
+C) Drag → Groups shelf
+D) Data → Group
+Risposta Corretta: B
+Spiegazione: Dal menu contestuale su una dimensione si crea un Group.
+
+In che cosa differisce un Set da un Group?
+A) Il Set è dinamico, il Group è statico
+B) Il Group è dinamico, il Set è statico
+C) Nessuna differenza
+D) Solo il Set può essere filtrato
+Risposta Corretta: A
+Spiegazione: I Set possono basarsi su condizioni che si aggiornano con i dati; i Group no.
+
+Quale shelf permette di aggiungere un filtro visivo all’utente?
+A) Filters
+B) Pages
+C) Tooltip
+D) Detail
+Risposta Corretta: A
+Spiegazione: Shelf Filters consente di definire e mostrare filtri interattivi.
+
+Cosa permette il shelf “Pages”?
+A) Paginare il report in PDF
+B) Animare la vista su un membro dimensionale
+C) Creare una storyboard
+D) Raggruppare le colonne
+Risposta Corretta: B
+Spiegazione: Pages crea una sequenza di viste animate su valori di una dimensione.
+
+Quale opzione specifica un filtro di contesto?
+A) Clic destro su filtro → Add to Context
+B) Doppio clik sul filtro
+C) Drag in Context shelf
+D) Menu Dashboard
+Risposta Corretta: A
+Spiegazione: Add to Context rende il filtro prioritario per le performance.
+
+Cosa fa un filtro di contesto?
+A) Ignora tutti gli altri filtri
+B) Definisce un sottoinsieme usato come base per altri calcoli
+C) Converte il filtro in set
+D) Blocca la fonte dati
+Risposta Corretta: B
+Spiegazione: I filtri di contesto creano un extract temporaneo per ottimizzare le query.
+
+Quale elemento non è interattivo in un dashboard senza azioni?
+A) Filtro
+B) Highlight
+C) Zoom
+D) Tooltip
+Risposta Corretta: B
+Spiegazione: Highlight richiede un’azione specifica per evidenziare componenti da un’altra vista.
+
+Quale azione permette di filtrare un foglio quando si clicca su un elemento in un altro foglio?
+A) URL Action
+B) Filter Action
+C) Highlight Action
+D) Parameter Action
+Risposta Corretta: B
+Spiegazione: Le Filter Actions fanno da collegamento interattivo tra fogli.
+
+Quale azione cambia il contenuto di un parametro al click?
+A) Filter Action
+B) Highlight Action
+C) URL Action
+D) Parameter Action
+Risposta Corretta: D
+Spiegazione: Parameter Actions assegnano valori a un parametro basandosi sulla selezione.
+
+Come si crea un dashboard nuovo?
+A) File → New Dashboard
+B) Clic sul tab “New Dashboard” in basso
+C) Data → New Dashboard
+D) Analysis → Dashboard
+Risposta Corretta: B
+Spiegazione: Il pulsante “New Dashboard” accanto ai fogli crea un nuovo contenitore.
+
+Quale oggetto non fa parte di un dashboard?
+A) Vertical container
+B) Horizontal container
+C) Worksheet
+D) Story point
+Risposta Corretta: D
+Spiegazione: Story points appartengono alle Stories, non ai Dashboards.
+
+Cosa fa un container flottante?
+A) Occupa tutto lo spazio
+B) Puo’ essere spostato liberamente sopra gli altri elementi
+C) Si ridimensiona automaticamente
+D) Blocca il layout
+Risposta Corretta: B
+Spiegazione: Con “Floating” ogni oggetto è posizionato liberamente.
+
+Quale oggetto permette di raggruppare più fogli in una sequenza narrativa?
+A) Dashboard
+B) Story
+C) Worksheet
+D) Layout
+Risposta Corretta: B
+Spiegazione: La Story in Tableau organizza fogli come capitoli di una narrazione.
+
+Per salvare una vista pubblicabile su Tableau Server si usa:
+A) File → Publish to Tableau Server
+B) Server → Publish Workbook
+C) Data → Publish Data Source
+D) Window → Publish
+Risposta Corretta: B
+Spiegazione: Dal menu Server si pubblica l’intera cartella di lavoro.
+
+Quale oggetto mostra i valori di tooltip al passaggio del mouse?
+A) Label
+B) Tooltip
+C) Detail
+D) Caption
+Risposta Corretta: B
+Spiegazione: Lo shelf Tooltip definisce il pop-up informativo sull’hover.
+
+Come si crea un asse duale in un grafico?
+A) Drag seconda misura su Columns e poi Merge
+B) Drag seconda misura sull’asse Y già presente
+C) Doppio click su Measure Names
+D) Clic destro → Dual Axis
+Risposta Corretta: D
+Spiegazione: Con il menu contestuale “Dual Axis” si sovrappongono due misure.
+
+In un dual axis, come si sincronizzano gli assi?
+A) Clic destro su asse → Synchronize Axis
+B) Merge Axis
+C) Auto
+D) Match Scales
+Risposta Corretta: A
+Spiegazione: “Synchronize Axis” allinea le scale dei due assi.
+
+Quale shelf contiene Measure Names e Measure Values?
+A) Filters
+B) Pages
+C) Marks
+D) Columns/Rows
+Risposta Corretta: C
+Spiegazione: Le misure multiple usano pillole Measure Names/Values sul Marks Card.
+
+Come si crea un bin su un campo continuo?
+A) Clic destro → Create → Bins
+B) Create → Group
+C) Data → Bin
+D) Analysis → Create Bin
+Risposta Corretta: A
+Spiegazione: Dal menu contestuale si genera un campo binario raggruppando valori.
+
+Quale funzione aggrega testo in Tableau?
+A) SUM()
+B) AVG()
+C) MIN()
+D) ATTR()
+Risposta Corretta: D
+Spiegazione: ATTR() restituisce il valore se univoco, altrimenti *.
+
+Quale tipo di grafico è sconsigliato se ci sono più di 3 categorie?
+A) Barre
+B) Linee
+C) Torte (Pie)
+D) Mappa ad albero
+Risposta Corretta: C
+Spiegazione: I grafici a torta diventano illeggibili con troppe fette.
+
+Quale shelf definisce la dimensione dei marchi?
+A) Color
+B) Size
+C) Shape
+D) Label
+Risposta Corretta: B
+Spiegazione: Shelf Size modifica le dimensioni di punti, barre, ecc.
+
+Come si crea un filtro Top N?
+A) Quick Filter → Top
+B) Filter → Top tab → By field
+C) Create Parameter → Rank
+D) Both A and B
+Risposta Corretta: D
+Spiegazione: Si può usare il Quick Filter o il pannello Filters Top tab.
+
+Cosa fa il comando “Hide” su un campo?
+A) Lo rimuove dal data source
+B) Lo nasconde dal Data Pane ma lo mantiene nella vista
+C) Elimina il campo
+D) Blocca il campo
+Risposta Corretta: B
+Spiegazione: Hide rimuove il campo dal data pane per pulizia ma preserva le viste.
+
+Quale pannello mostra le connessioni ai dati utilizzati?
+A) Data Source
+B) Analytics
+C) Dashboard
+D) Server
+Risposta Corretta: A
+Spiegazione: La scheda Data Source mostra tabelle, join e campi.
+
+Quale join predefinito usa Tableau quando unisci due tabelle?
+A) Inner
+B) Left
+C) Right
+D) Full Outer
+Risposta Corretta: A
+Spiegazione: Il Default Join è Inner Join, ma si può modificare.
+
+Cosa fa “Data Interpreter” nella scheda Data Source?
+A) Pulisce e ristruttura tabelle Excel importate
+B) Traduce i dati
+C) Esegue join automatici
+D) Crea grafici
+Risposta Corretta: A
+Spiegazione: Data Interpreter rimuove righe/colonne non utili e riconosce header.
+
+Quale shelf permette di specificare la forma dei marchi (shape)?
+A) Detail
+B) Shape
+C) Color
+D) Tooltip
+Risposta Corretta: B
+Spiegazione: Shelf Shape assegna icone predefinite ai valori di una dimensione.
+
+Come si cambia la paletta dei colori?
+A) Clic su Color → Edit Colors
+B) Analysis → Color Palette
+C) Data → Color
+D) Map → Color
+Risposta Corretta: A
+Spiegazione: Dal menu Color sul Marks Card si seleziona Edit Colors.
+
+Quale oggetto analytic aggiunge una linea di trend?
+A) Reference Line
+B) Trend Line
+C) Box Plot
+D) Forecast
+Risposta Corretta: B
+Spiegazione: Con Trend Line dal pannello Analytics si inserisce la retta di regressione.
+
+Quale oggetto analytic aggiunge un valore di mediana come linea?
+A) Reference Line
+B) Trend Line
+C) Distribution Band
+D) Box Plot
+Risposta Corretta: A
+Spiegazione: Reference Line può mostrare mediana, media o costanti.
+
+Quale shelf contiene i dati geografici per i mappe?
+A) Latitude e Longitude in Rows/Columns
+B) Pages
+C) Tooltip
+D) Filters
+Risposta Corretta: A
+Spiegazione: Tableau usa i campi geografici posizionati automaticamente su Rows/Columns.
+
+Quale icona indica un campo geografico?
+A) Mappa
+B) Globo
+C) Puntina
+D) Casa
+Risposta Corretta: A
+Spiegazione: L’icona a forma di mappa accanto al nome indica un ruolo geografico.
+
+Come si aggiunge un’azione URL a un dashboard?
+A) Dashboard → Actions → Add Action → URL
+B) Worksheet → URL
+C) Data → URL
+D) Analysis → Create URL
+Risposta Corretta: A
+Spiegazione: Dal menu Dashboard si definisce una Dashboard Action di tipo URL.
+
+Quale comando duplica un foglio di lavoro?
+A) Duplicate Sheet
+B) Copy Sheet
+C) Clone Sheet
+D) Copy Tab
+Risposta Corretta: A
+Spiegazione: Con il menu contestuale sul tab del foglio si seleziona “Duplicate Sheet”.
+
+Cosa mostra il “Performance Recording”?
+A) Durata delle query e rendering delle viste
+B) Le azioni degli utenti
+C) Crash log
+D) Eventi di sistema
+Risposta Corretta: A
+Spiegazione: Il Performance Recording traccia tempi di query, rendering e disegno.
+
+Quando si pubblica un estratto, come lo si aggiorna periodicamente su Server?
+A) Schedule → Refresh Extract
+B) Manualmente
+C) reload extract
+D) extract refresh script
+Risposta Corretta: A
+Spiegazione: Su Tableau Server si programma il refresh automatico degli extract.
+
+Quale file contiene i metadati di connessione Tableau?
+A) .tds
+B) .twb
+C) .twbx
+D) .tde
+Risposta Corretta: A
+Spiegazione: .tds (Tableau Data Source) memorizza connessione e schema, senza dati.
+
+Quale formato salva un workbook con estratti e immagini incluse?
+A) .twb
+B) .twbx
+C) .tdsx
+D) .tde
+Risposta Corretta: B
+Spiegazione: .twbx è il pacchetto compresso che include .twb e tutti i file di dati locali.
+
+Quale funzione crea rapidamente un istogramma in Tableau?
+A) Show Me → Histogram
+B) Analysis → Histogram
+C) Marks → Histogram
+D) Data → Histogram
+Risposta Corretta: A
+Spiegazione: Show Me include l’icona Histogram per generare istogrammi automaticamente.
+
+Quale shelf si usa per definire la forma dei segni in un grafico?
+A) Size
+B) Color
+C) Shape
+D) Label
+Risposta Corretta: C
+Spiegazione: Lo shelf Shape nel Marks card assegna icone diverse in base ai valori di una dimensione.
+
+Come si attiva il “Device Preview” per il design responsive?
+A) Window → Device Preview
+B) Server → Device Preview
+C) Dashboard Pane → Device Preview
+D) Help → Device Preview
+Risposta Corretta: A
+Spiegazione: Dal menu Window si apre il pannello Device Preview per simulare smartphone e tablet.
+
+Quale opzione permette di nascondere automaticamente le righe vuote in una tabella?
+A) Analysis → Hide Null Rows
+B) Analysis → Table Layout → Show Empty Rows
+C) Format → Shading
+D) Worksheet → Hide Empty Rows
+Risposta Corretta: B
+Spiegazione: Dal menu Table Layout si deseleziona “Show Empty Rows” per eliminare le righe vuote.
+
+Quale azione consente di mostrare un secondo foglio quando si clicca su un punto della mappa?
+A) Highlight Action
+B) Filter Action
+C) Go to Sheet Action
+D) URL Action
+Risposta Corretta: C
+Spiegazione: Le Go to Sheet Actions navigano direttamente ad un altro foglio all’interno della dashboard.
+
+In che modo si configura un parametro per scegliere dinamicamente il tipo di grafico?
+A) Usando Parameter Action legato ad un campo calcolato che restituisce tipo
+B) Con un filtro normale
+C) Con una Table Calculation
+D) Non è possibile
+Risposta Corretta: A
+Spiegazione: Un parametro + campo calcolato + Parameter Action possono cambiare la misura o dimensione su cui si basa il grafico.
+
+Quale shelf permette di aggiungere dettagli non visibili nel grafico ma disponibili nel tooltip?
+A) Size
+B) Detail
+C) Label
+D) Tooltip
+Risposta Corretta: B
+Spiegazione: Shelf Detail inserisce attributi aggiuntivi non visualizzati ma passati al tooltip.
+
+Quale oggetto dashboard permette di aggiungere testo fisso con formattazione?
+A) Blank
+B) Text
+C) Image
+D) Web Page
+Risposta Corretta: B
+Spiegazione: L’oggetto Text inserisce un riquadro di testo HTML-like con formattazioni.
+
+Come si crea un filtro di tipo “Wildcard” su un campo stringa?
+A) Clic destro sul campo → Filter → Wildcard
+B) Analysis → Filters → Wildcard
+C) Data → Wildcard
+D) Non esiste
+Risposta Corretta: A
+Spiegazione: Dal pannello Filter, tab Wildcard, si inseriscono pattern con * o ?.
+
+Quale oggetto analytico aggiunge un “Box Plot” alla vista?
+A) Reference Line
+B) Box Plot
+C) Distribution
+D) Forecast
+Risposta Corretta: B
+Spiegazione: Nel pannello Analytics si trascina Box Plot sulla vista per aggiungere i quartili e outlier.
+
+Che vantaggio offre una Data Source Published su Tableau Server?
+A) Aggiornamenti centralizzati
+B) Nessuno
+C) Server più veloce
+D) Permette solo estratti
+Risposta Corretta: A
+Spiegazione: Le Data Source Published consentono di condividere con altri utenti e gestire le credenziali e il refresh in un unico luogo.
+
+Quale funzione crea cluster automatici in Tableau?
+A) K-Means
+B) Cluster
+C) Group
+D) Set
+Risposta Corretta: B
+Spiegazione: L’oggetto Cluster nel pannello Analytics genera automaticamente raggruppamenti basati su misure.
+
+Come si aggiunge una previsione di tipo “seasonal” a un grafico?
+A) Analysis → Forecast → Show Forecast
+B) Analytics → Forecast
+C) File → Forecast
+D) Non esiste
+Risposta Corretta: B
+Spiegazione: Dal pannello Analytics si trascina Forecast sulla vista e si imposta modello stagionale o lineare.
+
+Quale opzione di forecast consente di cambiare il livello di confidenza (default 95%)?
+A) Dal menu Forecast Options
+B) Doppio click sulla linea di forecast
+C) Analysis → Forecast Options
+D) B e C
+Risposta Corretta: D
+Spiegazione: Le opzioni di forecast si configurano sia dal pannello Analytics che dal menu Analysis → Forecast Options.
+
+Quale estensione di file memorizza un workbook in formato XML senza dati?
+A) .twb
+B) .twbx
+C) .tds
+D) .tde
+Risposta Corretta: A
+Spiegazione: Il .twb contiene solo metadati, layout e connessioni, senza dati.
+
+Quale formato include workbook, estratti e immagini in un solo file?
+A) .twb
+B) .twbx
+C) .tds
+D) .tde
+Risposta Corretta: B
+Spiegazione: Il .twbx è un pacchetto (zip) che incorpora tutto.
+
+Quale estensione è usata per estratti dati legacy?
+A) .tde
+B) .hyper
+C) .hlex
+D) .extract
+Risposta Corretta: A
+Spiegazione: Fino a Tableau 10.x si usavano .tde, ora si preferisce .hyper.
+
+Quale opzione abilita l’inserimento di parametri nei tooltip?
+A) Tooltip shelf → Insert → Parameter
+B) Tooltip shelf → Insert → Field
+C) Analytic → Parameter
+D) Non è possibile
+Risposta Corretta: A
+Spiegazione: Nel editor del Tooltip, con Insert si può aggiungere il valore attuale di un parametro.
+
+Come si mostra un’annotazione puntuale su un punto clickabile?
+A) Annotations → Point
+B) Marks → Annotate
+C) Analytics → Add Annotation
+D) Dashboard → Annotate
+Risposta Corretta: A
+Spiegazione: Dal menu Worksheet → Annotate → Point si aggiunge una nota ancorata.
+
+Quale shelf si usa per inserire una dimensione nelle etichette?
+A) Label
+B) Color
+C) Shape
+D) Size
+Risposta Corretta: A
+Spiegazione: Shelf Label mostra etichette testuali su mark basate su un campo.
+
+Cosa fa l’opzione “Hide Title” su un foglio?
+A) Rimuove il titolo dalla vista
+B) Disabilita il foglio
+C) Nasconde i dati
+D) Non esiste
+Risposta Corretta: A
+Spiegazione: Con clic destro sul titolo si può scegliere Hide Title per rimuoverlo.
+
+Quale shelf è necessario per la funzione WINDOW_AVG()?
+A) Detail
+B) Table Calculations
+C) Non lo shelf ma si definisce come campo calcolato
+D) Tooltip
+Risposta Corretta: C
+Spiegazione: Le table calcs come WINDOW_AVG si definiscono in un campo calcolato selezionando Compute Using.
+
+Come si cambia il “Compute Using” di una Table Calculation?
+A) Clic destro sul campo calcolato → Edit Table Calculation
+B) Analysis → Table Calculation
+C) View → Compute Using
+D) Non si può
+Risposta Corretta: A
+Spiegazione: Edit Table Calculation apre dialog in cui scegliere dimensioni di calcolo.
+
+Quale funzione LOD include livelli di dettaglio aggiuntivi?
+A) FIXED
+B) EXCLUDE
+C) INCLUDE
+D) ALLLOD
+Risposta Corretta: C
+Spiegazione: INCLUDE aggiunge aggregazioni a livello di dimensioni supplementari alla vista.
+
+Quale tipo di join crea un’unione tra tabelle su più database?
+A) Data Blending
+B) Cross-Database Join
+C) Data Extract Join
+D) Live Join
+Risposta Corretta: B
+Spiegazione: Dal canvas relazioni si possono creare join tra tabelle di connessioni diverse.
+
+Quando si usa il Data Blending?
+A) Per unire tabelle dello stesso database
+B) Per unire fogli Excel
+C) Per unire dati di due Data Source differenti su misura
+D) Per unire storie
+Risposta Corretta: C
+Spiegazione: Il blending lega i dati di due sorgenti diverse tramite un campo in comune, con uno diventato Primary.
+
+Quale icona indica che un foglio fa blending su un’altra Data Source?
+A) Catena arancione
+B) Catena grigia
+C) Catena blu
+D) Catena rossa
+Risposta Corretta: B
+Spiegazione: Una piccola catena grigia accanto ai campi uniti indica blending.
+
+Quale shelf definisce parametri di ordinamento personalizzato?
+A) Sort
+B) Custom Sort
+C) Sort shelf
+D) Non esiste shelf, si usa menu contestuale sulla pillola dimensione
+Risposta Corretta: D
+Spiegazione: Clic destro sulla pillola di una dimensione → Sort → Manual/Field.
+
+Quale opzione di sort ordina la dimensione in base a una misura?
+A) Ascendente/Discendente
+B) Manuale
+C) Per campo (Field)
+D) Alfabeto
+Risposta Corretta: C
+Spiegazione: Sort → By Field → scegliere misura e aggregazione.
+
+In una Mappa di Calore (Heat Map), quale shelf determina il colore?
+A) Label
+B) Color
+C) Size
+D) Detail
+Risposta Corretta: B
+Spiegazione: Shelf Color codifica i valori di misura in una scala di colori.
+
+Come si crea un calcato che restituisce “Alto” se profitto>0 e “Basso” altrimenti?
+A) IF [Profit]>0 THEN "Alto" ELSE "Basso" END
+B) CASE [Profit]>0 WHEN TRUE THEN "Alto" ELSE "Basso" END
+C) IIF([Profit]>0,"Alto","Basso")
+D) A e C
+Risposta Corretta: D
+Spiegazione: In R1 e in versione compatta con IIF.
+
+Come si gestiscono le stringhe con spazi?
+A) [Order ID]
+B) "Order ID"
+C) 'Order ID'
+D) Order ID
+Risposta Corretta: A
+Spiegazione: I campi con spazi richiedono backtick (colonne).
+
+Quale shelf si usa per le etichette automatiche dei marker?
+A) Detail
+B) Label
+C) Tooltip
+D) Color
+Risposta Corretta: B
+Spiegazione: Shelf Label applica valori di campo come testo sulle marche.
+
+Quale strumento in Tableau Desktop misura la qualità delle prestazioni di un workbook?
+A) Performance Recorder
+B) Quality Analyzer
+C) Speed Test
+D) Viz Inspector
+Risposta Corretta: A
+Spiegazione: Performance Recorder traccia le query, rendering e calcoli.
+
+Quale vista si usa per analizzare le query generate da Tableau?
+A) Performance Summary
+B) Log View
+C) VizQL Performance Summary
+D) Query Inspector
+Risposta Corretta: C
+Spiegazione: Dopo il Performance Recording si apre la VizQL Performance Summary.
+
+Come si elimina un’azione da un dashboard?
+A) Dashboard → Actions → delete
+B) Worksheet → Delete Action
+C) Menu Data → Actions
+D) Clic destro sull’azione
+Risposta Corretta: A
+Spiegazione: Nel menu Dashboard → Actions si seleziona e si elimina.
+
+Quale formato esporta un foglio come immagine vettoriale?
+A) PNG
+B) JPG
+C) EMF (Windows)
+D) BMP
+Risposta Corretta: C
+Spiegazione: L’opzione PDF/EMF produce grafica vettoriale facilmente modificabile.
+
+Quale comando nell’interfaccia web permette di vedere i metadati di una vista?
+A) View Data
+B) Show Metadata
+C) Data Details
+D) Metadata Explorer
+Risposta Corretta: B
+Spiegazione: “Show Metadata” nella vista web elenca colonne e tipi.
+
+Quale strumento crea un flusso ETL all’interno di Tableau?
+A) Tableau Desktop
+B) Tableau Prep
+C) Tableau Server
+D) Tableau Online
+Risposta Corretta: B
+Spiegazione: Tableau Prep Builder costruisce flussi di pulizia e trasformazione.
+
+Come si integra un flusso di Tableau Prep in un workbook?
+A) Data → Connect to Prep Flow
+B) File → Import Prep Flow
+C) Analysis → Prep
+D) Non è possibile
+Risposta Corretta: A
+Spiegazione: Si seleziona “Tableau Prep” tra le connessioni dati.
+
+Quale opzione in Tableau Prep unisce in modo fuzzy due colonne simili?
+A) Fuzzy Join
+B) Wildcard Join
+C) Merge
+D) Clean
+Risposta Corretta: A
+Spiegazione: Il Fuzzy Join in Prep usa algoritmi di similarità.
+
+Quale shelf non esiste in Tableau?
+A) Columns
+B) Rows
+C) Pages
+D) Scripts
+Risposta Corretta: D
+Spiegazione: Non esiste uno shelf “Scripts” nel Marks card.
+
+Come si aggiunge la legenda dei colori alla dashboard?
+A) Dal menu Analysis → Legends → Color Legend
+B) Dal pannello Legends trascinando nel dashboard
+C) Modificando il worksheet
+D) Non serve, appare automaticamente
+Risposta Corretta: B
+Spiegazione: Dal pannello Legends si può trascinare la legenda nel layout.
+
+Quale URL Action può aprire una pagina web esterna?
+A) URL Action con https://…
+B) Filter Action
+C) Highlight Action
+D) Go to Sheet Action
+Risposta Corretta: A
+Spiegazione: Le URL Actions permettono di navigare su un sito esterno tramite un link dinamico.
+
+Quale licenza Tableau permette sia Desktop che Server?
+A) Creator
+B) Explorer
+C) Viewer
+D) Administrator
+Risposta Corretta: A
+Spiegazione: La licenza Creator include Desktop, Prep e pieno accesso a Server.
+
+Quale opzione disabilita l’esportazione dei dati per gli utenti Viewer?
+A) Permissions → Export Data
+B) Site Settings → Disable Export
+C) Workbook Settings → Export off
+D) Project Settings → Disable Export
+Risposta Corretta: A
+Spiegazione: Nei Permissions del progetto o workbook si revoca il permesso “Export Data”.
+
+Quale file contiene le credenziali salvate in un estratto protetto?
+A) .tdsx
+B) .tde
+C) .hyper
+D) Non esiste file separato, sono criptate nell’extract
+Risposta Corretta: D
+Spiegazione: Le credenziali nel .hyper sono criptate; non c’è file separato.
+
+Quale impostazione abilita il login SAML su Tableau Server?
+A) Identity Provider Configuration
+B) Server → Authentication → SAML
+C) Site Settings
+D) User Settings
+Risposta Corretta: B
+Spiegazione: Nel pannello di Authentication si configura SAML con metadata dell’IdP.
+
+Quale permission di Server serve per creare progetti?
+A) Project Leader
+B) Site Administrator
+C) Publisher
+D) Explorer
+Risposta Corretta: B
+Spiegazione: Solo i Site Admins hanno i diritti di creare e gestire progetti.
+
+Cosa fa la modalità “Web Edit” su Tableau Server?
+A) Permette di modificare workbook direttamente nel browser
+B) Apre Tableau Desktop nel browser
+C) Scarica il workbook
+D) Non esiste
+Risposta Corretta: A
+Spiegazione: Web Edit abilita editing leggero di fogli e dashboard via browser.
+
+Quale strumento Tableau consente di creare alert su KPI?
+A) Metrics
+B) Alerts
+C) Subscriptions
+D) Data Driven Alerts
+Risposta Corretta: A
+Spiegazione: La feature Metrics su Tableau Server/Online permette di monitorare valori e inviare notifiche quando superano soglie.

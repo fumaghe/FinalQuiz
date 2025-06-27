@@ -1,4 +1,3 @@
-
 import { Question } from '../types/quiz';
 
 const questionFiles = [
@@ -18,7 +17,7 @@ const questionFiles = [
 
 export async function loadQuestionsFromFiles(): Promise<Question[]> {
   const allQuestions: Question[] = [];
-  
+
   for (const fileName of questionFiles) {
     try {
       const response = await fetch(`/data/questions/${fileName}`);
@@ -26,56 +25,70 @@ export async function loadQuestionsFromFiles(): Promise<Question[]> {
         console.warn(`Could not load questions from ${fileName}`);
         continue;
       }
-      
+
       const content = await response.text();
-      const questions = parseQuestionsFromText(content, fileName.replace('.txt', ''));
+      const topic = fileName.replace('.txt', '');
+      const questions = parseQuestionsFromText(content, topic);
+      console.log(`Loaded ${questions.length} questions for topic ${topic}`);
       allQuestions.push(...questions);
     } catch (error) {
       console.error(`Error loading questions from ${fileName}:`, error);
     }
   }
-  
+
   return allQuestions;
 }
 
 function parseQuestionsFromText(content: string, topic: string): Question[] {
   const questions: Question[] = [];
-  const questionBlocks = content.trim().split('\n\n').filter(block => block.trim());
-  
-  for (let i = 0; i < questionBlocks.length; i++) {
-    try {
-      const block = questionBlocks[i].trim();
-      const lines = block.split('\n').map(line => line.trim()).filter(line => line);
-      
-      if (lines.length < 7) continue; // Should have question + 4 options + correct + explanation
-      
-      const questionText = lines[0];
-      const options = lines.slice(1, 5).map(line => line.substring(3)); // Remove "A) ", "B) ", etc.
-      
-      // Find correct answer line
-      const correctLine = lines.find(line => line.startsWith('Risposta Corretta:'));
-      if (!correctLine) continue;
-      
-      const correctLetter = correctLine.split(':')[1].trim().toLowerCase();
-      const correctIndex = ['a', 'b', 'c', 'd'].indexOf(correctLetter);
-      if (correctIndex === -1) continue;
-      
-      // Find explanation line
-      const explanationLine = lines.find(line => line.startsWith('Spiegazione:'));
-      const explanation = explanationLine ? explanationLine.split(':').slice(1).join(':').trim() : '';
-      
-      questions.push({
-        id: `${topic.toLowerCase()}_${i + 1}`,
-        question: questionText,
-        options,
-        correct: correctIndex,
-        explanation,
-        topic
-      });
-    } catch (error) {
-      console.error(`Error parsing question block ${i + 1} in ${topic}:`, error);
+  // Split on one or more blank lines (handles LF, CRLF, spaces)
+  const blocks = content
+    .split(/\r?\n\s*\r?\n+/)
+    .map(block => block.trim())
+    .filter(block => block.length > 0);
+
+  blocks.forEach((block, idx) => {
+    const lines = block
+      .split(/\r?\n/)
+      .map(line => line.trim())
+      .filter(line => line.length > 0);
+
+    if (lines.length < 7) {
+      // Need at least: question + 4 options + correct + explanation
+      return;
     }
-  }
-  
+
+    const questionText = lines[0];
+
+    // Options are expected in lines 1–4 as "A) ...", "B) ...", etc.
+    const options = lines.slice(1, 5).map(line => {
+      // remove leading "A) ", "B) ", etc.
+      const match = line.match(/^[A-D]\)\s*(.*)$/i);
+      return match ? match[1].trim() : line;
+    });
+
+    // Find the correct answer line
+    const correctLine = lines.find(line => line.toLowerCase().startsWith('risposta corretta:'));
+    if (!correctLine) return;
+    const letter = correctLine.split(':')[1].trim().toLowerCase();
+    const correctIndex = ['a', 'b', 'c', 'd'].indexOf(letter);
+    if (correctIndex === -1) return;
+
+    // Find explanation
+    const explanationLine = lines.find(line => line.toLowerCase().startsWith('spiegazione:'));
+    const explanation = explanationLine
+      ? explanationLine.split(':').slice(1).join(':').trim()
+      : '';
+
+    questions.push({
+      id: `${topic.toLowerCase()}_${idx + 1}`,
+      question: questionText,
+      options,
+      correct: correctIndex,
+      explanation,
+      topic
+    });
+  });
+
   return questions;
 }

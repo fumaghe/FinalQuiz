@@ -1,40 +1,800 @@
 
-Che tipo di linguaggio di programmazione è Python?
-A) Solo compilato
-B) Solo interpretato
-C) Interpretato e ad alto livello
-D) Assembly
+Come si apre un file in lettura in Python?
+A) open("file.txt", "w")
+B) open("file.txt", "r")
+C) open("file.txt", "rw")
+D) open.read("file.txt")
+Risposta Corretta: B
+Spiegazione: La modalità "r" apre il file in lettura.
+
+Quale costrutto crea un dizionario vuoto?
+A) dict = []
+B) dict = ()
+C) dict = {}
+D) dict = set()
 Risposta Corretta: C
-Spiegazione: Python è un linguaggio interpretato, ad alto livello e general-purpose, noto per la sua sintassi leggibile e la filosofia che enfatizza la leggibilità del codice.
+Spiegazione: Le parentesi graffe {} definiscono un dict vuoto.
 
-Quale operatore è utilizzato per l'elevamento a potenza in Python?
-A) ^
-B) **
-C) pow
-D) exp
+Come si definisce una funzione Python?
+A) function foo():
+B) def foo():
+C) fun foo():
+D) lambda foo():
 Risposta Corretta: B
-Spiegazione: In Python, l'operatore ** è utilizzato per l'elevamento a potenza. Ad esempio, 2**3 restituisce 8.
+Spiegazione: def introduce la definizione di funzione.
 
-Che cos'è una lista in Python?
-A) Una struttura dati immutable
-B) Una collezione ordinata e modificabile di elementi
-C) Solo per numeri
-D) Una stringa speciale
+Quale metodo lista aggiunge un elemento in coda?
+A) append()
+B) add()
+C) insert()
+D) push()
+Risposta Corretta: A
+Spiegazione: list.append(x) aggiunge x alla fine.
+
+Come si crea una tupla con un solo elemento?
+A) (1)
+B) (1,)
+C) 1,
+D) [1]
 Risposta Corretta: B
-Spiegazione: Una lista in Python è una collezione ordinata e modificabile (mutable) che può contenere elementi di diversi tipi di dati.
+Spiegazione: La virgola fa sì che sia una tupla, non una parentesi.
 
-Quale libreria Python è comunemente utilizzata per l'analisi dei dati?
-A) os
-B) sys
-C) pandas
-D) random
+Cosa stampa print(type(3.14))?
+A) <class 'int'>
+B) <class 'float'>
+C) <class 'str'>
+D) <class 'decimal'>
+Risposta Corretta: B
+Spiegazione: 3.14 è un numero in virgola mobile (float).
+
+Quale parola riservata serve per gestire le eccezioni?
+A) try/except
+B) catch/finally
+C) do/except
+D) error/handle
+Risposta Corretta: A
+Spiegazione: In Python si usa try: e poi except:.
+
+Cosa fa range(5) in un for?
+A) Genera [1,2,3,4,5]
+B) Genera [0,1,2,3,4]
+C) Genera [0,1,2,3,4,5]
+D) Errore
+Risposta Corretta: B
+Spiegazione: range(n) genera valori da 0 a n-1.
+
+Quale costrutto crea una lista di quadrati da 0 a 9?
+A) [i*i for i in range(10)]
+B) list(range(10**2))
+C) map(lambda i: i*i, range(10))
+D) for i in range(10): squares.append(i*i)
+Risposta Corretta: A
+Spiegazione: La list comprehension è concisa ed efficiente.
+
+Come si definisce una classe in Python?
+A) class Foo:
+B) def Foo:
+C) func Foo:
+D) object Foo:
+Risposta Corretta: A
+Spiegazione: class Nome: introduce una classe.
+
+Quale metodo speciale costruisce l’istanza?
+A) __start__
+B) __init__
+C) __new__
+D) __create__
+Risposta Corretta: B
+Spiegazione: __init__ è il costruttore che inizializza l’oggetto.
+
+Come chiami il metodo padre in un override?
+A) super().__method()
+B) parent.method()
+C) Base.method()
+D) self.parent.method()
+Risposta Corretta: A
+Spiegazione: super() restituisce la classe base per chiamare il metodo originale.
+
+Cosa restituisce len("ciao")?
+A) 3
+B) 4
+C) 5
+D) Errore
+Risposta Corretta: B
+Spiegazione: La stringa "ciao" ha quattro caratteri.
+
+Come concateni due liste a e b?
+A) a + b
+B) a.concat(b)
+C) a.extend(b)
+D) A e C
+Risposta Corretta: D
+Spiegazione: a+b restituisce nuova lista, a.extend(b) modifica a.
+
+Cosa stampa True and False or True?
+A) False
+B) True
+C) Errore
+D) None
+Risposta Corretta: B
+Spiegazione: and ha precedenza: (True and False) or True → False or True → True.
+
+Quale funzione converte stringa in intero?
+A) int("123")
+B) parseInt("123")
+C) to_int("123")
+D) str.to_int()
+Risposta Corretta: A
+Spiegazione: int() effettua il cast da stringa a intero.
+
+Quale funzione genera numeri pseudo-casuali?
+A) random()
+B) randint()
+C) uuid()
+D) shuffle()
+Risposta Corretta: B
+Spiegazione: In import random, random.randint(a,b) genera intero casuale tra a e b.
+
+Come si importa il modulo math?
+A) import math
+B) from math import *
+C) import math as m
+D) Tutte e tre
+Risposta Corretta: D
+Spiegazione: Sono tutte sintassi valide per importare il modulo math.
+
+Cosa stampa math.pi?
+A) Valore di π
+B) 3.0
+C) Errore
+D) 22/7
+Risposta Corretta: A
+Spiegazione: math.pi è una costante che vale circa 3.141592653589793.
+
+Quale built-in crea un’eccezione personalizzata?
+A) class MyError(Exception): pass
+B) raise Exception("msg")
+C) Error("msg")
+D) throw Exception
+Risposta Corretta: A
+Spiegazione: Definire una sottoclasse di Exception crea un tipo di errore custom.
+
+Cosa serve il contesto with?
+A) Gestire automaticamente risorse (file, lock)
+B) Creare funzioni
+C) Iterare su generatori
+D) Definire classi
+Risposta Corretta: A
+Spiegazione: with open(...) as f: chiude il file anche in caso di eccezione.
+
+Quale funzione trasforma un generatore in lista?
+A) list(gen)
+B) gen.to_list()
+C) collect(gen)
+D) [*gen]
+Risposta Corretta: A
+Spiegazione: list() consuma il generatore e ne restituisce gli elementi in una lista.
+
+Come si definisce un generatore?
+A) Funzione con return
+B) Funzione con yield
+C) Classe con __iter__
+D) Lambda
+Risposta Corretta: B
+Spiegazione: La keyword yield trasforma la funzione in un generatore.
+
+Cosa distingue un set da una lista?
+A) Set è ordinato
+B) Set non permette duplicati
+C) Lista non permette duplicati
+D) Nessuna differenza
+Risposta Corretta: B
+Spiegazione: I set disallow duplicate e non sono indicizzati.
+
+Quale metodo set rimuove e restituisce un elemento arbitrario?
+A) pop()
+B) remove()
+C) discard()
+D) clear()
+Risposta Corretta: A
+Spiegazione: pop() rimuove un elemento a scelta e lo restituisce.
+
+Come si controlla l’esistenza di una chiave in un dict?
+A) "k" in dict
+B) dict.has_key("k")
+C) dict.exists("k")
+D) dict["k"] != None
+Risposta Corretta: A
+Spiegazione: L’operatore in verifica la presenza di una chiave nel dizionario.
+
+Cosa fa dict.get("k", default)?
+A) Restituisce dict["k"] o default
+B) Aggiunge chiave se non esiste
+C) Elimina la chiave
+D) Errore
+Risposta Corretta: A
+Spiegazione: get() evita KeyError e restituisce default se non trova la chiave.
+
+Quale funzione ordina una lista in place?
+A) sorted(list)
+B) list.sort()
+C) list.sorted()
+D) sort(list)
+Risposta Corretta: B
+Spiegazione: list.sort() modifica la lista in place, sorted() crea nuova lista ordinata.
+
+Quale costrutto definisce un’espressione Lambda?
+A) lambda x: x+1
+B) def x: return x+1
+C) (x) => x+1
+D) fun x: x+1
+Risposta Corretta: A
+Spiegazione: lambda args: expression crea una funzione anonima.
+
+Come si unisce elementi di lista in stringa?
+A) " ".join(list)
+B) list.join(" ")
+C) concat(list)
+D) str(list)
+Risposta Corretta: A
+Spiegazione: str.join(iterable) concatena con il separatore.
+
+Cosa fa enumerate(iterable)?
+A) Restituisce coppie (index, element)
+B) Contatore di elementi
+C) Lista di elementi unici
+D) Errore
+Risposta Corretta: A
+Spiegazione: enumerate() aggiunge l’indice a ogni elemento dell’iterabile.
+
+Quale modulo standard facilita data e orari?
+A) datetime
+B) time
+C) calendar
+D) Tutti e tre
+Risposta Corretta: D
+Spiegazione: Ci sono varie utility per data/orario: datetime, time, calendar.
+
+Qual è l’estensione di un modulo Python?
+A) .pym
+B) .py
+C) .mod
+D) .python
+Risposta Corretta: B
+Spiegazione: I file sorgente Python finiscono con .py.
+
+Come si esegue un modulo direttamente dalla riga di comando?
+A) python -m module
+B) python module.py
+C) run module
+D) module run
+Risposta Corretta: A
+Spiegazione: -m esegue il modulo come script.
+
+Quale costrutto si usa per importare solo una funzione?
+A) from math import sqrt
+B) import math.sqrt
+C) use math.sqrt
+D) include math.sqrt
+Risposta Corretta: A
+Spiegazione: La sintassi from module import name importa solo quell’oggetto.
+
+Cosa restituisce os.path.join("a","b")?
+A) "a/b" (o backslash su Windows)
+B) "ab"
+C) ("a","b")
+D) Errore
+Risposta Corretta: A
+Spiegazione: os.path.join crea un percorso corretto per OS.
+
+Quale modulo offre pattern glob?
+A) glob
+B) re
+C) pathlib
+D) A e C
+Risposta Corretta: D
+Spiegazione: Sia glob sia pathlib.Path.glob() permettono pattern matching di file.
+
+Cosa fa @staticmethod in una classe?
+A) Definisce metodo non legato all’istanza
+B) Definisce metodo astratto
+C) Definisce metodo di classe
+D) Errore
+Risposta Corretta: A
+Spiegazione: Il metodo statico non riceve né self né cls.
+
+Cosa fa @classmethod?
+A) Il metodo riceve cls invece di self
+B) È un metodo privato
+C) È una funzione globale
+D) Errore
+Risposta Corretta: A
+Spiegazione: @classmethod passa la classe come primo argomento.
+
+Quale modulo aiuta a creare processi paralleli?
+A) threading
+B) multiprocessing
+C) asyncio
+D) A e B
+Risposta Corretta: D
+Spiegazione: threading per thread, multiprocessing per processi separati.
+
+Cosa serve asyncio?
+A) Programmazione asincrona con async/await
+B) Multi-threading
+C) Multi-processing
+D) Timer
+Risposta Corretta: A
+Spiegazione: asyncio implementa il loop di eventi per IO non bloccante.
+
+Come si definisce una coroutine?
+A) async def foo():
+B) def foo(): yield
+C) def foo(): async
+D) coroutine foo():
+Risposta Corretta: A
+Spiegazione: async def dichiara una coroutine che supporta await.
+
+Cosa fa await coro()?
+A) Esegue la coroutine e attende il risultato
+B) Crea una nuova coroutine
+C) Blocca il thread
+D) Errore
+Risposta Corretta: A
+Spiegazione: await sospende la coroutine corrente fino al completamento di coro().
+
+Quale struttura dati offre FIFO?
+A) queue.Queue
+B) collections.deque
+C) list con append/pop(0)
+D) Tutte e tre
+Risposta Corretta: D
+Spiegazione: Tutte e tre possono rappresentare code, ma con performance diverse.
+
+Cosa stampa __name__ in uno script eseguito direttamente?
+A) "__main__"
+B) Il nome del file
+C) "__script__"
+D) None
+Risposta Corretta: A
+Spiegazione: Quando eseguito come script, __name__ vale "__main__".
+
+Quale costrutto evita l’esecuzione durante l’import?
+A) if __name__=="__main__":
+B) if script==main:
+C) if __file__==__main__:
+D) guard main
+Risposta Corretta: A
+Spiegazione: Serve per codice di test o demo che non deve girare all’import.
+
+Come si installa un pacchetto da PyPI?
+A) pip install package
+B) py install package
+C) pip get package
+D) python package install
+Risposta Corretta: A
+Spiegazione: pip install nome_pacchetto scarica e installa da PyPI.
+
+Quale file definisce le dipendenze di un progetto Python?
+A) requirements.txt
+B) setup.py
+C) pyproject.toml
+D) Tutti e tre
+Risposta Corretta: D
+Spiegazione: requirements.txt, setup.py e pyproject.toml possono specificare dipendenze.
+
+Quale virtual environment tool è integrato?
+A) venv
+B) virtualenv
+C) pipenv
+D) conda
+Risposta Corretta: A
+Spiegazione: Dal 3.3, Python include il modulo venv per ambienti virtuali.
+
+Come si crea un package installabile?
+A) python setup.py sdist bdist_wheel
+B) pip pack .
+C) python -m wheel .
+D) pack .
+Risposta Corretta: A
+Spiegazione: setup.py con sdist e bdist_wheel produce i pacchetti distribuibili.
+
+Cosa stampa f"{2+3=}" in Python 3.8+?
+A) 2+3=5
+B) 5
+C) 2+3
+D) Errore
+Risposta Corretta: A
+Spiegazione: Le f-string con “=“ mostrano sia l’espressione che il valore.
+
+Quale modulo fornisce namedtuple?
+A) collections
+B) typing
+C) dataclasses
+D) itertools
+Risposta Corretta: A
+Spiegazione: collections.namedtuple crea tuple nominate.
+
+Come dichiari un elenco di interi con type hint?
+A) lst: List[int] = []
+B) lst: list[int] = []
+C) Entrambe
+D) lst: int[] = []
 Risposta Corretta: C
-Spiegazione: Pandas è una libreria Python fondamentale per l'analisi e manipolazione dei dati, offrendo strutture dati e strumenti di analisi ad alte performance.
+Spiegazione: In Python 3.9+ si usa list[int]; prima List[int] da typing.
 
-Che cosa fa il metodo "split()" su una stringa Python?
-A) Cancella la stringa
-B) Divide la stringa in una lista di sottostringhe
-C) Inverte la stringa
-D) Converte in maiuscolo
+Cosa fa functools.lru_cache?
+A) Cache LRU di funzioni pure
+B) Memorizza variabili globali
+C) Ottimizza thread
+D) Fa logging
+Risposta Corretta: A
+Spiegazione: Decora funzioni per memorizzare risultati recenti in cache.
+
+Quale costrutto crea una coroutine asincrona?
+A) async def foo(): ...
+B) def foo(): await bar()
+C) lambda: await x
+D) def foo(): yield
+Risposta Corretta: A
+Spiegazione: async def definisce coroutine utilizzabili con await.
+
+Quale modulo offre Counter?
+A) collections
+B) statistics
+C) math
+D) heapq
+Risposta Corretta: A
+Spiegazione: Counter conta occorrenze di elementi in un iterabile.
+
+Come unisci elementi di due liste in tuple?
+A) zip(a, b)
+B) enumerate(a, b)
+C) merge(a, b)
+D) combine(a, b)
+Risposta Corretta: A
+Spiegazione: zip accoppia elementi per indice fino al minore lunghezza.
+
+Cosa fa itertools.chain(a, b)?
+A) ConcatenA iteratori
+B) Crea coppie
+C) Raggruppa per chiave
+D) Ordina
+Risposta Corretta: A
+Spiegazione: chain itera prima su a poi su b in sequenza.
+
+Come si definisce un descrittore personalizzato?
+A) Classe con __get__, __set__
+B) Funzione con decorator
+C) Metaclasse
+D) Lambda
+Risposta Corretta: A
+Spiegazione: I descriptor implementano i metodi speciali di attributo.
+
+Quale costrutto crea un data class?
+A) @dataclass
+B) class Foo(Data):
+C) DataClass(Foo)
+D) @data
+Risposta Corretta: A
+Spiegazione: Il decorator @dataclass (modulo dataclasses) genera metodi di init, repr, etc.
+
+Quale modulo permette parsing JSON?
+A) json
+B) simplejson
+C) ujson
+D) Tutti e tre
+Risposta Corretta: D
+Spiegazione: Esistono varie librerie, la built-in è json.
+
+Come apri un database SQLite?
+A) sqlite3.connect("db.db")
+B) sqlite.connect()
+C) db = sqlite.open()
+D) connect_sqlite()
+Risposta Corretta: A
+Spiegazione: Modulo sqlite3 fornisce connect().
+
+Quale metodo cursor esegue query SELECT?
+A) cursor.execute(sql)
+B) cursor.select(sql)
+C) cursor.query(sql)
+D) cursor.run(sql)
+Risposta Corretta: A
+Spiegazione: execute() lancia qualsiasi SQL, SELECT incluso.
+
+Cosa fa pathlib.Path?
+A) Gestisce percorsi in modo orientato oggetti
+B) Legge file CSV
+C) Crea tuple
+D) Nessuna di queste
+Risposta Corretta: A
+Spiegazione: pathlib offre classi per filesystem path.
+
+Quale metodo Path legge testo?
+A) read_text()
+B) open_text()
+C) read()
+D) readlines()
+Risposta Corretta: A
+Spiegazione: Path("file").read_text() restituisce tutto il contenuto.
+
+Come crei un virtualenv?
+A) python -m venv venv
+B) virtualenv venv
+C) Entrambe
+D) pipenv install
+Risposta Corretta: C
+Spiegazione: Si può usare modulo venv o tool esterno virtualenv.
+
+Quale modulo offre logging?
+A) logging
+B) log
+C) logger
+D) syslog
+ResCorrecta: A
+Spiegazione: Il modulo standard logging gestisce messaggi di log.
+
+Come registri un logger root?
+A) logging.basicConfig(level=...)
+B) log.setLevel()
+C) logger = Logger()
+D) logging.init()
+Risposta Corretta: A
+Spiegazione: basicConfig configura handler e livello di root.
+
+Quale metodo registra un messaggio di errore?
+A) logger.error("msg")
+B) logger.err("msg")
+C) logger.log_error("msg")
+D) logger.warning("msg")
+Risposta Corretta: A
+Spiegazione: I livelli sono debug, info, warning, error, critical.
+
+Quale framework è popolare per test unitari?
+A) unittest
+B) pytest
+C) nose
+D) Tutti e tre
+Risposta Corretta: D
+Spiegazione: Ci sono vari framework; il built-in è unittest.
+
+Come scrivi un test in pytest?
+A) Funzione def test_...(): assert ...
+B) Classe class Test: ...
+C) Funzione def pytest(): ...
+D) Funzione def check(): ...
+Risposta Corretta: A
+Spiegazione: pytest raccoglie funzioni che iniziano per test_.
+
+Quale fixture built-in fornisce tmp_path?
+A) tmp_path
+B) temporary_path
+C) tempfile
+D) temp_path
+Risposta Corretta: A
+Spiegazione: tmp_path è fixture di pytest che fornisce Path univoco.
+
+Come misuri copertura di test?
+A) coverage run -m pytest
+B) pytest --cov
+C) Entrambe
+D) pytest --coverage
+Risposta Corretta: C
+Spiegazione: coverage può integrarsi con pytest via plugin pytest-cov.
+
+Quale modulo include defaultdict?
+A) collections
+B) dictutils
+C) typing
+D) collections.default
+Risposta Corretta: A
+Spiegazione: defaultdict fornisce dict con default factory.
+
+Cosa fa defaultdict(list)?
+A) Default valori liste vuote
+B) Solo accetta liste
+C) Mantiene key ordinata
+D) Errore
+Risposta Corretta: A
+Spiegazione: Ogni chiave inesistente crea automaticamente [].
+
+Come filtri una lista?
+A) filter(func, seq)
+B) [x for x in seq if cond]
+C) Entrambe
+D) seq.filter(cond)
+Risposta Corretta: C
+Spiegazione: Si può usare filter o comprehension condizionale.
+
+Cosa produce map(str, [1,2,3])?
+A) ['1','2','3']
+B) Generator di stringhe
+C) Lista di interi
+D) Errore
 Risposta Corretta: B
-Spiegazione: Il metodo split() divide una stringa in una lista, utilizzando un delimitatore specificato (spazio per default).
+Spiegazione: map restituisce un iteratore in Python 3, si converte con list().
+
+Quale modulo offre ThreadPoolExecutor?
+A) concurrent.futures
+B) threading
+C) multiprocessing
+D) asyncio
+Risposta Corretta: A
+Spiegazione: concurrent.futures fornisce executor per thread e processi.
+
+Cosa fa __slots__ in una classe?
+A) Limita attributi istanza a nome elenco
+B) Aggiunge thread-safety
+C) Abilita inheritance
+D) Definisce metodo statico
+Risposta Corretta: A
+Spiegazione: __slots__ riduce uso memoria vietando __dict__.
+
+Come misuri tempo di esecuzione?
+A) time.time()
+B) time.perf_counter()
+C) time.process_time()
+D) Dipende dallo scopo
+Risposta Corretta: D
+Spiegazione: time.time per timestamp, perf_counter per misure precise, process_time per CPU time.
+
+Quale built-in trasforma stringa in lista di parole?
+A) split()
+B) tokenize()
+C) str.split(" ")
+D) A e C
+Risposta Corretta: D
+Spiegazione: s.split() divide su whitespace per default.
+
+Quale modulo aiuta con espressioni regolari?
+A) re
+B) regex
+C) glob
+D) fnmatch
+Risposta Corretta: A
+Spiegazione: re è il regex engine built-in.
+
+Cosa fa re.match?
+A) Cerca pattern all’inizio della stringa
+B) Cerca ovunque
+C) Sostituisce
+D) Divide
+Risposta Corretta: A
+Spiegazione: match tenta un match dall’inizio, search ovunque.
+
+Quale modulo supporta Markdown parsing?
+A) markdown
+B) mistune
+C) markdown2
+D) Tutti e tre
+Risposta Corretta: D
+Spiegazione: Ci sono varie librerie esterne per Markdown in Python.
+
+Come si carica un modulo dinamicamente?
+A) importlib.import_module("mod")
+B) __import__("mod")
+C) Entrambe
+D) dynamic_import("mod")
+Risposta Corretta: C
+Spiegazione: importlib è preferito, __import__ è built-in.
+
+Cosa fa sys.path?
+A) Elenco di directory di ricerca moduli
+B) PATH sistema operativo
+C) Variabili di ambiente
+D) Nessuna di queste
+Risposta Corretta: A
+Spiegazione: sys.path contiene directory dove Python cerca moduli.
+
+Quale built-in restituisce variabili ambiente?
+A) os.environ
+B) environment()
+C) sys.env
+D) config.env
+Risposta Corretta: A
+Spiegazione: os.environ è mapping delle env var.
+
+Come imposti una variabile ambiente temporanea in Python?
+A) os.environ["VAR"]="value"
+B) setenv("VAR","value")
+C) env.set("VAR","value")
+D) export VAR=value
+Risposta Corretta: A
+Spiegazione: Modifica os.environ per il processo corrente.
+
+Quale modulo standard offre funzioni statistiche di base?
+A) statistics
+B) math
+C) numpy
+D) stats
+Risposta Corretta: A
+Spiegazione: statistics.mean, median, stdev in mod standard.
+
+Come gestisci property in classe?
+A) @property
+B) @getter
+C) property()
+D) A e C
+Risposta Corretta: D
+Spiegazione: Si può usare decoratore @property o funzione property().
+
+Cosa fa __repr__?
+A) Rappresentazione ufficiale oggetto
+B) Stampa a video
+C) Inizializza
+D) Distrugge
+Risposta Corretta: A
+Spiegazione: __repr__ dovrebbe restituire stringa che ricrea l’oggetto.
+
+Cosa fa __str__?
+A) Rappresentazione informale per utente
+B) Stampa debug
+C) Inizializza
+D) Salva su file
+Risposta Corretta: A
+Spiegazione: __str__ fornisce stringa leggibile per utente finale.
+
+Come scrivi file CSV?
+A) csv.writer
+B) pandas.DataFrame.to_csv
+C) Entrambe
+D) json.dump
+Risposta Corretta: C
+Spiegazione: Si può usare il modulo csv o libreria pandas.
+
+Quale modulo gestisce richieste HTTP?
+A) requests
+B) http.client
+C) urllib.request
+D) A, B, C
+Risposta Corretta: D
+Spiegazione: requests è esterno, urllib e http.client sono built-in.
+
+Cosa fa requests.get(url).json()?
+A) Restituisce JSON decodificato
+B) Restituisce testo
+C) Salva su file
+D) Errore
+Risposta Corretta: A
+Spiegazione: Il metodo .json() converte risposta in dict Python.
+
+Quale costrutto rilascia lock automaticamente?
+A) with lock:
+B) lock.acquire()
+C) lock.release()
+D) try/finally
+Risposta Corretta: A
+Spiegazione: Il context manager di threading.Lock gestisce acquisto e rilascio.
+
+Cos’è GIL?
+A) Global Interpreter Lock
+B) Grande Index Library
+C) Garbage Invocation Logic
+D) Nessuna
+Risposta Corretta: A
+Spiegazione: Il lock rende non parallelo l’interpretazione bytecode in un singolo processo.
+
+Quale modulo effettua introspezione?
+A) inspect
+B) reflection
+C) meta
+D) sys
+Risposta Corretta: A
+Spiegazione: inspect permette esaminare funzioni, classi, frame.
+
+Come si documenta una funzione?
+A) Stringa doc sotto la def
+B) Commento #
+C) @doc decorator
+D) JSON esterno
+Risposta Corretta: A
+Spiegazione: La docstring è la prima stringa nel blocco funzione.
+
+Quale caratteristica Python 3.10 introduce?
+A) match/case
+B) Async generators
+C) Walrus operator
+D) Type hints
+Risposta Corretta: A
+Spiegazione: Python 3.10 ha il structural pattern matching con match/case.

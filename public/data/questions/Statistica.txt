@@ -1,40 +1,1556 @@
 
-Che cos'è la media aritmetica?
-A) Il valore più frequente in un dataset
-B) La somma di tutti i valori divisa per il numero di valori
-C) Il valore centrale in un dataset ordinato
-D) La differenza tra il valore massimo e minimo
+Quale proprietà NON caratterizza la distribuzione binomiale?
+A) Esiti “successo” o “insuccesso”
+B) Probabilità di successo variabile fra le prove
+C) Prove indipendenti
+D) X assume valori da 0 a n
 Risposta Corretta: B
-Spiegazione: La media aritmetica è calcolata sommando tutti i valori del dataset e dividendo per il numero totale di osservazioni.
+Spiegazione: In una binomiale la probabilità di successo p è costante in tutte le prove 
 
-Qual è la differenza tra popolazione e campione?
-A) Non c'è differenza
-B) La popolazione include tutti gli elementi, il campione solo una parte
-C) Il campione è sempre più grande della popolazione
-D) La popolazione è teorica, il campione è pratico
-Risposta Corretta: B
-Spiegazione: La popolazione comprende tutti gli elementi di interesse, mentre il campione è un sottoinsieme rappresentativo della popolazione.
+La statistica inferenziale studia:
+A) Solo distribuzioni discrete
+B) Solo distribuzioni continue
+C) L’estensione dei risultati campionari alla popolazione
+D) Tecniche di smoothing dei dati
+Risposta Corretta: C
+Spiegazione: L’inferenza stima parametri di popolazione da un campione 
 
-Che cos'è la deviazione standard?
-A) La media dei valori
-B) Una misura di dispersione dei dati intorno alla media
-C) Il valore massimo meno il valore minimo
-D) La mediana dei valori
-Risposta Corretta: B
-Spiegazione: La deviazione standard misura quanto i dati si discostano dalla media, fornendo un'indicazione della variabilità del dataset.
+Quale non è un metodo di campionamento descritto?
+A) Casuale semplice
+B) Probabilistico con pesi diversi
+C) Ragionato (judgmental)
+D) Per cluster con reinserimento
+Risposta Corretta: D
+Spiegazione: Il file elenca casuale, probabilistico, ragionato e per quote, non per cluster 
 
-In una distribuzione normale, che percentuale di dati si trova entro una deviazione standard dalla media?
-A) 50%
-B) 68%
-C) 95%
-D) 99%
-Risposta Corretta: B
-Spiegazione: Nella regola empirica (68-95-99.7), circa il 68% dei dati si trova entro una deviazione standard dalla media.
+La media campionaria serve a stimare:
+A) La mediana della popolazione
+B) La moda del campione
+C) La media della popolazione
+D) Il coefficiente di variazione
+Risposta Corretta: C
+Spiegazione: X̄ è stimatore puntuale di μ 
 
-Che cos'è il p-value in un test statistico?
-A) La probabilità che l'ipotesi nulla sia vera
-B) La probabilità di osservare risultati almeno estremi quanto quelli ottenuti, assumendo vera l'ipotesi nulla
-C) La probabilità di errore nel campionamento
-D) La percentuale di confidenza del test
+Nella formula della deviazione standard campionaria si divide per (N–1) perché:
+A) È più semplice
+B) Riduce distorsione rispetto alla popolazione
+C) Aumenta la stima della varianza
+D) Serve solo per n≤30
 Risposta Corretta: B
-Spiegazione: Il p-value rappresenta la probabilità di ottenere risultati uguali o più estremi di quelli osservati, sotto l'assunzione che l'ipotesi nulla sia vera.
+Spiegazione: Frazionamento per N–1 rende s² non distorto 
+
+La Legge dei Grandi Numeri afferma che, aumentando n, X̄ tende a:
+A) 0
+B) μ
+C) σ
+D) ∞
+Risposta Corretta: B
+Spiegazione: Con n→∞ la media campionaria converge a μ 
+
+La stima puntuale di un parametro è:
+A) Un singolo valore
+B) Un intervallo
+C) Una distribuzione
+D) Un test d’ipotesi
+Risposta Corretta: A
+Spiegazione: Definizione di stima puntuale 
+
+La stima per intervallo include:
+A) Solo la media
+B) Un range di valori con confidenza associata
+C) Solo la varianza
+D) Una distribuzione discreta
+Risposta Corretta: B
+Spiegazione: Intervallo di confidenza (1–α) 
+
+Quanto aumenta l’ampiezza di un IC per la media se α diminuisce?
+A) Diminuisce
+B) Rimane costante
+C) Aumenta
+D) Prima aumenta poi diminuisce
+Risposta Corretta: C
+Spiegazione: Livello di confidenza maggiore →cod->ampiezza maggiore 
+
+Quando σ è ignoto e n<30, per costruire un IC sulla media si usa:
+A) Z
+B) t di Student
+C) χ²
+D) Uniforme
+Risposta Corretta: B
+Spiegazione: Varianza ignota e campioni piccoli →t(ν=n–1) 
+
+La distribuzione t di Student diventa normale standard se ν→∞. V/F?
+Risposta Corretta: V
+Spiegazione: Simmetrica e tende a N(0,1) per ν grandi 
+
+La χ² è usata principalmente per:
+A) Testare la media
+B) Stimare una varianza
+C) Calcolare percentili
+D) Distribuzioni continue
+Risposta Corretta: B
+Spiegazione: χ² per test su σ² e goodness–of–fit 
+
+La proporzione campionaria p̂ stima:
+A) μ
+B) p
+C) σ
+D) λ
+Risposta Corretta: B
+Spiegazione: p̂ = X/n stima la probabilità di successo p 
+
+Per p̂ e n≥30, l’IC per p si basa su:
+A) t
+B) Z
+C) χ²
+D) F
+Risposta Corretta: B
+Spiegazione: Approssimazione normale per proporzioni in campioni grandi 
+
+In un test d’ipotesi, l’ipotesi nulla H₀ è sempre formulata con:
+A) ≠
+B) =
+C) >
+D) <
+Risposta Corretta: B
+Spiegazione: H₀ contiene sempre l’uguale 
+
+L’errore di I specie (α) è:
+A) Non rifiutare H₀ vera
+B) Rifiutare H₀ falsa
+C) Rifiutare H₀ vera
+D) Non rifiutare H₀ falsa
+Risposta Corretta: C
+Spiegazione: α = P(rifiuto H₀ | H₀ vera) 
+
+L’errore di II specie (β) è:
+A) Rifiutare H₀ vera
+B) Non rifiutare H₀ falsa
+C) Non rifiutare H₀ vera
+D) Rifiutare H₀ falsa
+Risposta Corretta: B
+Spiegazione: β = P(non rifiuto H₀ | H₀ falsa) 
+
+La potenza del test è:
+A) α+β
+B) α–β
+C) 1–α
+D) 1–β
+Risposta Corretta: D
+Spiegazione: Potenza = P(rifiuto H₀ | H₀ falsa) = 1–β 
+
+Un test bilaterale si usa se H₁ contiene:
+A) =
+B) < o >
+C) ≠
+D) ≥ o ≤
+Risposta Corretta: C
+Spiegazione: Alternative ≠ →test a due code 
+
+Il p-value rappresenta:
+A) P(H₀ vera)
+B) P(osservare statistiche ≤ valore osservato | H₀ vera)
+C) 1–α
+D) Potenza del test
+Risposta Corretta: B
+Spiegazione: Definizione di p-value 
+
+Si rifiuta H₀ se p-value:
+A) > α
+B) = α
+C) < α
+D) ≥ α
+Risposta Corretta: C
+Spiegazione: Regola decisionale per p-value 
+
+La regione critica Cᶜ è formata dai valori di T che:
+A) Portano ad accettare H₀
+B) Portano a rifiutare H₀
+C) Sono improbabili sotto H₁
+D) Sono sempre centrali
+Risposta Corretta: B
+Spiegazione: Regione di rifiuto definisce Cᶜ 
+
+Per α=0,05 bilaterale, i valori critici Z sono:
+A) ±1,65
+B) ±1,96
+C) ±2,33
+D) ±2,58
+Risposta Corretta: B
+Spiegazione: α/2=0,025 →Z≈1,96.
+
+Nel campionamento per quote si garantisce:
+A) Probabilità identica per tutte le unità
+B) Campione con struttura pop. su attributi scelti
+C) Estrazioni indipendenti
+D) Reinserimento delle unità
+Risposta Corretta: B
+Spiegazione: Quote replicano struttura della popolazione 
+
+Una stima si dice non distorta se:
+A) Var(stimatore)=0
+B) E[θ̂]=θ
+C) θ̂>θ sempre
+D) θ̂<θ sempre
+Risposta Corretta: B
+Spiegazione: Unbiased: aspettativa uguale a parametro vero 
+
+La distribuzione di una statistica campionaria è detta:
+A) Popolazione
+B) Campionaria
+C) Teorica
+D) Frequenziale
+Risposta Corretta: B
+Spiegazione: Hₙ=h(X₁,…,Xₙ) ha la sua distribuzione campionaria 
+
+Quale dei seguenti non è un parametro solitamente stimato?
+A) Media di popolazione
+B) Varianza di popolazione
+C) Range
+D) Proporzione p
+Risposta Corretta: C
+Spiegazione: Range è indice di dispersione, non parametro di popolazione da stimare 
+
+La probabilità classica si basa su:
+A) Frequenze osservate
+B) A priori equiprobabilità degli esiti
+C) Simulazioni Monte Carlo
+D) Stima bayesiana
+Risposta Corretta: B
+Spiegazione: Definizione di probabilità classica 
+
+Una variabile aleatoria continua ha:
+A) Solo valori interi
+B) Un insieme numerabile
+C) Un supporto reale continuo
+D) Esclusivamente media zero
+Risposta Corretta: C
+Spiegazione: Continue assumono qualsiasi valore reale in un intervallo 
+
+La funzione di ripartizione F(x)=P(X≤x) vale:
+A) Solo discrete
+B) Solo continue
+C) Entrambe
+D) Nessuna
+Risposta Corretta: C
+Spiegazione: F definita per tutte le variabili aleatorie 
+
+Per standardizzare X~N(μ,σ²) si calcola:
+A) Z=(X+μ)/σ
+B) Z=(X−μ)/σ
+C) Z=(μ−X)/σ
+D) Z=(X−σ)/μ
+Risposta Corretta: B
+Spiegazione: Z-score classico 
+
+Qual è l’area complessiva sotto la curva normale?
+A) 0
+B) 0,5
+C) 1
+D) ∞
+Risposta Corretta: C
+Spiegazione: Integrale f(x) su ℝ =1 
+
+Il 50-esimo percentile corrisponde a:
+A) Primo quartile
+B) Mediana
+C) Terzo quartile
+D) Media
+Risposta Corretta: B
+Spiegazione: P50 = mediana 
+
+La differenza tra Q3 e Q1 è:
+A) Range
+B) IQR
+C) Varianza
+D) Deviazione standard
+Risposta Corretta: B
+Spiegazione: IQR = Q3−Q1 
+
+Per un test unilaterale destro con α=0,05, il valore critico Z≈:
+A) 1,64
+B) 1,96
+C) 2,33
+D) 2,58
+Risposta Corretta: A
+Spiegazione: α=5% a una coda →Z≈1,645.
+
+La combinazione “n su k” conta:
+A) Sequenze ordinate
+B) Sottoinsiemi senza ordine
+C) Permutazioni
+D) Disposizioni
+Risposta Corretta: B
+Spiegazione: Definizione di coeff. binomiale 
+
+Una variabile Bernoulli ha:
+A) Qualsiasi valore reale
+B) 0 o 1
+C) Numeri interi da 1 a n
+D) Solo media nulla
+Risposta Corretta: B
+Spiegazione: Successo/insuccesso 
+
+Il teorema di Bayes serve per:
+A) Calcolare media
+B) Trasformare P(A|B) in P(B|A)
+C) Costruire IC
+D) Testare α
+Risposta Corretta: B
+Spiegazione: Formula di Bayes su probabilità condizionate 
+
+Nella devianza campionaria si usa N–1 per:
+A) Correggere il bias
+B) Facilitarne il calcolo
+C) Ridurre la varianza
+D) Solo per n≥30
+Risposta Corretta: A
+Spiegazione: Correzione di Bessel 
+
+La probabilità cumulata P(X≤k) in una discreta si ottiene
+A) dalla densità
+B) dalla funzione di ripartizione
+C) dal quantile
+D) dal p-value
+Risposta Corretta: B
+Spiegazione: Definizione F(x) 
+
+Il calcolo del valore critico per α=0,10 bilaterale richiede di leggere:
+A) Z_{0.10}
+B) Z_{0.05}
+C) Z_{0.95}
+D) Z_{0.90}
+Risposta Corretta: B
+Spiegazione: α/2=0,05 →Z_{0.95}=1,645.
+
+Aumentare la dimensione campionaria n in un test:
+A) Aumenta β
+B) Non influenza β
+C) Diminuisce β
+D) Aumenta α
+Risposta Corretta: C
+Spiegazione: Più n →minor varianza →maggiore potenza (=1–β).
+
+Un parameter p della popolazione si stima meglio con:
+A) Media campionaria
+B) Proporzione campionaria
+C) Deviazione standard
+D) Varianza campionaria
+Risposta Corretta: B
+Spiegazione: p̂ stima p 
+
+Il principio della probabilità classica richiede che gli esiti siano:
+A) Dipendenti
+B) Equiprobabili
+C) Condizionati
+D) Continuativi
+Risposta Corretta: B
+Spiegazione: Equiprobabilità a priori 
+
+Nella stima per intervallo, un incremento di σ comporta:
+A) Riduzione ampiezza IC
+B) Nessuna variazione
+C) Aumento ampiezza IC
+D) Aumento confidenza
+Risposta Corretta: C
+Spiegazione: Maggiore σ →maggior margine di errore
+
+Qual è la definizione di media aritmetica per dati grezzi?
+A) La moda del campione
+B) La somma di tutte le osservazioni diviso il numero di osservazioni
+C) Il valore centrale della distribuzione
+D) Il quadrato degli scarti medi
+Risposta Corretta: B) La somma di tutte le osservazioni diviso il numero di osservazioni
+Spiegazione:
+La media aritmetica è la somma di tutte le N osservazioni divisa per N 
+
+Quale indice descrive il valore più frequente in un insieme di dati?
+A) Mediana
+B) Moda
+C) Media
+D) Varianza
+Risposta Corretta: B
+Spiegazione:
+La moda è il valore che compare con maggior frequenza 
+
+Come si calcola la mediana per un numero pari di osservazioni?
+A) Valore centrale univoco
+B) Media tra i due valori centrali
+C) Moda della distribuzione
+D) Scarto interquartile
+Risposta Corretta: B
+Spiegazione: Se n è pari, la mediana è la media dei due valori centrali 
+
+Lo scarto interquartile (IQR) è definito come:
+A) Q2 − Q1
+B) Q3 − Q1
+C) Max − Min
+D) σ / √n
+Risposta Corretta: B
+Spiegazione: IQR = terzo quartile − primo quartile 
+
+Qual è la regola per determinare il “baffo superiore” in un boxplot?
+A) Q3 + IQR
+B) Q3 + 1,5·IQR
+C) Max assoluto
+D) Q3 − 1,5·IQR
+Risposta Corretta: B
+Spiegazione: Il baffo superiore arriva a min{max; Q3+1,5·IQR}, oltre sono outlier 
+
+In un boxplot, come si definisce il “baffo inferiore”?
+A) Q1 + 1,5·IQR
+B) Min assoluto
+C) Max − IQR
+D) max{min; Q1−1,5·IQR}
+Risposta Corretta: D
+Spiegazione: Il baffo inferiore è max{min; Q1−1,5·IQR}, sotto sono outlier 
+
+Quale indice misura la variabilità totale tra valori minimi e massimi?
+A) Varianza
+B) Range
+C) IQR
+D) Deviazione standard
+Risposta Corretta: B
+Spiegazione: Il range è la differenza tra valore massimo e minimo 
+
+Quale funzione Excel conta quante volte un criterio si verifica?
+A) FREQUENZA
+B) CONTA.SE
+C) MEDIA
+D) VAR.P
+Risposta Corretta: B
+Spiegazione: CONTA.SE(range; criterio) conta le occorrenze di un criterio 
+
+La funzione FREQUENZA di Excel restituisce:
+A) Una matrice verticale di conteggi
+B) Un singolo valore
+C) La media dei dati
+D) Il range
+Risposta Corretta: A
+Spiegazione: FREQUENZA(dati; classi) restituisce un array di frequenze 
+
+Come si definisce la deviazione standard campionaria?
+A) Radice quadrata della media degli scarti al quadrato
+B) Somma degli scarti
+C) Moda degli scarti
+D) Q3 − Q1
+Risposta Corretta: A
+Spiegazione: √[Σ(xᵢ− x̄)²/(n−1)] è la dev. std. campionaria 
+
+Qual è la relazione tra varianza (σ²) e deviazione standard (σ)?
+A) σ² = σ
+B) σ² = σ³
+C) σ = √σ²
+D) σ² = √σ
+Risposta Corretta: C
+Spiegazione: La varianza è il quadrato della deviazione standard 
+
+Una covarianza negativa indica:
+A) Nessuna relazione
+B) Relazione diretta
+C) Relazione inversa
+D) Indipendenza
+Risposta Corretta: C
+Spiegazione: Covarianza <0 significa che, in media, variabili si muovono in versi opposti 
+
+Per una variabile casuale discreta X, la funzione P(X=xᵢ) si chiama:
+A) Densità di probabilità
+B) Funzione di massa di probabilità
+C) Funzione di ripartizione
+D) Moda
+Risposta Corretta: B
+Spiegazione: La funzione di massa assegna a ciascun valore discreto la sua probabilità 
+
+La funzione di ripartizione F(x)=P(X≤x) vale per:
+A) Solo discrete
+B) Solo continue
+C) Entrambe
+D) Nessuna
+Risposta Corretta: C
+Spiegazione: F(x) definita sia per variabili discrete che continue 
+
+In un lancio di 3 monete, la variabile X = numero di teste ha distribuzione:
+A) Binomiale (n=3,p=0.5)
+B) Poisson
+C) Normale
+D) Uniforme
+Risposta Corretta: A
+Spiegazione: Conteggio di successi in prove Bernoulli 
+
+Quale distribuzione modella tempi di attesa con parametro λ?
+A) Binomiale
+B) Esponenziale
+C) Normale
+D) Poisson
+Risposta Corretta: B
+Spiegazione: La esponenziale ha media 1/λ e modella tempi di attesa.
+
+La distribuzione normale standardizzata ha:
+A) μ=1, σ=1
+B) μ=0, σ=1
+C) μ=0, σ=0
+D) μ=1, σ=0
+Risposta Corretta: B
+Spiegazione: Standardizzata: media zero e dev. std. uno 
+
+Convertendo X~N(μ,σ²) in Z, la trasformazione è:
+A) Z=(X−μ)/σ
+B) Z=(X+μ)/σ
+C) Z=(X−σ)/μ
+D) Z=(μ−X)/σ
+Risposta Corretta: A
+Spiegazione: Z-score definito come (X−μ)/σ 
+
+L’area sotto la curva normale tra x₁ e x₂ rappresenta:
+A) P(X=x₁)
+B) P(X<x₁)
+C) P(x₁<X<x₂)
+D) Moda
+Risposta Corretta: C
+Spiegazione: Probabilità compresa nell’intervallo 
+
+Per z=1,6, la tavola F(z) fornisce circa:
+A) 0,8413
+B) 0,9452
+C) 0,7422
+D) 0,5000
+Risposta Corretta: B
+Spiegazione: F(1,6)=0,9452 
+
+P(Z≥0,65) si calcola come:
+A) F(0,65)
+B) 1−F(0,65)
+C) F(−0,65)
+D) 1+F(0,65)
+Risposta Corretta: B
+Spiegazione: P(Z≥z)=1−F(z) 
+
+Il teorema del limite centrale afferma che, per campioni grandi, la media campionaria tende a:
+A) Uniforme
+B) Normale
+C) Binomiale
+D) Esponenziale
+Risposta Corretta: B
+Spiegazione: Indipendentemente dalla distribuzione originale, la media → Normale (CLT).
+
+La somma dei residui al quadrato minimizzata in regressione lineare è:
+A) Σ|eᵢ|
+B) Σeᵢ
+C) Σeᵢ²
+D) Σeᵢ³
+Risposta Corretta: C
+Spiegazione: Minimi quadrati minimizzano Σeᵢ² 
+
+In regressione semplice, β₁=(Cov(X,Y))/Var(X). Vero o falso?
+A) Vero
+B) Falso
+C) Solo se Var(Y)=1
+D) Solo per dati standardizzati
+Risposta Corretta: A
+Spiegazione: Formula LS 
+
+Il coefficiente di determinazione R² è:
+A) Cov(X,Y)/Var(X)
+B) Percentuale varianza spiegata
+C) Errore standard
+D) t-statistico
+Risposta Corretta: B
+Spiegazione: R² = 1−(SS_res/SS_tot), proporzione varianza spiegata.
+
+In inferenza, uno stimatore non distorto ha:
+A) E[θ̂]=θ
+B) Var(θ̂)=0
+C) θ̂>θ sempre
+D) θ̂<θ sempre
+Risposta Corretta: A
+Spiegazione: Unbiased se media stimatore uguale al parametro vero 
+
+L’errore standard della media è:
+A) σ
+B) σ/√n
+C) σ·√n
+D) n/σ
+Risposta Corretta: B
+Spiegazione: SE = σ/√n 
+
+Intervallo di confidenza per la media con σ noto si basa sulla distribuzione:
+A) t di Student
+B) Normale Z
+C) Chi-quadrato
+D) F di Fisher
+Risposta Corretta: B
+Spiegazione: Con σ noto, si usa Z 
+
+Per σ ignoto e n piccolo si usa:
+A) Z
+B) t
+C) F
+D) Poisson
+Risposta Corretta: B
+Spiegazione: σ stimata con S → t 
+
+Il test χ² per l’indipendenza si basa su:
+A) Campioni appaiati
+B) Tabelle di contingenza
+C) Media campionaria
+D) Regressione
+Risposta Corretta: B
+Spiegazione: Confronto tra frequenze osservate e attese.
+
+Il p-value è la probabilità di osservare un risultato almeno tanto estremo, assumendo:
+A) H₁ vera
+B) H₀ vera
+C) Vero il test
+D) n→∞
+Risposta Corretta: B
+Spiegazione: Definizione di p-value 
+
+Quale test non parametrico confronta due medie appaiate?
+A) Wilcoxon signed-rank
+B) t-test paired
+C) ANOVA
+D) Z test
+Risposta Corretta: A
+Spiegazione: Wilcoxon paired è non parametrico.
+
+Il test di Shapiro-Wilk serve per verificare:
+A) Normalità
+B) Uguaglianza varianze
+C) Indipendenza
+D) Media uguale a zero
+Risposta Corretta: A
+Spiegazione: Test di adattamento normalità.
+
+La legge dei grandi numeri garantisce che la media campionaria converge a:
+A) 0
+B) μ
+C) σ
+D) ∞
+Risposta Corretta: B
+Spiegazione: Con n→∞, X̄→E[X]=μ.
+
+In un campione stratificato, la popolazione è divisa in:
+A) Sottoinsiemi omogenei
+B) Elementi casuali
+C) Gruppi irregolari
+D) Fattori di confondimento
+Risposta Corretta: A
+Spiegazione: Stratificazione mira a creare gruppi omogenei.
+
+Quale concetto descrive la scelta di campioni con e senza reinserimento?
+A) Campionamento multinomiale
+B) Campionamento casuale semplice
+C) Campionamento con/senza reinserimento
+D) Campionamento sistematico
+Risposta Corretta: C
+Spiegazione: Con reinserimento si rimette l’unità estratta prima di nuovo sorteggio 
+
+Il teorema di Bayes permette di passare da P(A|B) a P(B|A) usando:
+A) P(A∩B)=P(A|B)P(B)
+B) P(A)+P(B)
+C) P(A∪B)
+D) P(A×B)
+Risposta Corretta: A
+Spiegazione: Formula di Bayes: P(A|B)=P(B|A)P(A)/P(B).
+
+La proporzione campionaria p̂ stima:
+A) μ
+B) p
+C) σ²
+D) λ
+Risposta Corretta: B
+Spiegazione: p̂ = X/n stima la probabilità di successo p 
+
+La statistica di test per p̂ è (p̂−p₀)/√[p₀q₀/n] che segue:
+A) t
+B) Z
+C) Chi-quadrato
+D) F
+Risposta Corretta: B
+Spiegazione: Con campione grande, proporzioni → approssimazione Z.
+
+In ANOVA, F = MSB/MSW. Se F elevato, si rigetta:
+A) H₀ di medie uguali
+B) H₁
+C) H₀ di varianze uguali
+D) Nessuna
+Risposta Corretta: A
+Spiegazione: F alto indica differenze tra medie.
+
+Il grado di libertà per MSW in ANOVA a k gruppi e N osservazioni è:
+A) N−k
+B) k−1
+C) N
+D) k
+Risposta Corretta: A
+Spiegazione: df withing = N−k.
+
+La percentuale cumulata di frequenze relative raggiunge sempre:
+A) 1
+B) 100%
+C) N
+D) 0
+Risposta Corretta: B
+Spiegazione: In percentuale, la somma è 100% 
+
+Numero di outlier definiti su boxplot:
+A) Elementi >Q3+1,5·IQR o <Q1−1,5·IQR
+B) Nessuno
+C) Solo su valori massimi
+D) Solo su minimi
+Risposta Corretta: A
+Spiegazione: Definizione outlier IQR-based 
+
+In Excel, la funzione ESC.PERCENTILE differisce da INC.PERCENTILE perché:
+A) ESC esclude il limite superiore
+B) INC include 1
+C) ESC include 1
+D) Nessuna differenza
+Risposta Corretta: A
+Spiegazione: ESC.PERCENTILE usa [0,1) mentre INC usa [0,1] 
+
+La statistica F di ANOVA segue la distribuzione F con df=(k−1; N−k). Vero o falso?
+A) Vero
+B) Falso
+Risposta Corretta: A
+Spiegazione: Definizione ANOVA.
+
+La legge dei grandi numeri è parte di:
+A) Probabilità classica
+B) Statistica descrittiva
+C) Statistica inferenziale
+D) Regressione
+Risposta Corretta: C
+Spiegazione: Fondamentale per inferenza campionaria 
+
+Quale tipo di carattere è la categoria “sesso” (M/F)?
+A) Nominale
+B) Ordinale
+C) Intervallo
+D) Rapporto
+Risposta Corretta: A
+Spiegazione: Non ordinato 
+
+Il coefficiente di variazione è utile perché:
+A) Standardizza la dispersione rendendola adimensionale
+B) È un valore percentuale fisso
+C) Non dipende da σ
+D) È sempre <1
+Risposta Corretta: A
+Spiegazione: CV = σ/μ, senza unità 
+
+In Excel, quale funzione restituisce frequenze cumulative?
+A) FREQUENZA
+B) CONTA.SE
+C) PERCENTILE
+D) MEDIA
+Risposta Corretta: A
+Spiegazione: FREQUENZA con bins ordini restituisce conteggi cumulati.
+
+Un campione casuale semplice senza reinserimento garantisce:
+A) Ogni unità estratta una sola volta
+B) Estrazione illimitata
+C) Reinserimento dopo ogni estrazione
+D) Ordine dipendente
+Risposta Corretta: A
+Spiegazione: Definizione di campionamento senza reinserimento
+
+Quale delle seguenti NON è una delle quattro fasi fondamentali di un’indagine statistica?
+A) Progettazione
+B) Realizzazione
+C) Elaborazione
+D) Validazione
+Risposta Corretta: D
+Spiegazione: Le quattro fasi classiche sono progettazione, raccolta/realizzazione, elaborazione e diffusione; la “validazione” non ne fa parte.
+
+In un raggruppamento in classi con campo di variazione 74 e 6 classi, l’ampiezza di classe arrotondata per eccesso è:
+A) 11
+B) 12
+C) 13
+D) 15
+Risposta Corretta: C
+Spiegazione: Ampiezza = 74 ÷ 6 ≈ 12,33; arrotondando per eccesso si ottiene 13.
+
+La frequenza relativa si calcola come:
+A) F / N
+B) N / F
+C) F × 100
+D) (N − F) / N
+Risposta Corretta: A
+Spiegazione: È il rapporto tra la frequenza assoluta della modalità (F) e la numerosità totale (N).
+
+Quale grafico è più adatto a mostrare la relazione fra due variabili quantitative aggiungendo una terza variabile tramite la dimensione dei punti?
+A) Grafico a linee
+B) Grafico a dispersione
+C) Grafico a bolle
+D) Grafico a torta
+Risposta Corretta: C
+Spiegazione: Il bubble chart estende lo scatter plot usando la dimensione delle bolle per codificare una terza variabile.
+
+In Excel il simbolo $ in una formula (es. $B$3) serve a:
+A) Bloccare riga e colonna
+B) Applicare il valore assoluto
+C) Sommare celle
+D) Verificare errori
+Risposta Corretta: A
+Spiegazione: Il dollaro rende assoluti i riferimenti di riga e/o colonna, impedendo il cambiamento durante la copia.
+
+La media aritmetica è particolarmente sensibile a:
+A) Modalità mancanti
+B) Valori estremi
+C) Numero di classi
+D) Ordinamento alfabetico
+Risposta Corretta: B
+Spiegazione: Outlier molto alti o bassi spostano la media più di altri indici centrali.
+
+Per il campione [1 2 4 4 5 7 9 11] la moda è:
+A) 1
+B) 4
+C) 5
+D) 7
+Risposta Corretta: B
+Spiegazione: Il valore 4 ricorre due volte, più di ogni altro.
+
+Una distribuzione con due valori modali è detta:
+A) Unimodale
+B) Bimodale
+C) Trimodale
+D) Plurimodale
+Risposta Corretta: B
+Spiegazione: “Bi-” indica la presenza di due mode.
+
+Lo scarto interquartile è pari a:
+A) Q3 + Q1
+B) Q3 − Q1
+C) (Q3 − Q1) / 2
+D) (Q3 × Q1)
+Risposta Corretta: B
+Spiegazione: Misura l’ampiezza della fascia centrale del 50 % dei dati.
+
+Il range si calcola come:
+A) Valore minimo − valore massimo
+B) Valore massimo − valore minimo
+C) Media × varianza
+D) Q3 − Q1
+Risposta Corretta: B
+Spiegazione: Definisce l’estensione totale dei dati.
+
+Il 25° percentile corrisponde a:
+A) Mediana
+B) Primo quartile
+C) Terzo quartile
+D) Media aritmetica
+Risposta Corretta: B
+Spiegazione: Q1 lascia alla sua sinistra il 25 % delle osservazioni.
+
+Una covarianza negativa indica che due variabili:
+A) Sono indipendenti
+B) Variano nello stesso verso
+C) Variano in versi opposti
+D) Hanno uguale varianza
+Risposta Corretta: C
+Spiegazione: Quando una cresce, l’altra tende a decrescere, e viceversa.
+
+Nella probabilità classica, la probabilità di un evento impossibile è:
+A) 0
+B) 0,5
+C) 1
+D) > 1
+Risposta Corretta: A
+Spiegazione: Un evento impossibile ha probabilità nulla.
+
+Se due eventi E ed F sono indipendenti, P(E ∩ F) è uguale a:
+A) P(E) + P(F)
+B) P(E) × P(F)
+C) P(E) − P(F)
+D) |P(E) − P(F)|
+Risposta Corretta: B
+Spiegazione: L’indipendenza implica che la probabilità congiunta è il prodotto delle marginali.
+
+La probabilità dell’evento complementare di E è:
+A) 1 − P(E)
+B) P(E)²
+C) P(E) / 2
+D) 1 + P(E)
+Risposta Corretta: A
+Spiegazione: Le probabilità di un evento e del suo complementare sommano a 1.
+
+La funzione F(x) = P(X ≤ x) prende il nome di:
+A) Densità
+B) Funzione di ripartizione
+C) Varianza
+D) Retta di regressione
+Risposta Corretta: B
+Spiegazione: La cumulative distribution function accumula la probabilità fino al valore x.
+
+La distribuzione normale è un esempio di distribuzione:
+A) Discreta
+B) Cumulata
+C) Continua
+D) Degenerata
+Risposta Corretta: C
+Spiegazione: Il supporto della normale è l’insieme dei numeri reali.
+
+Il teorema del limite centrale afferma che, al crescere di n, la distribuzione della media campionaria tende a:
+A) Uniforme
+B) Normale
+C) Binomiale
+D) Esponenziale
+Risposta Corretta: B
+Spiegazione: Indipendentemente dalla distribuzione di partenza, la media (con varianza finita) converge alla normale.
+
+Uno stimatore è detto non distorto quando:
+A) La sua media attesa coincide col parametro
+B) Ha varianza nulla
+C) È sempre minore del parametro
+D) Minimizza l’errore quadratico
+Risposta Corretta: A
+Spiegazione: E[θ̂] = θ garantisce assenza di bias.
+
+L’errore standard della media campionaria è dato da:
+A) σ
+B) σ / √n
+C) σ × √n
+D) n / σ
+Risposta Corretta: B
+Spiegazione: Riduce l’incertezza dividendo la deviazione standard della popolazione per la radice del campione.
+
+Per un intervallo di confidenza della media con varianza nota si usa la distribuzione:
+A) t di Student
+B) Chi-quadrato
+C) Normale Z
+D) F di Fisher
+Risposta Corretta: C
+Spiegazione: Quando σ è nota, la statistica standardizzata segue la normale standard.
+
+Il p-value rappresenta:
+A) La probabilità di H₀
+B) La probabilità di osservare dati almeno tanto estremi quanto i dati campionari sotto H₀
+C) 1 − α
+D) L’intervallo di confidenza
+Risposta Corretta: B
+Spiegazione: È una misura di evidenza contro l’ipotesi nulla.
+
+Il test t a due campioni serve a confrontare:
+A) Due varianze
+B) Due medie
+C) Una media con una proporzione
+D) Due mediane
+Risposta Corretta: B
+Spiegazione: Determina se la differenza tra le medie di due popolazioni è statisticamente significativa.
+
+Nella regressione lineare semplice, il coefficiente angolare (β₁) misura:
+A) Varianza residua
+B) Il cambiamento medio di y per unità di x
+C) L’intercetta
+D) Il coefficiente di correlazione
+Risposta Corretta: B
+Spiegazione: Indica quanto y attesa varia per un incremento unitario di x.
+
+Il coefficiente di determinazione R² indica:
+A) Forza della correlazione negativa
+B) Percentuale di varianza di y spiegata dal modello
+C) Numero di osservazioni
+D) Errore standard dell’intercetta
+Risposta Corretta: B
+Spiegazione: R² = 1 − SS_res/SS_tot, valore fra 0 e 1.
+
+Il metodo standard per stimare i parametri della regressione lineare è:
+A) Massima verosimiglianza
+B) Metodo dei minimi quadrati
+C) Bootstrap
+D) Simulazione Monte Carlo
+Risposta Corretta: B
+Spiegazione: Minimizza la somma dei quadrati degli errori.
+
+Una variabile casuale di Bernoulli può assumere i valori:
+A) Tutti i reali
+B) 0 o 1
+C) 1…n
+D) −∞ a +∞
+Risposta Corretta: B
+Spiegazione: Rappresenta successo (1) o insuccesso (0) in una prova.
+
+Una distribuzione binomiale può essere approssimata con la normale quando:
+A) n p < 5
+B) n > 30 e p non troppo vicino a 0 o 1
+C) p = 0,5
+D) n < 10
+Risposta Corretta: B
+Spiegazione: Condizione di continuità (np(1−p) ≥5) garantisce buona approssimazione.
+
+La proporzione campionaria (p̂) è uno stimatore di:
+A) μ
+B) σ²
+C) p
+D) λ
+Risposta Corretta: C
+Spiegazione: p̂ = X/n stima la probabilità di successo nella popolazione.
+
+Un campionamento senza reinserimento e senza ordine è un esempio di:
+A) Permutazione
+B) Combinazione
+C) Disposizione
+D) Campione sistematico
+Risposta Corretta: B
+Spiegazione: Si scelgono k elementi tra n ignorando l’ordine e senza ripetizioni.
+
+Una popolazione statistica è:
+A) Il gruppo degli individui campionati
+B) L’insieme di tutti i possibili oggetti di interesse
+C) Un sottoinsieme della variabile dipendente
+D) Il totale delle frequenze relative
+Risposta Corretta: B
+Spiegazione: Costituisce il “universo” da cui possono essere estratti i campioni.
+
+Una variabile che può assumere solo numeri interi e finiti è detta:
+A) Qualitativa
+B) Quantitativa discreta
+C) Quantitativa continua
+D) Categorica
+Risposta Corretta: B
+Spiegazione: Il dominio è numerabile (es. numero di figli).
+
+Quale grafico è indicato per mostrare la ripartizione percentuale di un insieme?
+A) Grafico a linee
+B) Grafico a barre
+C) Grafico a torta
+D) Grafico a dispersione
+Risposta Corretta: C
+Spiegazione: Il pie chart suddivide l’intero in fette proporzionali alle percentuali.
+
+Il violin plot viene usato principalmente per:
+A) Confrontare medie di gruppi
+B) Visualizzare la distribuzione di una variabile
+C) Mostrare relazioni temporali
+D) Rappresentare composizioni percentuali
+Risposta Corretta: B
+Spiegazione: Mostra densità e statistici (mediana, quartili) di più insiemi.
+
+In Excel l’operatore : (due punti) indica:
+A) Un intervallo di celle
+B) Una concatenazione di stringhe
+C) Una sottrazione di intervalli
+D) La media di un intervallo
+Risposta Corretta: A
+Spiegazione: A1:B10, ad esempio, rappresenta tutte le celle tra A1 e B10.
+
+Il campo di variazione (campo) è definito come:
+A) Valore minimo + valore massimo
+B) Media / σ
+C) Valore massimo − valore minimo
+D) Q3 − Q1
+Risposta Corretta: C
+Spiegazione: Coincide col range già visto.
+
+Con campo di variazione 74 e 5 classi, l’ampiezza di classe arrotondata per eccesso è:
+A) 11
+B) 13
+C) 14
+D) 15
+Risposta Corretta: D
+Spiegazione: Ampiezza = 74 ÷ 5 = 14,8 → arrotondamento per eccesso = 15.
+
+In una tabella pivot i dati possono essere organizzati tramite:
+A) Filtri
+B) Campi riga
+C) Campi colonna
+D) Tutte le precedenti
+Risposta Corretta: D
+Spiegazione: Filtri, righe, colonne (e valori) sono i 4 “bucket” classici della pivot.
+
+Quale delle seguenti NON è citata come rappresentazione grafica nel materiale?
+A) Grafico polare
+B) Grafico a barre a pila
+C) Diagramma Sankey
+D) Grafico a dispersione
+Risposta Corretta: C
+Spiegazione: Negli appunti non compare il Sankey, mentre gli altri grafici sì.
+
+La somma delle frequenze relative percentuali di tutte le modalità è sempre:
+A) 1
+B) 100
+C) N
+D) 0
+Risposta Corretta: B
+Spiegazione: In termini percentuali, la distribuzione completa totalizza 100 %.
+
+Il coefficiente di variazione è calcolato come:
+A) σ / μ
+B) σ²
+C) μ / σ
+D) (Q3 − Q1) / μ
+Risposta Corretta: A
+Spiegazione: Misura la dispersione relativa (unità adimensionali).
+
+La varianza è:
+A) Somma semplice degli scarti
+B) Il quadrato dello scarto quadratico medio
+C) La radice della deviazione standard
+D) La differenza tra massimo e minimo
+Risposta Corretta: B
+Spiegazione: σ = √Var(X); dunque Var(X) = σ².
+
+In Excel la funzione PERCENTILE è stata sostituita da:
+A) INC.PERCENTILE e ESC.PERCENTILE
+B) PERCENTILE.NUOVO
+C) QUARTILE
+D) PERCENTRANK
+Risposta Corretta: A
+Spiegazione: Le nuove funzioni sono PERCENTILE.INC e PERCENTILE.EXC.
+
+Il valore che lascia alla sua sinistra il 50 % dei dati è il:
+A) Primo quartile
+B) Secondo quartile (mediana)
+C) Terzo quartile
+D) Media
+Risposta Corretta: B
+Spiegazione: Per definizione Q2 = mediana.
+
+Il box plot rappresenta graficamente, fra le altre cose, lo:
+A) Valore medio
+B) Percentile 99
+C) Scarto interquartile
+D) Coefficiente di correlazione
+Risposta Corretta: C
+Spiegazione: La “scatola” va da Q1 a Q3, di ampiezza IQR.
+
+Nel metodo dei minimi quadrati si minimizza:
+A) La somma dei residui
+B) La somma dei residui al quadrato
+C) La media dei residui
+D) La varianza dei residui
+Risposta Corretta: B
+Spiegazione: Obiettivo: Σ eᵢ² → min.
+
+Se due eventi sono complementari, la probabilità che uno dei due si verifichi è:
+A) 0
+B) 0,5
+C) 1
+D) P(E) + P(Eᶜ)
+Risposta Corretta: C
+Spiegazione: Uno dei due deve accadere con certezza.
+
+In Excel il tasto F4 durante l’editing di una formula serve a:
+A) Ripetere l’ultima azione
+B) Inserire o rimuovere i $ (sblocco/blocco riferimenti)
+C) Aprire la guida
+D) Salvare il file
+Risposta Corretta: B
+Spiegazione: Premendo F4 cicla tra riferimenti relativi, misti e assoluti.
+
+Una variabile categorica è anche detta:
+A) Qualitativa
+B) Discreta
+C) Continua
+D) Binomiale
+Risposta Corretta: A
+Spiegazione: Descrive attributi non numerici (sesso, colore, ecc.).
+
+L’errore standard diminuisce all’aumentare della:
+A) Varianza campionaria
+B) Dimensione campionaria
+C) Media del campione
+D) Probabilità p-value
+Risposta Corretta: B
+Spiegazione: Essendo SE = σ/√n, cresce n → SE decresce.
+
+Qual è la prima fase indicata tra le quattro di un’indagine statistica?
+A) Progettazione
+B) Realizzazione
+C) Elaborazione
+D) Presentazione
+Risposta Corretta: A
+Spiegazione: Ogni indagine parte dalla progettazione, cioè dalla definizione di obiettivi, unità d’analisi, variabili e metodi di rilevazione.
+
+Nella distribuzione binomiale, con quale lettera si indica la probabilità di successo in ogni prova?
+A) q
+B) p
+C) n
+D) X
+Risposta Corretta: B
+Spiegazione: Per convenzione p denota la probabilità di “successo”, mentre q = 1 − p è la probabilità di insuccesso.
+
+Quando si può approssimare la binomiale con una distribuzione di Poisson?
+A) n piccolo e p ≈ 0,5
+B) n grande e p ≈ 0,5
+C) n grande e p piccolo
+D) n = p
+Risposta Corretta: C
+Spiegazione: Con n→∞, p→0 e λ = np finito, la B(n,p) converge alla Poisson(λ).
+
+Il campionamento in cui il campione mantiene la stessa struttura della popolazione per alcune quote è detto:
+A) Casuale
+B) Probabilistico
+C) Ragionato
+D) Per quote
+Risposta Corretta: D
+Spiegazione: Nel campionamento per quote si fissano proporzioni (quote) su caratteristiche chiave e si selezionano unità finché tali quote sono rispettate.
+
+L’errore standard della media (σ nota) è:
+A) σ / √n
+B) σ² / n
+C) √n / σ
+D) σ · n
+Risposta Corretta: A
+Spiegazione: SE( X̄ ) = σ / √n deriva dalla varianza della media di n osservazioni indipendenti.
+
+Secondo la legge dei grandi numeri, la media campionaria tende a:
+A) 0
+B) la media della popolazione
+C) la varianza della popolazione
+D) ∞
+Risposta Corretta: B
+Spiegazione: LLN: X̄ → μ in probabilità quando n→∞.
+
+Con n osservazioni, i gradi di libertà della t di Student sono:
+A) n
+B) n + 1
+C) n − 1
+D) n / 2
+Risposta Corretta: C
+Spiegazione: Stimando la media con un solo parametro si “consuma” un grado di libertà.
+
+La distribuzione χ² viene usata soprattutto per:
+A) stimare medie
+B) intervalli per proporzioni
+C) confrontare due medie
+D) testare la varianza
+Risposta Corretta: D
+Spiegazione: Per dati normali, (n−1)s²/σ² segue una χ²(n−1).
+
+Il Teorema del Limite Centrale mostra che la somma standardizzata converge alla:
+A) Normale standard
+B) t di Student
+C) Binomiale
+D) Uniforme
+Risposta Corretta: A
+Spiegazione: La distribuzione di (ΣXi − nμ)/(σ√n) tende a N(0,1).
+
+Nella binomiale X ~ B(n,p) la varianza è:
+A) np
+B) np(1 − p)
+C) n + p
+D) √np
+Risposta Corretta: B
+Spiegazione: Var(X) = npq dove q = 1 − p.
+
+L’errore di seconda specie è indicato con:
+A) α
+B) δ
+C) β
+D) γ
+Risposta Corretta: C
+Spiegazione: β = P(accettare H₀ | H₀ falsa).
+
+La potenza di un test vale:
+A) α
+B) 1 − α
+C) β
+D) 1 − β
+Risposta Corretta: D
+Spiegazione: Potenza = probabilità di rifiutare H₀ quando è falsa.
+
+In un test bilaterale, la regione di rifiuto si trova:
+A) nelle due code
+B) in un solo tail di sinistra
+C) al centro della curva
+D) soltanto a destra
+Risposta Corretta: A
+Spiegazione: Si controllano deviazioni sia positive che negative rispetto a H₀.
+
+A parità di α, per ridurre β conviene:
+A) diminuire n
+B) aumentare n
+C) diminuire σ
+D) aumentare il livello di confidenza
+Risposta Corretta: B
+Spiegazione: Un campione più grande rende il test più potente (β↓).
+
+Quale fra i seguenti è un indice di dispersione?
+A) Scarto interquartile
+B) Media
+C) Mediana
+D) Moda
+Risposta Corretta: A
+Spiegazione: IQR misura la dispersione centrale fra Q1 e Q3.
+
+Il campionamento in cui ogni unità ha la stessa probabilità di essere scelta è:
+A) Per quote
+B) Probabilistico
+C) Ragionato
+D) Casuale
+Risposta Corretta: D
+Spiegazione: Nel campionamento casuale semplice P(selection) = 1/N.
+
+La proporzione campionaria è uno stimatore di:
+A) p
+B) μ
+C) σ²
+D) λ
+Risposta Corretta: A
+Spiegazione: p̂ = X/n stima la probabilità di successo nella popolazione.
+
+Aumentando il livello di confidenza (1 − α), l’ampiezza dell’intervallo per la media:
+A) diminuisce
+B) aumenta
+C) resta costante
+D) vale zero
+Risposta Corretta: B
+Spiegazione: z_{1−α/2} cresce ⇒ margine d’errore più ampio.
+
+Nel calcolo dell’errore standard, l’elemento al denominatore è:
+A) σ
+B) √σ
+C) √n
+D) n²
+Risposta Corretta: C
+Spiegazione: SE ∝ 1/√n, riducendosi con la radice di n.
+
+Per un intervallo di confidenza con n < 30 e σ ignota si usa la distribuzione:
+A) Normale
+B) Chi-quadro
+C) Binomiale
+D) t di Student
+Risposta Corretta: D
+Spiegazione: La t compensa l’incertezza nella stima di σ con piccoli campioni.
+
+Nella binomiale, la probabilità di insuccesso si indica con:
+A) q
+B) p
+C) 1 − n
+D) X
+Risposta Corretta: A
+Spiegazione: q = 1 − p.
+
+Una variabile di Bernoulli può assumere:
+A) 1 valore
+B) 2 valori
+C) 3 valori
+D) infiniti valori
+Risposta Corretta: B
+Spiegazione: 0 = insuccesso, 1 = successo.
+
+Il coefficiente di variazione si calcola come:
+A) μ / σ
+B) σ²
+C) σ / μ
+D) √σ
+Risposta Corretta: C
+Spiegazione: CV rende confrontabili dispersioni di scale diverse.
+
+La fase di chiusura di un’indagine statistica è:
+A) Elaborazione
+B) Realizzazione
+C) Progettazione
+D) Presentazione
+Risposta Corretta: D
+Spiegazione: Include diffusione dei risultati e reportistica.
+
+“Tutti i televisori prodotti da un’azienda” rappresentano una:
+A) Popolazione statistica
+B) Unità campionaria
+C) Variabile statistica
+D) Modalità
+Risposta Corretta: A
+Spiegazione: È l’intero insieme di unità su cui si indaga.
+
+Il campionamento ragionato è descritto come uno dei più:
+A) costosi
+B) rapidi ed economici
+C) rigorosi
+D) casuali
+Risposta Corretta: B
+Spiegazione: Si basa sul giudizio dell’intervistatore, riducendo costi ma sacrificando rigore statistico.
+
+Nella deviazione standard campionaria si divide per:
+A) N
+B) N + 1
+C) N − 1
+D) √N
+Risposta Corretta: C
+Spiegazione: Il divisore N−1 produce uno stimatore non distorto della varianza.
+
+Un test con regione critica in una sola coda è:
+A) Bilaterale
+B) Bicaudale
+C) Centrale
+D) Unilaterale
+Risposta Corretta: D
+Spiegazione: Si valuta solo una direzione di scostamento da H₀.
+
+La varianza della Normale standard è:
+A) 1
+B) n
+C) σ²
+D) 0,5
+Risposta Corretta: A
+Spiegazione: N(0,1) ha media 0 e varianza 1.
+
+Il livello di significatività α è la probabilità di:
+A) accettare H₀ quando falsa
+B) rifiutare H₀ quando vera
+C) accettare H₀ quando vera
+D) rifiutare H₁
+Risposta Corretta: B
+Spiegazione: Tipo I error: falsa allerta.
+
+Per diminuire β mantenendo α costante bisogna:
+A) aumentare α
+B) ridurre n
+C) aumentare n
+D) ridurre p
+Risposta Corretta: C
+Spiegazione: Campione maggiore ⇒ test più potente.
+
+Con σ nota la statistica test Z segue la distribuzione:
+A) t di Student
+B) Chi-quadro
+C) Binomiale
+D) Normale standard
+Risposta Corretta: D
+Spiegazione: ( X̄ − μ₀ )/(σ/√n) → N(0,1).
+
+Il campo di variazione è:
+A) max − min
+B) media − varianza
+C) Q3 − Q1
+D) media + σ
+Risposta Corretta: A
+Spiegazione: Range semplice dei dati.
+
+Se σ è stimata da s ma n è grande, si continua a usare la distribuzione:
+A) Chi-quadro
+B) Normale
+C) t di Student
+D) F
+Risposta Corretta: B
+Spiegazione: Con n≥30 l’approssimazione normale resta valida.
+
+La media campionaria è uno stimatore:
+A) non distorto
+B) superato
+C) poco efficiente
+D) bias attenuato
+Risposta Corretta: A
+Spiegazione: E[ X̄ ] = μ.
+
+L’istogramma di frequenze è adatto a variabili:
+A) qualitative
+B) nominali
+C) categoriche
+D) quantitative in classi
+Risposta Corretta: D
+Spiegazione: Richiede ampiezze di classe su scala numerica continua o discreta elevata.
+
+La regressione lineare multipla viene definita con un numero di regressori:
+A) k > 2
+B) k = 1
+C) k < 2
+D) k = 2
+Risposta Corretta: A
+Spiegazione: Con più di due predittori il modello è “multiplo”.
+
+Il rapporto di verosimiglianza è associato al metodo di:
+A) Minimi quadrati
+B) Massima verosimiglianza
+C) Bootstrap
+D) Bayes
+Risposta Corretta: B
+Spiegazione: Il LR test confronta massimi di verosimiglianze sotto modelli annidati.
+
+La funzione che restituisce P(X ≤ x) si chiama:
+A) densità di probabilità
+B) funzione caratteristica
+C) funzione di ripartizione
+D) momento centrale
+Risposta Corretta: C
+Spiegazione: È la cumulative distribution function (CDF).
+
+Un carattere qualitativo è espresso:
+A) numericamente
+B) in percentuali
+C) in classi continue
+D) verbalmente
+Risposta Corretta: D
+Spiegazione: Categorie o etichette non numeriche (es. colore, marca).
+
+Nella statistica test Z, al denominatore compare:
+A) σ
+B) μ
+C) n
+D) β
+Risposta Corretta: A
+Spiegazione: La deviazione standard nota della popolazione (o σ/√n nel caso della media).
+
+Riducendo α (con n fisso) l’errore β:
+A) diminuisce
+B) aumenta
+C) resta invariato
+D) diventa zero
+Risposta Corretta: B
+Spiegazione: Maggiore rigore nel rifiutare H₀ riduce potenza ⇒ β cresce.
+
+Il campionamento per quote è considerato:
+A) casuale
+B) probabilistico
+C) non probabilistico
+D) sistematico
+Risposta Corretta: C
+Spiegazione: Le unità non sono estratte con probabilità nota ma scelte per rispettare quote prefissate.
+
+Dividere per N − 1 nella deviazione standard campionaria serve a:
+A) aumentare il bias
+B) ridurre α
+C) calcolare frequenze cumulative
+D) ottenere uno stimatore non distorto
+Risposta Corretta: D
+Spiegazione: Corregge la sottostima della varianza insita nel campione.
+
+L’indice di posizione che lascia il 50 % dei dati alla sua sinistra è la:
+A) Mediana
+B) Moda
+C) Media
+D) Varianza
+Risposta Corretta: A
+Spiegazione: Q₂ = mediana divide il campione in due metà.
+
+Nel programma è specificato che la regressione multipla richiede k:
+A) = 1
+B) > 2
+C) < 2
+D) = 0
+Risposta Corretta: B
+Spiegazione: Serve almeno tre predittori (incluso l’intercetta).
+
+Quale fra queste distribuzioni è continua?
+A) Binomiale
+B) Poisson
+C) Normale
+D) Bernoulli
+Risposta Corretta: C
+Spiegazione: La densità normale è definita su ℝ.
+
+Tra le rappresentazioni grafiche elencate, l’istogramma di frequenze è:
+A) Grafico a torta
+B) Diagramma di Pareto
+C) Box plot
+D) Istogramma di frequenze
+Risposta Corretta: D
+Spiegazione: È proprio la rappresentazione in oggetto.
+
+Per l’intervallo di confidenza di una proporzione con grandi campioni si usa la distribuzione:
+A) Normale
+B) t
+C) Chi-quadro
+D) Binomiale
+Risposta Corretta: A
+Spiegazione: Grazie all’approssimazione np≥5, nq≥5 si impiega la Z.
+
+Il livello di significatività è usualmente indicato con:
+A) β
+B) α
+C) γ
+D) δ
+Risposta Corretta: B
+Spiegazione: α fissa la probabilità di commettere errore di tipo I.
