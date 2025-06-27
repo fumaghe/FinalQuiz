@@ -1,0 +1,899 @@
+1. In Machine Learning, quale fase consiste nel definire chiaramente l'obiettivo, le variabili di input e le metriche di valutazione di un problema?  
+A) Feature Engineering  
+B) Model Deployment  
+C) Formalizzazione del problema  
+D) Hyperparameter Tuning  
+Risposta Corretta: C) Formalizzazione del problema  
+Spiegazione:  
+La formalizzazione del problema prevede la definizione degli obiettivi, delle variabili in ingresso e delle metriche per valutare le prestazioni del modello.
+
+2. Quale tecnica di apprendimento automatico non supervisionato è utilizzata per raggruppare dati simili in insiemi?  
+A) Regressione Lineare  
+B) K-Means Clustering  
+C) Regressione Logistica  
+D) Support Vector Machine  
+Risposta Corretta: B) K-Means Clustering  
+Spiegazione:  
+K-Means è un algoritmo non supervisionato che suddivide i dati in k cluster minimizzando la varianza all'interno di ciascun cluster.
+
+3. In Spark, quale operazione viene eseguita immediatamente e innesca il calcolo del DAG?  
+A) Transformations  
+B) Actions  
+C) Lazy Evaluations  
+D) Persistences  
+Risposta Corretta: B) Actions  
+Spiegazione:  
+Le azioni, come collect() o count(), vengono eseguite immediatamente e avviano l'esecuzione delle trasformazioni registrate.
+
+4. Quale metrica è comunemente usata per valutare la purezza di un nodo in un albero decisionale?  
+A) Coefficiente di Determinazione (R^2)  
+B) Entropia  
+C) Errore Quadratico Medio (MSE)  
+D) Silhouette Score  
+Risposta Corretta: B) Entropia  
+Spiegazione:  
+L'entropia misura l'incertezza o il disordine in un nodo, ed è usata per selezionare le migliori suddivisioni negli alberi decisionali.
+
+5. In PCA, quale passaggio è fondamentale prima di calcolare la matrice di covarianza se le variabili hanno scale diverse?  
+A) Decomposizione ai valori singolari  
+B) Standardizzazione dei dati  
+C) Selezione delle componenti  
+D) Proiezione dei dati  
+Risposta Corretta: B) Standardizzazione dei dati  
+Spiegazione:  
+La standardizzazione porta ogni variabile a media zero e deviazione standard uno, essenziale per un corretto calcolo della covarianza.
+
+6. Quale funzione in Databricks rimuove i file non necessari da una Delta Table?  
+A) optimize()  
+B) vacuum()  
+C) clean()  
+D) compact()  
+Risposta Corretta: B) vacuum()  
+Spiegazione:  
+La funzione vacuum() elimina i file obsoleti o non referenziati in una Delta Table, liberando spazio.
+
+7. In regressione lineare, come si chiama il termine di errore nel modello y = β0 + β1x + ε?  
+A) Coefficiente  
+B) Intercetta  
+C) Residuo  
+D) Iperparametro  
+Risposta Corretta: C) Residuo  
+Spiegazione:  
+Il residuo (ε) rappresenta la differenza tra il valore osservato e quello predetto dal modello.
+
+8. Quale tecnica di validazione incrociata suddivide ripetutamente i dati in k sottogruppi per valutare il modello?  
+A) Hold-out Validation  
+B) Leave-One-Out  
+C) K-Fold Cross-Validation  
+D) Bootstrap  
+Risposta Corretta: C) K-Fold Cross-Validation  
+Spiegazione:  
+La validazione k-fold suddivide il dataset in k parti e usa ciascuna a turno come test set, migliorando la stima della generalizzazione.
+
+9. Quale algoritmo di clustering può gestire cluster di forma arbitraria e rilevare outlier basandosi sulla densità?  
+A) Agglomerative Clustering  
+B) DBSCAN  
+C) K-Means  
+D) PCA  
+Risposta Corretta: B) DBSCAN  
+Spiegazione:  
+DBSCAN identifica cluster come aree di alta densità e separa i punti rumorosi (outlier).
+
+10. In regressione logistica, quale funzione viene utilizzata per mappare i risultati su una probabilità tra 0 e 1?  
+A) ReLU  
+B) Tangente Iperbolica  
+C) Sigmoide (Logistica)  
+D) Softmax  
+Risposta Corretta: C) Sigmoide (Logistica)  
+Spiegazione:  
+La funzione sigmoide trasforma la combinazione lineare delle feature in un valore compreso tra 0 e 1.
+
+11. In Spark, quale architettura distingue tra livelli bronze, silver e gold?  
+A) Lambda Architecture  
+B) Kappa Architecture  
+C) Medallion Architecture  
+D) Microservices Architecture  
+Risposta Corretta: C) Medallion Architecture  
+Spiegazione:  
+La Medallion Architecture organizza i dati in livelli progressivamente più raffinati e puliti.
+
+12. Quale metrica è adatta per valutare la qualità di un clustering?  
+A) Precision  
+B) Recall  
+C) F1-Score  
+D) Silhouette Score  
+Risposta Corretta: D) Silhouette Score  
+Spiegazione:  
+Il Silhouette Score misura quanto un punto è simile al proprio cluster rispetto agli altri.
+
+13. In un albero decisionale CART, quale criterio è utilizzato per la regressione?  
+A) Indice di Gini  
+B) Entropia  
+C) Somma dei Quadrati Residui (RSS)  
+D) Information Gain  
+Risposta Corretta: C) Somma dei Quadrati Residui (RSS)  
+Spiegazione:  
+CART usa la RSS per valutare la riduzione dell'errore in problemi di regressione.
+
+14. Quale tecnica permette di ottimizzare gli iperparametri di un modello mediante ricerca su griglia?  
+A) Random Search  
+B) Grid Search  
+C) Bayesian Optimization  
+D) Genetic Algorithms  
+Risposta Corretta: B) Grid Search  
+Spiegazione:  
+Grid Search esplora sistematicamente una griglia di valori di iperparametri per trovare la combinazione ottimale.
+
+15. Quale metrica valuta la probabilità predetta correttamente in classificazione binaria considerando sia precisione che recall?  
+A) Accuracy  
+B) Precision  
+C) Recall  
+D) F1-Score  
+Risposta Corretta: D) F1-Score  
+Spiegazione:  
+L'F1-Score è la media armonica di precisione e recall, utile quando le classi sono sbilanciate.
+
+16. In PCA, come si chiamano le direzioni che massimizzano la varianza nei dati?  
+A) Centroidi  
+B) Autovalori  
+C) Componenti Principali  
+D) Feature Latenti  
+Risposta Corretta: C) Componenti Principali  
+Spiegazione:  
+Le componenti principali sono combinazioni lineari delle variabili originali che catturano la massima varianza.
+
+17. Quale metodo aiuta a determinare il numero ottimale di cluster in K-Means?  
+A) Metodo del Gomito  
+B) Silhouette Analysis  
+C) Both A and B  
+D) AIC  
+Risposta Corretta: C) Both A and B  
+Spiegazione:  
+Il metodo del gomito e l'analisi della silhouette sono tecniche comuni per scegliere k.
+
+18. Quale algoritmo di classificazione lineare utilizza vettori di supporto e margini massimi?  
+A) Perceptron  
+B) Decision Tree  
+C) SVM Lineare  
+D) Naive Bayes  
+Risposta Corretta: C) SVM Lineare  
+Spiegazione:  
+Le SVM lineari cercano l'iperpiano che separa classi con margine massimo.
+
+19. In regressione lineare multipla, quanti coefficienti β vengono stimati per n feature?  
+A) n  
+B) n+1  
+C) n-1  
+D) 2n  
+Risposta Corretta: B) n+1  
+Spiegazione:  
+Oltre ai n coefficienti per le feature, si stima anche l'intercetta β0.
+
+20. Quale concetto Shannon ha introdotto per misurare l'incertezza in un insieme di dati?  
+A) Entropia  
+B) Gini  
+C) RSS  
+D) MSE  
+Risposta Corretta: A) Entropia  
+Spiegazione:  
+Claude Shannon definì l'entropia per quantificare l'informazione e l'incertezza nei sistemi di comunicazione.
+
+21. Quale modello generativo assume indipendenza condizionale tra feature date le classi?  
+A) Random Forest  
+B) Naive Bayes  
+C) KNN  
+D) SVM  
+Risposta Corretta: B) Naive Bayes  
+Spiegazione:  
+Naive Bayes assume che le feature siano indipendenti l’una dall’altra all’interno di ogni classe.
+
+22. In regressione, quale tecnica penalizza i coefficienti aggiungendo il termine λ ∑βi²?  
+A) Lasso  
+B) Ridge  
+C) Elastic Net  
+D) Dropout  
+Risposta Corretta: B) Ridge  
+Spiegazione:  
+Ridge Regression aggiunge una penalità L2 sui coefficienti per ridurre l’overfitting.
+
+23. Quale tecnica combina L1 e L2 penalty nella regressione?  
+A) Lasso  
+B) Ridge  
+C) Elastic Net  
+D) Dropout  
+Risposta Corretta: C) Elastic Net  
+Spiegazione:  
+Elastic Net mixa punizioni L1 e L2 per ottenere selezione di feature e stabilità.
+
+24. In un albero decisionale, quale processo evita l’overfitting riducendo le dimensioni dell’albero?  
+A) Pre-pruning  
+B) Ensemble  
+C) Boosting  
+D) PCA  
+Risposta Corretta: A) Pre-pruning  
+Spiegazione:  
+Il pre-pruning interrompe la crescita dell’albero basandosi su soglie di purità o profondità.
+
+25. Quale algoritmo ensemble costruisce alberi in sequenza, correggendo gli errori dei precedenti?  
+A) Random Forest  
+B) Gradient Boosting  
+C) Bagging  
+D) AdaBoost  
+Risposta Corretta: B) Gradient Boosting  
+Spiegazione:  
+Gradient Boosting costruisce alberi iterativamente, minimizzando l’errore residuo.
+
+26. Quale metrica è più sensibile alle classi sbilanciate?  
+A) Accuracy  
+B) ROC AUC  
+C) Precision-Recall AUC  
+D) MSE  
+Risposta Corretta: C) Precision-Recall AUC  
+Spiegazione:  
+L’area sotto la curva Precision-Recall è più informativa quando le classi positive sono poche.
+
+27. In reti neurali, quale funzione di attivazione introduce non linearità e soffre del problema dei “morti”?  
+A) Sigmoide  
+B) ReLU  
+C) Tanh  
+D) Softmax  
+Risposta Corretta: B) ReLU  
+Spiegazione:  
+ReLU imposta a zero valori negativi e può bloccare neuroni che non si attivano più (dead neurons).
+
+28. Quale algoritmo di ottimizzazione adatta il learning rate individualmente per ogni parametro?  
+A) SGD  
+B) Adam  
+C) Momentum  
+D) RMSProp  
+Risposta Corretta: B) Adam  
+Spiegazione:  
+Adam calcola learning rate adattativi basati sulle prime e seconde stime dei gradienti.
+
+29. In feature selection, quale metodo valuta ogni feature singolarmente per la relazione con la variabile target?  
+A) Wrapper  
+B) Embedded  
+C) Filter  
+D) PCA  
+Risposta Corretta: C) Filter  
+Spiegazione:  
+I metodi filter usano test statistici (es. chi-quadrato) per selezionare feature prima del training.
+
+30. Quale metodo di ensemble media le previsioni di più modelli indipendenti?  
+A) Boosting  
+B) Bagging  
+C) Stacking  
+D) Pruning  
+Risposta Corretta: B) Bagging  
+Spiegazione:  
+Bagging addestra modelli su campioni bootstrap e prende la media (o maggioranza) delle loro previsioni.
+
+31. Quale tecnica riduce la dimensionalità preservando le distanze locali tra punti?  
+A) PCA  
+B) t-SNE  
+C) LDA  
+D) UMAP  
+Risposta Corretta: B) t-SNE  
+Spiegazione:  
+t-SNE proietta dati in basso numero di dimensioni preservando vicinanze locali.
+
+32. Quale criterio di split in Random Forest introduce casualità aggiuntiva?  
+A) Scelta del miglior split su tutte le feature  
+B) Scelta random di un sottoinsieme di feature  
+C) Utilizzo di Gini su tutte le feature  
+D) Nessuno  
+Risposta Corretta: B) Scelta random di un sottoinsieme di feature  
+Spiegazione:  
+Ad ogni nodo RF valuta split solo su un subset casuale di feature per diversificare gli alberi.
+
+33. In Time Series, quale modello combina autoregressione e media mobile?  
+A) ARIMA  
+B) Holt-Winters  
+C) Prophet  
+D) GARCH  
+Risposta Corretta: A) ARIMA  
+Spiegazione:  
+ARIMA unisce AR(p), differenziazione e MA(q) per modellare serie storiche.
+
+34. Quale tecnica di oversampling genera nuovi esempi sintetici dalle minoranze?  
+A) Random Oversampling  
+B) SMOTE  
+C) ADASYN  
+D) Undersampling  
+Risposta Corretta: B) SMOTE  
+Spiegazione:  
+SMOTE sintetizza nuovi punti interpolando tra esempi di minoranza vicini.
+
+35. In NLP, quale rappresentazione convectionalizza il testo in vettori densi pre-addestrati?  
+A) One-Hot Encoding  
+B) TF-IDF  
+C) Word Embeddings (es. Word2Vec)  
+D) Count Vectorizer  
+Risposta Corretta: C) Word Embeddings (es. Word2Vec)  
+Spiegazione:  
+Word2Vec mappa parole in vettori densi catturando similarità semantica.
+
+36. Quale metodo di riduzione dell’overfitting nelle reti neurali disattiva casualmente unità durante l’addestramento?  
+A) Weight Decay  
+B) Dropout  
+C) Batch Normalization  
+D) Early Stopping  
+Risposta Corretta: B) Dropout  
+Spiegazione:  
+Dropout spegne casualmente neuroni per impedire co-adattamenti.
+
+37. In clustering gerarchico, quale approccio inizia con ogni punto come cluster e unisce iterativamente?  
+A) Divisive  
+B) Agglomerative  
+C) K-Means  
+D) DBSCAN  
+Risposta Corretta: B) Agglomerative  
+Spiegazione:  
+L’agglomerative clustering fonde i due cluster più simili fino a formare un unico cluster.
+
+38. Quale indice misura la bontà di fit di un modello di regressione lineare?  
+A) MSE  
+B) R²  
+C) MAE  
+D) RMSE  
+Risposta Corretta: B) R²  
+Spiegazione:  
+R² indica la percentuale di varianza spiegata dal modello.
+
+39. In ensemble stacking, cosa viene utilizzato come input per il modello finale di meta-learning?  
+A) Dati originali  
+B) Predizioni dei modelli base  
+C) Residui dei modelli  
+D) Iperparametri dei modelli  
+Risposta Corretta: B) Predizioni dei modelli base  
+Spiegazione:  
+Il meta-learner impara a combinare le predizioni dei base learners per migliorare l’accuratezza.
+
+40. Quale tecnica di pre-processing rimuove valori estremi lontani dalla distribuzione?  
+A) Min-Max Scaling  
+B) Winsorizing  
+C) Normalizzazione  
+D) PCA  
+Risposta Corretta: B) Winsorizing  
+Spiegazione:  
+Winsorizing limita i valori ai percentili scelti per attenuare l’effetto degli outlier.
+
+41. In classificazione multiclasse, quale generalizzazione della funzione sigmoide viene usata?  
+A) ReLU  
+B) Softmax  
+C) Tanh  
+D) Linear  
+Risposta Corretta: B) Softmax  
+Spiegazione:  
+Softmax trasforma un vettore di punteggi in una distribuzione di probabilità sulle classi.
+
+42. Quale tecnica di feature encoding trasforma feature categoriche in colonne binarie?  
+A) Label Encoding  
+B) One-Hot Encoding  
+C) Ordinal Encoding  
+D) Embedding  
+Risposta Corretta: B) One-Hot Encoding  
+Spiegazione:  
+One-Hot crea una colonna per ciascuna categoria, settando 1 se presente e 0 altrimenti.
+
+43. In reinforcement learning, quale meccanismo bilancia esplorazione ed sfruttamento?  
+A) Learning Rate  
+B) Discount Factor  
+C) Epsilon-Greedy  
+D) Entropy Regularization  
+Risposta Corretta: C) Epsilon-Greedy  
+Spiegazione:  
+Epsilon-Greedy sceglie casualmente un’azione con probabilità ε per esplorare.
+
+44. Quale metodo di normalizzazione mantiene la forma della distribuzione ma sposta media e varianza?  
+A) Min-Max Scaling  
+B) Z-Score Standardization  
+C) Log Transformation  
+D) Robust Scaling  
+Risposta Corretta: B) Z-Score Standardization  
+Spiegazione:  
+La standardizzazione Z-Score porta media a 0 e deviazione standard a 1 mantenendo la forma.
+
+45. In un autoencoder, quale parte comprime i dati in uno spazio latente di dimensione ridotta?  
+A) Decoder  
+B) Encoder  
+C) Reconstruction Layer  
+D) Hidden Layer  
+Risposta Corretta: B) Encoder  
+Spiegazione:  
+L’encoder trasforma l’input in un vettore di dimensione inferiore nel space latente.
+
+46. Quale tecnica seleziona feature utilizzando il modello stesso durante l’addestramento?  
+A) Filter  
+B) Wrapper  
+C) Embedded  
+D) PCA  
+Risposta Corretta: C) Embedded  
+Spiegazione:  
+I metodi embedded integrano la selezione di feature come parte del processo di training (es. Lasso).
+
+47. Quale metrica per regressione è meno sensibile agli outlier rispetto all’MSE?  
+A) MAE  
+B) RMSE  
+C) R²  
+D) RSS  
+Risposta Corretta: A) MAE  
+Spiegazione:  
+MAE calcola l’errore medio assoluto, penalizzando meno gli outlier rispetto all’MSE.
+
+48. In clustering, quale algoritmo utilizza gerarchie basate sulla densità e rileva cluster a densità variabile?  
+A) DBSCAN  
+B) HDBSCAN  
+C) K-Means  
+D) OPTICS  
+Risposta Corretta: B) HDBSCAN  
+Spiegazione:  
+HDBSCAN estende DBSCAN permettendo cluster con densità variabile.
+
+49. Quale metrica combina sensibilità e specificità per valutare un test diagnostico?  
+A) Accuracy  
+B) ROC AUC  
+C) Precision  
+D) Recall  
+Risposta Corretta: B) ROC AUC  
+Spiegazione:  
+L’AUC ROC misura la capacità del modello di distinguere tra classi su tutti i threshold.
+
+50. In machine learning, quale concetto evita eccessivo adattamento ai dati di training fermando l’addestramento tempestivamente?  
+A) Dropout  
+B) Early Stopping  
+C) Regularization  
+D) Data Augmentation  
+Risposta Corretta: B) Early Stopping  
+Spiegazione:  
+L’Early Stopping interrompe l’addestramento quando la performance sul validation set non migliora più.  
+
+51. Il report di classificazione fornisce informazioni su quali metriche?  
+A) Accuracy, MSE, AUC  
+B) Precision, Recall, F1-Score, Support  
+C) R², MSE, MAE  
+D) Log-Loss, ROC AUC, Precision  
+Risposta Corretta: B) Precision, Recall, F1-Score, Support  
+Spiegazione:  
+Il classification report include precisione, richiamo, F1-score e supporto per ciascuna classe.
+
+52. Come si calcola la precisione (Precision)?  
+A) TP / (TP + FN)  
+B) TP / (TP + FP)  
+C) TP / (FP + FN)  
+D) (TP + TN) / Totale  
+Risposta Corretta: B) TP / (TP + FP)  
+Spiegazione:  
+La precisione misura la frazione di veri positivi tra tutte le predizioni positive.
+
+53. Come si calcola il richiamo (Recall)?  
+A) TP / (TP + FN)  
+B) TP / (TP + FP)  
+C) TN / (TN + FP)  
+D) (TP + TN) / Totale  
+Risposta Corretta: A) TP / (TP + FN)  
+Spiegazione:  
+Il recall è la percentuale di veri positivi catturati rispetto a tutti i positivi reali.
+
+54. Che cos’è l’F1-Score?  
+A) Media aritmetica di precision e recall  
+B) Media geometrica di precision e recall  
+C) Media armonica di precision e recall  
+D) Differenza tra precision e recall  
+Risposta Corretta: C) Media armonica di precision e recall  
+Spiegazione:  
+L’F1-score è la media armonica di precisione e recall, bilanciando entrambe le metriche.
+
+55. Cosa indica il supporto (Support)?  
+A) Numero di predizioni corrette  
+B) Numero di istanze di ciascuna classe nel test set  
+C) Numero di FP per classe  
+D) Numero di FN per classe  
+Risposta Corretta: B) Numero di istanze di ciascuna classe nel test set  
+Spiegazione:  
+Il supporto mostra quante occorrenze reali di ogni classe sono presenti nel dataset di verifica.
+
+56. Qual è uno dei vantaggi di C4.5 rispetto a ID3?  
+A) Gestione dei dati continui  
+B) Meno complessità computazionale  
+C) Nessuna potatura  
+D) Nessun supporto per valori mancanti  
+Risposta Corretta: A) Gestione dei dati continui  
+Spiegazione:  
+C4.5 può suddividere variabili continue trovando il punto di split ottimale.
+
+57. Cosa utilizza C4.5 per evitare bias verso attributi con molti valori distinti?  
+A) Gain Ratio  
+B) Entropia  
+C) Gini Index  
+D) Chi-square  
+Risposta Corretta: A) Gain Ratio  
+Spiegazione:  
+Il gain ratio normalizza il guadagno di informazione dividendo per l’entropia del sottoinsieme.
+
+58. Quale fase riduce l’overfitting in C4.5?  
+A) Pre-pruning  
+B) Potatura post-costruzione  
+C) Aumento del dataset  
+D) Cross-validation  
+Risposta Corretta: B) Potatura post-costruzione  
+Spiegazione:  
+C4.5 rimuove rami che non migliorano significativamente le prestazioni su un validation set.
+
+59. In CART, quale criterio si usa per la regressione?  
+A) Indice di Gini  
+B) Entropia  
+C) RSS (Residual Sum of Squares)  
+D) Information Gain  
+Risposta Corretta: C) RSS (Residual Sum of Squares)  
+Spiegazione:  
+CART minimizza la somma dei quadrati residui per suddividere i dati nei nodi.
+
+60. Quale caratteristica è peculiare di CART rispetto a C4.5?  
+A) Gestione dei dati continui  
+B) Alberi binari sempre  
+C) Gain ratio  
+D) Nessuna potatura  
+Risposta Corretta: B) Alberi binari sempre  
+Spiegazione:  
+CART costruisce sempre alberi binari, mentre C4.5 può avere più rami.
+
+61. Cos’è il bootstrap nel Random Forest?  
+A) Valutazione delle feature  
+B) Campionamento con ripetizione del training set  
+C) Potatura degli alberi  
+D) Tecnica di pruning  
+Risposta Corretta: B) Campionamento con ripetizione del training set  
+Spiegazione:  
+Il bootstrap crea diversi sottoinsiemi di dati per ciascun albero.
+
+62. Come aggrega le previsioni un Random Forest per la classificazione?  
+A) Media  
+B) Voto di maggioranza  
+C) Softmax  
+D) Mediana  
+Risposta Corretta: B) Voto di maggioranza  
+Spiegazione:  
+Ogni albero vota per una classe e quella con più voti è la predizione finale.
+
+63. Cosa misura l’Out-Of-Bag error nel Random Forest?  
+A) Accuracy sul training set  
+B) Errore sulle istanze non campionate nel bootstrap  
+C) Errore sul validation set esterno  
+D) Errore su tutte le istanze  
+Risposta Corretta: B) Errore sulle istanze non campionate nel bootstrap  
+Spiegazione:  
+Il OOB error è stimato sulle istanze non incluse nel campione bootstrap di ciascun albero.
+
+64. Qual è un vantaggio chiave del Random Forest?  
+A) Interpretabilità  
+B) Riduce l’overfitting rispetto a un singolo albero  
+C) Richiede pochi alberi  
+D) Non usa feature selection  
+Risposta Corretta: B) Riduce l’overfitting rispetto a un singolo albero  
+Spiegazione:  
+Combinando più alberi deboli si ottiene un modello più robusto e meno incline a overfitting.
+
+65. Cosa sono i support vectors in una SVM?  
+A) I pesi finali dell’iperpiano  
+B) I dati più vicini all’iperpiano di separazione  
+C) I padding parameters  
+D) I centroidi dei cluster  
+Risposta Corretta: B) I dati più vicini all’iperpiano di separazione  
+Spiegazione:  
+I support vectors definiscono il margine massimo della SVM.
+
+66. Qual è lo scopo del kernel trick in SVM?  
+A) Accelerare il training  
+B) Trasformare i dati in uno spazio superiore per separabilità lineare  
+C) Ridurre il margine  
+D) Eliminare vettori di supporto  
+Risposta Corretta: B) Trasformare i dati in uno spazio superiore per separabilità lineare  
+Spiegazione:  
+Il kernel trick proietta i dati in dimensioni più alte senza calcolare esplicitamente le nuove feature.
+
+67. Cosa massimizza una SVM lineare?  
+A) Numero di support vectors  
+B) Margine di separazione tra classi  
+C) Likelihood dei dati  
+D) Entropia  
+Risposta Corretta: B) Margine di separazione tra classi  
+Spiegazione:  
+La SVM cerca l’iperpiano che massimizza la distanza tra classi diverse.
+
+68. Quale funzione di perdita è tipica nelle SVM?  
+A) Log-loss  
+B) Hinge loss  
+C) MSE  
+D) Cross-entropy  
+Risposta Corretta: B) Hinge loss  
+Spiegazione:  
+La hinge loss penalizza i punti che cadono al di fuori del margine desiderato.
+
+69. Quale parametro regola il compromesso tra margine e classificazione errata in SVM?  
+A) γ (gamma)  
+B) C (regularization parameter)  
+C) ε (epsilon)  
+D) α (alpha)  
+Risposta Corretta: B) C (regularization parameter)  
+Spiegazione:  
+Il parametro C controlla quanto penalizzare gli errori rispetto all’allargare il margine.
+
+70. Che cos’è una Relevance SVM (RSVM)?  
+A) Una SVM con kernel RBF  
+B) Una SVM che seleziona un sottoinsieme rilevante di dati  
+C) Una SVM multiclasse  
+D) Una SVM senza support vectors  
+Risposta Corretta: B) Una SVM che seleziona un sottoinsieme rilevante di dati  
+Spiegazione:  
+RSVM riduce il dataset a un reference set per abbattere i costi computazionali mantenendo prestazioni simili.
+
+71. Quale approccio bayesiano fornisce una distribuzione di probabilità sui parametri del modello?  
+A) Metodi frequentisti  
+B) Metodi Bayesiani  
+C) SVM  
+D) Random Forest  
+Risposta Corretta: B) Metodi Bayesiani  
+Spiegazione:  
+I metodi bayesiani combinano prior e likelihood per derivare la posterior distribution.
+
+72. In Bayes, cosa rappresenta la prior distribution?  
+A) La likelihood dei dati  
+B) La conoscenza iniziale sui parametri prima di osservare i dati  
+C) Il valore a posteriori  
+D) Il margine  
+Risposta Corretta: B) La conoscenza iniziale sui parametri prima di osservare i dati  
+Spiegazione:  
+La prior riflette le convinzioni iniziali sui parametri del modello.
+
+73. Qual è la formula del Teorema di Bayes?  
+A) P(A|B) = P(A)·P(B)  
+B) P(A|B) = P(B|A)·P(A) / P(B)  
+C) P(A|B) = P(A|B) / P(B|A)  
+D) P(A|B) = P(B|A) + P(A)  
+Risposta Corretta: B) P(A|B) = P(B|A)·P(A) / P(B)  
+Spiegazione:  
+Il Teorema di Bayes aggiorna la prior con la likelihood divisa per la marginale.
+
+74. Che cos’è MCMC?  
+A) Un modello di clustering  
+B) Una catena di Markov Monte Carlo per campionare posteriori  
+C) Un metodo di ottimizzazione di SVM  
+D) Un ensemble di alberi  
+Risposta Corretta: B) Una catena di Markov Monte Carlo per campionare posteriori  
+Spiegazione:  
+MCMC genera campioni da distribuzioni complesse usando processi di Markov.
+
+75. Qual è uno degli algoritmi MCMC più noti?  
+A) K-Means  
+B) Metropolis-Hastings  
+C) Adam  
+D) Gradient Boosting  
+Risposta Corretta: B) Metropolis-Hastings  
+Spiegazione:  
+Metropolis-Hastings propone nuovi stati e li accetta in base a un criterio di probabilità.
+
+76. In MCMC, cosa fa Gibbs Sampling?  
+A) Usa gradienti per proporre stati  
+B) Campiona ogni variabile condizionalmente alle altre  
+C) Costruisce un albero di decisione  
+D) Aumenta il margine  
+Risposta Corretta: B) Campiona ogni variabile condizionalmente alle altre  
+Spiegazione:  
+Gibbs Sampling è un caso particolare di Metropolis-Hastings che campiona da condizionali.
+
+77. In regressione bayesiana, quale distribuzione si applica come prior sui coefficienti β?  
+A) Uniforme  
+B) Normale  
+C) Bernoulli  
+D) Poisson  
+Risposta Corretta: B) Normale  
+Spiegazione:  
+Si sceglie spesso una prior normale su β per modellare conoscenza a priori.
+
+78. Quale metodo si usa per calcolare la posterior predictive distribution?  
+A) Calcolo simbolico chiuso  
+B) Integrazione della posterior su β  
+C) Sostituzione di MAP  
+D) SVM  
+Risposta Corretta: B) Integrazione della posterior su β  
+Spiegazione:  
+La predictive distribution si ottiene integrando la likelihood sui parametri pesati dalla posterior.
+
+79. Quale è un vantaggio della regressione bayesiana?  
+A) Sempre più veloce della regressione OLS  
+B) Fornisce una misura esplicita di incertezza nelle predizioni  
+C) Non richiede priors  
+D) Non usa dati di training  
+Risposta Corretta: B) Fornisce una misura esplicita di incertezza nelle predizioni  
+Spiegazione:  
+La regressione bayesiana restituisce intervalli di credibilità sulle predizioni.
+
+80. Quale è uno svantaggio dei metodi bayesiani?  
+A) Nessuna flessibilità  
+B) Complessità computazionale elevata  
+C) Nessun trattamento dell’incertezza  
+D) Mancanza di interpretabilità  
+Risposta Corretta: B) Complessità computazionale elevata  
+Spiegazione:  
+Il campionamento MCMC e l’inferenza variazionale possono essere costosi in termini di tempo.
+
+81. In classificazione bayesiana, cosa assume Naive Bayes sulle feature?  
+A) Dipendenza completa  
+B) Indipendenza condizionale  
+C) Correlazione lineare  
+D) Margine massimo  
+Risposta Corretta: B) Indipendenza condizionale  
+Spiegazione:  
+Naive Bayes assume che le feature siano indipendenti date le classi.
+
+82. Quale smoothing è usato per evitare zero-frequency in Naive Bayes?  
+A) L2  
+B) Laplace  
+C) Dropout  
+D) Ridge  
+Risposta Corretta: B) Laplace  
+Spiegazione:  
+Lo smoothing di Laplace aggiunge una piccola costante per evitare probabilità nulle.
+
+83. In RSVM, cosa influenza la selezione del reference set?  
+A) Margine  
+B) Rilevanza di ciascun punto  
+C) Precisione  
+D) Recall  
+Risposta Corretta: B) Rilevanza di ciascun punto  
+Spiegazione:  
+RSVM sceglie punti più informativi per ridurre il carico computazionale.
+
+84. Quale tecnica bayesiana permette aggiornamenti incrementali?  
+A) K-Fold  
+B) Batch gradient  
+C) Teorema di Bayes  
+D) PCA  
+Risposta Corretta: C) Teorema di Bayes  
+Spiegazione:  
+I metodi bayesiani aggiungono nuove evidenze aggiornando la posterior con la nuova likelihood.
+
+85. Cosa misura il parametro γ in un kernel RBF SVM?  
+A) Incertezza a priori  
+B) Ampiezza del kernel  
+C) Learning rate  
+D) Numero di support vectors  
+Risposta Corretta: B) Ampiezza del kernel  
+Spiegazione:  
+γ controlla la larghezza del kernel Gaussiano in RBF.
+
+86. Quale test aiuta a scegliere il numero di cluster in K-Means?  
+A) Metodo del gomito  
+B) Silhouette Score  
+C) Entrambi  
+D) Entrambi non si usano  
+Risposta Corretta: C) Entrambi  
+Spiegazione:  
+Il metodo del gomito e l’analisi silhouette identificano k ottimale.
+
+87. In Random Forest, cosa misura l’importanza delle feature (feature importance)?  
+A) Frequenza di split  
+B) Numero di radici  
+C) Profondità dell’albero  
+D) Caratteristiche mancanti  
+Risposta Corretta: A) Frequenza di split  
+Spiegazione:  
+L’importanza è proporzionale a quanto frequentemente e quanto migliorano l’impurity le split su quella feature.
+
+88. Che cos’è un modello ensemble?  
+A) Un singolo albero  
+B) Molti modelli combinati  
+C) Un solo neurone  
+D) Nessuna predizione  
+Risposta Corretta: B) Molti modelli combinati  
+Spiegazione:  
+Gli ensemble uniscono più modelli deboli per aumentare accuratezza e robustezza.
+
+89. Quale iperparametro regola la penalizzazione in Ridge Regression?  
+A) α  
+B) λ  
+C) C  
+D) γ  
+Risposta Corretta: B) λ  
+Spiegazione:  
+λ controlla la forza della penalità L2 sui coefficienti.
+
+90. Cos’è SMOTE?  
+A) Un metodo di undersampling  
+B) Un metodo di oversampling sintetico  
+C) Un kernel SVM  
+D) Un albero decisionale  
+Risposta Corretta: B) Un metodo di oversampling sintetico  
+Spiegazione:  
+SMOTE genera nuovi esempi di minoranza interpolando tra vicini.
+
+91. In t-SNE, cosa preserva principalmente?  
+A) Varianza globale  
+B) Distanze locali  
+C) Margine  
+D) Support vectors  
+Risposta Corretta: B) Distanze locali  
+Spiegazione:  
+t-SNE mantiene la struttura delle vicinanze locali quando riduce dimensioni.
+
+92. Quale tecnica neural evita co-adattamento dei neuroni?  
+A) Weight decay  
+B) Dropout  
+C) BatchNorm  
+D) Early stopping  
+Risposta Corretta: B) Dropout  
+Spiegazione:  
+Dropout spegne casualmente neuroni per migliorare generalizzazione.
+
+93. Che cos’è Early Stopping?  
+A) Interrompere l’addestramento quando il training loss cresce  
+B) Interrompere l’addestramento quando la performance sul validation set non migliora  
+C) Aumentare il learning rate  
+D) Ridurre batch size  
+Risposta Corretta: B) Interrompere l’addestramento quando la performance sul validation set non migliora  
+Spiegazione:  
+Early Stopping previene overfitting fermando l’allenamento al plateau del validation loss.
+
+94. In variational inference, cosa si approssima?  
+A) La posterior distribution  
+B) La prior  
+C) Il margine  
+D) Il supporto  
+Risposta Corretta: A) La posterior distribution  
+Spiegazione:  
+VI usa una family più semplice per approssimare la distribuzione posteriore difficile.
+
+95. Cos’è il Gini Index in un albero decisionale?  
+A) Una misura di purezza/nodal impurity  
+B) Un margine  
+C) Un kernel  
+D) Un support vector  
+Risposta Corretta: A) Una misura di purezza/nodal impurity  
+Spiegazione:  
+Gini misura la probabilità di errata classificazione se si pesca un’istanza a caso nel nodo.
+
+96. Quale tecnica di ensemble combina modelli addestrati sequenzialmente correggendo errori precedenti?  
+A) Bagging  
+B) Boosting  
+C) Stacking  
+D) Pruning  
+Risposta Corretta: B) Boosting  
+Spiegazione:  
+Boosting costruisce modelli in serie, ciascuno focalizzato sugli errori residui del precedente.
+
+97. In PCA, perché si standardizzano i dati?  
+A) Migliorare il margine  
+B) Uniformare scale diverse  
+C) Salvare memoria  
+D) Ridurre dimensioni  
+Risposta Corretta: B) Uniformare scale diverse  
+Spiegazione:  
+La standardizzazione assicura che variabili con scale diverse non distorcano la covarianza.
+
+98. Che cos’è l’Information Gain?  
+A) Riduzione di entropia dopo uno split  
+B) Numero di support vectors  
+C) Margine  
+D) Entropia iniziale  
+Risposta Corretta: A) Riduzione di entropia dopo uno split  
+Spiegazione:  
+L’IG misura quanto uno split riduce l’incertezza (entropia) nei sottoinsiemi.
+
+99. Quale tecnica sfrutta catene di Markov per esplorare nel sampling?  
+A) K-Means  
+B) MCMC  
+C) PCA  
+D) Grid Search  
+Risposta Corretta: B) MCMC  
+Spiegazione:  
+MCMC usa catene di Markov per generare campioni dalla distribuzione target.
+
+100. In Bayesian classification, come si decide la classe finale?  
+A) Massima prior  
+B) Massima posterior  
+C) Massima likelihood  
+D) Minima entropia  
+Risposta Corretta: B) Massima posterior  
+Spiegazione:  
+La classificazione bayesiana assegna la classe con la più alta probabilità a posteriori dato l’input.  
