@@ -1,0 +1,399 @@
+Cosa significa l’acronimo SDLC?
+A) Software Deployment and Launch Cycle
+B) Software Development Life Cycle
+C) System Design and Life Control
+D) Software Definition and Lifecycle
+Risposta Corretta: B
+Spiegazione: SDLC sta per Software Development Life Cycle, il ciclo di vita per lo sviluppo del software.
+
+Quale dei seguenti è un modello SDLC tradizionale e sequenziale?
+A) Agile
+B) DevOps
+C) Waterfall
+D) Spiral
+Risposta Corretta: C
+Spiegazione: Il modello Waterfall è lineare e procede per fasi sequenziali.
+
+Quale caratteristica contraddistingue l’approccio Agile?
+A) Un’unica grande release alla fine
+B) Iterazioni brevi e frequenti
+C) Nessuna documentazione
+D) Testing solo alla fine
+Risposta Corretta: B
+Spiegazione: Agile prevede sprint brevi con consegne incrementali e feedback continuo.
+
+Cos’è GitHub Actions nel contesto SDLC?
+A) Un tool per editing di codice
+B) Una piattaforma CI/CD per automatizzare workflow
+C) Un IDE online
+D) Un servizio di hosting statico
+Risposta Corretta: B
+Spiegazione: GitHub Actions permette di definire pipeline di integrazione continua e delivery.
+
+In quale percorso deve trovarsi il file di configurazione di un workflow GitHub Actions?
+A) /.github/workflows/*.yml
+B) /workflows/actions.yml
+C) /.github/actions.yml
+D) /ci/git-actions.yml
+Risposta Corretta: A
+Spiegazione: Per convenzione, i file di workflow risiedono in .github/workflows.
+
+Quale chiave YAML specifica l’ambiente di esecuzione del job?
+A) runs-on
+B) environment
+C) runner
+D) machine
+Risposta Corretta: A
+Spiegazione: La proprietà runs-on indica il sistema operativo del runner (es. ubuntu-24.04).
+
+Quale Action ufficiale si usa per installare Python in un workflow?
+A) actions/setup-node
+B) actions/install-python
+C) actions/setup-python@v5
+D) python/setup-action
+Risposta Corretta: C
+Spiegazione: actions/setup-python@v5 è l’Action ufficiale per configurare Python.
+
+Come si specifica la versione di Python da usare?
+A) python-version: '3.12.6'
+B) version: '3.12.6'
+C) uses: python@3.12.6
+D) setup-python: '3.12.6'
+Risposta Corretta: A
+Spiegazione: Nel blocco with di setup-python si usa python-version.
+
+Cosa differenzia una chiave uses: da una chiave run: in GitHub Actions?
+A) uses: richiama un’Action; run: esegue comandi shell
+B) uses: esegue shell; run: richiama Action
+C) Nessuna differenza
+D) uses: definisce variabili; run: esegue test
+Risposta Corretta: A
+Spiegazione: uses: importa un’Action riutilizzabile, run: lancia comandi in shell.
+
+Qual è lo scopo della Continuous Integration (CI)?
+A) Deploy automatico in produzione
+B) Verificare che il software integri correttamente nuove modifiche
+C) Scrivere documentazione
+D) Monitorare i server
+Risposta Corretta: B
+Spiegazione: CI automatizza build e test per garantire che ogni modifica non rompa il sistema.
+
+Cosa si intende per Continuous Delivery (CD)?
+A) Pubblicare un pacchetto solo manualmente
+B) Preparare in modo automatico artefatti pronti per il deploy
+C) Eseguire solo test di unità
+D) Creare snapshot del database
+Risposta Corretta: B
+Spiegazione: CD rende pronte per il rilascio le build verificate da CI.
+
+E la Continuous Deployment?
+A) Stessa cosa della Continuous Delivery
+B) Deploy automatico in produzione a ogni build passata
+C) Solo deployment di database
+D) Deploy manuale su richiesta
+Risposta Corretta: B
+Spiegazione: In Continuous Deployment, ogni build che supera i test viene automaticamente distribuita in produzione.
+
+Cosa indica CDE (Cloud Development Environment)?
+A) Un IDE desktop
+B) Un ambiente di sviluppo preconfigurato in cloud
+C) Un container Docker locale
+D) Un plugin per il browser
+Risposta Corretta: B
+Spiegazione: Il CDE fornisce online un container o VM standardizzata per sviluppare.
+
+Quale file definisce la configurazione di un devcontainer in VS Code?
+A) .devcontainer.json
+B) dev.json
+C) container.json
+D) vscode.json
+Risposta Corretta: A
+Spiegazione: .devcontainer.json specifica immagine, estensioni e settings per CDE.
+
+Quale sito fornisce specifiche e esempi per devcontainer?
+A) https://containers.dev/
+B) https://devcontainer.io/
+C) https://docker.com/devcontainer
+D) https://github.com/devcontainer
+Risposta Corretta: A
+Spiegazione: containers.dev è la documentazione ufficiale Microsoft/VSCode.
+
+Quale comando inizializza un nuovo progetto Azure Function in Python?
+A) func init MyProjFolder --worker-runtime python --model V2
+B) az function init
+C) azure init python
+D) func new --template Python
+Risposta Corretta: A
+Spiegazione: func init imposta il progetto Function con runtime Python.
+
+Come crei un trigger HTTP in un progetto Azure Functions?
+A) func new --template "Http Trigger" --name MyHttpTrigger
+B) func add http
+C) az function new http
+D) func http create
+Risposta Corretta: A
+Spiegazione: func new con template “Http Trigger” genera il codice boilerplate.
+
+E per un trigger basato su timer?
+A) func new --template "Timer Trigger" --name MyTimeTrigger
+B) func timer add
+C) az function timer create
+D) func new --type timer
+Risposta Corretta: A
+Spiegazione: Con template “Timer Trigger” si genera una funzione invocata periodicamente.
+
+Quale comando avvia l’esecuzione locale dell’Azure Function?
+A) func start
+B) az function run
+C) npm start
+D) python main.py
+Risposta Corretta: A
+Spiegazione: func start mette in ascolto e invoca le funzioni localmente.
+
+Cos’è il Contract Testing?
+A) Testare i contratti legali
+B) Verificare che due sistemi rispettino un formato di scambio dati concordato
+C) Testare interfacce utente
+D) Testare solo API REST
+Risposta Corretta: B
+Spiegazione: Si assicura che producer e consumer rispettino lo stesso “contratto” di dati.
+
+Qual è il ruolo del JSON Schema nel Contract Testing?
+A) Definire lo stile grafico delle API
+B) Dichiarare struttura, tipi e vincoli dei JSON scambiati
+C) Eseguire test di performance
+D) Creare snapshot automatici
+Risposta Corretta: B
+Spiegazione: JSON Schema descrive la struttura dei documenti JSON da validare.
+
+Quale libreria Python implementa JSON Schema validation?
+A) jsonschema
+B) fastjson
+C) pydantic
+D) marshmallow
+Risposta Corretta: A
+Spiegazione: jsonschema è il package ufficiale per la specifica JSON Schema.
+
+Quale plugin pytest facilita la validazione JSON Schema?
+A) pytest-jsonschema
+B) pytest-contract
+C) pytest-schema
+D) pytest-json
+Risposta Corretta: A
+Spiegazione: pytest-jsonschema integra direttamente la convalida nelle fixture di test.
+
+In Test Driven Development (TDD), qual è il primo step?
+A) Scrivere il codice
+B) Scrivere un test che fallisca
+C) Scrivere documentazione
+D) Creare il repository Git
+Risposta Corretta: B
+Spiegazione: TDD prevede “Red – Green – Refactor”: prima un test che fallisce.
+
+Cos’è lo Snapshot Testing?
+A) Testare snapshot del database
+B) Confrontare output testuale attuale con uno salvato in precedenza
+C) Salvare immagini della UI
+D) Backup automatici di file
+Risposta Corretta: B
+Spiegazione: Si salva l’output atteso in un file (“snapshot”) e lo si confronta ad ogni run.
+
+Quale plugin pytest genera e aggiorna snapshot?
+A) pytest-snapshot
+B) pytest-snap
+C) pytest-golden
+D) pytest-save
+Risposta Corretta: A
+Spiegazione: pytest-snapshot crea file di snapshot e li aggiorna con --snapshot-update.
+
+Quale comando pytest aggiorna tutti gli snapshot esistenti?
+A) pytest --snapshot-update
+B) pytest --update-snapshots
+C) pytest -U
+D) pytest --rebase
+Risposta Corretta: A
+Spiegazione: L’opzione --snapshot-update rigenera gli snapshot mancanti o obsoleti.
+
+Cos’è Great Expectations (GX)?
+A) Un framework di UI testing
+B) Una libreria per definire e validare “expectations” sui dati
+C) Un servizio cloud di monitoraggio dati
+D) Un plugin VSCode
+Risposta Corretta: B
+Spiegazione: GX permette di dichiarare regole sui dati (ad es. range, tipi) e di verificarle.
+
+Come si chiamano le regole dichiarative in Great Expectations?
+A) Assertions
+B) Expectations
+C) Constraints
+D) Validators
+Risposta Corretta: B
+Spiegazione: In GX si definiscono “Expectations” per verificare qualità e conformità dei dati.
+
+Quale fase SDLC include l’automazione dei test di qualità dei dati?
+A) Extract
+B) Transform
+C) Load
+D) Continuous Integration
+Risposta Corretta: D
+Spiegazione: Nella CI si includono anche i test di convalida dati (data contract e expectations).
+
+Qual è lo scopo del pip freeze in un progetto Python?
+A) Bloccare la CPU
+B) Elencare le dipendenze con versione per requirements.txt
+C) Creare un virtualenv
+D) Pulire la cache
+Risposta Corretta: B
+Spiegazione: pip freeze mostra le versione installate; utile per generare il file requirements.txt.
+
+Come installi le dipendenze elencate in requirements.txt?
+A) pip install requirements.txt
+B) pip install -r requirements.txt
+C) python install requirements.txt
+D) pip req install
+Risposta Corretta: B
+Spiegazione: L’opzione -r dice a pip di leggere le dipendenze da quel file.
+
+Quale strumento genera un sito statico da un branch GitHub?
+A) GitHub Pages
+B) GitLab Pages
+C) Netlify
+D) Vercel
+Risposta Corretta: A
+Spiegazione: GitHub Pages ospita siti statici direttamente da un repository su GitHub.
+
+Quale branch convention si usa solitamente per GitHub Pages da repo principale?
+A) main
+B) gh-pages
+C) pages
+D) master
+Risposta Corretta: B
+Spiegazione: Spesso si pubblica da un ramo gh-pages.
+
+Quale evento GitHub Actions attiva un workflow sui push in main?
+A) on: push: branches: [ main ]
+B) on: commit
+C) on: release
+D) on: publish
+Risposta Corretta: A
+Spiegazione: La chiave on: push con la lista di branch specifica.
+
+Come esprimi in cron un trigger giornaliero alle 2:00 AM?
+A) 0 2 * * *
+B) 2 0 * * *
+C) 0 0 2 * *
+D) * * 2 * *
+Risposta Corretta: A
+Spiegazione: In cron: minuto ora giorno mese giornoSett; 0 2 * * * alle 02:00.
+
+Quale file crea un devcontainer con Python 3.12?
+A) .devcontainer.json con image: mcr.microsoft.com/vscode/devcontainers/python:3.12
+B) docker-compose.yml
+C) Dockerfile
+D) requirements.txt
+Risposta Corretta: A
+Spiegazione: In .devcontainer.json si punta all’immagine container Python.
+
+Quale concetto distingue CI per Software da CI per Data Engineering?
+A) Nessuna differenza
+B) In Data CI si testano anche trasformazioni e qualità dei dati
+C) Solo performance test
+D) Solo test di sicurezza
+Risposta Corretta: B
+Spiegazione: Nella CI dati si convalidano anche i contratti e la qualità in ogni fase ETL.
+
+In un Data Pipeline ETL, quale fase segue l’Extract?
+A) Load
+B) Transform
+C) Test
+D) Validate
+Risposta Corretta: B
+Spiegazione: Il flusso è Extract → Transform → Load.
+
+Quale libreria Python si usa comunemente per i test di unità?
+A) unittest
+B) pytest
+C) nose
+D) doctest
+Risposta Corretta: B
+Spiegazione: pytest è il framework più usato per scrivere test in Python.
+
+Quale comando pip installa pytest dal requirements.txt?
+A) pip install pytest
+B) pip install -r requirements.txt
+C) pytest install
+D) pip add pytest
+Risposta Corretta: B
+Spiegazione: In requirements.txt si includono pytest e plugin, li installi con -r.
+
+Come si definisce un test che si aspetta un’eccezione in pytest?
+A) with pytest.raises(Exception):
+B) @pytest.exception
+C) assertRaises(Exception)
+D) @raises(Exception)
+Risposta Corretta: A
+Spiegazione: pytest.raises è il context manager per eccezioni attese.
+
+Quale plugin pytest si usa per integrare JSON Schema validation?
+A) pytest-jsonschema
+B) pytest-json
+C) pytest-schema
+D) pytest-contract
+Risposta Corretta: A
+Spiegazione: Vedi domanda 23: semplifica validazione JSON Schema.
+
+Cosa fa pytest --maxfail=1?
+A) Si ferma al primo test fallito
+B) Esegue un solo test
+C) Salta tutti i test
+D) Aumenta timeout
+Risposta Corretta: A
+Spiegazione: Con --maxfail si limita il numero di fallimenti prima di abortire.
+
+Quale fase SDLC include la pianificazione, la progettazione e l’analisi dei requisiti?
+A) Testing
+B) Requirements & Design
+C) Deployment
+D) Maintenance
+Risposta Corretta: B
+Spiegazione: Le prime fasi del ciclo di vita sono requisiti e architettura.
+
+Cos’è una GitHub Action “reusable workflow”?
+A) Un workflow definito in un altro repo e richiamato con uses:
+B) Un workflow ripetuto in ogni commit
+C) Una Action scaricata da marketplace
+D) Un Action manuale
+Risposta Corretta: A
+Spiegazione: I reusable workflows si richiamano come moduli con uses: repo/.github/workflows/....
+
+Quale file definisce variabili d’ambiente per GitHub Actions?
+A) .env
+B) env: nello YAML del workflow
+C) variables.json
+D) settings.py
+Risposta Corretta: B
+Spiegazione: Nel blocco jobs.<job_id>.steps.env si dichiara VAR_NAME: value.
+
+In Git, quale comando crea un nuovo branch e vi ci sposta?
+A) git checkout -b feature
+B) git branch feature && git checkout feature
+C) Entrambi
+D) git new branch feature
+Risposta Corretta: C
+Spiegazione: checkout -b è scorciatoia di branch + checkout.
+
+Quale comando Git aggiunge tutti i file modificati all’area di staging?
+A) git add .
+B) git stage all
+C) git commit -a
+D) git stage -A
+Risposta Corretta: A
+Spiegazione: git add . mette nello stage tutti i cambiamenti nelle directory.
+
+Quale comando GitHub Actions pubblica un pacchetto su GitHub Pages?
+A) Un workflow con peaceiris/actions-gh-pages
+B) actions/deploy-pages
+C) GitHub Pages Action
+D) A e B
+Risposta Corretta: D
+Spiegazione: Si può usare sia peaceiris/actions-gh-pages sia la Action ufficiale actions/deploy-pages.

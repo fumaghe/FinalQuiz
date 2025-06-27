@@ -1,0 +1,399 @@
+Qual è il formato di serializzazione dati di Apache Avro?
+A) Binario JSON
+B) XML
+C) CSV
+D) Protocol Buffers
+Risposta Corretta: A
+Spiegazione: Avro usa un formato binario basato su JSON Schema per efficienza e compattezza.
+
+In Avro, dove è definito lo schema dei dati?
+A) Nel file .avsc incluso nell’header
+B) Solo all’interno del file container
+C) Solo in un registro esterno
+D) Avro non usa schemi
+Risposta Corretta: A
+Spiegazione: Lo schema JSON è incluso nell’header dei file container Avro o gestito esternamente.
+
+Quale componente non fa parte di un file Parquet?
+A) Magic header (PAR1)
+B) Footer con metadata
+C) Manifest list
+D) Row group
+Risposta Corretta: C
+Spiegazione: I manifest list sono di Iceberg; Parquet ha header, row group, column chunk e footer.
+
+In Parquet, cosa raccoglie i metadati di colonna e statistiche?
+A) Row group
+B) Column chunk footer
+C) File footer
+D) Page header
+Risposta Corretta: C
+Spiegazione: Il footer include metadata globali e liste di row group.
+
+Quale compressione è nativa in Parquet?
+A) Snappy, GZIP, Brotli
+B) LZO, LZ4, ZSTD
+C) Solo Snappy
+D) Nessuna
+Risposta Corretta: A
+Spiegazione: Parquet supporta Snappy, GZIP, Brotli, LZO, LZ4, ZSTD a seconda dell’implementazione.
+
+Quale caratteristica distingue Parquet da Avro?
+A) Parquet è row-based
+B) Parquet è columnar
+C) Avro è columnar
+D) Nessuna differenza
+Risposta Corretta: B
+Spiegazione: Parquet è columnar, ottimo per analytics; Avro è row-based.
+
+Cos’è Apache Iceberg?
+A) Un motore SQL
+B) Un formato di tabelle per data lake con gestione di metadata
+C) Un database NoSQL
+D) Un file system distribuito
+Risposta Corretta: B
+Spiegazione: Iceberg fornisce tabelle versionate, snapshot, time-travel su file Parquet, Avro, ORC.
+
+Quale formato di file non è supportato da Iceberg nativamente?
+A) Parquet
+B) ORC
+C) Avro
+D) CSV
+Risposta Corretta: D
+Spiegazione: Iceberg supporta Parquet, ORC, Avro; CSV non è un formato columnar gestito per metadata.
+
+Quale componente Iceberg mantiene l’elenco di snapshot di una tabella?
+A) manifest list
+B) catalog
+C) metadata JSON
+D) file Parquet
+Risposta Corretta: C
+Spiegazione: Il metadata JSON dello snapshot contiene riferimenti al manifest list.
+
+In Iceberg, cosa contiene un manifest file?
+A) Solo path dei file di dati
+B) Riferimenti ai file dei dati e statistiche per predicate pushdown
+C) Solo statistiche
+D) SQL query
+Risposta Corretta: B
+Spiegazione: I manifest files elencano file di dati con statistiche usate per filter pushdown.
+
+Cosa permette di fare il time-travel in Iceberg?
+A) Ripristinare backup di filesystem
+B) Leggere la tabella a uno snapshot passato
+C) Eseguire rollback fisico dei file
+D) Nessuna di queste
+Risposta Corretta: B
+Spiegazione: Time-travel consente di leggere dati a uno snapshot ID o timestamp specifico.
+
+Qual è il file di metadata principale di una tabella Iceberg?
+A) table.avsc
+B) metadata.json
+C) schema.avro
+D) table.manifest
+Risposta Corretta: B
+Spiegazione: metadata.json definisce schema, snapshot, manifest.
+
+Quale metadata Iceberg definisce lo schema attuale?
+A) current-snapshot.json
+B) schema.avsc
+C) metadata.json
+D) manifest.json
+Risposta Corretta: C
+Spiegazione: metadata.json include la sezione schema con campi e tipi.
+
+Quale API Iceberg introduce un nuovo snapshot con i dati aggiunti?
+A) new_transaction()
+B) new_append()
+C) new_overwrite()
+D) publish_snapshot()
+Risposta Corretta: B
+Spiegazione: new_append() aggiunge dati e committa un nuovo snapshot.
+
+Cosa si intende per namespace in Iceberg?
+A) Unificare colonne in schema
+B) Un pool di snapshot
+C) Un database logico per tabelle
+D) Un modulo di catalogo
+Risposta Corretta: C
+Spiegazione: I namespace organizzano le tabelle in insiemi logici simili a database.
+
+Quale metodo PyIceberg restituisce una tabella esistente dal catalogo?
+A) load_table()
+B) get_table()
+C) open_table()
+D) fetch_table()
+Risposta Corretta: A
+Spiegazione: catalog.load_table(identifier) carica la tabella nel client.
+
+In contesto Iceberg, cosa fa un catalogo?
+A) Gestisce i file Parquet
+B) Memorizza metadati e fornisce accesso alle tabelle
+C) Indica il warehouse directory
+D) Esegue query SQL
+Risposta Corretta: B
+Spiegazione: Il catalogo registra namespace, tabelle, metadata location.
+
+Qual è il vantaggio degli schemi evolvibili in Avro e Iceberg?
+A) Solo compressione migliore
+B) Permettere aggiunta/rimozione di campi senza rewrite
+C) Velocità di scrittura aumentata
+D) Nessuno
+Risposta Corretta: B
+Spiegazione: Schema evolution consente di gestire campi nuovi, rinominati, rimossi senza ricreare tutta la tabella.
+
+Come Avro registra la compressione in un file container?
+A) Header del file con codec (deflate, snappy)
+B) Footer JSON
+C) Nel nome del file
+D) Non supporta compressione
+Risposta Corretta: A
+Spiegazione: L’header container Avro specifica il codec utilizzato.
+
+Quale tipo di encoding Parquet non supporta?
+A) Dictionary
+B) Run-Length
+C) Delta
+D) LZW
+Risposta Corretta: D
+Spiegazione: Parquet supporta Dictionary, RLE, Delta, Bit-Packed, non LZW.
+
+Cosa definisce un row group in Parquet?
+A) Un insieme di colonne
+B) Un insieme di righe organizzate in column chunk
+C) Un file separato
+D) Nessuna di queste
+Risposta Corretta: B
+Spiegazione: Un row group contiene tutti i chunk di colonna per un subset di righe.
+
+Quale encoding migliora la compressione dei dati ripetitivi in Parquet?
+A) Plain
+B) Dictionary
+C) Delta
+D) RLE
+Risposta Corretta: B
+Spiegazione: Dictionary encoding sostituisce valori ripetuti con indici più compatti.
+
+Quale formato è più adatto per OLTP?
+A) Avro
+B) Parquet
+C) CSV
+D) JSON
+Risposta Corretta: A
+Spiegazione: Avro (row-based) è più efficiente per scritture singole tipiche di OLTP.
+
+Quale formato è preferibile per analytics su grandi dataset?
+A) Avro
+B) Parquet
+C) JSON
+D) XML
+Risposta Corretta: B
+Spiegazione: Parquet (columnar) ottimizza scansione selettiva di colonne.
+
+In Iceberg, cosa definisce la retention di snapshot?
+A) table.properties['history.expire.min-snapshots-to-keep']
+B) catalog.properties['retention']
+C) warehouse.properties['snapshot.retention']
+D) Nessuna proprietà
+Risposta Corretta: A
+Spiegazione: Proprietà di tabella controllano quanti snapshot mantenere.
+
+Quale strategia di partizionamento supporta Iceberg?
+A) Hive-style static
+B) Identity, Bucket, Truncate, Year/Month/Day
+C) Hash su file Parquet
+D) Nessuna
+Risposta Corretta: B
+Spiegazione: Iceberg supporta partizioni colonna specifiche e funzioni di partition transform.
+
+Cos’è il pruning delle partizioni?
+A) Eliminare file non usati
+B) Scartare row group che non soddisfano filtri
+C) Compattare row group
+D) Nessuna di queste
+Risposta Corretta: B
+Spiegazione: Partition pruning evita di leggere dati in partizioni non interessate.
+
+Quale API Iceberg permette di definire bucket partitioning?
+A) PartitionSpec.builderFor(table.schema).bucket(...)
+B) PartitionSpec.hash(...)
+C) table.new_partition()
+D) catalog.create_partition()
+Risposta Corretta: A
+Spiegazione: Si usa PartitionSpec.builderFor(...).bucket("col", buckets).build().
+
+Quale comando Parquet fornisce informazioni sul file?
+A) parquet-tools meta file.parquet
+B) parquet-info file.parquet
+C) parquet show file.parquet
+D) parquet meta
+Risposta Corretta: A
+Spiegazione: parquet-tools meta mostra schema, row groups, statistiche.
+
+Quale modalità di scrittura Iceberg assicura atomicità?
+A) Direct write
+B) Two-phase commit via metadata JSON
+C) Overwrite only
+D) Streaming
+Risposta Corretta: B
+Spiegazione: Iceberg usa due-phase commit: scrive metadata temporanei poi aggiorna metadata.json.
+
+Quale strumento consente di esplorare tabelle Iceberg in Spark?
+A) spark.read.format("iceberg")
+B) spark.iceberg.load()
+C) spark.table("iceberg...")
+D) Nessuna di queste
+Risposta Corretta: A
+Spiegazione: In Spark si usa spark.read.format("iceberg").load("catalog.db.table").
+
+Quale formato di Avro permette schema evolution forward compatibility?
+A) Aggiungere nuovi campi opzionali
+B) Rinominare campi
+C) Rimuovere campi esistenti
+D) Cambiare tipo di campo
+Risposta Corretta: A
+Spiegazione: Aggiungere campi con default garantisce compatibilità forward.
+
+Cos’è un container file Avro?
+A) Un file JSON con dati
+B) Un file binario con header, blocchi e sync markers
+C) Un file Parquet con Avro metadata
+D) Nessuna di queste
+Risposta Corretta: B
+Spiegazione: Un container Avro combina header con schema, blocchi di dati e marker di sincronizzazione.
+
+Quale header Parquet identifica l’inizio del file?
+A) "PARQUET"
+B) "PAR1"
+C) "PQRT"
+D) "PFMT"
+Risposta Corretta: B
+Spiegazione: I primi quattro byte sono PAR1, stessi ultimi quattro byte segnano la fine.
+
+Quale utility Python legge file Parquet?
+A) pandas.read_parquet
+B) pyarrow.parquet.read_table
+C) fastparquet.ParquetFile
+D) Tutte e tre
+Risposta Corretta: D
+Spiegazione: Pandas, PyArrow e Fastparquet offrono API per Parquet in Python.
+
+Quale libreria Java fornisce API Iceberg?
+A) iceberg-core
+B) iceberg-client
+C) iceberg-java
+D) iceberg-hive
+Risposta Corretta: A
+Spiegazione: iceberg-core è il modulo base per API Java e Scala.
+
+Quale configurazione Iceberg abilita metriche sui manifest?
+A) write.metadata.split.target-file-size-bytes
+B) write.metadata.metrics.enabled
+C) write.metadata.metrics.*.enabled
+D) catalog.enable-metrics
+Risposta Corretta: C
+Spiegazione: write.metadata.metrics.*.enabled=true abilita statistiche in manifest.
+
+Quale plugin Hive supporta tabelle Iceberg?
+A) hive-iceberg-storage-handler
+B) iceberg-hive-runtime
+C) iceberg-hive-v2
+D) Nessuno
+Risposta Corretta: C
+Spiegazione: Il Hive Connector V2 permette a Hive di leggere/scrivere tabelle Iceberg.
+
+Quale pattern evita ri-scrittura di tutti i file in overwrite?
+A) Append-only
+B) Incremental commit
+C) Copy-on-write
+D) Merge-on-read
+Risposta Corretta: C
+Spiegazione: Iceberg usa copy-on-write per append o overwrite di partizioni senza riscrivere tutta la tabella.
+
+Quale feature Iceberg migliora performance di small file?
+A) Split open files
+B) File compaction
+C) Small file merge in manifest
+D) Partition pruning
+Risposta Corretta: B
+Spiegazione: Compact può unire piccoli file in file più grandi.
+
+Quale metadata preciso traccia le modifiche di schema?
+A) schema-history.json
+B) metadata.json
+C) schema-log.json
+D) manifest-schema.json
+Risposta Corretta: B
+Spiegazione: metadata.json mantiene la lista di evoluzioni di schema.
+
+Quale parametro Iceberg specifica il formato dei file dati?
+A) write.format.default
+B) write.file.format
+C) file.format.default
+D) format.default
+Risposta Corretta: A
+Spiegazione: write.format.default=parquet o avro o orc.
+
+Cos’è un snapshot ID in Iceberg?
+A) Un nome utente
+B) Un identificatore univoco del commit
+C) La dimensione in byte
+D) L’URI del catalogo
+Risposta Corretta: B
+Spiegazione: Ogni snapshot ha un ID numerico univoco.
+
+In Iceberg, cosa fa new_overwrite()?
+A) Aggiunge righe
+B) Sovrascrive tutti i dati della tabella
+C) Elimina snapshot
+D) Compatta file
+Risposta Corretta: B
+Spiegazione: new_overwrite() crea un overwrite full della tabella o di una partizione.
+
+Quale proprietà Iceberg controlla quanti snapshot minima mantenere?
+A) history.expire.min-snapshots-to-keep
+B) expiration.history.min
+C) snapshots.keep.min
+D) retention.minSnapshots
+Risposta Corretta: A
+Spiegazione: Proprietà standard Iceberg per retention.
+
+Quale API R permette di leggere tabelle Iceberg?
+A) RApacheIceberg
+B) sparklyr con format “iceberg”
+C) rhdfs
+D) nessuna
+Risposta Corretta: B
+Spiegazione: Con sparklyr e read.df(..., format="iceberg").
+
+Quale opzione Parquet riduce latenza di apertura?
+A) metadata caching
+B) footer size
+C) row group size
+D) page size
+Risposta Corretta: A
+Spiegazione: Caching del footer evita letture multiple per metadata.
+
+Cosa consente di fare il predicate pushdown in Parquet?
+A) Spostare filtri al livello database
+B) Applicare filtri sui row group prima di leggere i dati
+C) Compattare dati
+D) Nessuna di queste
+Risposta Corretta: B
+Spiegazione: Le statistiche nei column chunk permettono di saltare row group non necessari.
+
+Quale tool consente di validare i file Parquet?
+A) parquet-tools verify
+B) parquet-tools check
+C) parquet-tools inspect
+D) parquet-tools validate
+Risposta Corretta: A
+Spiegazione: parquet-tools verify controlla integrità e checksum.
+
+Quale caratteristica rende Iceberg adatto a Data Lakehouse?
+A) Storage a oggetti distribuiti
+B) Metadati versionati, snapshot, time-travel
+C) Solo file CSV
+D) Nessuna di queste
+Risposta Corretta: B
+Spiegazione: Iceberg fornisce funzionalità di gestione di metadata e versioning tipiche di un Lakehouse.
