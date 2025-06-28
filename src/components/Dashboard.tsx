@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useQuiz } from '../contexts/QuizContext';
 import ProgressRing from './ProgressRing';
@@ -97,7 +96,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
           <h3 className="text-h3 font-medium mb-4">Inizia a studiare</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <button
-              onClick={() => onNavigate('quiz', { type: 'general' })}
+              onClick={() => onNavigate('quiz', { quizType: 'general' })}
               disabled={!hasUnansweredQuestions}
               className="apple-card p-4 sm:p-6 text-left hover:bg-gray-50 transition-colors apple-button group disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -205,13 +204,6 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
           >
             <BarChart className="w-6 h-6 mb-1" />
             <span className="text-small">Statistiche</span>
-          </button>
-          <button 
-            onClick={() => onNavigate('settings')}
-            className="flex flex-col items-center p-2 text-apple-secondary hover:text-apple-blue transition-colors"
-          >
-            <User className="w-6 h-6 mb-1" />
-            <span className="text-small">Profilo</span>
           </button>
         </div>
       </nav>

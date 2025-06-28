@@ -1,126 +1,100 @@
-import React, { useState, useEffect } from 'react';
-import { QuizProvider } from '../contexts/QuizContext';
+import React from 'react';
+import { useQuiz } from '../contexts/QuizContext';
+
 import SplashScreen from '../components/SplashScreen';
-import LoginScreen from '../components/LoginScreen';
-import Dashboard from '../components/Dashboard';
-import TopicsList from '../components/TopicsList';
-import QuizScreen from '../components/QuizScreen';
-import StatsScreen from '../components/StatsScreen';
+import LoginScreen  from '../components/LoginScreen';
+import Dashboard    from '../components/Dashboard';
+import TopicsList   from '../components/TopicsList';
+import QuizScreen   from '../components/QuizScreen';
 import ResultsScreen from '../components/ResultsScreen';
+import StatsScreen  from '../components/StatsScreen';
 import ReviewScreen from '../components/ReviewScreen';
 
-type Screen = 'splash' | 'login' | 'dashboard' | 'topics' | 'quiz' | 'stats' | 'results' | 'settings' | 'review';
+/** Firma comune per la navigazione interna */
+type NavigateFn = (screen: string, params?: any) => void;
 
-interface NavigationParams {
-  type?: 'general' | 'topic' | 'custom';
-  topicId?: string;
-  topicName?: string;
-  score?: number;
-  correctAnswers?: number;
-  totalQuestions?: number;
-  quizType?: 'general' | 'topic';
-  quizHistory?: any;
-  questionIds?: string[];
-  title?: string;
-}
+const Index: React.FC = () => {
+  const { state, dispatch } = useQuiz();
 
-const Index = () => {
-  const [currentScreen, setCurrentScreen] = useState<Screen>('splash');
-  const [navigationParams, setNavigationParams] = useState<NavigationParams>({});
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const loggedIn = localStorage.getItem('quizmaster_logged_in');
-    if (loggedIn === 'true') {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
-  const handleNavigation = (screen: Screen, params?: NavigationParams) => {
-    setCurrentScreen(screen);
-    if (params) {
-      setNavigationParams(params);
-    }
+  /** Cambia schermata salvando eventuali parametri */
+  const handleNavigate: NavigateFn = (screen, params) => {
+    dispatch({ type: 'SET_CURRENT_SCREEN', payload: { screen, params } });
   };
 
-  const handleSplashComplete = () => {
-    if (isLoggedIn) {
-      setCurrentScreen('dashboard');
-    } else {
-      setCurrentScreen('login');
-    }
-  };
+  /** Scelta della view da renderizzare */
+  const renderScreen = () => {
+    const { currentScreen, screenParams } = state;
 
-  const handleLogin = () => {
-    localStorage.setItem('quizmaster_logged_in', 'true');
-    setIsLoggedIn(true);
-    setCurrentScreen('dashboard');
-  };
-
-  const renderCurrentScreen = () => {
     switch (currentScreen) {
+      /* Splash --------------------------------------------------- */
       case 'splash':
-        return <SplashScreen onComplete={handleSplashComplete} />;
-      
+        return <SplashScreen onComplete={() => handleNavigate('login')} />;
+
+      /* Login ---------------------------------------------------- */
       case 'login':
-        return <LoginScreen onLogin={handleLogin} />;
-      
-      case 'dashboard':
-        return <Dashboard onNavigate={handleNavigation} />;
-      
-      case 'topics':
-        return <TopicsList onNavigate={handleNavigation} />;
-      
-      case 'quiz':
         return (
-          <QuizScreen 
-            onNavigate={handleNavigation}
-            quizType={navigationParams.type || 'general'}
-            topicId={navigationParams.topicId}
-            topicName={navigationParams.topicName}
-            questionIds={navigationParams.questionIds}
-            title={navigationParams.title}
+          <LoginScreen
+            onLogin={() => handleNavigate('dashboard')}
           />
         );
-      
-      case 'stats':
-        return <StatsScreen onNavigate={handleNavigation} />;
-      
+
+      /* Dashboard ------------------------------------------------ */
+      case 'dashboard':
+        return <Dashboard onNavigate={handleNavigate} />;
+
+      /* Topics --------------------------------------------------- */
+      case 'topics':
+        return <TopicsList onNavigate={handleNavigate} />;
+
+      /* Quiz ----------------------------------------------------- */
+      case 'quiz': {
+        /* accetta sia quizType che type per retro-compatibilità */
+        const qt = screenParams?.quizType ?? screenParams?.type ?? 'general';
+        return (
+          <QuizScreen
+            quizType={qt}
+            {...screenParams}
+            onNavigate={handleNavigate}
+          />
+        );
+      }
+
+      /* Results -------------------------------------------------- */
       case 'results':
         return (
           <ResultsScreen
-            onNavigate={handleNavigation}
-            score={navigationParams.score || 0}
-            correctAnswers={navigationParams.correctAnswers || 0}
-            totalQuestions={navigationParams.totalQuestions || 0}
-            quizType={navigationParams.quizType || 'general'}
-            topicName={navigationParams.topicName}
-            quizHistory={navigationParams.quizHistory}
+            score={screenParams?.score}
+            correctAnswers={screenParams?.correctAnswers}
+            totalQuestions={screenParams?.totalQuestions}
+            quizType={screenParams?.quizType ?? screenParams?.type}
+            {...screenParams}
+            onNavigate={handleNavigate}
           />
         );
 
+      /* Stats ---------------------------------------------------- */
+      case 'stats':
+        return <StatsScreen onNavigate={handleNavigate} />;
+
+      /* Review --------------------------------------------------- */
       case 'review':
         return (
           <ReviewScreen
-            onNavigate={handleNavigation}
-            quizHistory={navigationParams.quizHistory}
+            params={screenParams}
+            onNavigate={handleNavigate}
           />
         );
-      
-      case 'settings':
-        return <Dashboard onNavigate={handleNavigation} />;
-      
+
+      /* Default -------------------------------------------------- */
       default:
-        return <Dashboard onNavigate={handleNavigation} />;
+        return <Dashboard onNavigate={handleNavigate} />;
     }
   };
 
   return (
-    <QuizProvider>
-      <div className="font-sf-pro">
-        {renderCurrentScreen()}
-      </div>
-    </QuizProvider>
+    <div className="min-h-screen bg-apple-light">
+      {renderScreen()}
+    </div>
   );
 };
 

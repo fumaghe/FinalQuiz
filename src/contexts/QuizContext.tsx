@@ -1,191 +1,261 @@
+import React, {
+  createContext,
+  useContext,
+  useReducer,
+  useEffect,
+} from 'react';
 
-import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import { Question, QuizSession, UserStats, UserSettings, Topic } from '../types/quiz';
+import {
+  Question,
+  QuizSession,
+  UserStats,
+  UserSettings,
+  Topic,
+} from '../types/quiz';
 import { loadQuestionsFromFiles } from '../utils/questionLoader';
 
-interface QuizState {
-  questions: Question[];
-  topics: Topic[];
-  currentSession: QuizSession | null;
-  userStats: UserStats;
-  settings: UserSettings;
-  loading: boolean;
+/* ------------------------------------------------------------------ */
+/* STATE & ACTIONS                                                    */
+/* ------------------------------------------------------------------ */
+
+export interface QuizState {
+  /* Dati core ------------------------------------------------------ */
+  questions:        Question[];
+  topics:           Topic[];
+  currentSession:   QuizSession | null;
+  userStats:        UserStats;
+  settings:         UserSettings;
+  loading:          boolean;
+
+  /* Navigazione interna -------------------------------------------- */
+  currentScreen:    string;   // es. 'dashboard', 'quiz', ...
+  screenParams?:    any;      // parametri opzionali per la schermata
 }
 
-type QuizAction = 
-  | { type: 'SET_LOADING'; payload: boolean }
-  | { type: 'LOAD_QUESTIONS'; payload: Question[] }
-  | { type: 'LOAD_TOPICS'; payload: Topic[] }
-  | { type: 'START_QUIZ'; payload: QuizSession }
-  | { type: 'ANSWER_QUESTION'; payload: { index: number; answer: number } }
+export type QuizAction =
+  | { type: 'SET_LOADING';       payload: boolean }
+  | { type: 'LOAD_QUESTIONS';    payload: Question[] }
+  | { type: 'LOAD_TOPICS';       payload: Topic[] }
+  | { type: 'START_QUIZ';        payload: QuizSession }
+  | { type: 'ANSWER_QUESTION';   payload: { index: number; answer: number } }
   | { type: 'END_QUIZ' }
-  | { type: 'UPDATE_STATS'; payload: UserStats }
-  | { type: 'UPDATE_SETTINGS'; payload: UserSettings }
-  | { type: 'TOGGLE_FAVORITE'; payload: string };
+  | { type: 'UPDATE_STATS';      payload: UserStats }
+  | { type: 'UPDATE_SETTINGS';   payload: UserSettings }
+  | { type: 'TOGGLE_FAVORITE';   payload: string }
+  | { type: 'SET_CURRENT_SCREEN';payload: { screen: string; params?: any } };
+
+/* ------------------------------------------------------------------ */
+/* INITIAL STATE                                                      */
+/* ------------------------------------------------------------------ */
 
 const initialState: QuizState = {
-  questions: [],
-  topics: [],
+  questions:  [],
+  topics:     [],
   currentSession: null,
   userStats: {
-    totalQuizzes: 0,
-    totalQuestions: 0,
-    correctAnswers: 0,
-    overallAccuracy: 0,
-    currentStreak: 0,
-    bestStreak: 0,
-    topicStats: [],
-    lastUpdated: new Date(),
+    totalQuizzes:      0,
+    totalQuestions:    0,
+    correctAnswers:    0,
+    overallAccuracy:   0,
+    currentStreak:     0,
+    bestStreak:        0,
+    topicStats:        [],
+    lastUpdated:       new Date(),
     answeredQuestions: {},
-    correctQuestions: {},
-    incorrectQuestions: {},
-    quizHistory: [],
-    statsPerTopic: {}
+    correctQuestions:  {},
+    incorrectQuestions:{},
+    quizHistory:       [],
+    statsPerTopic:     {},
   },
   settings: {
-    fontSize: 'medium',
-    darkMode: false,
-    reminders: false,
-    reminderTime: '18:00'
+    fontSize:      'medium',
+    darkMode:      false,
+    reminders:     false,
+    reminderTime:  '18:00',
   },
-  loading: true
+  loading: true,
+
+  /* Navigazione ---------------------------------------------------- */
+  currentScreen: 'splash',
+  screenParams:  null,
 };
+
+/* ------------------------------------------------------------------ */
+/* REDUCER                                                            */
+/* ------------------------------------------------------------------ */
 
 function quizReducer(state: QuizState, action: QuizAction): QuizState {
   switch (action.type) {
+    /* -------------------------------------------------------------- */
+    /* BOOT & DOMANDE                                                 */
+    /* -------------------------------------------------------------- */
     case 'SET_LOADING':
       return { ...state, loading: action.payload };
-    
+
     case 'LOAD_QUESTIONS':
       return { ...state, questions: action.payload };
-    
+
     case 'LOAD_TOPICS':
       return { ...state, topics: action.payload };
-    
+
+    /* -------------------------------------------------------------- */
+    /* SESSIONE QUIZ                                                 */
+    /* -------------------------------------------------------------- */
     case 'START_QUIZ':
       return { ...state, currentSession: action.payload };
-    
-    case 'ANSWER_QUESTION':
+
+    case 'ANSWER_QUESTION': {
       if (!state.currentSession) return state;
-      const newAnswers = [...state.currentSession.answers];
-      newAnswers[action.payload.index] = action.payload.answer;
+      const answers = [...state.currentSession.answers];
+      answers[action.payload.index] = action.payload.answer;
       return {
         ...state,
-        currentSession: {
-          ...state.currentSession,
-          answers: newAnswers
-        }
+        currentSession: { ...state.currentSession, answers },
       };
-    
+    }
+
     case 'END_QUIZ':
       return { ...state, currentSession: null };
-    
+
+    /* -------------------------------------------------------------- */
+    /* STATISTICHE & SETTINGS                                        */
+    /* -------------------------------------------------------------- */
     case 'UPDATE_STATS':
       return { ...state, userStats: action.payload };
-    
+
     case 'UPDATE_SETTINGS':
       return { ...state, settings: action.payload };
-    
+
+    /* -------------------------------------------------------------- */
+    /* TOPICS FAVORITI                                               */
+    /* -------------------------------------------------------------- */
     case 'TOGGLE_FAVORITE':
       return {
         ...state,
-        topics: state.topics.map(topic =>
-          topic.id === action.payload
-            ? { ...topic, isFavorite: !topic.isFavorite }
-            : topic
-        )
+        topics: state.topics.map((t) =>
+          t.id === action.payload ? { ...t, isFavorite: !t.isFavorite } : t
+        ),
       };
-    
+
+    /* -------------------------------------------------------------- */
+    /* NAVIGAZIONE                                                   */
+    /* -------------------------------------------------------------- */
+    case 'SET_CURRENT_SCREEN':
+      return {
+        ...state,
+        currentScreen: action.payload.screen,
+        screenParams:  action.payload.params ?? null,
+      };
+
+    /* -------------------------------------------------------------- */
     default:
       return state;
   }
 }
 
+/* ------------------------------------------------------------------ */
+/* CONTEXT + HOOK                                                     */
+/* ------------------------------------------------------------------ */
+
 const QuizContext = createContext<{
-  state: QuizState;
-  dispatch: React.Dispatch<QuizAction>;
-  resetAllQuestions: () => void;
-  getFilteredQuestions: (type: 'all' | 'unanswered' | 'incorrect') => Question[];
+  state:               QuizState;
+  dispatch:            React.Dispatch<QuizAction>;
+  resetAllQuestions:   () => void;
+  getFilteredQuestions:(type: 'all' | 'unanswered' | 'incorrect') => Question[];
 } | null>(null);
 
 export const useQuiz = () => {
-  const context = useContext(QuizContext);
-  if (!context) {
-    throw new Error('useQuiz must be used within a QuizProvider');
-  }
-  return context;
+  const ctx = useContext(QuizContext);
+  if (!ctx) throw new Error('useQuiz must be used within a QuizProvider');
+  return ctx;
 };
 
-export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+/* ------------------------------------------------------------------ */
+/* PROVIDER                                                           */
+/* ------------------------------------------------------------------ */
+
+export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [state, dispatch] = useReducer(quizReducer, initialState);
 
+  /* -------------------------------------------------------------- */
+  /* UTILS                                                          */
+  /* -------------------------------------------------------------- */
   const resetAllQuestions = () => {
-    const resetStats = {
-      ...state.userStats,
-      answeredQuestions: {},
-      correctQuestions: {},
-      incorrectQuestions: {},
-      statsPerTopic: {},
-      lastUpdated: new Date()
-    };
-    dispatch({ type: 'UPDATE_STATS', payload: resetStats });
+    dispatch({
+      type: 'UPDATE_STATS',
+      payload: {
+        ...state.userStats,
+        answeredQuestions: {},
+        correctQuestions:  {},
+        incorrectQuestions:{},
+        statsPerTopic:     {},
+        lastUpdated:       new Date(),
+      },
+    });
   };
 
-  const getFilteredQuestions = (type: 'all' | 'unanswered' | 'incorrect') => {
+  const getFilteredQuestions = (
+    type: 'all' | 'unanswered' | 'incorrect'
+  ) => {
     switch (type) {
       case 'unanswered':
-        return state.questions.filter(q => !state.userStats.correctQuestions[q.id]);
+        return state.questions.filter(
+          (q) => !state.userStats.answeredQuestions[q.id]
+        );
       case 'incorrect':
-        return state.questions.filter(q => state.userStats.incorrectQuestions[q.id]);
+        return state.questions.filter(
+          (q) => state.userStats.incorrectQuestions[q.id]
+        );
       default:
         return state.questions;
     }
   };
 
+  /* -------------------------------------------------------------- */
+  /* LOAD                       (localStorage + files)              */
+  /* -------------------------------------------------------------- */
   useEffect(() => {
     const loadStoredData = () => {
       try {
-        const storedStats = localStorage.getItem('quizmaster_stats');
-        if (storedStats) {
-          const parsedStats = JSON.parse(storedStats);
-          const updatedStats = {
-            ...parsedStats,
-            answeredQuestions: parsedStats.answeredQuestions || {},
-            correctQuestions: parsedStats.correctQuestions || {},
-            incorrectQuestions: parsedStats.incorrectQuestions || {},
-            quizHistory: parsedStats.quizHistory || [],
-            statsPerTopic: parsedStats.statsPerTopic || {}
-          };
-          dispatch({ type: 'UPDATE_STATS', payload: updatedStats });
+        /* Stats --------------------------------------------------- */
+        const stats = localStorage.getItem('quizmaster_stats');
+        if (stats) {
+          const parsed = JSON.parse(stats);
+          dispatch({ type: 'UPDATE_STATS', payload: parsed });
         }
 
-        const storedSettings = localStorage.getItem('quizmaster_settings');
-        if (storedSettings) {
-          dispatch({ type: 'UPDATE_SETTINGS', payload: JSON.parse(storedSettings) });
+        /* Settings ------------------------------------------------ */
+        const settings = localStorage.getItem('quizmaster_settings');
+        if (settings) {
+          dispatch({ type: 'UPDATE_SETTINGS', payload: JSON.parse(settings) });
         }
 
-        const storedTopics = localStorage.getItem('quizmaster_topics');
-        if (storedTopics) {
-          dispatch({ type: 'LOAD_TOPICS', payload: JSON.parse(storedTopics) });
+        /* Topics -------------------------------------------------- */
+        const topics = localStorage.getItem('quizmaster_topics');
+        if (topics) {
+          dispatch({ type: 'LOAD_TOPICS', payload: JSON.parse(topics) });
         }
-      } catch (error) {
-        console.error('Error loading stored data:', error);
+      } catch (err) {
+        console.error('Error loading stored data', err);
       }
     };
 
     const loadQuestions = async () => {
+      dispatch({ type: 'SET_LOADING', payload: true });
       try {
-        dispatch({ type: 'SET_LOADING', payload: true });
         const questions = await loadQuestionsFromFiles();
         dispatch({ type: 'LOAD_QUESTIONS', payload: questions });
-        
+
+        /* Genera topics al primo avvio --------------------------- */
         if (state.topics.length === 0) {
           const topics = generateTopicsFromQuestions(questions);
           dispatch({ type: 'LOAD_TOPICS', payload: topics });
           localStorage.setItem('quizmaster_topics', JSON.stringify(topics));
         }
-      } catch (error) {
-        console.error('Error loading questions:', error);
+      } catch (err) {
+        console.error('Error loading questions', err);
       } finally {
         dispatch({ type: 'SET_LOADING', payload: false });
       }
@@ -193,13 +263,15 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     loadStoredData();
     loadQuestions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Save to localStorage when state changes
+  /* -------------------------------------------------------------- */
+  /* PERSISTENZA AUTOMATICA                                         */
+  /* -------------------------------------------------------------- */
   useEffect(() => {
-    if (state.userStats.totalQuizzes > 0) {
+    if (state.userStats.totalQuizzes > 0)
       localStorage.setItem('quizmaster_stats', JSON.stringify(state.userStats));
-    }
   }, [state.userStats]);
 
   useEffect(() => {
@@ -207,52 +279,58 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [state.settings]);
 
   useEffect(() => {
-    if (state.topics.length > 0) {
+    if (state.topics.length > 0)
       localStorage.setItem('quizmaster_topics', JSON.stringify(state.topics));
-    }
   }, [state.topics]);
 
+  /* -------------------------------------------------------------- */
+  /* RENDER                                                         */
+  /* -------------------------------------------------------------- */
   return (
-    <QuizContext.Provider value={{ state, dispatch, resetAllQuestions, getFilteredQuestions }}>
+    <QuizContext.Provider
+      value={{ state, dispatch, resetAllQuestions, getFilteredQuestions }}
+    >
       {children}
     </QuizContext.Provider>
   );
 };
 
+/* ------------------------------------------------------------------ */
+/* HELPERS                                                            */
+/* ------------------------------------------------------------------ */
+
 function generateTopicsFromQuestions(questions: Question[]): Topic[] {
-  const topicMap = new Map<string, { count: number; questions: Question[] }>();
-  
-  questions.forEach(question => {
-    if (!topicMap.has(question.topic)) {
-      topicMap.set(question.topic, { count: 0, questions: [] });
-    }
-    const topic = topicMap.get(question.topic)!;
-    topic.count++;
-    topic.questions.push(question);
+  /* Costruisci una mappa Topic -> domande */
+  const map = new Map<string, { count: number; questions: Question[] }>();
+  questions.forEach((q) => {
+    if (!map.has(q.topic)) map.set(q.topic, { count: 0, questions: [] });
+    const t = map.get(q.topic)!;
+    t.count += 1;
+    t.questions.push(q);
   });
 
-  const topicIcons: Record<string, string> = {
-    'SQL': '🗄️',
-    'Statistica': '📊',
-    'Tableau': '📈',
-    'Databricks': '⚡',
-    'DataLake2': '🏞️',
-    'Git': '🔧',
-    'NoSQL': '🍃',
-    'PowerBI': '📊',
-    'Python': '🐍',
-    'R': '📊',
-    'ML': '🤖',
-    'DeepLearning': '🧠'
+  const icons: Record<string, string> = {
+    SQL:          '🗄️',
+    Statistica:   '📊',
+    Tableau:      '📈',
+    Databricks:   '⚡',
+    DataLake2:    '🏞️',
+    Git:          '🔧',
+    NoSQL:        '🍃',
+    PowerBI:      '📊',
+    Python:       '🐍',
+    R:            '📊',
+    ML:           '🤖',
+    DeepLearning: '🧠',
   };
 
-  return Array.from(topicMap.entries()).map(([name, data]) => ({
-    id: name.toLowerCase(),
+  return Array.from(map.entries()).map(([name, data]) => ({
+    id:             name.toLowerCase(),
     name,
-    icon: topicIcons[name] || '📝',
-    description: `${data.count} domande disponibili`,
+    icon:           icons[name] || '📝',
+    description:    `${data.count} domande disponibili`,
     totalQuestions: data.count,
-    completed: 0,
-    isFavorite: false
+    completed:      0,
+    isFavorite:     false,
   }));
 }

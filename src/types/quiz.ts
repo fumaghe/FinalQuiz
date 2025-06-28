@@ -19,11 +19,14 @@ export interface QuizSession {
 
 export interface AnsweredQuestion {
   questionId: string;
+  question: string;
+  options: string[];
   userAnswer: number;
   correctAnswer: number;
   isCorrect: boolean;
   timestamp: Date;
   topic: string;
+  explanation: string;
 }
 
 export interface QuizHistory {

@@ -1,899 +1,799 @@
-1. Che cosa definisce il “Deep Learning” rispetto al Machine Learning tradizionale?  
+Che cosa definisce il “Deep Learning” rispetto al Machine Learning tradizionale?  
 A) Uso di modelli lineari  
 B) Uso di alberi decisionali  
 C) Uso di reti neurali profonde con più strati  
 D) Uso di regressione multipla  
-Risposta Corretta: C) Uso di reti neurali profonde con più strati  
-Spiegazione:  
-Il Deep Learning utilizza reti neurali artificiali composte da molti strati di neuroni per apprendere rappresentazioni gerarchiche dei dati, consentendo di ottenere prestazioni migliori su dati complessi come immagini e testo :contentReference[oaicite:0]{index=0}.
+Risposta Corretta: C  
+Spiegazione: Il Deep Learning utilizza reti neurali artificiali composte da molti strati di neuroni per apprendere rappresentazioni gerarchiche dei dati, consentendo di ottenere prestazioni migliori su dati complessi come immagini e testo.
 
-2. Quale struttura matematica viene utilizzata per rappresentare un’immagine RGB in input a una CNN?  
+Quale struttura matematica viene utilizzata per rappresentare un’immagine RGB in input a una CNN?  
 A) Vettore 1D  
 B) Matrice 2D  
 C) Tensore 3D  
 D) Tensore 4D  
-Risposta Corretta: C) Tensore 3D  
-Spiegazione:  
-Un’immagine a colori è rappresentata come un tensore tridimensionale (altezza × larghezza × canali RGB) per consentire alle CNN di operare sui singoli canali con filtri convoluzionali :contentReference[oaicite:1]{index=1}.
+Risposta Corretta: C  
+Spiegazione: Un’immagine a colori è rappresentata come un tensore tridimensionale (altezza × larghezza × canali RGB) per consentire alle CNN di operare sui singoli canali con filtri convoluzionali.
 
-3. Qual è il ruolo della funzione di attivazione ReLU in una rete neurale?  
+Qual è il ruolo della funzione di attivazione ReLU in una rete neurale?  
 A) Aumentare linearità  
 B) Introdurre non-linearità azzerando valori negativi  
 C) Normalizzare l’input  
 D) Ridurre la dimensionalità  
-Risposta Corretta: B) Introdurre non-linearità azzerando valori negativi  
-Spiegazione:  
-La ReLU (Rectified Linear Unit) trasforma qualsiasi input negativo in zero e mantiene invariati i valori positivi, introducendo la non-linearità necessaria per apprendere relazioni complesse :contentReference[oaicite:2]{index=2}.
+Risposta Corretta: B  
+Spiegazione: La ReLU trasforma qualsiasi input negativo in zero e mantiene invariati i valori positivi, introducendo la non-linearità necessaria per apprendere relazioni complesse.
 
-4. In che modo la Batch Normalization aiuta l’addestramento delle reti profonde?  
+In che modo la Batch Normalization aiuta l’addestramento delle reti profonde?  
 A) Elimina rumore dai dati  
 B) Standardizza l’output di ogni strato per stabilizzare il training  
 C) Riduce il numero di parametri  
 D) Aumenta il learning rate  
-Risposta Corretta: B) Standardizza l’output di ogni strato per stabilizzare il training  
-Spiegazione:  
-La Batch Normalization normalizza gli input di ogni livello per mantenere media zero e varianza uno, accelerando la convergenza e riducendo il problema dei gradienti scomparsi :contentReference[oaicite:3]{index=3}.
+Risposta Corretta: B  
+Spiegazione: La Batch Normalization normalizza gli input di ogni livello per mantenere media zero e varianza uno, accelerando la convergenza e riducendo il problema dei gradienti scomparsi.
 
-5. Quale metodo di ottimizzazione utilizza la media esponenziale dei gradienti e del quadrato dei gradienti?  
+Quale metodo di ottimizzazione utilizza la media esponenziale dei gradienti e del quadrato dei gradienti?  
 A) SGD  
 B) Adam  
 C) RMSprop  
 D) Adagrad  
-Risposta Corretta: B) Adam  
-Spiegazione:  
-Adam combina i vantaggi di Momentum e RMSprop mantenendo medie esponenziali sia dei gradienti sia dei loro quadrati per adattare dinamicamente il learning rate :contentReference[oaicite:4]{index=4}.
+Risposta Corretta: B  
+Spiegazione: Adam combina i vantaggi di Momentum e RMSprop mantenendo medie esponenziali sia dei gradienti sia dei loro quadrati per adattare dinamicamente il learning rate.
 
-6. Come si calcola la backward propagation in una rete neurale?  
+Come si calcola la backward propagation in una rete neurale?  
 A) Propagazione in avanti dei dati  
 B) Aggiornamento dei pesi casuale  
 C) Applicazione della regola della catena sulle derivate per aggiornare i pesi  
 D) Solo calcolo della loss  
-Risposta Corretta: C) Applicazione della regola della catena sulle derivate per aggiornare i pesi  
-Spiegazione:  
-La retropropagazione usa la regola della catena per calcolare le derivate parziali della funzione di perdita rispetto a ciascun peso, aggiornandoli per ridurre l’errore :contentReference[oaicite:5]{index=5}.
+Risposta Corretta: C  
+Spiegazione: La retropropagazione usa la regola della catena per calcolare le derivate parziali della funzione di perdita rispetto a ciascun peso, aggiornandoli per ridurre l’errore.
 
-7. Quale iperparametro controlla la dimensione dei passi nella discesa del gradiente?  
+Quale iperparametro controlla la dimensione dei passi nella discesa del gradiente?  
 A) Momentum  
 B) Learning rate  
 C) Batch size  
 D) Numero di epoche  
-Risposta Corretta: B) Learning rate  
-Spiegazione:  
-Il learning rate (η) determina di quanto vengono modificati i pesi ad ogni iterazione lungo la direzione opposta al gradiente :contentReference[oaicite:6]{index=6}.
+Risposta Corretta: B  
+Spiegazione: Il learning rate determina di quanto vengono modificati i pesi ad ogni iterazione lungo la direzione opposta al gradiente.
 
-8. Quale tecnica impedisce all’overfitting spegnendo casualmente neuroni durante l’addestramento?  
+Quale tecnica impedisce l’overfitting spegnendo casualmente neuroni durante l’addestramento?  
 A) L2 Regularization  
 B) Dropout  
 C) Batch Normalization  
 D) Data Augmentation  
-Risposta Corretta: B) Dropout  
-Spiegazione:  
-Il Dropout disattiva casualmente una frazione di unità nel layer durante il training, riducendo la dipendenza tra neuroni e migliorando la generalizzazione :contentReference[oaicite:7]{index=7}.
+Risposta Corretta: B  
+Spiegazione: Il Dropout disattiva casualmente una frazione di unità nel layer durante il training, riducendo la dipendenza tra neuroni e migliorando la generalizzazione.
 
-9. Quando si usa una rete LSTM piuttosto che una RNN semplice?  
+Quando si usa una rete LSTM piuttosto che una RNN semplice?  
 A) Per dati non sequenziali  
 B) Quando serve memoria a lungo termine e mitigazione dei vanishing gradients  
 C) Solo per immagini  
 D) Solo per regressione lineare  
-Risposta Corretta: B) Quando serve memoria a lungo termine e mitigazione dei vanishing gradients  
-Spiegazione:  
-Le LSTM introducono gate di input, forget e output per gestire quali informazioni mantenere o dimenticare, affrontando il problema dei vanishing gradients di RNN standard :contentReference[oaicite:8]{index=8}.
+Risposta Corretta: B  
+Spiegazione: Le LSTM introducono gate di input, forget e output per gestire quali informazioni mantenere o dimenticare, affrontando il problema dei vanishing gradients.
 
-10. Cos’è un Variational Autoencoder (VAE)?  
+Cos’è un Variational Autoencoder (VAE)?  
 A) Un autoencoder con rumore  
 B) Un modello probabilistico che codifica input in distribuzioni latenti  
 C) Un modello discriminativo  
 D) Un RNN bidirezionale  
-Risposta Corretta: B) Un modello probabilistico che codifica input in distribuzioni latenti  
-Spiegazione:  
-Il VAE estende l’autoencoder introducendo una componente probabilistica, apprendendo una distribuzione latente da cui campionare per generare nuovi dati :contentReference[oaicite:9]{index=9}.
+Risposta Corretta: B  
+Spiegazione: Il VAE estende l’autoencoder introducendo una componente probabilistica, apprendendo una distribuzione latente da cui campionare per generare nuovi dati.
 
-11. Quale architettura sfrutta meccanismi di self-attention per elaborare sequenze?  
+Quale architettura sfrutta meccanismi di self-attention per elaborare sequenze?  
 A) RNN  
 B) CNN  
 C) Transformer  
 D) Autoencoder  
-Risposta Corretta: C) Transformer  
-Spiegazione:  
-I Transformer utilizzano meccanismi di self-attention per consentire a ogni posizione di una sequenza di prestare attenzione a tutte le altre, migliorando la cattura di dipendenze a lungo termine :contentReference[oaicite:10]{index=10}.
+Risposta Corretta: C  
+Spiegazione: I Transformer utilizzano meccanismi di self-attention per consentire a ogni posizione di una sequenza di prestare attenzione a tutte le altre, migliorando la cattura di dipendenze a lungo termine.
 
-12. Che differenza c’è tra Xavier e He initialization?  
+Che differenza c’è tra Xavier e He initialization?  
 A) Xavier per ReLU, He per Sigmoid  
 B) Xavier utilizza varianza 2/(nin+nout), He utilizza 2/nin per ReLU  
 C) Nessuna differenza  
 D) Xavier solo per CNN  
-Risposta Corretta: B) Xavier utilizza varianza 2/(nin+nout), He utilizza 2/nin per ReLU  
-Spiegazione:  
-Xavier/Glorot bilancia la varianza tra input e output, mentre He initialization è ottimale per funzioni ReLU usando varianza 2/nin :contentReference[oaicite:11]{index=11}.
+Risposta Corretta: B  
+Spiegazione: Xavier bilancia la varianza tra input e output, mentre He initialization è ottimale per funzioni ReLU usando varianza 2/nin.
 
-13. Quale criterio di split nei nodi di un albero decisionale misura purezza usando la probabilità quadratica?  
+Quale criterio di split nei nodi di un albero decisionale misura purezza usando la probabilità quadratica?  
 A) Entropia  
 B) Gini Index  
 C) Information Gain  
 D) RSS  
-Risposta Corretta: B) Gini Index  
-Spiegazione:  
-Il Gini Index quantifica la probabilità di classificare erroneamente un’istanza se selezionata a caso nel nodo, usato nelle decision tree come CART :contentReference[oaicite:12]{index=12}.
+Risposta Corretta: B  
+Spiegazione: Il Gini Index quantifica la probabilità di classificare erroneamente un’istanza se selezionata a caso nel nodo.
 
-14. Quale componente di una CNN riduce la dimensionalità spaziale mantenendo le feature principali?  
+Quale componente di una CNN riduce la dimensionalità spaziale mantenendo le feature principali?  
 A) Layer Fully Connected  
 B) Strato di Pooling  
 C) Strato di Dropout  
 D) Batch Normalization  
-Risposta Corretta: B) Strato di Pooling  
-Spiegazione:  
-Il pooling (max o average) riduce larghezza e altezza dei feature map, mantenendo informazioni salienti e riducendo complessità computazionale :contentReference[oaicite:13]{index=13}.
+Risposta Corretta: B  
+Spiegazione: Il pooling (max o average) riduce larghezza e altezza dei feature map, mantenendo informazioni salienti e riducendo complessità computazionale.
 
-15. In un GAN, quale rete cerca di distinguere dati reali da quelli generati?  
+In un GAN, quale rete cerca di distinguere dati reali da quelli generati?  
 A) Generator  
 B) Discriminator  
 C) Autoencoder  
 D) Encoder  
-Risposta Corretta: B) Discriminator  
-Spiegazione:  
-Il Discriminatore valuta se un campione proviene dal dataset reale o dal Generatore, fornendo feedback per migliorare la qualità dei dati falsi generati :contentReference[oaicite:14]{index=14}.
+Risposta Corretta: B  
+Spiegazione: Il Discriminatore valuta se un campione proviene dal dataset reale o dal Generatore, fornendo feedback per migliorare la qualità dei dati generati.
 
-16. Quale funzione di perdita è tipica per la classificazione multiclass?  
+Quale funzione di perdita è tipica per la classificazione multiclass?  
 A) MSE  
 B) Hinge Loss  
 C) Cross-Entropy  
 D) MAE  
-Risposta Corretta: C) Cross-Entropy  
-Spiegazione:  
-La cross-entropy misura la distanza tra le distribuzioni di probabilità previste e reali, risultando molto efficace in problematiche di classificazione :contentReference[oaicite:15]{index=15}.
+Risposta Corretta: C  
+Spiegazione: La cross-entropy misura la distanza tra le distribuzioni di probabilità previste e reali, risultando molto efficace in classificazione.
 
-17. Quando conviene usare RMSprop invece di Adagrad?  
+Quando conviene usare RMSprop invece di Adagrad?  
 A) Quando Adagrad riduce troppo il learning rate a lungo termine  
 B) Quando non ci sono GPU  
 C) Solo per regressione  
 D) RMSprop non adatta learning rate  
-Risposta Corretta: A) Quando Adagrad riduce troppo il learning rate a lungo termine  
-Spiegazione:  
-RMSprop mantiene una media esponenziale dei gradienti al quadrato, evitando la decrescita eccessiva del learning rate tipica di Adagrad :contentReference[oaicite:16]{index=16}.
+Risposta Corretta: A  
+Spiegazione: RMSprop mantiene una media esponenziale dei gradienti al quadrato, evitando la decrescita eccessiva del learning rate tipica di Adagrad.
 
-18. Cosa rappresenta lo “support” nel classification report?  
+Cosa rappresenta lo “support” nel classification report?  
 A) Numero di FP  
 B) Numero di veri positivi  
 C) Numero di campioni reali per classe  
 D) Numero di TN  
-Risposta Corretta: C) Numero di campioni reali per classe  
-Spiegazione:  
-Il support indica quante istanze di ogni classe sono presenti nel dataset di test, utile per interpretare precision e recall :contentReference[oaicite:17]{index=17}.
+Risposta Corretta: C  
+Spiegazione: Il support indica quante istanze di ogni classe sono presenti nel dataset di test, utile per interpretare precision e recall.
 
-19. Quale layer di un RNN standard ha difficoltà con dipendenze a lungo termine?  
+Quale layer di un RNN standard ha difficoltà con dipendenze a lungo termine?  
 A) LSTM  
 B) GRU  
 C) Simple RNN  
 D) CNN  
-Risposta Corretta: C) Simple RNN  
-Spiegazione:  
-Le RNN semplici soffrono del problema dei vanishing gradients su sequenze lunghe, perdendo informazioni a lungo termine :contentReference[oaicite:18]{index=18}.
+Risposta Corretta: C  
+Spiegazione: Le RNN semplici soffrono del problema dei vanishing gradients su sequenze lunghe, perdendo informazioni a lungo termine.
 
-20. In quale scenario è ideale un modello RBF Network?  
+In quale scenario è ideale un modello RBF Network?  
 A) Dati sequenziali  
 B) Pattern classification con funzioni di attivazione basate sulla distanza  
 C) Generazione di immagini  
 D) Batch processing  
-Risposta Corretta: B) Pattern classification con funzioni di attivazione basate sulla distanza  
-Spiegazione:  
-Le RBF utilizzano funzioni radiali come Gaussiane per misurare la distanza tra input e centri, efficaci in classificazione non lineare :contentReference[oaicite:19]{index=19}.
+Risposta Corretta: B  
+Spiegazione: Le RBF utilizzano funzioni radiali come Gaussiane per misurare la distanza tra input e centri, efficaci in classificazione non lineare.
 
-21. Cos’è il momentum coefficient (β) in Gradient Descent with Momentum?  
+Cos’è il momentum coefficient (β) in Gradient Descent with Momentum?  
 A) Learning rate iniziale  
 B) Frazione di memorizzazione degli aggiornamenti precedenti  
 C) Numero di epoche  
 D) Batch size  
-Risposta Corretta: B) Frazione di memorizzazione degli aggiornamenti precedenti  
-Spiegazione:  
-Il parametro β (tipicamente 0.9) determina quanto il passo corrente incorpora la passata velocità dei gradienti per accelerare la convergenza :contentReference[oaicite:20]{index=20}.
+Risposta Corretta: B  
+Spiegazione: Il parametro β (tipicamente 0.9) determina quanto il passo corrente incorpora la velocità dei gradienti precedenti per accelerare la convergenza.
 
-22. Quale tecnica riduce la varianza dei gradienti usando piccoli lotti di dati?  
+Quale tecnica riduce la varianza dei gradienti usando piccoli lotti di dati?  
 A) Batch Gradient Descent  
 B) Mini-Batch Gradient Descent  
 C) Stochastic Gradient Descent  
 D) Full Batch  
-Risposta Corretta: B) Mini-Batch Gradient Descent  
-Spiegazione:  
-Il mini-batch usa piccoli sottoinsiemi del dataset per calcolare gradienti meno rumorosi rispetto a SGD e più efficienti rispetto al full batch :contentReference[oaicite:21]{index=21}.
+Risposta Corretta: B  
+Spiegazione: Il mini-batch usa piccoli sottoinsiemi del dataset per calcolare gradienti meno rumorosi rispetto a SGD e più efficienti rispetto al full batch.
 
-23. Come si evita il problema degli exploding gradients?  
+Come si evita il problema degli exploding gradients?  
 A) Aumentando il learning rate  
 B) Gradient clipping  
 C) Usando solo ReLU  
 D) Aumentando batch size  
-Risposta Corretta: B) Gradient clipping  
-Spiegazione:  
-Il gradient clipping limita in norma il valore dei gradienti per evitare aggiornamenti troppo grandi durante la retropropagazione :contentReference[oaicite:22]{index=22}.
+Risposta Corretta: B  
+Spiegazione: Il gradient clipping limita in norma il valore dei gradienti per evitare aggiornamenti troppo grandi durante la retropropagazione.
 
-24. Quale network va usato per riconoscimento vocale in tempo reale?  
+Quale network va usato per riconoscimento vocale in tempo reale?  
 A) FNN  
 B) CNN  
 C) RNN (LSTM/GRU)  
 D) GAN  
-Risposta Corretta: C) RNN (LSTM/GRU)  
-Spiegazione:  
-Le architetture RNN con gating come LSTM o GRU sono ideali per sequenze audio, mantenendo contesto temporale per il riconoscimento vocale :contentReference[oaicite:23]{index=23}.
+Risposta Corretta: C  
+Spiegazione: Le architetture RNN con gating come LSTM o GRU sono ideali per sequenze audio, mantenendo contesto temporale per il riconoscimento vocale.
 
-25. In che modo una CNN ottiene l’invarianza traslazionale?  
+In che modo una CNN ottiene l’invarianza traslazionale?  
 A) Dropout  
 B) Convolution + pooling  
 C) Batch Normalization  
 D) Fully Connected layers  
-Risposta Corretta: B) Convolution + pooling  
-Spiegazione:  
-I filtri convoluzionali rilevano pattern indipendentemente dalla posizione mentre il pooling riduce sensibilità locale, garantendo invarianza allo spostamento :contentReference[oaicite:24]{index=24}.
+Risposta Corretta: B  
+Spiegazione: I filtri convoluzionali rilevano pattern indipendentemente dalla posizione mentre il pooling riduce sensibilità locale, garantendo invarianza allo spostamento.
 
-26. Quale concetto descrive la dimensione del batch nelle reti neurali?  
+Quale concetto descrive la dimensione del batch nelle reti neurali?  
 A) Numero totale di parametri  
 B) Numero di esempi usati per un aggiornamento dei pesi  
 C) Numero di epoche  
 D) Numero di strati  
-Risposta Corretta: B) Numero di esempi usati per un aggiornamento dei pesi  
-Spiegazione:  
-Il batch size determina quanti campioni di training vengono processati prima di aggiornare i pesi, influenzando la stabilità e la velocità del training :contentReference[oaicite:25]{index=25}.
+Risposta Corretta: B  
+Spiegazione: Il batch size determina quanti campioni di training vengono processati prima di aggiornare i pesi, influenzando la stabilità e la velocità del training.
 
-27. Quando si preferisce usare Tanh piuttosto che Sigmoid?  
+Quando si preferisce usare Tanh piuttosto che Sigmoid?  
 A) Per output binari  
 B) Quando si vuole attivazione centrata su zero  
 C) Per ridurre dropout  
 D) Per supporti multipli  
-Risposta Corretta: B) Quando si vuole attivazione centrata su zero  
-Spiegazione:  
-Tanh mappa input in [−1, 1], centrando le attivazioni attorno a zero, utile in RNN per accelerare la convergenza rispetto a Sigmoid :contentReference[oaicite:26]{index=26}.
+Risposta Corretta: B  
+Spiegazione: Tanh mappa input in [−1, 1], centrando le attivazioni attorno a zero, utile in RNN per accelerare la convergenza rispetto a Sigmoid.
 
-28. Che cos’è il noise injection negli autoencoder?  
+Che cos’è il noise injection negli autoencoder?  
 A) Aggiunta di rumore ai pesi  
 B) Aggiunta di rumore ai dati di input per robustezza  
 C) Aggiunta di rumore alle etichette  
 D) Rumore nel learning rate  
-Risposta Corretta: B) Aggiunta di rumore ai dati di input per robustezza  
-Spiegazione:  
-Il denoising autoencoder introduce rumore negli input durante l’addestramento per far imparare alla rete rappresentazioni più robuste :contentReference[oaicite:27]{index=27}.
+Risposta Corretta: B  
+Spiegazione: Il denoising autoencoder introduce rumore negli input durante l’addestramento per far imparare alla rete rappresentazioni più robuste.
 
-29. Quale layer in un Transformer calcola pesi di attenzione tra tutte le posizioni di una sequenza?  
+Quale layer in un Transformer calcola pesi di attenzione tra tutte le posizioni di una sequenza?  
 A) Convolutional Layer  
 B) Self-Attention Layer  
 C) LSTM Layer  
 D) Pooling Layer  
-Risposta Corretta: B) Self-Attention Layer  
-Spiegazione:  
-Il self-attention calcola affinità tra ogni coppia di posizioni nella sequenza, permettendo al modello di cogliere dipendenze su lunghe distanze :contentReference[oaicite:28]{index=28}.
+Risposta Corretta: B  
+Spiegazione: Il self-attention calcola affinità tra ogni coppia di posizioni nella sequenza, permettendo al modello di cogliere dipendenze su lunghe distanze.
 
-30. Cosa misura l’F1-Score in classificazione?  
+Cosa misura l’F1-Score in classificazione?  
 A) Somma di precision e recall  
 B) Media aritmetica di precision e recall  
 C) Media armonica di precision e recall  
 D) Differenza di precision e recall  
-Risposta Corretta: C) Media armonica di precision e recall  
-Spiegazione:  
-L’F1-Score è la media armonica tra precision e recall, bilanciando il trade-off e risultando utile con dataset sbilanciati :contentReference[oaicite:29]{index=29}.
+Risposta Corretta: C  
+Spiegazione: L’F1-Score è la media armonica tra precision e recall, bilanciando il trade-off e risultando utile con dataset sbilanciati.
 
-31. Quale vantaggio offrono i tensori di ordine superiore (4D) in CNN?  
+Quale vantaggio offrono i tensori di ordine superiore (4D) in CNN?  
 A) Permettono batch processing di immagini a colori  
 B) Riduzione del numero di parametri  
 C) Aumentano dropout rate  
 D) Disabilitano pooling  
-Risposta Corretta: A) Permettono batch processing di immagini a colori  
-Spiegazione:  
-I tensori 4D ([batch, height, width, channels]) consentono di processare multiple immagini RGB in parallelo durante il training :contentReference[oaicite:30]{index=30}.
+Risposta Corretta: A  
+Spiegazione: I tensori 4D ([batch, height, width, channels]) consentono di processare multiple immagini RGB in parallelo durante il training.
 
-32. In che modo Adagrad adatta il learning rate?  
+In che modo Adagrad adatta il learning rate?  
 A) In base alla seconda derivata  
 B) Diminuisce rate per parametri con gradienti frequenti  
 C) Aumenta rate per gradienti grandi  
 D) Mantiene un rate fisso  
-Risposta Corretta: B) Diminuisce rate per parametri con gradienti frequenti  
-Spiegazione:  
-Adagrad riduce il learning rate per parametri con grandi gradienti cumulativi, permettendo di adattarsi automaticamente alle caratteristiche dei dati :contentReference[oaicite:31]{index=31}.
+Risposta Corretta: B  
+Spiegazione: Adagrad riduce il learning rate per parametri con grandi gradienti cumulativi, permettendo di adattarsi automaticamente alle caratteristiche dei dati.
 
-33. Quale tipo di rete è più adatto alla segmentazione semantica delle immagini?  
+Quale tipo di rete è più adatto alla segmentazione semantica delle immagini?  
 A) FNN  
 B) GAN  
 C) CNN con upsampling/deconvoluzione  
 D) RNN  
-Risposta Corretta: C) CNN con upsampling/deconvoluzione  
-Spiegazione:  
-Le CNN con layer di deconvoluzione o upsampling (es. U-Net) permettono di ricostruire mappe di predizione della stessa risoluzione dell’input per segmentazione :contentReference[oaicite:32]{index=32}.
+Risposta Corretta: C  
+Spiegazione: Le CNN con layer di deconvoluzione o upsampling (es. U-Net) permettono di ricostruire mappe di predizione della stessa risoluzione dell’input per segmentazione.
 
-34. Quale funzione di perdita è usata nelle GAN per il Discriminatore?  
+Quale funzione di perdita è usata nelle GAN per il Discriminatore?  
 A) MSE  
 B) Binary Cross-Entropy  
 C) Hinge Loss  
 D) MAE  
-Risposta Corretta: B) Binary Cross-Entropy  
-Spiegazione:  
-Il Discriminatore ottimizza la binary cross-entropy per distinguere tra esempi reali e generati, migliorando la capacità di differenziazione :contentReference[oaicite:33]{index=33}.
+Risposta Corretta: B  
+Spiegazione: Il Discriminatore ottimizza la binary cross-entropy per distinguere tra esempi reali e generati, migliorando la capacità di differenziazione.
 
-35. Cosa indica il termine “tensorial calculus” nel deep learning?  
+Cosa indica il termine “tensorial calculus” nel deep learning?  
 A) Solo matrici  
 B) Operazioni su tensori ND per gestire input complessi  
 C) Solo vettori  
 D) Nessuna operazione  
-Risposta Corretta: B) Operazioni su tensori ND per gestire input complessi  
-Spiegazione:  
-Il calcolo tensoriale generalizza operazioni di algebra lineare su tensori di ordine superiore (ND), fondamentali per elaborare dati multidimensionali :contentReference[oaicite:34]{index=34}.
+Risposta Corretta: B  
+Spiegazione: Il calcolo tensoriale generalizza operazioni di algebra lineare su tensori di ordine superiore, fondamentali per elaborare dati multidimensionali.
 
-36. Come si evita l’overfitting con regolarizzazione L2?  
+Come si evita l’overfitting con regolarizzazione L2?  
 A) Aggiungendo dropout  
 B) Penalizzando grandezza dei pesi tramite termine λ∑w²  
 C) Aumentando batch size  
 D) Abbassando il learning rate  
-Risposta Corretta: B) Penalizzando grandezza dei pesi tramite termine λ∑w²  
-Spiegazione:  
-La regolarizzazione L2 (weight decay) aggiunge una penalità proporzionale al quadrato dei pesi, spingendoli verso valori piccoli e riducendo l’overfitting :contentReference[oaicite:35]{index=35}.
+Risposta Corretta: B  
+Spiegazione: La regolarizzazione L2 (weight decay) aggiunge una penalità proporzionale al quadrato dei pesi, spingendoli verso valori piccoli e riducendo l’overfitting.
 
-37. In quale fase di training si calcola la loss function?  
+In quale fase di training si calcola la loss function?  
 A) Solo prima del training  
 B) Durante il forward pass confrontando output con target  
 C) Solo dopo l’addestramento  
 D) Solo nel backward pass  
-Risposta Corretta: B) Durante il forward pass confrontando output con target  
-Spiegazione:  
-Durante il forward pass la rete produce una previsione che viene confrontata con il valore reale tramite la loss function per calcolare l’errore :contentReference[oaicite:36]{index=36}.
+Risposta Corretta: B  
+Spiegazione: Durante il forward pass la rete produce una previsione che viene confrontata con il valore reale tramite la loss function per calcolare l’errore.
 
-38. Quale scenario beneficia di un Transformer rispetto a una RNN?  
+Quale scenario beneficia di un Transformer rispetto a una RNN?  
 A) Piccole sequenze  
 B) Lunghe sequenze con dipendenze a lungo termine e addestramento parallelo  
 C) Dati tabellari  
 D) Regressione lineare  
-Risposta Corretta: B) Lunghe sequenze con dipendenze a lungo termine e addestramento parallelo  
-Spiegazione:  
-I Transformer gestiscono relazioni su lunghe distanze tramite self-attention e sfruttano parallelismo nei calcoli, superando i limiti sequenziali delle RNN :contentReference[oaicite:37]{index=37}.
+Risposta Corretta: B  
+Spiegazione: I Transformer gestiscono relazioni su lunghe distanze tramite self-attention e parallelismo, superando i limiti delle RNN.
 
-39. Cosa indica “tensor rank” in algebra multilineare?  
+Cosa indica “tensor rank” in algebra multilineare?  
 A) Numero di elementi  
 B) Numero di dimensioni di un tensore  
 C) Batch size  
 D) Numero di gradienti  
-Risposta Corretta: B) Numero di dimensioni di un tensore  
-Spiegazione:  
-Il tensor rank (ordine) è il numero di indici necessari per individuare ogni elemento, corrispondente al numero di assi del tensore :contentReference[oaicite:38]{index=38}.
+Risposta Corretta: B  
+Spiegazione: Il tensor rank è il numero di indici necessari per individuare ogni elemento, corrispondente al numero di assi del tensore.
 
-40. Quale strato in una CNN è tipicamente seguito da uno strato Fully Connected?  
+Quale strato in una CNN è tipicamente seguito da uno strato Fully Connected?  
 A) Convolutional  
 B) Pooling  
 C) Flatten  
 D) Dropout  
-Risposta Corretta: C) Flatten  
-Spiegazione:  
-Il layer Flatten trasforma i feature map multi-dimensionali in un vettore 1D per poterli alimentare agli strati fully connected :contentReference[oaicite:39]{index=39}.
+Risposta Corretta: C  
+Spiegazione: Il layer Flatten trasforma i feature map multi-dimensionali in un vettore 1D per poterli alimentare agli strati fully connected.
 
-41. Quale meccanismo caratterizza gli LSTM?  
+Quale meccanismo caratterizza gli LSTM?  
 A) Solo input gate  
 B) Input, forget e output gate  
 C) Solo hidden state  
 D) Nessun gate  
-Risposta Corretta: B) Input, forget e output gate  
-Spiegazione:  
-Gli LSTM contengono tre gate che regolano quali informazioni mantenere, dimenticare e trasmettere, consentendo apprendimento di lungo termine :contentReference[oaicite:40]{index=40}.
+Risposta Corretta: B  
+Spiegazione: Gli LSTM contengono tre gate che regolano quali informazioni mantenere, dimenticare e trasmettere, consentendo apprendimento di lungo termine.
 
-42. Per quale scopo si usa la funzione Softmax all’output di un classificatore multiclass?  
+Per quale scopo si usa la funzione Softmax all’output di un classificatore multiclass?  
 A) Normalizzare input  
 B) Convertire logit in probabilità sommate a uno  
 C) Ridurre dimensioni  
 D) Aumentare batch size  
-Risposta Corretta: B) Convertire logit in probabilità sommate a uno  
-Spiegazione:  
-Softmax trasforma un vettore di score reali in una distribuzione di probabilità su più classi, garantendo somma pari a uno :contentReference[oaicite:41]{index=41}.
+Risposta Corretta: B  
+Spiegazione: Softmax trasforma un vettore di score reali in una distribuzione di probabilità su più classi, garantendo somma pari a uno.
 
-43. Cosa definisce un RNN bidirezionale (BiRNN)?  
+Cosa definisce un RNN bidirezionale (BiRNN)?  
 A) Elaborazione solo forward  
-B) Elaborazione sia forward che backward lungo la sequenza  
+B) Elaborazione sia forward che backward  
 C) Solo backward  
 D) Nessuna memoria  
-Risposta Corretta: B) Elaborazione sia forward che backward lungo la sequenza  
-Spiegazione:  
-Le BiRNN combinano un RNN diretto e uno inverso, catturando contesto sia passato che futuro per ciascun passo della sequenza :contentReference[oaicite:42]{index=42}.
+Risposta Corretta: B  
+Spiegazione: Le BiRNN combinano un RNN diretto e uno inverso, catturando contesto sia passato che futuro per ciascun elemento della sequenza.
 
-44. In quale contesto si usa un VAE?  
+In quale contesto si usa un VAE?  
 A) Classificazione supervisionata  
 B) Generazione di nuovi esempi realistici campionando dallo spazio latente  
 C) Regressione lineare  
 D) Clustering  
-Risposta Corretta: B) Generazione di nuovi esempi realistici campionando dallo spazio latente  
-Spiegazione:  
-Il VAE apprende una distribuzione latente continua dai dati di training, da cui campionare per generare nuovi esempi simili :contentReference[oaicite:43]{index=43}.
+Risposta Corretta: B  
+Spiegazione: Il VAE apprende una distribuzione latente continua dai dati di training, da cui campionare per generare nuovi esempi simili.
 
-45. Quale proprietà rende i Transformer più scalabili delle RNN?  
+Quale proprietà rende i Transformer più scalabili delle RNN?  
 A) Meno parametri  
 B) Parallelismo nel calcolo dell’attenzione  
 C) Solo ReLU  
 D) Solo Softmax  
-Risposta Corretta: B) Parallelismo nel calcolo dell’attenzione  
-Spiegazione:  
-I Transformer calcolano self-attention su tutte le posizioni in parallelo, eliminando la dipendenza sequenziale delle RNN e accelerando il training :contentReference[oaicite:44]{index=44}.
+Risposta Corretta: B  
+Spiegazione: I Transformer calcolano self-attention su tutte le posizioni in parallelo, eliminando la dipendenza sequenziale delle RNN e accelerando il training.
 
-46. Quando si usa Early Stopping nel training?  
+Quando si usa Early Stopping nel training?  
 A) Per aumentare batch size  
 B) Per fermare il training quando il validation loss non migliora  
 C) Per ridurre il dimensionamento del modello  
 D) Per regolarizzare i dati  
-Risposta Corretta: B) Per fermare il training quando il validation loss non migliora  
-Spiegazione:  
-L’Early Stopping monitora le prestazioni sul validation set e interrompe l’allenamento al plateau o peggioramento, prevenendo overfitting :contentReference[oaicite:45]{index=45}.
+Risposta Corretta: B  
+Spiegazione: L’Early Stopping monitora le prestazioni sul validation set e interrompe l’allenamento al plateau o peggioramento, prevenendo overfitting.
 
-47. Quale metodo di encoding trasforma categorie in colonne binarie?  
+Quale metodo di encoding trasforma categorie in colonne binarie?  
 A) Label Encoding  
 B) One-Hot Encoding  
 C) Embedding Layer  
 D) Tanh  
-Risposta Corretta: B) One-Hot Encoding  
-Spiegazione:  
-One-Hot crea una colonna per ogni categoria impostando 1 se presente, 0 altrimenti, usato per rappresentare attributi categorici nei modelli :contentReference[oaicite:46]{index=46}.
+Risposta Corretta: B  
+Spiegazione: One-Hot crea una colonna per ogni categoria impostando 1 se presente e 0 altrimenti, usato per rappresentare attributi categorici nei modelli.
 
-48. Quale ottimizzatore converge più rapidamente in presenza di gradienti rumorosi?  
+Quale ottimizzatore converge più rapidamente in presenza di gradienti rumorosi?  
 A) SGD puro  
 B) Adam  
 C) Adagrad  
-D) None  
-Risposta Corretta: B) Adam  
-Spiegazione:  
-Adam regola dinamicamente il learning rate e utilizza momentum, risultando efficace e stabile anche con gradienti rumorosi :contentReference[oaicite:47]{index=47}.
+D) Nessuno  
+Risposta Corretta: B  
+Spiegazione: Adam regola dinamicamente il learning rate e utilizza momentum, risultando efficace e stabile anche con gradienti rumorosi.
 
-49. Quale rete usa filtri convoluzionali 1D?  
+Quale rete usa filtri convoluzionali 1D?  
 A) CNN per testo/time series  
 B) RNN  
 C) Transformer  
 D) GAN  
-Risposta Corretta: A) CNN per testo/time series  
-Spiegazione:  
-Le CNN 1D applicano filtri lungo la dimensione temporale o testuale, catturando pattern locali in sequenze di testo o segnali :contentReference[oaicite:48]{index=48}.
+Risposta Corretta: A  
+Spiegazione: Le CNN 1D applicano filtri lungo la dimensione temporale o testuale, catturando pattern locali in sequenze di testo o segnali.
 
-50. Quale tecnica di regolarizzazione usa rumore gaussiano sui pesi?  
+Quale tecnica di regolarizzazione usa rumore gaussiano sui pesi?  
 A) Dropout  
 B) Weight Noise Injection  
 C) L1 Regularization  
 D) Batch Normalization  
-Risposta Corretta: B) Weight Noise Injection  
-Spiegazione:  
-L’weight noise injection aggiunge rumore gaussiano direttamente ai pesi durante l’addestramento per rendere il modello più robusto :contentReference[oaicite:49]{index=49}.
+Risposta Corretta: B  
+Spiegazione: Weight Noise Injection aggiunge rumore gaussiano direttamente ai pesi durante l’addestramento per rendere il modello più robusto.  
 
-51. In un Transformer, quale tecnica utilizza mascheramento causale per prevenire che ogni posizione “veda” le future durante l’addestramento?  
+In un Transformer, quale tecnica utilizza mascheramento causale per prevenire che ogni posizione “veda” le future durante l’addestramento?  
 A) Positional Encoding  
 B) Self-Attention Bidirezionale  
 C) Masked Self-Attention  
 D) Layer Normalization  
-Risposta Corretta: C) Masked Self-Attention  
-Spiegazione:  
-Il masked self-attention applica una maschera triangolare per impedire a ogni token di influenzare quelli successivi, garantendo causalità nelle sequenze generate.
+Risposta Corretta: C  
+Spiegazione: Il masked self-attention applica una maschera triangolare per impedire a ogni token di influenzare quelli successivi, garantendo causalità nelle sequenze generate.
 
-52. Quale variante di attention normalizza i pesi di attenzione all’interno di ciascuna testa nel Transformer?  
+Quale variante di attention normalizza i pesi di attenzione all’interno di ciascuna testa nel Transformer?  
 A) Softmax sull’intera matrice  
 B) Softmax per riga  
 C) Sigmoid per colonna  
 D) ReLU su bilanciamento  
-Risposta Corretta: B) Softmax per riga  
-Spiegazione:  
-Ad ogni testa di self-attention si applica un Softmax riga-wise sui pesi di similarità per ottenere distribuzioni di probabilità condizionate.
+Risposta Corretta: B  
+Spiegazione: Ad ogni testa di self-attention si applica un Softmax riga-wise sui pesi di similarità per ottenere distribuzioni di probabilità condizionate.
 
-53. Cos’è il “warmup” del learning rate nei modelli Transformer?  
+Cos’è il “warmup” del learning rate nei modelli Transformer?  
 A) Fase di riscaldamento dei GPU  
 B) Aumento lineare iniziale del LR seguito da decrescita  
 C) Azzeramento del LR nei primi epoch  
 D) Aumento esponenziale del LR  
-Risposta Corretta: B) Aumento lineare iniziale del LR seguito da decrescita  
-Spiegazione:  
-Il warmup prevede un graduale aumento iniziale del learning rate per stabilizzare l’inizio del training, poi si applica un decay basato sulla lunghezza di addestramento.
+Risposta Corretta: B  
+Spiegazione: Il warmup prevede un graduale aumento iniziale del learning rate per stabilizzare l’inizio del training, poi si applica un decay basato sulla lunghezza di addestramento.
 
-54. Quale metodo di regularizzazione è introdotto specificamente nei Transformers per ridurre l’overfitting nelle matrici Q/K/V?  
+Quale metodo di regularizzazione è introdotto specificamente nei Transformers per ridurre l’overfitting nelle matrici Q/K/V?  
 A) DropPath  
 B) Label Smoothing  
 C) Attention Dropout  
 D) Layer Dropout  
-Risposta Corretta: C) Attention Dropout  
-Spiegazione:  
-Si applica dropout direttamente sui pesi di attenzione (after Softmax) per prevenire sovradipendenza su pochi elementi di contesto.
+Risposta Corretta: C  
+Spiegazione: Si applica dropout direttamente sui pesi di attenzione (after Softmax) per prevenire sovradipendenza su pochi elementi di contesto.
 
-55. In un modello BERT, quali tokens speciali identificano l’inizio e la separazione delle frasi?  
+In un modello BERT, quali tokens speciali identificano l’inizio e la separazione delle frasi?  
 A) [START], [SEP]  
 B) [CLS], [SEP]  
 C) [BOS], [EOS]  
 D) <s>, </s>  
-Risposta Corretta: B) [CLS], [SEP]  
-Spiegazione:  
-[CLS] viene mappato all’inizio di ogni input per task di classificazione; [SEP] separa coppie di frasi o segna la fine.
+Risposta Corretta: B  
+Spiegazione: [CLS] viene mappato all’inizio di ogni input per task di classificazione; [SEP] separa coppie di frasi o segna la fine.
 
-56. Come vengono calcolate le rappresentazioni posizionali nel Transformer standard?  
+Come vengono calcolate le rappresentazioni posizionali nel Transformer standard?  
 A) Embedding appreso  
 B) Funzioni sinusoidali e cosinusoidali  
 C) One-hot per indice  
 D) Parametri fissi unitari  
-Risposta Corretta: B) Funzioni sinusoidali e cosinusoidali  
-Spiegazione:  
-Si usano formule sinus/cosinus con frequenze diverse per ogni dimensione, permettendo al modello di inferire relazioni posizionali.
+Risposta Corretta: B  
+Spiegazione: Si usano formule sinus/cosinus con frequenze diverse per ogni dimensione, permettendo al modello di inferire relazioni posizionali.
 
-57. Cosa distingue un LayerNorm da BatchNorm nelle Reti Deep?  
+Cosa distingue un LayerNorm da BatchNorm nelle Reti Deep?  
 A) Normalizza lungo batch  
 B) Normalizza lungo feature per singolo esempio  
 C) Non usa parametri appresi  
 D) Rimuove dipendenza dallo spazio dei canali  
-Risposta Corretta: B) Normalizza lungo feature per singolo esempio  
-Spiegazione:  
-LayerNorm calcola media e deviazione su tutte le caratteristiche di un singolo sample, ideale per modelli sequenziali dove il batch può cambiare.
+Risposta Corretta: B  
+Spiegazione: LayerNorm calcola media e deviazione su tutte le caratteristiche di un singolo sample, ideale per modelli sequenziali dove il batch può cambiare.
 
-58. Quale tecnica di pruning dinamico elimina connessioni deboli durante il training?  
+Quale tecnica di pruning dinamico elimina connessioni deboli durante il training?  
 A) Magnitude-based Static Pruning  
 B) Lottery Ticket Hypothesis  
 C) Dynamic Sparse Training  
 D) Gradient Pruning  
-Risposta Corretta: C) Dynamic Sparse Training  
-Spiegazione:  
-DST modifica attivamente la maschera di sparseness in base ai gradienti, mantenendo solo connessioni rilevanti e riattivando altre quando necessario.
+Risposta Corretta: C  
+Spiegazione: DST modifica attivamente la maschera di sparseness in base ai gradienti, mantenendo solo connessioni rilevanti e riattivando altre quando necessario.
 
-59. In un autoencoder variazionale, come si ottiene la riproducibilità durante il campionamento latente?  
+In un autoencoder variazionale, come si ottiene la riproducibilità durante il campionamento latente?  
 A) Fissando il seed di numpy  
 B) Usando il trick di ri-parametrizzazione  
 C) Aumentando il batch size  
 D) Applicando un dropout costante  
-Risposta Corretta: B) Usando il trick di ri-parametrizzazione  
-Spiegazione:  
-La ri-parametrizzazione esprime z = μ + σ·ε con ε ∼ N(0,I), separando il rumore casuale dalla parte differenziabile.
+Risposta Corretta: B  
+Spiegazione: La ri-parametrizzazione esprime z = μ + σ·ε con ε ∼ N(0,I), separando il rumore casuale dalla parte differenziabile.
 
-60. Quale criterio di stopping viene usato nelle tecniche di early stopping basate su plateau?  
+Quale criterio di stopping viene usato nelle tecniche di early stopping basate su plateau?  
 A) Numero fisso di epoch  
 B) Nessuna riduzione di validation loss per k iterazioni  
 C) Massimo validation accuracy raggiunto  
 D) Soglia di gradient norm inferiore a ε  
-Risposta Corretta: B) Nessuna riduzione di validation loss per k iterazioni  
-Spiegazione:  
-Si interrompe il training se la perdita di validazione non migliora per un numero prestabilito di step.
+Risposta Corretta: B  
+Spiegazione: Si interrompe il training se la perdita di validazione non migliora per un numero prestabilito di step.
 
-61. Nelle architetture GAN avanzate, cosa introduce il “gradient penalty” in WGAN-GP?  
+Nelle architetture GAN avanzate, cosa introduce il “gradient penalty” in WGAN-GP?  
 A) L1 penalty sui pesi  
 B) Penalità sulla norma del gradiente della critic  
 C) Dropout addizionale  
 D) BatchNorm nei generatori  
-Risposta Corretta: B) Penalità sulla norma del gradiente della critic  
-Spiegazione:  
-WGAN-GP aggiunge un termine λ·(∥∇D(αx+(1−α)x̂)∥₂ −1)² per stabilizzare il training rispettando la 1-Lipschitz constraint.
+Risposta Corretta: B  
+Spiegazione: WGAN-GP aggiunge un termine λ·(∥∇D(αx+(1−α)x̂)∥₂ −1)² per stabilizzare il training rispettando la 1-Lipschitz constraint.
 
-62. Cosa caratterizza un livello “Mixture of Experts”?  
+Cosa caratterizza un livello “Mixture of Experts”?  
 A) Un singolo transform  
 B) Routing dei token a sotto-reti specializzate  
 C) Dropout su sottoreti  
 D) Softmax sui parametri  
-Risposta Corretta: B) Routing dei token a sotto-reti specializzate  
-Spiegazione:  
-Un gating network decide quali “esperti” (piccole subnet) elaborano ciascun token, permettendo modelli estremamente larghi e condizionati.
+Risposta Corretta: B  
+Spiegazione: Un gating network decide quali “esperti” (piccole subnet) elaborano ciascun token, permettendo modelli estremamente larghi e condizionati.
 
-63. Quale tecnica scalabile aggrega gradienti da più GPU senza centralizzare un singolo server?  
+Quale tecnica scalabile aggrega gradienti da più GPU senza centralizzare un singolo server?  
 A) Parameter Server  
 B) Ring All-Reduce  
 C) Horovod All-Gather  
 D) Data-Parallel SGD  
-Risposta Corretta: B) Ring All-Reduce  
-Spiegazione:  
-Ring All-Reduce scambia parzialmente gradienti tra nodi in un anello, riducendo latenza e colli di bottiglia.
+Risposta Corretta: B  
+Spiegazione: Ring All-Reduce scambia parzialmente gradienti tra nodi in un anello, riducendo latenza e colli di bottiglia.
 
-64. Cosa misura l’entropia di attenzione in un meccanismo di self-attention?  
+Cosa misura l’entropia di attenzione in un meccanismo di self-attention?  
 A) Numero di parametri  
 B) Uniformità della distribuzione di attenzione  
 C) Grandezza dei query  
 D) Sparsità dei pesi  
-Risposta Corretta: B) Uniformità della distribuzione di attenzione  
-Spiegazione:  
-Un’entropia alta indica attenzione distribuita uniformemente, bassa indica focalizzazione su pochi token.
+Risposta Corretta: B  
+Spiegazione: Un’entropia alta indica attenzione distribuita uniformemente, bassa indica focalizzazione su pochi token.
 
-65. Quale approccio consente a un modello Transformer di gestire input di lunghezza arbitraria senza ricomputare posizionali?  
+Quale approccio consente a un modello Transformer di gestire input di lunghezza arbitraria senza ricomputare posizionali?  
 A) Rotary Positional Embeddings (RoPE)  
 B) Learned absolute pos embeddings  
 C) One-hot positionals  
 D) Sinusoidal con decay  
-Risposta Corretta: A) Rotary Positional Embeddings (RoPE)  
-Spiegazione:  
-RoPE ruota i vettori Q/K in funzione della posizione, consentendo extrapolazione su lunghezze maggiori di quelle viste in training.
+Risposta Corretta: A  
+Spiegazione: RoPE ruota i vettori Q/K in funzione della posizione, consentendo extrapolazione su lunghezze maggiori di quelle viste in training.
 
-66. In meta-learning, cosa definisce il “support set” in few-shot learning?  
+In meta-learning, cosa definisce il “support set” in few-shot learning?  
 A) Set di test  
 B) Piccoli batch di query  
 C) Piccole porzioni di dati etichettati per task  
 D) Insieme di iperparametri  
-Risposta Corretta: C) Piccole porzioni di dati etichettati per task  
-Spiegazione:  
-Il support set contiene pochi esempi per ciascuna classe nel task corrente, da cui il modello apprende a generalizzare subito.
+Risposta Corretta: C  
+Spiegazione: Il support set contiene pochi esempi per ciascuna classe nel task corrente, da cui il modello apprende a generalizzare subito.
 
-67. Quale ottimizzatore secondario viene spesso applicato durante la fase di fine-tuning di grandi modelli?  
+Quale ottimizzatore secondario viene spesso applicato durante la fase di fine-tuning di grandi modelli?  
 A) AdamW con learning rate molto basso  
 B) SGD puro  
 C) RMSprop senza weight decay  
 D) Adagrad con warm restarts  
-Risposta Corretta: A) AdamW con learning rate molto basso  
-Spiegazione:  
-AdamW separa weight decay dal gradiente, offrendo stabilità e regolarizzazione efficaci nei fine-tuning.
+Risposta Corretta: A  
+Spiegazione: AdamW separa weight decay dal gradiente, offrendo stabilità e regolarizzazione efficaci nei fine-tuning.
 
-68. Quale tecnica di compressione modella solo i gradienti più significativi per ridurre il costo di comunicazione?  
+Quale tecnica di compressione modella solo i gradienti più significativi per ridurre il costo di comunicazione?  
 A) Quantization  
 B) Top-k sparsification  
 C) Pruning statico  
 D) Knowledge Distillation  
-Risposta Corretta: B) Top-k sparsification  
-Spiegazione:  
-Si selezionano solo i k gradienti con modulo maggiore in ogni update, riducendo banda e mantenendo precisione.
+Risposta Corretta: B  
+Spiegazione: Si selezionano solo i k gradienti con modulo maggiore in ogni update, riducendo banda e mantenendo precisione.
 
-69. Cosa fa il layer di “Prompt Tuning” nei modelli pre-addestrati?  
+Cosa fa il layer di “Prompt Tuning” nei modelli pre-addestrati?  
 A) Modifica parametri di embedding  
 B) Aggiunge token appresi all’inizio dell’input  
 C) Varia dropout rate  
 D) Cambia struttura di rete  
-Risposta Corretta: B) Aggiunge token appresi all’inizio dell’input  
-Spiegazione:  
-Prompt Tuning apprende vettori di prompt fissi che vengono concatenati ai token di input per adattare il modello a nuovi task senza cambiare i pesi base.
+Risposta Corretta: B  
+Spiegazione: Prompt Tuning apprende vettori di prompt fissi che vengono concatenati ai token di input per adattare il modello a nuovi task senza cambiare i pesi base.
 
-70. In fine-tuning di un LLM, cosa significa “LoRA” (Low-Rank Adapters)?  
+In fine-tuning di un LLM, cosa significa “LoRA” (Low-Rank Adapters)?  
 A) Riduzione del numero di layer  
 B) Aggiunta di moduli a basso rango per aggiornare solo sottospazi  
 C) Quantizzazione a bassa precisione  
 D) Rimozione di saturazioni  
-Risposta Corretta: B) Aggiunta di moduli a basso rango per aggiornare solo sottospazi  
-Spiegazione:  
-LoRA inserisce matrici di adattamento a basso rango in parallelo ai pesi originali, riducendo i parametri da trainare nel fine-tuning.
+Risposta Corretta: B  
+Spiegazione: LoRA inserisce matrici di adattamento a basso rango in parallelo ai pesi originali, riducendo i parametri da trainare nel fine-tuning.
 
-71. Quale tecnica di data augmentation specifica per audio consente variazioni di tempo senza modificare il pitch?  
+Quale tecnica di data augmentation specifica per audio consente variazioni di tempo senza modificare il pitch?  
 A) Noise injection  
 B) Time stretch  
 C) Pitch shift  
 D) Spectrogram masking  
-Risposta Corretta: B) Time stretch  
-Spiegazione:  
-Il time stretch accelera o rallenta la traccia audio preservando il pitch, utile per robustezza nei modelli speech.
+Risposta Corretta: B  
+Spiegazione: Il time stretch accelera o rallenta la traccia audio preservando il pitch, utile per robustezza nei modelli speech.
 
-72. Cos’è il “Mixup” nel training supervisionato?  
+Cos’è il “Mixup” nel training supervisionato?  
 A) Fusione di modelli ensemble  
 B) Interpolazione lineare di coppie di esempi e delle loro etichette  
 C) Aggiunta di rumore  
 D) Data augmentation basata su trasformazioni geometriche  
-Risposta Corretta: B) Interpolazione lineare di coppie di esempi e delle loro etichette  
-Spiegazione:  
-Mixup crea nuovi esempi come \(x_{\text{mix}} = \alpha x_i + (1-\alpha)x_j\) e etichette miste \(y_{\text{mix}} = \alpha y_i + (1-\alpha)y_j\), migliorando la generalizzazione e la robustezza del modello.  
+Risposta Corretta: B  
+Spiegazione: Mixup crea nuovi esempi come xₘᵢₓ = αxᵢ + (1−α)xⱼ e etichette miste yₘᵢₓ = αyᵢ + (1−α)yⱼ, migliorando la generalizzazione e la robustezza del modello.
 
-73. In Vision Transformer, quale tecnica viene utilizzata per suddividere l’immagine in patch?  
+In Vision Transformer, quale tecnica viene utilizzata per suddividere l’immagine in patch?  
 A) Convolutione 3×3  
 B) Flatten  
 C) Patch Embedding (conv 1×1 + reshape)  
 D) Pooling  
-Risposta Corretta: C) Patch Embedding (conv 1×1 + reshape)  
-Spiegazione:  
-Le immagini sono spartite in patch di dimensione fissa che vengono linearmente proiettate in embedding, sostituendo il ruolo delle convoluzioni tradizionali.
+Risposta Corretta: C  
+Spiegazione: Le immagini sono spartite in patch di dimensione fissa che vengono linearmente proiettate in embedding, sostituendo il ruolo delle convoluzioni tradizionali.
 
-74. Quale metodo permette di imparare concentrazioni diverse di attention tra layer in un modello Transformer?  
+Quale metodo permette di imparare concentrazioni diverse di attention tra layer in un modello Transformer?  
 A) Multi-Head Self-Attention  
 B) Sparse Attention  
 C) Per-Head Scaling  
 D) LayerDrop  
-Risposta Corretta: C) Per-Head Scaling  
-Spiegazione:  
-Si introducono scale learnable per ogni testa di attenzione, consentendo di modulare dinamicamente l’importanza dei vari heads.
+Risposta Corretta: C  
+Spiegazione: Si introducono scale learnable per ogni testa di attenzione, consentendo di modulare dinamicamente l’importanza dei vari heads.
 
-75. In quali condizioni la “label smoothing” migliora la robustezza del modello?  
+In quali condizioni la “label smoothing” migliora la robustezza del modello?  
 A) Classi perfettamente bilanciate  
 B) Predizioni soggette a overconfidence  
 C) Dati sequenziali  
 D) Solo in regressione  
-Risposta Corretta: B) Predizioni soggette a overconfidence  
-Spiegazione:  
-Label smoothing distribuisce una piccola parte di probabilità sulle etichette non corrette, riducendo la fiducia eccessiva nelle predizioni e migliorando la generalizzazione.
+Risposta Corretta: B  
+Spiegazione: Label smoothing distribuisce una piccola parte di probabilità sulle etichette non corrette, riducendo la fiducia eccessiva nelle predizioni e migliorando la generalizzazione.
 
-76. Cosa caratterizza un approccio “ReZero” in ottimizzazione di deep network?  
+Cosa caratterizza un approccio “ReZero” in ottimizzazione di deep network?  
 A) Azzeramento del learning rate  
 B) Parametri di residual inizializzati a zero  
 C) Azzeramento dei gradienti  
 D) Reset periodico dei pesi  
-Risposta Corretta: B) Parametri di residual inizializzati a zero  
-Spiegazione:  
-ReZero inizializza i coefficienti dei rami residual a zero, permettendo un flusso di gradiente stabile prima di attivare gradualmente i rami residual.
+Risposta Corretta: B  
+Spiegazione: ReZero inizializza i coefficienti dei rami residual a zero, permettendo un flusso di gradiente stabile prima di attivare gradualmente i rami residual.
 
-77. Quale metrica è più indicata per valutare la coerenza globale in modelli generativi di testo?  
+Quale metrica è più indicata per valutare la coerenza globale in modelli generativi di testo?  
 A) BLEU  
 B) Perplexity  
 C) Coh-Metrix  
 D) FID  
-Risposta Corretta: C) Coh-Metrix  
-Spiegazione:  
-Coh-Metrix analizza coesione testuale e caratteristiche linguistiche, andando oltre semplici misure di n-gram overlap.
+Risposta Corretta: C  
+Spiegazione: Coh-Metrix analizza coesione testuale e caratteristiche linguistiche, andando oltre semplici misure di n-gram overlap.
 
-78. In quali modelli si utilizza il “cross attention” tra encoder e decoder?  
+In quali modelli si utilizza il “cross attention” tra encoder e decoder?  
 A) BERT  
 B) GPT  
 C) Transformer Encoder-Decoder (es. T5)  
 D) Autoencoder  
-Risposta Corretta: C) Transformer Encoder-Decoder (es. T5)  
-Spiegazione:  
-Nel paradigma encoder-decoder, il decoder applica cross-attention per integrare informazioni codificate nel encoder durante la generazione.
+Risposta Corretta: C  
+Spiegazione: Nel paradigma encoder-decoder, il decoder applica cross-attention per integrare informazioni codificate nel encoder durante la generazione.
 
-79. Qual è lo scopo del “gradient centralization”?  
+Qual è lo scopo del “gradient centralization”?  
 A) Normalizzare la media dei gradienti a zero  
 B) Aumentare il learning rate  
 C) Clippare i gradienti fuori soglia  
 D) Aggiungere rumore gaussiano  
-Risposta Corretta: A) Normalizzare la media dei gradienti a zero  
-Spiegazione:  
-Gradient Centralization sottrae la media dai gradienti, migliorando stabilità e velocità di convergenza.
+Risposta Corretta: A  
+Spiegazione: Gradient Centralization sottrae la media dai gradienti, migliorando stabilità e velocità di convergenza.
 
-80. Cosa definisce un “equivariant neural network”?  
+Cosa definisce un “equivariant neural network”?  
 A) Invarianza a permutazioni  
 B) Rispetto di un gruppo di simmetrie (es. rotazioni)  
 C) Nessuna trasformazione  
 D) Solo CNN  
-Risposta Corretta: B) Rispetto di un gruppo di simmetrie (es. rotazioni)  
-Spiegazione:  
-Le reti equivarianti codificano nel design architetturale la simmetria di un gruppo, garantendo che trasformazioni sugli input si riflettano prevedibilmente negli output.
+Risposta Corretta: B  
+Spiegazione: Le reti equivarianti codificano nel design architetturale la simmetria di un gruppo, garantendo che trasformazioni sugli input si riflettano prevedibilmente negli output.
 
-81. Quale approccio sfrutta dropout applicato solo sui pesi anziché sulle unità?  
+Quale approccio sfrutta dropout applicato solo sui pesi anziché sulle unità?  
 A) DropConnect  
 B) DropPath  
 C) Node Dropout  
 D) Weight Decay  
-Risposta Corretta: A) DropConnect  
-Spiegazione:  
-DropConnect applica dropout direttamente ai pesi durante il training, rendendo il modello più robusto a variazioni nei parametri.
+Risposta Corretta: A  
+Spiegazione: DropConnect applica dropout direttamente ai pesi durante il training, rendendo il modello più robusto a variazioni nei parametri.
 
-82. In quale scenario si preferisce un modello “Mixture Density Network”?  
+In quale scenario si preferisce un modello “Mixture Density Network”?  
 A) Output deterministico  
 B) Output multimodale (es. predizione di distribuzioni)  
 C) Classificazione binaria  
 D) Clustering  
-Risposta Corretta: B) Output multimodale (es. predizione di distribuzioni)  
-Spiegazione:  
-Le MDN apprendono parametri di una combinazione di gaussiane, permettendo di modellare distribuzioni con più picchi.
+Risposta Corretta: B  
+Spiegazione: Le MDN apprendono parametri di una combinazione di gaussiane, permettendo di modellare distribuzioni con più picchi.
 
-83. Quale approccio abilita l’apprendimento continuo senza catastrofic forgetting?  
+Quale approccio abilita l’apprendimento continuo senza catastrofic forgetting?  
 A) Fine-tuning classico  
 B) Elastic Weight Consolidation (EWC)  
 C) Batch Training  
 D) Dropout  
-Risposta Corretta: B) Elastic Weight Consolidation (EWC)  
-Spiegazione:  
-EWC penalizza modifiche a pesi importanti per task precedenti, mantenendo performance su vecchi compiti durante l’apprendimento di nuovi.
+Risposta Corretta: B  
+Spiegazione: EWC penalizza modifiche a pesi importanti per task precedenti, mantenendo performance su vecchi compiti durante l’apprendimento di nuovi.
 
-84. Cosa introduce il “Spectral Normalization” nei GAN?  
+Cosa introduce il “Spectral Normalization” nei GAN?  
 A) Limitazione della norma singolare dei pesi  
 B) Clipping diretto dei gradienti  
 C) Aumento del batch size  
 D) BatchNorm extra  
-Risposta Corretta: A) Limitazione della norma singolare dei pesi  
-Spiegazione:  
-Spectral normalization normalizza i pesi in base al massimo valore singolare, stabilizzando l’addestramento del discriminatore.
+Risposta Corretta: A  
+Spiegazione: Spectral normalization normalizza i pesi in base al massimo valore singolare, stabilizzando l’addestramento del discriminatore.
 
-85. Quale tecnica di sampling migliora la qualità dell’audio generato in modelli autoregressivi?  
+Quale tecnica di sampling migliora la qualità dell’audio generato in modelli autoregressivi?  
 A) Sampling casuale  
 B) Top-p (nucleus) sampling  
 C) Greedy  
 D) Beam search  
-Risposta Corretta: B) Top-p (nucleus) sampling  
-Spiegazione:  
-Top-p sampling seleziona dinamicamente il sottoinsieme di token con probabilità cumulativa p, bilanciando qualità e diversità.
+Risposta Corretta: B  
+Spiegazione: Top-p sampling seleziona dinamicamente il sottoinsieme di token con probabilità cumulativa p, bilanciando qualità e diversità.
 
-86. In federated learning, cosa protegge la privacy dei dati locali?  
+In federated learning, cosa protegge la privacy dei dati locali?  
 A) Encryption TOR  
 B) Differential Privacy  
 C) BatchNorm  
 D) Dropout  
-Risposta Corretta: B) Differential Privacy  
-Spiegazione:  
-Incorporando rumore nei gradienti o aggiornamenti, la DP garantisce che singoli dati non siano facilmente ricostruibili dal modello globale.
+Risposta Corretta: B  
+Spiegazione: Incorporando rumore nei gradienti o aggiornamenti, la DP garantisce che singoli dati non siano facilmente ricostruibili dal modello globale.
 
-87. Cosa definisce il “3D convolution” in modelli per video?  
+Cosa definisce il “3D convolution” in modelli per video?  
 A) Convoluzione solo spaziale  
 B) Convoluzione spaziale e temporale  
 C) Convoluzione su canali  
 D) Pooling 3D  
-Risposta Corretta: B) Convoluzione spaziale e temporale  
-Spiegazione:  
-Le 3D conv estendono i kernel su tempo e spazio, catturando caratteristiche dinamiche nei video.
+Risposta Corretta: B  
+Spiegazione: Le 3D conv estendono i kernel su tempo e spazio, catturando caratteristiche dinamiche nei video.
 
-88. Quale approccio accelera l’addestramento di Transformer utilizzando precisione mista?  
+Quale approccio accelera l’addestramento di Transformer utilizzando precisione mista?  
 A) Float64  
 B) Mixed Precision (FP16+FP32)  
 C) Bfloat16 only  
 D) Low Precision Int8  
-Risposta Corretta: B) Mixed Precision (FP16+FP32)  
-Spiegazione:  
-Mixed precision combina FP16 per calcoli intensivi e FP32 per accumuli, riducendo memoria e accelerando il training senza perdita di accuratezza.
+Risposta Corretta: B  
+Spiegazione: Mixed precision combina FP16 per calcoli intensivi e FP32 per accumuli, riducendo memoria e accelerando il training senza perdita di accuratezza.
 
-89. In un modello di reinforcement learning, cosa ottimizza il “policy gradient”?  
+In un modello di reinforcement learning, cosa ottimizza il “policy gradient”?  
 A) Valore di stato  
 B) Probabilità di azioni che massimizzano reward atteso  
 C) Q-value  
 D) Critic loss  
-Risposta Corretta: B) Probabilità di azioni che massimizzano reward atteso  
-Spiegazione:  
-Policy gradient calcola la derivata della performance attesa rispetto ai parametri della policy per aggiornare la distribuzione delle azioni.
+Risposta Corretta: B  
+Spiegazione: Policy gradient calcola la derivata della performance attesa rispetto ai parametri della policy per aggiornare la distribuzione delle azioni.
 
-90. Quale tecnica usa equilibration dei second-order moments per stabilizzare il training?  
+Quale tecnica usa equilibration dei second-order moments per stabilizzare il training?  
 A) RMSProp  
 B) Adam  
 C) AdaBelief  
 D) SGD  
-Risposta Corretta: C) AdaBelief  
-Spiegazione:  
-AdaBelief adatta le stime della varianza basandosi sulla differenza tra gradiente e la sua aspettativa, migliorando convergenza e generalizzazione.
+Risposta Corretta: C  
+Spiegazione: AdaBelief adatta le stime della varianza basandosi sulla differenza tra gradiente e la sua aspettativa, migliorando convergenza e generalizzazione.
 
-91. In “zero-shot learning”, come viene generalizzato un modello a classi non viste?  
+In “zero-shot learning”, come viene generalizzato un modello a classi non viste?  
 A) Solo dati etichettati  
 B) Descrittori semantici o embedding di classe  
 C) Solo augmentazione  
 D) Solo supervised learning  
-Risposta Corretta: B) Descrittori semantici o embedding di classe  
-Spiegazione:  
-Lo zero-shot sfrutta relazioni semantiche tra input e classi tramite embedding testuali o attributi per predire classi mai viste.
+Risposta Corretta: B  
+Spiegazione: Lo zero-shot sfrutta relazioni semantiche tra input e classi tramite embedding testuali o attributi per predire classi mai viste.
 
-92. Quale tecnica migliora l’efficienza dei Transformer riducendo la lunghezza effettiva della sequenza?  
+Quale tecnica migliora l’efficienza dei Transformer riducendo la lunghezza effettiva della sequenza?  
 A) Strided Convolutions  
 B) Funnel Transformer  
 C) Pooling globale  
 D) LayerNorm  
-Risposta Corretta: B) Funnel Transformer  
-Spiegazione:  
-Funnel riduce progressivamente la risoluzione delle rappresentazioni tramite pooling, diminuendo complessità sequenziale.
+Risposta Corretta: B  
+Spiegazione: Funnel riduce progressivamente la risoluzione delle rappresentazioni tramite pooling, diminuendo complessità sequenziale.
 
-93. Cosa definisce un “Flipout” estimator nelle reti neurali bayesiane?  
+Cosa definisce un “Flipout” estimator nelle reti neurali bayesiane?  
 A) Solo posterior  
 B) Campionamento randomizzato di perturbazioni indipendenti per ogni esempio  
 C) Deterministic Forward Pass  
 D) Nessuna stima  
-Risposta Corretta: B) Campionamento randomizzato di perturbazioni indipendenti per ogni esempio  
-Spiegazione:  
-Flipout genera perturbazioni di peso con struttura decorrelata su batch per stimare in modo efficiente la varianza posterior.
+Risposta Corretta: B  
+Spiegazione: Flipout genera perturbazioni di peso con struttura decorrelata su batch per stimare in modo efficiente la varianza posterior.
 
-94. Quale approccio bilancia esplorazione e sfruttamento nei bandit MAB?  
+Quale approccio bilancia esplorazione e sfruttamento nei bandit MAB?  
 A) UCB (Upper Confidence Bound)  
 B) Epsilon-Greedy  
 C) Thompson Sampling  
 D) Tutti e tre  
-Risposta Corretta: D) Tutti e tre  
-Spiegazione:  
-UCB, Epsilon-Greedy e Thompson Sampling offrono strategie diverse per gestire trade-off esplorazione-sfruttamento in Multi-Armed Bandits.
+Risposta Corretta: D  
+Spiegazione: UCB, Epsilon-Greedy e Thompson Sampling offrono strategie diverse per gestire trade-off esplorazione-sfruttamento in Multi-Armed Bandits.
 
-95. In spectral clustering, cosa si usa per definire l’affinità tra punti?  
+In spectral clustering, cosa si usa per definire l’affinità tra punti?  
 A) Distanza euclidea diretta  
 B) Kernel Gaussiano  
 C) Cosine similarity  
 D) Tutti i precedenti  
-Risposta Corretta: D) Tutti i precedenti  
-Spiegazione:  
-L’affinità può essere calcolata con diverse funzioni (RBF, cosine, etc.) a seconda della natura dei dati.
+Risposta Corretta: D  
+Spiegazione: L’affinità può essere calcolata con diverse funzioni (RBF, cosine, etc.) a seconda della natura dei dati.
 
-96. Quale meccanismo aiuta a mitigare il “mode collapse” nei GAN multimodali?  
+Quale meccanismo aiuta a mitigare il “mode collapse” nei GAN multimodali?  
 A) BatchNorm  
 B) Minibatch Discrimination  
 C) Dropout  
 D) Early Stopping  
-Risposta Corretta: B) Minibatch Discrimination  
-Spiegazione:  
-Minibatch discrimination introduce statistiche di batch nel discriminatore per scoraggiare il generatore a produrre campioni troppo simili.
+Risposta Corretta: B  
+Spiegazione: Minibatch discrimination introduce statistiche di batch nel discriminatore per scoraggiare il generatore a produrre campioni troppo simili.
 
-97. Quale approccio di parallelismo suddivide sia dati che modello?  
+Quale approccio di parallelismo suddivide sia dati che modello?  
 A) Data Parallelism  
 B) Model Parallelism  
 C) Hybrid Parallelism  
 D) Task Parallelism  
-Risposta Corretta: C) Hybrid Parallelism  
-Spiegazione:  
-L’hybrid parallelism combina data- e model-parallelism per scalare grandi modelli su cluster GPU.
+Risposta Corretta: C  
+Spiegazione: L’hybrid parallelism combina data- e model-parallelism per scalare grandi modelli su cluster GPU.
 
-98. In fine-tuning di LLM, cosa fa il “prefix tuning”?  
+In fine-tuning di LLM, cosa fa il “prefix tuning”?  
 A) Modifica solo il prompt  
 B) Aggiunge parametri learnable all’inizio di ogni layer  
 C) Modifica posizione dei token  
 D) Cambia embedding finale  
-Risposta Corretta: B) Aggiunge parametri learnable all’inizio di ogni layer  
-Spiegazione:  
-Prefix tuning inserisce vettori controllati da parametri in ogni layer, modellando il comportamento LLM con pochi parametri.
+Risposta Corretta: B  
+Spiegazione: Prefix tuning inserisce vettori controllati da parametri in ogni layer, modellando il comportamento LLM con pochi parametri.
 
-99. Quale metrica misura l’efficacia di un clustering gerarchico?  
+Quale metrica misura l’efficacia di un clustering gerarchico?  
 A) Silhouette Score  
 B) Cophenetic Correlation Coefficient  
 C) Calinski-Harabasz Index  
 D) Davies-Bouldin Index  
-Risposta Corretta: B) Cophenetic Correlation Coefficient  
-Spiegazione:  
-Questa metrica confronta le distanze originali con quelle nel dendrogramma per valutare fedeltà strutturale.
+Risposta Corretta: B  
+Spiegazione: Questa metrica confronta le distanze originali con quelle nel dendrogramma per valutare fedeltà strutturale.
 
-100. In “knowledge distillation”, cosa rappresenta la “temperature” nel soft target?  
+In “knowledge distillation”, cosa rappresenta la “temperature” nel soft target?  
 A) Sole parametro di learning rate  
 B) Fattore che smussa le probabilità del teacher  
 C) Numero di layer del teacher  
 D) Batch size  
-Risposta Corretta: B) Fattore che smussa le probabilità del teacher  
-Spiegazione:  
-Temperature >1 rende la distribuzione del teacher più uniforme, agevolando l’apprendimento di informazioni sui rapporti tra classi.
+Risposta Corretta: B  
+Spiegazione: Temperature >1 rende la distribuzione del teacher più uniforme, agevolando l’apprendimento di informazioni sui rapporti tra classi.
