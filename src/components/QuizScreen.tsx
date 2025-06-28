@@ -89,10 +89,8 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
   const handleGoogleSearch = () => {
     if (!currentSession) return;
     const currentQuestion = currentSession.questions[currentSession.currentIndex];
-    const searchQuery = currentQuestion.question
-      .replace(/\s+/g, '+')
-      .replace(/[^\w+]/g, '');
-    const googleUrl = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
+    const searchQuery = encodeURIComponent(currentQuestion.question);
+    const googleUrl = `https://www.google.com/search?q=${searchQuery}`;
     window.open(googleUrl, '_blank');
   };
 

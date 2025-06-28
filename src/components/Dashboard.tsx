@@ -53,7 +53,6 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
           onClick={() => onNavigate('settings')}
           className="p-2 rounded-full hover:bg-apple-light transition-colors"
         >
-          <User className="w-6 h-6 text-apple-secondary" />
         </button>
       </header>
 
