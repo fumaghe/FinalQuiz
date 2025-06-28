@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useQuiz } from '../contexts/QuizContext';
-import { ArrowLeft, SkipForward, Eye, EyeOff, Globe } from 'lucide-react';
-import { Question, QuizSession, AnsweredQuestion, QuizHistory } from '../types/quiz';
+import { ArrowLeft, SkipForward, Eye, EyeOff, Globe, RefreshCw } from 'lucide-react';
+import {
+  Question,
+  QuizSession,
+  AnsweredQuestion,
+  QuizHistory
+} from '../types/quiz';
 
 interface QuizScreenProps {
   onNavigate: (screen: string, params?: any) => void;
@@ -17,28 +22,33 @@ interface ShuffledQuestion extends Question {
   optionMapping: number[];
 }
 
-const QuizScreen: React.FC<QuizScreenProps> = ({ 
-  onNavigate, 
-  quizType, 
-  topicId, 
-  topicName, 
+const QuizScreen: React.FC<QuizScreenProps> = ({
+  onNavigate,
+  quizType,
+  topicId,
+  topicName,
   questionIds,
-  title 
+  title
 }) => {
+  /* ------------------------------------------------------------------ */
+  /* ⏺  Context e stato                                                 */
+  /* ------------------------------------------------------------------ */
   const { state, dispatch } = useQuiz();
   const { questions, currentSession, topics } = state;
-  
+
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
   const [showExplanation, setShowExplanation] = useState(true);
   const [shuffledQuestions, setShuffledQuestions] = useState<ShuffledQuestion[]>([]);
 
-  // Shuffle options for a question
+  /* ------------------------------------------------------------------ */
+  /* 🔀  Shuffle opzioni di una singola domanda                         */
+  /* ------------------------------------------------------------------ */
   const shuffleQuestionOptions = (question: Question): ShuffledQuestion => {
     const optionIndices = [0, 1, 2, 3];
     const shuffledIndices = [...optionIndices].sort(() => Math.random() - 0.5);
-    
+
     return {
       ...question,
       shuffledOptions: shuffledIndices.map(i => question.options[i]),
@@ -46,126 +56,125 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
     };
   };
 
+  /* ------------------------------------------------------------------ */
+  /* 📦  Lifecycle                                                      */
+  /* ------------------------------------------------------------------ */
   useEffect(() => {
-    if (!currentSession) {
-      startNewQuiz();
-    }
+    if (!currentSession) startNewQuiz();
   }, []);
 
   useEffect(() => {
     if (currentSession && shuffledQuestions.length === 0) {
-      const shuffled = currentSession.questions.map(shuffleQuestionOptions);
-      setShuffledQuestions(shuffled);
+      setShuffledQuestions(currentSession.questions.map(shuffleQuestionOptions));
     }
   }, [currentSession]);
 
   useEffect(() => {
-    if (currentSession) {
-      const currentAnswer = currentSession.answers[currentSession.currentIndex];
-      if (currentAnswer !== null && currentAnswer !== -1) {
-        setSelectedAnswer(currentAnswer);
-        setShowFeedback(true);
-        setIsAnswered(true);
-      } else {
-        setSelectedAnswer(null);
-        setShowFeedback(false);
-        setIsAnswered(false);
-      }
+    if (!currentSession) return;
+    const currentAnswer = currentSession.answers[currentSession.currentIndex];
+    if (currentAnswer !== null && currentAnswer !== -1) {
+      setSelectedAnswer(currentAnswer);
+      setShowFeedback(true);
+      setIsAnswered(true);
+    } else {
+      setSelectedAnswer(null);
+      setShowFeedback(false);
+      setIsAnswered(false);
     }
   }, [currentSession?.currentIndex]);
 
+  /* ------------------------------------------------------------------ */
+  /* 🔗  Ricerca Google                                                 */
+  /* ------------------------------------------------------------------ */
   const handleGoogleSearch = () => {
     if (!currentSession) return;
     const currentQuestion = currentSession.questions[currentSession.currentIndex];
-    const searchQuery = currentQuestion.question.replace(/\s+/g, '+').replace(/[^\w+]/g, '');
+    const searchQuery = currentQuestion.question
+      .replace(/\s+/g, '+')
+      .replace(/[^\w+]/g, '');
     const googleUrl = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
     window.open(googleUrl, '_blank');
   };
 
+  /* ------------------------------------------------------------------ */
+  /* ↩️  Back (per quiz “topic”)                                        */
+  /* ------------------------------------------------------------------ */
   const handleBackButton = () => {
     if (!currentSession) return;
-    
-    // Save current session state and mark as completed (even if incomplete)
+
+    /** Salvataggio stato parziale solo per quiz “topic” */
     if (quizType === 'topic') {
-      // Calculate current progress
-      const answeredCount = currentSession.answers.filter(a => a !== null && a !== -1).length;
+      const answeredCount = currentSession.answers.filter(
+        a => a !== null && a !== -1
+      ).length;
       let correctCount = 0;
-      
-      // Count correct answers
+
       currentSession.answers.forEach((answer, index) => {
         if (answer !== null && answer !== -1) {
-          const question = currentSession.questions[index];
-          if (answer === question.correct) {
-            correctCount++;
-          }
+          if (answer === currentSession.questions[index].correct) correctCount++;
         }
       });
 
-      // Update user stats for partially completed quiz
       const updatedAnsweredQuestions = { ...state.userStats.answeredQuestions };
       const updatedCorrectQuestions = { ...state.userStats.correctQuestions };
       const updatedIncorrectQuestions = { ...state.userStats.incorrectQuestions };
       const updatedStatsPerTopic = { ...state.userStats.statsPerTopic };
 
       currentSession.answers.forEach((answer, index) => {
-        if (answer !== null && answer !== -1) {
-          const question = currentSession.questions[index];
-          const isCorrect = answer === question.correct;
-          
-          updatedAnsweredQuestions[question.id] = true;
-          
-          if (isCorrect) {
-            updatedCorrectQuestions[question.id] = true;
-            delete updatedIncorrectQuestions[question.id];
-          } else {
-            updatedIncorrectQuestions[question.id] = true;
-          }
+        if (answer === null || answer === -1) return;
+        const q = currentSession.questions[index];
+        const isCorrect = answer === q.correct;
 
-          // Update topic stats
-          const topic = question.topic;
-          if (!updatedStatsPerTopic[topic]) {
-            const topicQuestions = questions.filter(q => q.topic === topic);
-            updatedStatsPerTopic[topic] = { 
-              done: 0, 
-              correct: 0, 
-              total: topicQuestions.length 
-            };
-          }
-          
-          if (!state.userStats.answeredQuestions[question.id]) {
-            updatedStatsPerTopic[topic].done++;
-          }
-          
-          if (isCorrect && !state.userStats.correctQuestions[question.id]) {
-            updatedStatsPerTopic[topic].correct++;
-          }
+        updatedAnsweredQuestions[q.id] = true;
+
+        if (isCorrect) {
+          updatedCorrectQuestions[q.id] = true;
+          delete updatedIncorrectQuestions[q.id];
+        } else {
+          updatedIncorrectQuestions[q.id] = true;
+        }
+
+        const topic = q.topic;
+        if (!updatedStatsPerTopic[topic]) {
+          const topicQs = questions.filter(qq => qq.topic === topic);
+          updatedStatsPerTopic[topic] = {
+            done: 0,
+            correct: 0,
+            total: topicQs.length
+          };
+        }
+
+        if (!state.userStats.answeredQuestions[q.id]) {
+          updatedStatsPerTopic[topic].done++;
+        }
+
+        if (isCorrect && !state.userStats.correctQuestions[q.id]) {
+          updatedStatsPerTopic[topic].correct++;
         }
       });
 
-      // Create quiz history entry for partial completion
       if (answeredCount > 0) {
         const score = (correctCount / answeredCount) * 100;
-        
+
         const answeredQuestions: AnsweredQuestion[] = [];
         currentSession.answers.forEach((answer, index) => {
-          if (answer !== null && answer !== -1) {
-            const question = currentSession.questions[index];
-            answeredQuestions.push({
-              questionId: question.id,
-              question: question.question,
-              options: question.options,
-              userAnswer: answer,
-              correctAnswer: question.correct,
-              isCorrect: answer === question.correct,
-              timestamp: new Date(),
-              topic: question.topic,
-              explanation: question.explanation
-            });
-          }
+          if (answer === null || answer === -1) return;
+          const q = currentSession.questions[index];
+          answeredQuestions.push({
+            questionId: q.id,
+            question: q.question,
+            options: q.options,
+            userAnswer: answer,
+            correctAnswer: q.correct,
+            isCorrect: answer === q.correct,
+            timestamp: new Date(),
+            topic: q.topic,
+            explanation: q.explanation
+          });
         });
 
         const quizHistoryEntry: QuizHistory = {
-          id: currentSession.id + '_partial',
+          id: `${currentSession.id}_partial`,
           quizType: 'topic',
           topicName: title || topicName,
           timestamp: new Date(),
@@ -179,7 +188,10 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
           ...state.userStats,
           totalQuestions: state.userStats.totalQuestions + answeredCount,
           correctAnswers: state.userStats.correctAnswers + correctCount,
-          overallAccuracy: ((state.userStats.correctAnswers + correctCount) / (state.userStats.totalQuestions + answeredCount)) * 100,
+          overallAccuracy:
+            ((state.userStats.correctAnswers + correctCount) /
+              (state.userStats.totalQuestions + answeredCount)) *
+            100,
           lastUpdated: new Date(),
           quizHistory: [...state.userStats.quizHistory, quizHistoryEntry],
           answeredQuestions: updatedAnsweredQuestions,
@@ -191,33 +203,76 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
         dispatch({ type: 'UPDATE_STATS', payload: updatedStats });
       }
     }
-    
-    // Clear current session to prevent blocking future quizzes
+
     dispatch({ type: 'END_QUIZ' });
-    
-    // Navigate back to appropriate screen
-    if (quizType === 'topic') {
-      onNavigate('topics');
-    } else {
-      onNavigate('dashboard');
-    }
+    onNavigate(quizType === 'topic' ? 'topics' : 'dashboard');
   };
 
-  const startNewQuiz = ()=> {
+  /* ------------------------------------------------------------------ */
+  /* 🚀  startNewQuiz                                                   */
+  /* ------------------------------------------------------------------ */
+  const startNewQuiz = () => {
     let quizQuestions: Question[] = [];
-    
+
+    /* === QUIZ GENERALE → MODIFICA 1 (quote fisse) =================== */
     if (quizType === 'general') {
-      // Solo domande non ancora risposte correttamente - increased to 30
-      const unansweredQuestions = questions.filter(q => !state.userStats.correctQuestions[q.id]);
-      quizQuestions = [...unansweredQuestions].sort(() => Math.random() - 0.5).slice(0, 30);
-    } else if (quizType === 'topic' && topicId) {
-      const topicQuestions = questions.filter(q => q.topic.toLowerCase() === topicId.toLowerCase());
-      const unansweredTopicQuestions = topicQuestions.filter(q => !state.userStats.correctQuestions[q.id]);
-      quizQuestions = unansweredTopicQuestions;
-    } else if (quizType === 'custom' && questionIds) {
+      const quotaPerTopic: Record<string, number> = {
+        SQL: 3,
+        Statistica: 3,
+        Tableau: 2,
+        Databricks: 2,
+        DataLake2: 1,
+        Git: 1,
+        NoSQL: 3,
+        PowerBI: 3,
+        Python: 4,
+        R: 2,
+        ML: 3,
+        DeepLearning: 3
+      };
+
+      const unanswered = questions.filter(
+        q => !state.userStats.correctQuestions[q.id]
+      );
+      const chosen: Question[] = [];
+      const usedIds = new Set<string>();
+
+      Object.entries(quotaPerTopic).forEach(([topic, qty]) => {
+        const pool = unanswered.filter(
+          q => q.topic === topic && !usedIds.has(q.id)
+        );
+        const picked = [...pool].sort(() => Math.random() - 0.5).slice(0, qty);
+        picked.forEach(q => usedIds.add(q.id));
+        chosen.push(...picked);
+      });
+
+      if (chosen.length < 30) {
+        const filler = unanswered
+          .filter(q => !usedIds.has(q.id))
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 30 - chosen.length);
+        chosen.push(...filler);
+      }
+
+      quizQuestions = [...chosen]
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 30);
+    }
+
+    /* === QUIZ PER ARGOMENTO ======================================== */
+    else if (quizType === 'topic' && topicId) {
+      const topicQs = questions.filter(
+        q => q.topic.toLowerCase() === topicId.toLowerCase()
+      );
+      quizQuestions = topicQs.filter(q => !state.userStats.correctQuestions[q.id]);
+    }
+
+    /* === QUIZ CUSTOM =============================================== */
+    else if (quizType === 'custom' && questionIds) {
       quizQuestions = questions.filter(q => questionIds.includes(q.id));
     }
 
+    /* Nessuna domanda → torna a dashboard */
     if (quizQuestions.length === 0) {
       onNavigate('dashboard');
       return;
@@ -234,6 +289,9 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
     dispatch({ type: 'START_QUIZ', payload: newSession });
   };
 
+  /* ------------------------------------------------------------------ */
+  /* ✅  Gestione risposte                                              */
+  /* ------------------------------------------------------------------ */
   const handleAnswerSelect = (answerIndex: number) => {
     if (isAnswered || !currentSession) return;
     setSelectedAnswer(answerIndex);
@@ -242,16 +300,16 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
   const handleConfirmAnswer = () => {
     if (selectedAnswer === null || !currentSession || isAnswered) return;
 
-    // Map the shuffled answer back to original index
     const shuffledQuestion = shuffledQuestions[currentSession.currentIndex];
-    const originalAnswerIndex = shuffledQuestion ? shuffledQuestion.optionMapping[selectedAnswer] : selectedAnswer;
+    const originalAnswerIndex =
+      shuffledQuestion.optionMapping[selectedAnswer];
 
-    dispatch({ 
-      type: 'ANSWER_QUESTION', 
-      payload: { 
-        index: currentSession.currentIndex, 
+    dispatch({
+      type: 'ANSWER_QUESTION',
+      payload: {
+        index: currentSession.currentIndex,
         answer: originalAnswerIndex
-      } 
+      }
     });
 
     setShowFeedback(true);
@@ -262,12 +320,11 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
     if (!currentSession) return;
 
     if (currentSession.currentIndex < currentSession.questions.length - 1) {
-      const nextIndex = currentSession.currentIndex + 1;
       dispatch({
         type: 'START_QUIZ',
         payload: {
           ...currentSession,
-          currentIndex: nextIndex
+          currentIndex: currentSession.currentIndex + 1
         }
       });
       setShowExplanation(true);
@@ -277,16 +334,11 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
   };
 
   const handleSkipQuestion = () => {
-    if (!currentSession) return;
-    
-    if (quizType !== 'topic') return;
-    
-    dispatch({ 
-      type: 'ANSWER_QUESTION', 
-      payload: { 
-        index: currentSession.currentIndex, 
-        answer: -1
-      } 
+    if (!currentSession || quizType !== 'topic') return;
+
+    dispatch({
+      type: 'ANSWER_QUESTION',
+      payload: { index: currentSession.currentIndex, answer: -1 }
     });
 
     handleNextQuestion();
@@ -298,67 +350,74 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
     const answeredQuestions: AnsweredQuestion[] = [];
     let correctCount = 0;
 
-    // Aggiorna le statistiche per ogni domanda risposta
-    const updatedAnsweredQuestions = { ...state.userStats.answeredQuestions };
-    const updatedCorrectQuestions = { ...state.userStats.correctQuestions };
-    const updatedIncorrectQuestions = { ...state.userStats.incorrectQuestions };
+    const updatedAnsweredQuestions = {
+      ...state.userStats.answeredQuestions
+    };
+    const updatedCorrectQuestions = {
+      ...state.userStats.correctQuestions
+    };
+    const updatedIncorrectQuestions = {
+      ...state.userStats.incorrectQuestions
+    };
     const updatedStatsPerTopic = { ...state.userStats.statsPerTopic };
 
     currentSession.answers.forEach((answer, index) => {
-      const question = currentSession.questions[index];
-      const isCorrect = answer === question.correct;
-      
+      const q = currentSession.questions[index];
+      const isCorrect = answer === q.correct;
+
       if (answer !== null && answer !== -1) {
-        updatedAnsweredQuestions[question.id] = true;
-        
+        updatedAnsweredQuestions[q.id] = true;
+
         if (isCorrect) {
           correctCount++;
-          updatedCorrectQuestions[question.id] = true;
-          // Rimuovi dalle domande sbagliate se era presente
-          delete updatedIncorrectQuestions[question.id];
+          updatedCorrectQuestions[q.id] = true;
+          delete updatedIncorrectQuestions[q.id];
         } else {
-          updatedIncorrectQuestions[question.id] = true;
+          updatedIncorrectQuestions[q.id] = true;
         }
 
-        // Aggiorna statistiche per topic
-        const topic = question.topic;
+        const topic = q.topic;
         if (!updatedStatsPerTopic[topic]) {
-          const topicQuestions = questions.filter(q => q.topic === topic);
-          updatedStatsPerTopic[topic] = { 
-            done: 0, 
-            correct: 0, 
-            total: topicQuestions.length 
+          const topicQs = questions.filter(qq => qq.topic === topic);
+          updatedStatsPerTopic[topic] = {
+            done: 0,
+            correct: 0,
+            total: topicQs.length
           };
         }
-        
-        // Solo se è la prima volta che rispondiamo a questa domanda
-        if (!state.userStats.answeredQuestions[question.id]) {
+
+        if (!state.userStats.answeredQuestions[q.id]) {
           updatedStatsPerTopic[topic].done++;
         }
-        
-        // Aggiorna il conteggio delle risposte corrette per questo topic
-        if (isCorrect && !state.userStats.correctQuestions[question.id]) {
+
+        if (isCorrect && !state.userStats.correctQuestions[q.id]) {
           updatedStatsPerTopic[topic].correct++;
-        } else if (!isCorrect && state.userStats.correctQuestions[question.id]) {
-          // Se precedentemente era corretta e ora è sbagliata
-          updatedStatsPerTopic[topic].correct = Math.max(0, updatedStatsPerTopic[topic].correct - 1);
+        } else if (
+          !isCorrect &&
+          state.userStats.correctQuestions[q.id]
+        ) {
+          updatedStatsPerTopic[topic].correct = Math.max(
+            0,
+            updatedStatsPerTopic[topic].correct - 1
+          );
         }
 
         answeredQuestions.push({
-          questionId: question.id,
-          question: question.question,
-          options: question.options,
+          questionId: q.id,
+          question: q.question,
+          options: q.options,
           userAnswer: answer,
-          correctAnswer: question.correct,
+          correctAnswer: q.correct,
           isCorrect,
           timestamp: new Date(),
-          topic: question.topic,
-          explanation: question.explanation
+          topic: q.topic,
+          explanation: q.explanation
         });
       }
     });
 
-    const score = (correctCount / currentSession.questions.length) * 100;
+    const score =
+      (correctCount / currentSession.questions.length) * 100;
 
     const quizHistoryEntry: QuizHistory = {
       id: currentSession.id,
@@ -374,11 +433,21 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
     const updatedStats = {
       ...state.userStats,
       totalQuizzes: state.userStats.totalQuizzes + 1,
-      totalQuestions: state.userStats.totalQuestions + currentSession.questions.length,
-      correctAnswers: state.userStats.correctAnswers + correctCount,
-      overallAccuracy: ((state.userStats.correctAnswers + correctCount) / (state.userStats.totalQuestions + currentSession.questions.length)) * 100,
-      currentStreak: score >= 70 ? state.userStats.currentStreak + 1 : 0,
-      bestStreak: Math.max(state.userStats.bestStreak, score >= 70 ? state.userStats.currentStreak + 1 : 0),
+      totalQuestions:
+        state.userStats.totalQuestions + currentSession.questions.length,
+      correctAnswers:
+        state.userStats.correctAnswers + correctCount,
+      overallAccuracy:
+        ((state.userStats.correctAnswers + correctCount) /
+          (state.userStats.totalQuestions +
+            currentSession.questions.length)) *
+        100,
+      currentStreak:
+        score >= 70 ? state.userStats.currentStreak + 1 : 0,
+      bestStreak: Math.max(
+        state.userStats.bestStreak,
+        score >= 70 ? state.userStats.currentStreak + 1 : 0
+      ),
       lastUpdated: new Date(),
       quizHistory: [...state.userStats.quizHistory, quizHistoryEntry],
       answeredQuestions: updatedAnsweredQuestions,
@@ -390,9 +459,9 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
     dispatch({ type: 'UPDATE_STATS', payload: updatedStats });
     dispatch({ type: 'END_QUIZ' });
 
-    onNavigate('results', { 
-      score, 
-      correctAnswers: correctCount, 
+    onNavigate('results', {
+      score,
+      correctAnswers: correctCount,
       totalQuestions: currentSession.questions.length,
       quizType,
       topicName,
@@ -400,132 +469,272 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
     });
   };
 
+  /* ------------------------------------------------------------------ */
+  /* ♻️  handleReplaceQuestion  →  MODIFICA 2 (+ estensione topic)      */
+  /* ------------------------------------------------------------------ */
+  const handleReplaceQuestion = () => {
+    if (!currentSession || isAnswered) return;
+
+    const currentQ = currentSession.questions[currentSession.currentIndex];
+    const usedIds = new Set(currentSession.questions.map(q => q.id));
+
+    // Pool di domande alternative per lo stesso argomento
+    const pool = questions.filter(
+      q =>
+        q.topic === currentQ.topic &&
+        !state.userStats.correctQuestions[q.id] &&
+        !usedIds.has(q.id)
+    );
+
+    /* ---------- Caso 1: alternativa disponibile ---------- */
+    if (pool.length > 0) {
+      const newQ =
+        pool[Math.floor(Math.random() * pool.length)];
+
+      const newQuestions = [...currentSession.questions];
+      const newAnswers = [...currentSession.answers];
+      const newShuffled = [...shuffledQuestions];
+
+      newQuestions[currentSession.currentIndex] = newQ;
+      newAnswers[currentSession.currentIndex] = null;
+      newShuffled[currentSession.currentIndex] =
+        shuffleQuestionOptions(newQ);
+
+      setSelectedAnswer(null);
+      setShowFeedback(false);
+      setIsAnswered(false);
+      setShowExplanation(true);
+      setShuffledQuestions(newShuffled);
+
+      dispatch({
+        type: 'START_QUIZ',
+        payload: {
+          ...currentSession,
+          questions: newQuestions,
+          answers: newAnswers
+        }
+      });
+      return;
+    }
+
+    /* ---------- Caso 2: nessuna alternativa ---------- */
+    if (quizType === 'topic') {
+      // Rimuove la domanda corrente
+      const newQuestions = currentSession.questions.filter(
+        (_, i) => i !== currentSession.currentIndex
+      );
+      const newAnswers = currentSession.answers.filter(
+        (_, i) => i !== currentSession.currentIndex
+      );
+      const newShuffled = shuffledQuestions.filter(
+        (_, i) => i !== currentSession.currentIndex
+      );
+
+      // Se non restano domande, chiude il quiz
+      if (newQuestions.length === 0) {
+        finishQuiz();
+        return;
+      }
+
+      const newIndex = Math.min(
+        currentSession.currentIndex,
+        newQuestions.length - 1
+      );
+
+      setSelectedAnswer(null);
+      setShowFeedback(false);
+      setIsAnswered(false);
+      setShowExplanation(true);
+      setShuffledQuestions(newShuffled);
+
+      dispatch({
+        type: 'START_QUIZ',
+        payload: {
+          ...currentSession,
+          questions: newQuestions,
+          answers: newAnswers,
+          currentIndex: newIndex
+        }
+      });
+    } else {
+      // Quiz generale o custom: avvisa l’utente (caso raro)
+      window.alert(
+        'Nessuna altra domanda disponibile per questo argomento.'
+      );
+    }
+  };
+
+  /* ------------------------------------------------------------------ */
+  /* ⏳  Loading                                                        */
+  /* ------------------------------------------------------------------ */
   if (!currentSession || shuffledQuestions.length === 0) {
     return (
       <div className="min-h-screen bg-apple-light flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-apple-blue border-t-transparent rounded-full animate-spin mb-4 mx-auto"></div>
-          <p className="text-body text-apple-secondary">Caricamento quiz...</p>
+          <p className="text-body text-apple-secondary">
+            Caricamento quiz...
+          </p>
         </div>
       </div>
     );
   }
 
+  /* ------------------------------------------------------------------ */
+  /* 🎨  Render                                                         */
+  /* ------------------------------------------------------------------ */
   const currentQuestion = currentSession.questions[currentSession.currentIndex];
   const shuffledQuestion = shuffledQuestions[currentSession.currentIndex];
-  const progress = ((currentSession.currentIndex + 1) / currentSession.questions.length) * 100;
-  
-  // Map the selected answer to check correctness using shuffled options
-  const isCorrect = selectedAnswer !== null && shuffledQuestion 
-    ? shuffledQuestion.optionMapping[selectedAnswer] === currentQuestion.correct
-    : false;
-  
+  const progress =
+    ((currentSession.currentIndex + 1) /
+      currentSession.questions.length) *
+    100;
+  const isCorrect =
+    selectedAnswer !== null && shuffledQuestion
+      ? shuffledQuestion.optionMapping[selectedAnswer] ===
+        currentQuestion.correct
+      : false;
   const topicInfo = topics.find(t => t.name === currentQuestion.topic);
 
   return (
     <div className="min-h-screen bg-apple-light flex flex-col overflow-x-hidden">
-      {/* Header */}
+      {/* ---------------------------------------------------------------- */}
+      {/* Header                                                          */}
+      {/* ---------------------------------------------------------------- */}
       <header className="bg-apple-card shadow-apple-card px-4 sm:px-6 py-4 sticky top-0 z-10">
         <div className="flex items-center justify-between mb-4">
-          {/* Back button - only for topic quizzes */}
           {quizType === 'topic' ? (
-            <button 
+            <button
               onClick={handleBackButton}
               className="p-2 -ml-2 rounded-full hover:bg-apple-light transition-colors flex-shrink-0"
             >
               <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6 text-apple-blue" />
             </button>
           ) : (
-            <div className="w-6 sm:w-10"></div>
+            <div className="w-6 sm:w-10" />
           )}
-          
+
           <div className="text-center flex-1 min-w-0 px-2">
             <h1 className="text-sm sm:text-base font-medium truncate">
-              {title || (quizType === 'general' ? 'Quiz Generale' : topicName)}
+              {title ||
+                (quizType === 'general'
+                  ? 'Quiz Generale'
+                  : topicName)}
             </h1>
             <p className="text-xs text-apple-secondary">
-              Domanda {currentSession.currentIndex + 1} di {currentSession.questions.length}
+              Domanda {currentSession.currentIndex + 1} di{' '}
+              {currentSession.questions.length}
             </p>
           </div>
-          <div className="w-6 sm:w-10"></div>
+          <div className="w-6 sm:w-10" />
         </div>
 
-        {/* Progress Bar */}
+        {/* Progress bar */}
         <div className="w-full bg-apple-light rounded-full h-1">
-          <div 
+          <div
             className="bg-apple-blue h-1 rounded-full transition-all duration-300"
             style={{ width: `${progress}%` }}
           />
         </div>
       </header>
 
-      {/* Question Content */}
+      {/* ---------------------------------------------------------------- */}
+      {/* Contenuto domanda                                               */}
+      {/* ---------------------------------------------------------------- */}
       <div className="flex-1 px-4 sm:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6">
-        {/* Topic Label */}
+        {/* Topic label */}
         <div className="flex items-center space-x-2 mb-3 sm:mb-4">
-          <span className="text-base sm:text-lg">{topicInfo?.icon || '📝'}</span>
+          <span className="text-base sm:text-lg">
+            {topicInfo?.icon || '📝'}
+          </span>
           <span className="text-xs sm:text-sm text-apple-secondary font-medium truncate">
             {currentQuestion.topic}
           </span>
         </div>
 
-        {/* Question Card */}
+        {/* Card domanda */}
         <div className="apple-card p-4 sm:p-6">
           <div className="flex items-start justify-between gap-3 sm:gap-4">
             <h2 className="text-base sm:text-lg font-medium leading-relaxed flex-1">
               {currentQuestion.question}
             </h2>
-            <button
-              onClick={handleGoogleSearch}
-              className="flex-shrink-0 p-2 rounded-full hover:bg-apple-light transition-colors text-apple-secondary hover:text-apple-blue"
-              title="Cerca su Google"
-            >
-              <Globe className="w-4 h-4 sm:w-5 sm:h-5" />
-            </button>
+
+            {/* Pulsanti azione */}
+            <div className="flex items-center space-x-1">
+              <button
+                onClick={handleGoogleSearch}
+                className="flex-shrink-0 p-2 rounded-full hover:bg-apple-light transition-colors text-apple-secondary hover:text-apple-blue"
+                title="Cerca su Google"
+              >
+                <Globe className="w-4 h-4 sm:w-5 sm:h-5" />
+              </button>
+
+              {!isAnswered && (
+                <button
+                  onClick={handleReplaceQuestion}
+                  className="flex-shrink-0 p-2 rounded-full hover:bg-apple-light transition-colors text-apple-secondary hover:text-apple-blue"
+                  title="Sostituisci domanda"
+                >
+                  <RefreshCw className="w-4 h-4 sm:w-5 sm:h-5" />
+                </button>
+              )}
+            </div>
           </div>
         </div>
 
-        {/* Answer Options */}
+        {/* Opzioni risposta */}
         <div className="space-y-2 sm:space-y-3">
-          {shuffledQuestion.shuffledOptions.map((option, index) => {
-            let buttonStyle = "w-full p-3 sm:p-4 rounded-apple border text-left transition-all apple-button ";
-            
+          {shuffledQuestion.shuffledOptions.map((opt, idx) => {
+            let btnStyle =
+              'w-full p-3 sm:p-4 rounded-apple border text-left transition-all apple-button ';
+
             if (showFeedback) {
-              const originalCorrectIndex = shuffledQuestion.optionMapping.indexOf(currentQuestion.correct);
-              if (index === originalCorrectIndex) {
-                buttonStyle += "bg-apple-green text-white border-apple-green ";
-              } else if (index === selectedAnswer && index !== originalCorrectIndex) {
-                buttonStyle += "bg-apple-red text-white border-apple-red ";
+              const corrIdx =
+                shuffledQuestion.optionMapping.indexOf(
+                  currentQuestion.correct
+                );
+              if (idx === corrIdx) {
+                btnStyle +=
+                  'bg-apple-green text-white border-apple-green ';
+              } else if (
+                idx === selectedAnswer &&
+                idx !== corrIdx
+              ) {
+                btnStyle +=
+                  'bg-apple-red text-white border-apple-red ';
               } else {
-                buttonStyle += "bg-apple-light border-apple-border text-apple-secondary ";
+                btnStyle +=
+                  'bg-apple-light border-apple-border text-apple-secondary ';
               }
-            } else if (selectedAnswer === index) {
-              buttonStyle += "bg-apple-blue/10 border-apple-blue text-apple-blue ";
+            } else if (selectedAnswer === idx) {
+              btnStyle +=
+                'bg-apple-blue/10 border-apple-blue text-apple-blue ';
             } else {
-              buttonStyle += "bg-apple-card border-apple-border text-apple-text hover:bg-apple-light ";
+              btnStyle +=
+                'bg-apple-card border-apple-border text-apple-text hover:bg-apple-light ';
             }
 
             return (
               <button
-                key={index}
-                onClick={() => handleAnswerSelect(index)}
+                key={idx}
+                onClick={() => handleAnswerSelect(idx)}
                 disabled={isAnswered}
-                className={buttonStyle}
+                className={btnStyle}
               >
                 <div className="flex items-center space-x-2 sm:space-x-3">
                   <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 border-current flex items-center justify-center flex-shrink-0">
                     <span className="text-xs sm:text-sm font-bold">
-                      {String.fromCharCode(65 + index)}
+                      {String.fromCharCode(65 + idx)}
                     </span>
                   </div>
-                  <span className="text-sm sm:text-base">{option}</span>
+                  <span className="text-sm sm:text-base">{opt}</span>
                 </div>
               </button>
             );
           })}
         </div>
 
-        {/* Explanation */}
+        {/* Spiegazione */}
         {showFeedback && currentQuestion.explanation && (
           <div className="apple-card p-3 sm:p-4">
             <div className="flex items-center justify-between mb-2">
@@ -536,8 +745,14 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
                 onClick={() => setShowExplanation(!showExplanation)}
                 className="flex items-center space-x-1 text-apple-blue text-xs sm:text-sm"
               >
-                {showExplanation ? <EyeOff className="w-3 h-3 sm:w-4 sm:h-4" /> : <Eye className="w-3 h-3 sm:w-4 sm:h-4" />}
-                <span>{showExplanation ? 'Nascondi' : 'Mostra'}</span>
+                {showExplanation ? (
+                  <EyeOff className="w-3 h-3 sm:w-4 sm:h-4" />
+                ) : (
+                  <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
+                )}
+                <span>
+                  {showExplanation ? 'Nascondi' : 'Mostra'}
+                </span>
               </button>
             </div>
             {showExplanation && (
@@ -549,9 +764,10 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
         )}
       </div>
 
-      {/* Footer Actions – centered buttons */}
+      {/* ---------------------------------------------------------------- */}
+      {/* Footer                                                          */}
+      {/* ---------------------------------------------------------------- */}
       <div className="mt-6 mb-32 flex justify-center gap-4">
-        {/* Skip – visibile solo nei quiz per argomento */}
         {quizType === 'topic' && (
           <button
             onClick={handleSkipQuestion}
@@ -576,13 +792,13 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
             onClick={handleNextQuestion}
             className="px-4 sm:px-6 py-2 sm:py-3 apple-button-primary text-sm sm:text-base"
           >
-            {currentSession.currentIndex < currentSession.questions.length - 1
+            {currentSession.currentIndex <
+            currentSession.questions.length - 1
               ? 'Prossima'
               : 'Termina'}
           </button>
         )}
       </div>
-
     </div>
   );
 };
