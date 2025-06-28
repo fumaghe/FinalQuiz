@@ -549,41 +549,40 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
         )}
       </div>
 
-      {/* Footer Actions */}
-      <div className="bg-apple-card border-t border-apple-border px-4 sm:px-6 py-3 sm:py-4 sticky bottom-0">
-        <div className="flex justify-between items-center">
-          {/* Skip button - only for topic quizzes */}
-          {quizType === 'topic' ? (
-            <button
-              onClick={handleSkipQuestion}
-              disabled={isAnswered}
-              className="flex items-center space-x-1 sm:space-x-2 text-apple-blue font-medium apple-button disabled:opacity-50 text-sm sm:text-base"
-            >
-              <SkipForward className="w-3 h-3 sm:w-4 sm:h-4" />
-              <span>Salta</span>
-            </button>
-          ) : (
-            <div></div>
-          )}
+      {/* Footer Actions – centered buttons */}
+      <div className="mt-6 mb-32 flex justify-center gap-4">
+        {/* Skip – visibile solo nei quiz per argomento */}
+        {quizType === 'topic' && (
+          <button
+            onClick={handleSkipQuestion}
+            disabled={isAnswered}
+            className="flex items-center space-x-1 sm:space-x-2 text-apple-blue font-medium apple-button disabled:opacity-50 text-sm sm:text-base"
+          >
+            <SkipForward className="w-3 h-3 sm:w-4 sm:h-4" />
+            <span>Salta</span>
+          </button>
+        )}
 
-          {!isAnswered ? (
-            <button
-              onClick={handleConfirmAnswer}
-              disabled={selectedAnswer === null}
-              className="px-4 sm:px-6 py-2 sm:py-3 apple-button-primary disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
-            >
-              Conferma
-            </button>
-          ) : (
-            <button
-              onClick={handleNextQuestion}
-              className="px-4 sm:px-6 py-2 sm:py-3 apple-button-primary text-sm sm:text-base"
-            >
-              {currentSession.currentIndex < currentSession.questions.length - 1 ? 'Prossima' : 'Termina'}
-            </button>
-          )}
-        </div>
+        {!isAnswered ? (
+          <button
+            onClick={handleConfirmAnswer}
+            disabled={selectedAnswer === null}
+            className="px-4 sm:px-6 py-2 sm:py-3 apple-button-primary disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
+          >
+            Conferma
+          </button>
+        ) : (
+          <button
+            onClick={handleNextQuestion}
+            className="px-4 sm:px-6 py-2 sm:py-3 apple-button-primary text-sm sm:text-base"
+          >
+            {currentSession.currentIndex < currentSession.questions.length - 1
+              ? 'Prossima'
+              : 'Termina'}
+          </button>
+        )}
       </div>
+
     </div>
   );
 };
