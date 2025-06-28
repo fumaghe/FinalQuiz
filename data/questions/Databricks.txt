@@ -1,0 +1,728 @@
+
+Quale metodo viene utilizzato per definire una funzione utente personalizzata che può essere applicata a una colonna di un DataFrame in Spark?
+A) map()
+B) udf()
+C) apply()
+D) lambda()
+Risposta Corretta: B
+Spiegazione: In Spark, udf() viene utilizzato per registrare una funzione definita dall’utente (User Defined Function) che può essere applicata a colonne di un DataFrame per eseguire trasformazioni personalizzate.
+
+Quale delle seguenti opzioni descrive meglio il concetto di “Lazy Evaluation” in Spark?
+A) Esecuzione immediata di tutte le trasformazioni
+B) Esecuzione delle trasformazioni solo quando un’azione viene chiamata
+C) Esecuzione delle trasformazioni in parallelo
+D) Esecuzione delle trasformazioni su un singolo nodo
+Risposta Corretta: B
+Spiegazione: La “Lazy Evaluation” in Spark significa che le trasformazioni vengono registrate ma non eseguite fino a quando un’azione (come collect() o save()) viene invocata, ottimizzando così il piano di esecuzione.
+
+In Databricks, quale componente è responsabile della gestione della sicurezza e dell’accesso ai dati attraverso le politiche di controllo degli accessi?
+A) Delta Lake
+B) Unity Catalog
+C) Databricks Repos
+D) Autoloader
+Risposta Corretta: B
+Spiegazione: Unity Catalog in Databricks gestisce la sicurezza e l’accesso ai dati attraverso politiche centralizzate di controllo degli accessi, facilitando la gestione dei permessi a livello di metadati.
+
+Quale delle seguenti affermazioni descrive meglio una “Delta Table” in Databricks?
+A) Una tabella SQL tradizionale senza versioning
+B) Una tabella ottimizzata con supporto per transazioni ACID e versioning dei dati
+C) Una tabella non strutturata memorizzata in formato JSON
+D) Una tabella temporanea utilizzata solo durante l’esecuzione di un notebook
+Risposta Corretta: B
+Spiegazione: Le Delta Tables in Databricks forniscono funzionalità avanzate come transazioni ACID, versioning dei dati e ottimizzazioni per migliorare la gestione e la qualità dei dati.
+
+In Spark, quale tipo di RDD (Resilient Distributed Dataset) è caratterizzato da operazioni che non richiedono uno shuffle dei dati?
+A) RDD Wide
+B) RDD Narrow
+C) RDD Shuffle
+D) RDD Partitioned
+Risposta Corretta: B
+Spiegazione: Le Narrow Transformations sono operazioni che non richiedono uno shuffle dei dati, come map e filter, poiché ogni partizione di input è mappata a una singola partizione di output.
+
+Quale delle seguenti operazioni in Spark può causare un “spill” su disco durante l’elaborazione?
+A) cache()
+B) broadcast()
+C) join()
+D) collect()
+Risposta Corretta: C
+Spiegazione: Le operazioni come join() possono richiedere uno shuffle dei dati che, se la memoria disponibile è insufficiente, possono causare uno “spill” su disco per gestire i dati intermedi.
+
+In Databricks, quale strumento consente di automatizzare e orchestrare flussi di lavoro complessi utilizzando grafi di dipendenza?
+A) Delta Live Tables
+B) Workflows
+C) Autoloader
+D) Unity Catalog
+Risposta Corretta: B
+Spiegazione: Databricks Workflows permette di creare, programmare e monitorare flussi di lavoro complessi utilizzando grafi di dipendenza, facilitando l’automazione delle pipeline di dati.
+
+Quale delle seguenti pratiche migliora l’efficienza della cache in Spark?
+A) Aumentare il numero di partizioni senza limitare la memoria
+B) Cacheare solo le colonne necessarie
+C) Utilizzare il formato di compressione non ottimizzato
+D) Cacheare l’intero DataFrame indipendentemente dall’uso
+Risposta Corretta: B
+Spiegazione: Cacheare solo le colonne necessarie riduce l’uso della memoria e migliora l’efficienza della cache, evitando di memorizzare dati non utilizzati.
+
+In Databricks, quale componente consente di monitorare le prestazioni e lo stato delle pipeline di dati in tempo reale?
+A) Delta Live Tables
+B) Monitoring
+C) Unity Catalog
+D) Autoloader
+Risposta Corretta: B
+Spiegazione: Il componente Monitoring in Databricks permette di osservare e analizzare le prestazioni e lo stato delle pipeline di dati in tempo reale, facilitando il rilevamento di anomalie e problemi.
+
+Quale delle seguenti architetture è progettata per minimizzare la latenza nella gestione e nell’elaborazione dei dati tramite livelli distinti di qualità?
+A) Lambda Architecture
+B) Medallion Architecture
+C) Kappa Architecture
+D) Microservices Architecture
+Risposta Corretta: B
+Spiegazione: La Medallion Architecture organizza i dati in livelli bronze, silver e gold, migliorando la qualità e minimizzando la latenza attraverso trasformazioni incrementalmente più pulite e affidabili.
+
+In Spark, quale operazione viene eseguita immediatamente quando viene invocata?
+A) Transformations
+B) Actions
+C) Lazy Evaluations
+D) Persistences
+Risposta Corretta: B
+Spiegazione: Le azioni in Spark, come collect() o save(), vengono eseguite immediatamente e innescano l’esecuzione del DAG delle trasformazioni registrate.
+
+Quale delle seguenti opzioni rappresenta un vantaggio principale nell’utilizzo di Delta Lake rispetto ai tradizionali Data Lake?
+A) Supporto per linguaggi di programmazione multipli
+B) Integrazione nativa con Azure Data Factory
+C) Gestione delle transazioni ACID e del versioning dei dati
+D) Capacità di archiviazione di dati non strutturati
+Risposta Corretta: C
+Spiegazione: Delta Lake aggiunge supporto per transazioni ACID e versioning dei dati ai tradizionali Data Lake, migliorando la consistenza e la gestione delle modifiche sui dati.
+
+In Databricks, quale funzione consente di rimuovere i file non necessari e ottimizzare lo storage di una Delta Table?
+A) optimize()
+B) vacuum()
+C) clean()
+D) compact()
+Risposta Corretta: B
+Spiegazione: La funzione vacuum() in Databricks rimuove i file non necessari da una Delta Table, liberando spazio di storage e mantenendo l’efficienza dei dati.
+
+Quale delle seguenti opzioni descrive meglio una “wide transformation” in Spark?
+A) Operazioni che trasformano ogni elemento in modo indipendente
+B) Operazioni che coinvolgono una singola partizione
+C) Operazioni che richiedono uno shuffle dei dati tra le partizioni
+D) Operazioni che non modificano lo schema dei dati
+Risposta Corretta: C
+Spiegazione: Le wide transformations in Spark, come join() e groupBy(), richiedono uno shuffle dei dati tra le partizioni, comportando una ridistribuzione dei dati.
+
+In Spark, quale delle seguenti operazioni può essere ottimizzata utilizzando le “Broadcast Variables”?
+A) Join di grandi dataset
+B) Join di un grande dataset con un piccolo dataset
+C) Filtraggio di un DataFrame
+D) Aggregazione di dati
+Risposta Corretta: B
+Spiegazione: Le Broadcast Variables possono essere utilizzate per inviare un piccolo dataset a tutti i nodi, ottimizzando le operazioni di join con un grande dataset riducendo lo shuffle.
+
+Quale delle seguenti tecniche di partizionamento può migliorare significativamente le prestazioni di una query in un Data Warehouse?
+A) Partizionamento casuale
+B) Partizionamento basato su hash
+C) Partizionamento basato su intervalli di valori
+D) Nessun partizionamento
+Risposta Corretta: C
+Spiegazione: Il partizionamento basato su intervalli di valori consente di limitare la scansione dei dati solo ai segmenti rilevanti, migliorando le prestazioni delle query.
+
+In Databricks, quale strumento permette di eseguire test di integrazione automatizzati per le pipeline di dati?
+A) Unit Test Framework
+B) Integration Test Framework
+C) Databricks Test Framework
+D) Data Test Suite
+Risposta Corretta: C
+Spiegazione: Il Databricks Test Framework consente di eseguire test di integrazione automatizzati per verificare che le pipeline di dati funzionino correttamente nell’ambiente Databricks.
+
+Quale dei seguenti non è un formato di file supportato nativamente da Spark per l’elaborazione dei dati?
+A) CSV
+B) Parquet
+C) XML
+D) JSON
+Risposta Corretta: C
+Spiegazione: Sebbene Spark possa leggere file XML tramite librerie aggiuntive, non è supportato nativamente come CSV, Parquet e JSON.
+
+In Spark, quale metodo viene utilizzato per memorizzare un DataFrame in memoria per un uso futuro?
+A) cache()
+B) persist()
+C) store()
+D) retain()
+Risposta Corretta: B
+Spiegazione: Il metodo persist() in Spark permette di memorizzare un DataFrame in memoria (o in memoria e disco) per un uso futuro, migliorando le prestazioni per operazioni ripetute.
+
+Quale delle seguenti affermazioni descrive meglio il concetto di “shuffle” in Spark?
+A) Spostamento di dati all’interno di una singola partizione
+B) Ridistribuzione dei dati tra diverse partizioni per operazioni come join o groupBy
+C) Compressione dei dati per risparmiare spazio
+D) Memorizzazione dei dati in cache
+Risposta Corretta: B
+Spiegazione: Il “shuffle” in Spark si riferisce alla ridistribuzione dei dati tra diverse partizioni necessaria per operazioni come join() o groupBy(), che richiedono dati correlati su diverse partizioni.
+
+In Databricks, quale componente consente di integrare e gestire segreti e chiavi in modo sicuro?
+A) Unity Catalog
+B) Azure Key Vault
+C) Delta Live Tables
+D) Autoloader
+Risposta Corretta: B
+Spiegazione: Azure Key Vault in Databricks permette di gestire in modo sicuro segreti, chiavi e certificati, integrandosi con i servizi di sicurezza di Azure.
+
+Quale delle seguenti tecniche può essere utilizzata per migliorare la scalabilità di un cluster Spark?
+A) Ridurre il numero di nodi
+B) Aumentare la memoria per ogni nodo senza aggiungere altri nodi
+C) Aumentare il numero di nodi nel cluster
+D) Limitare il numero di esecutori per nodo
+Risposta Corretta: C
+Spiegazione: Aumentare il numero di nodi in un cluster Spark migliora la scalabilità distribuendo il carico di lavoro su più risorse computazionali.
+
+In Spark, quale delle seguenti operazioni è idempotente?
+A) append()
+B) update()
+C) delete()
+D) write overwrite
+Risposta Corretta: D
+Spiegazione: L’operazione write overwrite è idempotente poiché ripetere l’operazione più volte produce lo stesso risultato, sovrascrivendo i dati esistenti senza effetti collaterali aggiuntivi.
+
+Quale delle seguenti affermazioni descrive meglio il concetto di “Data Skew” in Spark?
+A) Distribuzione uniforme dei dati tra le partizioni
+B) Distribuzione non uniforme dei dati che causa squilibri di carico tra le partizioni
+C) Compressione dei dati per ridurre la dimensione
+D) Aumento della velocità di elaborazione dei dati
+Risposta Corretta: B
+Spiegazione: Il “Data Skew” si verifica quando i dati non sono distribuiti uniformemente tra le partizioni, causando squilibri di carico e potenziali colli di bottiglia durante l’elaborazione.
+
+In Databricks, quale componente permette di eseguire test di unità sui notebook?
+A) Databricks Repos
+B) Unity Catalog
+C) Databricks Test Framework
+D) Delta Live Tables
+Risposta Corretta: C
+Spiegazione: Il Databricks Test Framework consente di scrivere ed eseguire test di unità sui notebook, assicurando che il codice funzioni come previsto.
+
+Quale delle seguenti tecnologie è comunemente utilizzata per l’archiviazione di dati non strutturati in un Data Lake?
+A) Tabelle SQL
+B) File Parquet
+C) File JSON
+D) File di testo semplice
+Risposta Corretta: D
+Spiegazione: I file di testo semplice sono comunemente utilizzati per l’archiviazione di dati non strutturati in un Data Lake, poiché non richiedono uno schema definito.
+
+In Spark, quale delle seguenti operazioni può beneficiare dell’uso di una “Broadcast Join” per migliorare le prestazioni?
+A) Join di due grandi DataFrame
+B) Join di un grande DataFrame con un piccolo DataFrame
+C) Join di due piccoli DataFrame
+D) Join di DataFrame senza chiavi
+Risposta Corretta: B
+Spiegazione: Una “Broadcast Join” invia il piccolo DataFrame a tutti i nodi, evitando lo shuffle dei dati e migliorando le prestazioni quando si unisce un grande DataFrame con uno piccolo.
+
+Quale delle seguenti pratiche è consigliata per gestire efficacemente i file semi-strutturati come Parquet in un Data Lake?
+A) Utilizzare una sola partizione per tutti i dati
+B) Non utilizzare schemi per i dati
+C) Organizzare i dati in partizioni basate su colonne frequentemente filtrate
+D) Archiviare i dati in formato CSV per una migliore compressione
+Risposta Corretta: C
+Spiegazione: Organizzare i dati in partizioni basate su colonne frequentemente filtrate migliora le prestazioni delle query riducendo la quantità di dati letti durante l’elaborazione.
+
+In Databricks, quale funzionalità consente di eseguire automaticamente il riavvio di un job in caso di fallimento?
+A) Autoloader
+B) Workflows
+C) Delta Live Tables
+D) Job Retry Policies
+Risposta Corretta: B
+Spiegazione: Databricks Workflows permette di configurare politiche di retry per i job, consentendo il riavvio automatico in caso di fallimento.
+
+Quale delle seguenti opzioni descrive meglio il concetto di “Data Lakehouse” offerto da Databricks?
+A) Una combinazione di Data Warehouse e Data Lake che offre funzionalità di gestione dei dati strutturati e non strutturati
+B) Un Data Lake tradizionale senza alcuna ottimizzazione
+C) Un Data Warehouse che supporta solo dati strutturati
+D) Un sistema di archiviazione basato su file system locale
+Risposta Corretta: A
+Spiegazione: Il concetto di “Data Lakehouse” combina le capacità di un Data Warehouse (gestione di dati strutturati e query ottimizzate) con quelle di un Data Lake (gestione di dati non strutturati), offrendo una piattaforma unificata per l’analisi dei dati.
+
+In Spark, quale delle seguenti configurazioni può essere regolata per ottimizzare la dimensione delle partizioni durante il processo di shuffle?
+A) spark.executor.memory
+B) spark.sql.shuffle.partitions
+C) spark.driver.cores
+D) spark.serializer
+Risposta Corretta: B
+Spiegazione: La configurazione spark.sql.shuffle.partitions determina il numero di partizioni utilizzate durante le operazioni di shuffle, influenzando la parallelizzazione e le prestazioni delle query.
+
+Quale delle seguenti affermazioni descrive meglio una “DataFrame Transformation” in Spark?
+A) Un’operazione che restituisce un valore al driver
+B) Un’operazione che crea un nuovo DataFrame da uno esistente senza eseguire alcun calcolo immediato
+C) Un’operazione che salva i dati su disco
+D) Un’operazione che modifica i dati originali
+Risposta Corretta: B
+Spiegazione: Le trasformazioni sui DataFrame in Spark, come select() o filter(), creano nuovi DataFrame basati sui precedenti senza eseguire calcoli immediati grazie alla Lazy Evaluation.
+
+In Databricks, quale componente consente di gestire versioni del codice e collaborare utilizzando sistemi di controllo delle versioni come Git?
+A) Unity Catalog
+B) Databricks Repos
+C) Delta Live Tables
+D) Autoloader
+Risposta Corretta: B
+Spiegazione: Databricks Repos integra sistemi di controllo delle versioni come Git, permettendo di gestire versioni del codice e collaborare efficacemente sui progetti.
+
+Quale delle seguenti operazioni in Spark può essere ottimizzata utilizzando il metodo “repartition()”?
+A) Riduzione della memoria utilizzata da un DataFrame
+B) Aumento del numero di partizioni per migliorare la parallelizzazione
+C) Eliminazione di partizioni vuote
+D) Modifica dello schema di un DataFrame
+Risposta Corretta: B
+Spiegazione: Il metodo repartition() può aumentare o diminuire il numero di partizioni di un DataFrame, migliorando la parallelizzazione e bilanciando il carico di lavoro tra i nodi del cluster.
+
+In Spark, quale delle seguenti API è considerata più performante per operazioni di streaming strutturato?
+A) RDD API
+B) DataFrame API
+C) DStream API
+D) SQL API
+Risposta Corretta: B
+Spiegazione: L’API DataFrame per lo streaming strutturato in Spark è più performante rispetto a DStream API grazie alle ottimizzazioni del motore Catalyst e alla gestione efficiente delle risorse.
+
+Quale delle seguenti caratteristiche non è supportata nativamente da Pandas?
+A) Operazioni di join tra DataFrame
+B) Supporto per dati di grandi dimensioni che non cablano in memoria
+C) Manipolazione di dati tabulari
+D) Integrazione con librerie di visualizzazione
+Risposta Corretta: B
+Spiegazione: Pandas carica i dati interamente in memoria, il che limita la sua capacità di gestire dataset di grandi dimensioni che non possono essere contenuti nella memoria disponibile.
+
+In Databricks, quale funzionalità permette di applicare automaticamente trasformazioni e pulizie sui dati in arrivo in tempo reale?
+A) Delta Live Tables
+B) Autoloader
+C) Workflows
+D) Unity Catalog
+Risposta Corretta: A
+Spiegazione: Delta Live Tables permette di definire pipeline di dati che applicano automaticamente trasformazioni, pulizie e validazioni sui dati in arrivo in tempo reale.
+
+Quale delle seguenti affermazioni descrive meglio il “Schema on Read” tipico dei Data Lake?
+A) Lo schema dei dati viene definito al momento della scrittura
+B) Lo schema dei dati viene definito al momento della lettura
+C) I dati devono essere sempre strutturati
+D) I dati non possono essere modificati dopo la scrittura
+Risposta Corretta: B
+Spiegazione: Il “Schema on Read” implica che lo schema viene applicato ai dati al momento della lettura, consentendo una maggiore flessibilità nella gestione di dati semi-strutturati e non strutturati.
+
+In Spark, quale delle seguenti operazioni può ridurre il numero di partizioni di un DataFrame?
+A) repartition()
+B) coalesce()
+C) mapPartitions()
+D) filter()
+Risposta Corretta: B
+Spiegazione: L’operazione coalesce() può ridurre il numero di partizioni di un DataFrame senza eseguire uno shuffle completo, rendendola più efficiente rispetto a repartition() quando si diminuisce il numero di partizioni.
+
+Quale delle seguenti opzioni rappresenta un vantaggio dell’utilizzo di file Parquet rispetto ai file CSV in un Data Lake?
+A) Maggiore compatibilità con i database SQL
+B) Minore efficienza nella compressione
+C) Supporto per schemi e tipi di dati complessi
+D) Facilità di modifica manuale
+Risposta Corretta: C
+Spiegazione: I file Parquet supportano schemi complessi e tipi di dati nativi, offrendo migliori prestazioni e compressione rispetto ai file CSV, che sono semplici e privi di schema.
+
+In Databricks, quale funzionalità consente di mascherare dati sensibili per garantire la conformità alle normative sulla privacy?
+A) Unity Catalog
+B) Data Masking
+C) Delta Live Tables
+D) Autoloader
+Risposta Corretta: B
+Spiegazione: La funzionalità Data Masking in Databricks permette di nascondere dati sensibili nei dataset, garantendo la conformità alle normative sulla privacy e proteggendo le informazioni riservate.
+
+Quale delle seguenti tecniche può essere utilizzata per ottimizzare le prestazioni delle query in un Data Warehouse?
+A) Aumentare la granularità dei dati
+B) Utilizzare indici bitmap per colonne ad alta cardinalità
+C) Eliminare tutte le chiavi primarie
+D) Ridurre il numero di join nelle query
+Risposta Corretta: B
+Spiegazione: Gli indici bitmap sono efficaci per colonne ad alta cardinalità in un Data Warehouse, poiché migliorano le prestazioni delle query riducendo il tempo di ricerca e filtraggio.
+
+In Spark, quale delle seguenti configurazioni controlla la quantità di memoria allocata per ogni esecutore?
+A) spark.executor.cores
+B) spark.executor.memory
+C) spark.driver.memory
+D) spark.memory.fraction
+Risposta Corretta: B
+Spiegazione: La configurazione spark.executor.memory definisce la quantità di memoria allocata a ciascun esecutore nel cluster Spark, influenzando le prestazioni delle operazioni di elaborazione.
+
+Quale delle seguenti affermazioni descrive meglio il concetto di “ACID” nelle transazioni di un Data Warehouse?
+A) Atomicità, Consistenza, Isolamento, Durabilità
+B) Accelerazione, Compressione, Integrità, Durabilità
+C) Asincronia, Consistenza, Isolamento, Durabilità
+D) Atomicità, Concurrency, Isolamento, Durabilità
+Risposta Corretta: A
+Spiegazione: ACID è un acronimo che sta per Atomicità, Consistenza, Isolamento e Durabilità, principi fondamentali per garantire l’affidabilità e l’integrità delle transazioni in un sistema di gestione dei dati.
+
+In Databricks, quale funzionalità permette di applicare politiche di governance dei dati a livello di catalogo?
+A) Unity Catalog
+B) Delta Live Tables
+C) Autoloader
+D) Workflows
+Risposta Corretta: A
+Spiegazione: Unity Catalog consente di applicare politiche di governance dei dati a livello di catalogo, gestendo l’accesso e le autorizzazioni per dataset e tabelle in modo centralizzato.
+
+Quale delle seguenti operazioni in Spark può essere utilizzata per aggregare i dati di un DataFrame?
+A) map()
+B) filter()
+C) groupBy()
+D) join()
+Risposta Corretta: C
+Spiegazione: L’operazione groupBy() in Spark è utilizzata per raggruppare i dati di un DataFrame basandosi su una o più colonne, consentendo di eseguire aggregazioni su ciascun gruppo.
+
+In Spark, quale delle seguenti funzioni può essere utilizzata per applicare una funzione di aggregazione personalizzata a un gruppo di dati?
+A) agg()
+B) apply()
+C) aggregate()
+D) fold()
+Risposta Corretta: A
+Spiegazione: La funzione agg() in Spark permette di applicare funzioni di aggregazione personalizzate a gruppi di dati dopo un’operazione di groupBy().
+
+Quale delle seguenti opzioni rappresenta una pratica raccomandata per gestire la concorrenza nei cluster Spark?
+A) Utilizzare un singolo esecutore per tutte le operazioni
+B) Evitare l’uso di cache
+C) Configurare adeguatamente il numero di esecutori e core per applicazione
+D) Utilizzare RDD invece di DataFrame
+Risposta Corretta: C
+Spiegazione: Configurare correttamente il numero di esecutori e core per applicazione aiuta a gestire la concorrenza e a ottimizzare l’utilizzo delle risorse nei cluster Spark.
+
+In Databricks, quale funzionalità permette di caricare automaticamente file da un percorso di storage senza la necessità di scrivere codice personalizzato?
+A) Autoloader
+B) Delta Live Tables
+C) Workflows
+D) Unity Catalog
+Risposta Corretta: A
+Spiegazione: Autoloader in Databricks permette di caricare automaticamente file da percorsi di storage configurati, semplificando l’ingestione dei dati senza la necessità di scrivere codice personalizzato.
+
+Quale delle seguenti opzioni non è una caratteristica principale di un Data Lake?
+A) Archiviazione di dati non strutturati
+B) Supporto per grandi volumi di dati
+C) Schema rigidamente definito al momento della scrittura
+D) Accesso flessibile ai dati per diverse applicazioni
+Risposta Corretta: C
+Spiegazione: I Data Lake adottano un approccio “Schema on Read”, permettendo flessibilità nello schema dei dati al momento della lettura, piuttosto che avere uno schema rigidamente definito al momento della scrittura.
+
+Quale delle seguenti fasi NON fa parte del processo di ottimizzazione del Catalyst Optimizer in Spark SQL?
+A) Analisi del piano
+B) Ottimizzazione logica
+C) Generazione del codice Java bytecode
+D) Ottimizzazione fisica
+Risposta Corretta: C
+Spiegazione: Il Catalyst Optimizer prevede tre fasi principali—analisi, ottimizzazione logica e ottimizzazione fisica—ma la generazione del bytecode avviene nel motore Tungsten, non come fase del Catalyst.
+
+In Spark, quale modalità di caching salva i dati in memoria e su disco se non c’è spazio sufficiente in memoria?
+A) MEMORY_ONLY
+B) MEMORY_AND_DISK
+C) DISK_ONLY
+D) MEMORY_AND_DISK_SER
+Risposta Corretta: B
+Spiegazione: Con MEMORY_AND_DISK Spark mantiene i dati in memoria e, se manca spazio, li scrive su disco per evitare di ricalcolare le partizioni.
+
+Quale delle seguenti API di Spark consente di definire uno schema fortemente tipizzato su un RDD in Scala/Java?
+A) DataFrame API
+B) Dataset API
+C) RDD API
+D) SQL API
+Risposta Corretta: B
+Spiegazione: La Dataset API fornisce tipi e encoder, garantendo sicurezza di tipo e ottimizzazioni del Catalyst.
+
+In Delta Lake, quale proprietà di tabella controlla per quanto tempo vengono conservati i log di transazione prima del vacuum?
+A) delta.retentionDuration
+B) delta.logRetentionDuration
+C) delta.minRetention
+D) delta.timeTravelRetention
+Risposta Corretta: B
+Spiegazione: delta.logRetentionDuration specifica per quanto tempo i file di log vengono mantenuti, permettendo il time travel entro tale finestra.
+
+Quale dei seguenti livelli di persistenza serializza i dati prima di scriverli in memoria?
+A) MEMORY_ONLY
+B) MEMORY_AND_DISK
+C) MEMORY_ONLY_SER
+D) DISK_ONLY
+Risposta Corretta: C
+Spiegazione: Con MEMORY_ONLY_SER, Spark serializza i dati (risparmiando spazio) quando li memorizza in memoria.
+
+In Databricks, quale comando Python di DBUtils consente di leggere un file JSON da un path DBFS?
+A) dbutils.fs.ls()
+B) dbutils.fs.head()
+C) dbutils.fs.cp()
+D) dbutils.fs.open()
+Risposta Corretta: D
+Spiegazione: dbutils.fs.open(path) restituisce uno stream leggibile, utile per caricare file direttamente dal DBFS.
+
+Quale tecnica di ottimizzazione consente di ridurre i dati letti in un file Parquet applicando i filtri prima della lettura?
+A) Predicate Pushdown
+B) Projection Pushdown
+C) Columnar Scan
+D) Schema Pruning
+Risposta Corretta: A
+Spiegazione: Il Predicate Pushdown passa le condizioni di filtro al formato Parquet, evitando di leggere le righe non necessarie.
+
+In Spark Structured Streaming, quale trigger esegue la query esattamente una volta e poi si ferma?
+A) Trigger.ProcessingTime()
+B) Trigger.Once()
+C) Trigger.Continuous()
+D) Trigger.AvailableNow()
+Risposta Corretta: B
+Spiegazione: Trigger.Once() avvia lo streaming, elabora i dati disponibili, poi termina l’esecuzione.
+
+Quale delle seguenti trasformazioni sui DataFrame è considerata una wide transformation?
+A) select()
+B) filter()
+C) map()
+D) groupBy()
+Risposta Corretta: D
+Spiegazione: groupBy() richiede lo shuffle dei dati tra partizioni per raggrupparli, caratteristica delle wide transformations.
+
+In Spark, come si chiama la capacità di riavviare speculativamente task lenti su altri esecutori?
+A) Fault Tolerance
+B) Speculative Execution
+C) Task Retry
+D) Dynamic Allocation
+Risposta Corretta: B
+Spiegazione: La Speculative Execution avvia copie di task lenti su nodi diversi per evitare colli di bottiglia.
+
+Quale delle seguenti strategie di partizionamento in un Data Lakehouse usa stringhe di “sale” per bilanciare il Data Skew?
+A) Range Partitioning
+B) Hash Partitioning
+C) Salting delle chiavi
+D) Custom Partitioning
+Risposta Corretta: C
+Spiegazione: Il salting aggiunge un prefisso casuale alle chiavi di join per distribuire uniformemente le partizioni.
+
+In Delta Lake, quale funzione SQL consente di interrogare i dati a una versione precedente?
+A) VERSION_AS_OF
+B) VERSION_HISTORY
+C) HISTORY AS OF
+D) TIME_TRAVEL
+Risposta Corretta: A
+Spiegazione: VERSION AS OF n permette di leggere la tabella al commit di versione n, abilitando il time travel.
+
+Quale dei seguenti formati colonnari supporta nativamente l’encoding bit-packed?
+A) CSV
+B) JSON
+C) Parquet
+D) Text
+Risposta Corretta: C
+Spiegazione: Parquet utilizza tecniche di encoding come bit-packed e dictionary encoding per comprimere i dati.
+
+In Spark, quale proprietà di configurazione regola la dimensione massima della memoria utilizzata per shuffle?
+A) spark.shuffle.memoryFraction
+B) spark.memory.storageFraction
+C) spark.shuffle.file.buffer
+D) spark.sql.shuffle.partitions
+Risposta Corretta: A
+Spiegazione: spark.shuffle.memoryFraction controlla la frazione di memoria dedicata allo shuffle, bilanciando compute e storage.
+
+Quale delle seguenti API di Pandas UDF in Spark consente l’elaborazione vettoriale per migliorare le performance?
+A) scalar
+B) grouped_map
+C) grouped_agg
+D) PandasUDFType.SCALAR
+Risposta Corretta: D
+Spiegazione: Le Pandas UDF di tipo SCALAR operano su batch vettoriali, offrendo velocità superiori rispetto alle UDF Python pure.
+
+In Databricks, quale modalità di esecuzione cluster è consigliata per notebook interattivi e debugging?
+A) Job Cluster
+B) Interactive Cluster
+C) High Concurrency Cluster
+D) Single Node Cluster
+Risposta Corretta: B
+Spiegazione: Gli Interactive Cluster sono ottimizzati per sessioni di sviluppo e debugging, con risorse flessibili e bassa latenza.
+
+Quale delle seguenti rappresentazioni viene usata per ottimizzare i tipi e l’accesso ai dati nei Dataset Scala?
+A) Catalyst
+B) Tungsten
+C) Vectorized Reader
+D) Data Source V2
+Risposta Corretta: B
+Spiegazione: Tungsten gestisce la generazione di codice e la gestione della memoria off-heap, migliorando l’efficienza dei Dataset.
+
+In Spark, quale impostazione consente di abilitare la rimozione automatica delle partizioni vuote dopo un write?
+A) spark.sql.adaptive.enabled
+B) spark.sql.sources.partitionOverwriteMode
+C) spark.sql.legacy.parquet.ignoreCorruptFiles
+D) spark.sql.shuffle.partitions
+Risposta Corretta: B
+Spiegazione: Impostando partitionOverwriteMode a dynamic, Spark sovrascrive solo le partizioni presenti, eliminando le vuote.
+
+Quale delle seguenti opzioni definisce meglio il pattern Kappa Architecture?
+A) Batch + Streaming su livelli distinti
+B) Solo Streaming con storage immutabile
+C) Streaming incrementale + versioning
+D) Vari layer di pulizia dati
+Risposta Corretta: B
+Spiegazione: La Kappa Architecture mantiene un unico flusso di streaming continuamente rielaborato, evitando batch jobs separati.
+
+In Spark Streaming, quale parametro definisce il percorso di checkpoint per lo stato di un’applicazione?
+A) checkpointInterval
+B) checkpointLocation
+C) stateCheckpointDuration
+D) streamingCheckpointDir
+Risposta Corretta: B
+Spiegazione: checkpointLocation indica dove salvare lo stato e i progressi per tolleranza ai guasti.
+
+Quale delle seguenti modalità di scrittura DataFrame solleva un errore se la destinazione esiste già?
+A) append
+B) overwrite
+C) errorifexists
+D) ignore
+Risposta Corretta: C
+Spiegazione: Con mode("errorIfExists"), Spark lancia un’eccezione se la tabella o il path esistono già.
+
+In Databricks, quale API consente di eseguire un’azione batch su ogni micro-batch di uno streaming DataFrame?
+A) writeStream()
+B) foreach()
+C) foreachBatch()
+D) mapInPandas()
+Risposta Corretta: C
+Spiegazione: foreachBatch() permette di eseguire logica personalizzata su ogni micro-batch, combinando streaming e batch.
+
+Quale delle seguenti trasformazioni sui DataFrame garantisce l’ordine delle righe?
+A) map()
+B) filter()
+C) sort()
+D) union()
+Risposta Corretta: C
+Spiegazione: sort() (o orderBy()) ordina l’intero DataFrame, richiedendo uno shuffle globale.
+
+In Spark, quale tipo di join lascia tutte le righe da sinistra e aggiunge valori null per le mancanti a destra?
+A) inner
+B) left_outer
+C) right_outer
+D) full_outer
+Risposta Corretta: B
+Spiegazione: Con left_outer (o left), tutte le righe di sinistra vengono mantenute, e quelle mancanti a destra generano null.
+
+Quale dei seguenti vantaggi principali di Z-Ordering in Delta Lake?
+A) Compressione avanzata
+B) Ottimizzazione delle statistiche
+C) Minore latenza di query su colonne combinate
+D) Transazioni ACID
+Risposta Corretta: C
+Spiegazione: Z-Ordering riordina fisicamente le file per migliorare il pruning multi-colonna, riducendo l’I/O.
+
+In Spark, quale dei seguenti meccanismi controlla la parallelizzazione delle operazioni?
+A) Number of partitions
+B) Number of executors
+C) Number of cores per executor
+D) Tutti i precedenti
+Risposta Corretta: D
+Spiegazione: La parallelizzazione dipende dal numero di partizioni, esecutori e core disponibili.
+
+Quale delle seguenti configurazioni abilita l’adaptive query execution (AQE) in Spark SQL?
+A) spark.sql.adaptive.enabled=true
+B) spark.sql.aqe.enabled=true
+C) spark.sql.execution.adaptive=true
+D) spark.sql.execution.aqe.enabled=true
+Risposta Corretta: A
+Spiegazione: Abilitando spark.sql.adaptive.enabled, Spark può ottimizzare dinamicamente piani di esecuzione in base ai dati reali.
+
+In Databricks, quale API Python consente di creare widget input (ad es. dropdown) in un notebook?
+A) dbutils.widgets.text()
+B) dbutils.widgets.create()
+C) dbutils.widgets.new()
+D) dbutils.widget.add()
+Risposta Corretta: A
+Spiegazione: dbutils.widgets.text() (e analoghi dropdown, combobox) crea widget interattivi per parametri notebook.
+
+Quale delle seguenti descrizioni si applica al modello di esecuzione Tungsten in Spark?
+A) Fa caching in memoria solo su disco
+B) Genera codice bytecode a runtime e gestisce la memoria off-heap
+C) Opera solo su SQL
+D) Sostituisce il Catalyst Optimizer
+Risposta Corretta: B
+Spiegazione: Tungsten migliora performance con generazione di codice e gestione diretta della memoria off-heap.
+
+In Spark, quale operazione consente di applicare funzioni diverse a gruppi di dati e restituire DataFrame strutturati?
+A) groupBy().agg()
+B) groupBy().apply()
+C) groupBy().mapGroups()
+D) groupBy().flatMapGroups()
+Risposta Corretta: C
+Spiegazione: mapGroups() permette di applicare funzioni personalizzate a ciascun gruppo restituendo un nuovo Dataset con schema definito.
+
+Quale delle seguenti opzioni descrive meglio il “common table expression” (CTE) in Spark SQL?
+A) Tabella temporanea persistente
+B) View temporanea definita all’interno di una query
+C) Persistenza su disco
+D) Funzione definita dall’utente
+Risposta Corretta: B
+Spiegazione: Un CTE (WITH … AS (…)) crea una view temporanea che dura solo per la query corrente.
+
+In Databricks, quale strumento integrato facilita il monitoraggio di esperimenti di machine learning?
+A) MLflow
+B) TensorBoard
+C) Keras Tracker
+D) Databricks Experiments
+Risposta Corretta: A
+Spiegazione: MLflow integrato in Databricks traccia esperimenti, metriche e modelli, facilitando il lifecycle ML.
+
+Quale API Spark Structured Streaming utilizzi per limitare quante nuove partizioni di file leggere per micro-batch?
+A) maxFilesPerTrigger
+B) maxPartitionsPerBatch
+C) maxFilesPerBatch
+D) triggerMaxFiles
+Risposta Corretta: A
+Spiegazione: Con readStream.option("maxFilesPerTrigger", n) si limita il numero di file processati in ogni micro-batch.
+
+In Spark, quale comando SQL crea una view temporanea globale?
+A) CREATE TEMP VIEW
+B) CREATE GLOBAL TEMP VIEW
+C) CREATE TEMPORARY VIEW
+D) CREATE GLOBAL VIEW
+Risposta Corretta: B
+Spiegazione: CREATE GLOBAL TEMP VIEW rende la view visibile a tutte le sessioni sotto il database global_temp.
+
+Quale delle seguenti opzioni definisce meglio uno schema evolutivo in Delta Lake?
+A) Schema enforcement
+B) Schema autoMerge
+C) Schema strict
+D) Schema validation
+Risposta Corretta: B
+Spiegazione: mergeSchema o autoMerge consente di aggiungere nuove colonne automaticamente durante il write.
+
+In Spark, quale delle seguenti opzioni abilita la compressione Snappy per i file Parquet scritti?
+A) spark.parquet.codec=snappy
+B) spark.sql.parquet.compression.codec=snappy
+C) spark.parquet.compression=snappy
+D) spark.sql.parquet.codec=snappy
+Risposta Corretta: B
+Spiegazione: Questa proprietà configura il codec di compressione usato da Spark per i file Parquet.
+
+Quale delle seguenti affermazioni descrive meglio il concetto di “Data Skipping” in Delta Lake?
+A) Lettura selettiva basata sugli indici dei file
+B) Lettura di tutti i file
+C) Eliminazione delle partizioni vuote
+D) Spostamento dei dati tra livelli
+Risposta Corretta: A
+Spiegazione: Data Skipping utilizza statistiche dei file (min/max) per evitare di leggere file che non contengono dati rilevanti.
+
+In Spark, quale operazione consente di flatten uno Schema complesso con struct e array?
+A) explode()
+B) flatten()
+C) inline()
+D) unnest()
+Risposta Corretta: A
+Spiegazione: explode() trasforma un array in più righe, aiutando a “appiattire” strutture nidificate.
+
+Quale componente Databricks consente di controllare l’accesso basato su ruoli (RBAC) a livello di workspace?
+A) Unity Catalog
+B) IAM Roles
+C) Workspace ACLs
+D) Cluster Policies
+Risposta Corretta: C
+Spiegazione: Le ACLs del workspace permettono di definire permessi di lettura/scrittura sui notebook e risorse del workspace.
+
+In Spark, quale parametro regola il numero di task usati per un’operazione coalesce() senza shuffle?
+A) numPartitions
+B) targetPartitions
+C) shufflePartitions
+D) maxPartitions
+Risposta Corretta: A
+Spiegazione: coalesce(numPartitions) riduce il numero di partizioni a numPartitions senza eseguire shuffle.
+
+Quale delle seguenti tecniche consente di migliorare la tolleranza ai guasti in uno streaming Spark Structured?
+A) Abilitare checkpoint e writeAheadLogs
+B) Utilizzare MEMORY_ONLY cache
+C) Disabilitare backpressure
+D) Aumentare il batch interval
+Risposta Corretta: A
+Spiegazione: Il checkpointing (e WAL) salva lo stato del stream per recuperare correttamente in caso di guasti.
