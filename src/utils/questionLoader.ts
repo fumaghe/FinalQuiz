@@ -1,6 +1,6 @@
 import { Question } from '../types/quiz';
 
-/* Lista dei file di testo con le domande */
+/* Lista dei file */
 const questionFiles = [
   'SQL.txt',
   'Statistica.txt',
@@ -17,86 +17,78 @@ const questionFiles = [
 ];
 
 /**
- * Carica e unisce tutte le domande.
- * Each txt file deve trovarsi in  public/data/questions/<fileName>
+ * Carica tutte le domande.
+ * Metti i file in  public/data/questions/<nome>.txt
  */
 export async function loadQuestionsFromFiles(): Promise<Question[]> {
   const allQuestions: Question[] = [];
-  const base = import.meta.env.BASE_URL; // "/" in dev, "/FinalQuiz/" in prod
 
-  for (const fileName of questionFiles) {
+  // In dev = "/", in build = "/FinalQuiz/"
+  const base = import.meta.env.BASE_URL;
+
+  for (const file of questionFiles) {
+    const url = `${base}data/questions/${file}`; // es. /FinalQuiz/data/questions/SQL.txt
     try {
-      const url = `${base}data/questions/${fileName}`; // -> es. /FinalQuiz/data/questions/SQL.txt
-      const response = await fetch(url);
-
-      if (!response.ok) {
-        console.warn(`Could not load questions from ${fileName}`);
+      const res = await fetch(url);
+      if (!res.ok) {
+        console.warn('Missing TXT:', file);
         continue;
       }
-
-      const content = await response.text();
-      const topic = fileName.replace('.txt', '');
-      const questions = parseQuestionsFromText(content, topic);
-
-      console.log(`Loaded ${questions.length} questions for topic ${topic}`);
-      allQuestions.push(...questions);
-    } catch (error) {
-      console.error(`Error loading questions from ${fileName}:`, error);
+      const txt = await res.text();
+      const topic = file.replace('.txt', '');
+      allQuestions.push(...parseQuestionsFromText(txt, topic));
+    } catch (err) {
+      console.error('Fetch error', file, err);
     }
   }
 
   return allQuestions;
 }
 
-/* ------------------------------------------------------------------ */
-/* Helper: converte un file di testo in array di Question              */
-/* ------------------------------------------------------------------ */
-function parseQuestionsFromText(content: string, topic: string): Question[] {
-  const questions: Question[] = [];
-
-  // divide in blocchi separati da una o più righe vuote
-  const blocks = content
+/* -------------------------------------------------------------- */
+/* Parser                                                          */
+/* -------------------------------------------------------------- */
+function parseQuestionsFromText(src: string, topic: string): Question[] {
+  const out: Question[] = [];
+  const blocks = src
     .split(/\r?\n\s*\r?\n+/)
     .map((b) => b.trim())
-    .filter((b) => b.length > 0);
+    .filter(Boolean);
 
-  blocks.forEach((block, idx) => {
+  blocks.forEach((block, i) => {
     const lines = block
       .split(/\r?\n/)
       .map((l) => l.trim())
-      .filter((l) => l.length > 0);
+      .filter(Boolean);
 
-    if (lines.length < 7) return; // domanda, 4 opzioni, risposta, spiegazione
+    if (lines.length < 7) return;
 
-    const questionText = lines[0];               // prima riga = domanda
-    const options = lines.slice(1, 5).map((l) => // righe 1-4 = opzioni
-      l.replace(/^[A-D]\)\s*/i, '').trim(),
-    );
-
-    const correctLine = lines.find((l) =>
+    const [questionText, ...rest] = lines;
+    const options = rest.slice(0, 4).map((l) => l.replace(/^[A-D]\)\s*/i, ''));
+    const correctLine = rest.find((l) =>
       l.toLowerCase().startsWith('risposta corretta:'),
     );
     if (!correctLine) return;
     const letter = correctLine.split(':')[1].trim().toLowerCase();
-    const correctIndex = ['a', 'b', 'c', 'd'].indexOf(letter);
-    if (correctIndex === -1) return;
+    const correct = ['a', 'b', 'c', 'd'].indexOf(letter);
+    if (correct === -1) return;
 
-    const explanationLine = lines.find((l) =>
+    const explanationLine = rest.find((l) =>
       l.toLowerCase().startsWith('spiegazione:'),
     );
     const explanation = explanationLine
       ? explanationLine.split(':').slice(1).join(':').trim()
       : '';
 
-    questions.push({
-      id: `${topic.toLowerCase()}_${idx + 1}`,
+    out.push({
+      id: `${topic.toLowerCase()}_${i + 1}`,
       question: questionText,
       options,
-      correct: correctIndex,
+      correct,
       explanation,
       topic,
     });
   });
 
-  return questions;
+  return out;
 }
