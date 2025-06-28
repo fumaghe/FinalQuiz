@@ -1,5 +1,6 @@
 import { Question } from '../types/quiz';
 
+/* Lista dei file di testo con le domande */
 const questionFiles = [
   'SQL.txt',
   'Statistica.txt',
@@ -12,15 +13,22 @@ const questionFiles = [
   'Python.txt',
   'R.txt',
   'ML.txt',
-  'DeepLearning.txt'
+  'DeepLearning.txt',
 ];
 
+/**
+ * Carica e unisce tutte le domande.
+ * Each txt file deve trovarsi in  public/data/questions/<fileName>
+ */
 export async function loadQuestionsFromFiles(): Promise<Question[]> {
   const allQuestions: Question[] = [];
+  const base = import.meta.env.BASE_URL; // "/" in dev, "/FinalQuiz/" in prod
 
   for (const fileName of questionFiles) {
     try {
-      const response = await fetch(`/data/questions/${fileName}`);
+      const url = `${base}data/questions/${fileName}`; // -> es. /FinalQuiz/data/questions/SQL.txt
+      const response = await fetch(url);
+
       if (!response.ok) {
         console.warn(`Could not load questions from ${fileName}`);
         continue;
@@ -29,6 +37,7 @@ export async function loadQuestionsFromFiles(): Promise<Question[]> {
       const content = await response.text();
       const topic = fileName.replace('.txt', '');
       const questions = parseQuestionsFromText(content, topic);
+
       console.log(`Loaded ${questions.length} questions for topic ${topic}`);
       allQuestions.push(...questions);
     } catch (error) {
@@ -39,43 +48,42 @@ export async function loadQuestionsFromFiles(): Promise<Question[]> {
   return allQuestions;
 }
 
+/* ------------------------------------------------------------------ */
+/* Helper: converte un file di testo in array di Question              */
+/* ------------------------------------------------------------------ */
 function parseQuestionsFromText(content: string, topic: string): Question[] {
   const questions: Question[] = [];
-  // Split on one or more blank lines (handles LF, CRLF, spaces)
+
+  // divide in blocchi separati da una o più righe vuote
   const blocks = content
     .split(/\r?\n\s*\r?\n+/)
-    .map(block => block.trim())
-    .filter(block => block.length > 0);
+    .map((b) => b.trim())
+    .filter((b) => b.length > 0);
 
   blocks.forEach((block, idx) => {
     const lines = block
       .split(/\r?\n/)
-      .map(line => line.trim())
-      .filter(line => line.length > 0);
+      .map((l) => l.trim())
+      .filter((l) => l.length > 0);
 
-    if (lines.length < 7) {
-      // Need at least: question + 4 options + correct + explanation
-      return;
-    }
+    if (lines.length < 7) return; // domanda, 4 opzioni, risposta, spiegazione
 
-    const questionText = lines[0];
+    const questionText = lines[0];               // prima riga = domanda
+    const options = lines.slice(1, 5).map((l) => // righe 1-4 = opzioni
+      l.replace(/^[A-D]\)\s*/i, '').trim(),
+    );
 
-    // Options are expected in lines 1–4 as "A) ...", "B) ...", etc.
-    const options = lines.slice(1, 5).map(line => {
-      // remove leading "A) ", "B) ", etc.
-      const match = line.match(/^[A-D]\)\s*(.*)$/i);
-      return match ? match[1].trim() : line;
-    });
-
-    // Find the correct answer line
-    const correctLine = lines.find(line => line.toLowerCase().startsWith('risposta corretta:'));
+    const correctLine = lines.find((l) =>
+      l.toLowerCase().startsWith('risposta corretta:'),
+    );
     if (!correctLine) return;
     const letter = correctLine.split(':')[1].trim().toLowerCase();
     const correctIndex = ['a', 'b', 'c', 'd'].indexOf(letter);
     if (correctIndex === -1) return;
 
-    // Find explanation
-    const explanationLine = lines.find(line => line.toLowerCase().startsWith('spiegazione:'));
+    const explanationLine = lines.find((l) =>
+      l.toLowerCase().startsWith('spiegazione:'),
+    );
     const explanation = explanationLine
       ? explanationLine.split(':').slice(1).join(':').trim()
       : '';
@@ -86,7 +94,7 @@ function parseQuestionsFromText(content: string, topic: string): Question[] {
       options,
       correct: correctIndex,
       explanation,
-      topic
+      topic,
     });
   });
 
