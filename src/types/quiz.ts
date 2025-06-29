@@ -1,3 +1,4 @@
+// src/types/quiz.ts
 /* ================================================================== */
 /*  TYPES  —  QUIZ, BADGE, USERSTATS                                  */
 /* ================================================================== */
@@ -30,10 +31,11 @@ export interface QuizSession {
   startTime: Date;
   endTime?: Date;
   score?: number;
-  timeTaken?: number;   // solo timed
-  streakCount?: number; // solo streak
+  timeTaken?: number;   // timed
+  streakCount?: number; // streak
 }
 
+/* ---------- Storico quiz ---------------------------------------- */
 export interface AnsweredQuestion {
   questionId: string;
   question: string;
@@ -61,28 +63,30 @@ export interface QuizHistory {
 
 /* ---------- BADGE ------------------------------------------------- */
 export type BadgeRarity = 'common' | 'rare' | 'epic' | 'legendary';
+export type BadgeLevel  = 'bronze' | 'silver' | 'gold' | 'amethyst';
+
+export type BadgeCategory =
+  | 'topic_progress'
+  | 'topic_precision'
+  | 'global'
+  | 'combo'
+  | 'speed'
+  | 'quiz_type';
 
 export interface Badge {
   id: string;
+  baseId: string;
   emoji: string;
   name: string;
   description: string;
   rarity: BadgeRarity;
+  level: BadgeLevel;
+  /** ➜ nuovo campo */
+  category: BadgeCategory;
 }
 
-/* Catalogo statico (puoi spostarlo in JSON) ------------------------ */
-export const ALL_BADGES: Badge[] = [
-  { id:'first_try',  emoji:'🎯', name:'Prima Botta',     description:'Risposta corretta al primo tentativo',              rarity:'common' },
-  { id:'cerebro',    emoji:'🧠', name:'Cerebro',         description:'Precisione ≥ 90 % su 100 domande',                  rarity:'epic'   },
-  { id:'constant',   emoji:'🐢', name:'Costante',        description:'7 giorni consecutivi con almeno un quiz',          rarity:'rare'   },
-  { id:'on_fire',    emoji:'🔥', name:'On Fire',         description:'5 quiz di fila con > 70 % di precisione',          rarity:'rare'   },
-  { id:'speed_run',  emoji:'⚡', name:'Speed Runner',    description:'Quiz a tempo finito in < 5 minuti',                 rarity:'rare'   },
-  { id:'reverse_pro',emoji:'🧪', name:'Reverse Sensei',  description:'Quiz inverso completato al 100 %',                  rarity:'epic'   },
-  { id:'easter',     emoji:'👻', name:'Easter Mind',     description:'Hai scoperto un badge nascosto!',                  rarity:'legendary' },
-  { id:'streak_10',  emoji:'🏅', name:'Streak × 10',     description:'10 risposte corrette di fila (Streak Quiz)',        rarity:'common' },
-  { id:'streak_20',  emoji:'🥈', name:'Streak × 20',     description:'20 risposte corrette di fila (Streak Quiz)',        rarity:'rare'   },
-  { id:'streak_30',  emoji:'🥇', name:'Streak × 30',     description:'30 risposte corrette di fila (Streak Quiz)',        rarity:'epic'   },
-];
+/* ── catalogo completo (50+ badge) in un file separato ──────────── */
+export { ALL_BADGES } from '../data/badges';
 
 /* ---------- Topic stats ------------------------------------------ */
 export interface TopicStats {
@@ -96,7 +100,7 @@ export interface TopicStats {
   masteryLevel: 'beginner' | 'intermediate' | 'advanced' | 'master';
 }
 
-/* ---------- UserStats (aggiunto unlockedBadges) ------------------- */
+/* ---------- UserStats ------------------------------------------- */
 export interface UserStats {
   totalQuizzes: number;
   totalQuestions: number;
@@ -104,21 +108,22 @@ export interface UserStats {
   overallAccuracy: number;
   currentStreak: number;
   bestStreak: number;
-  topicStats: TopicStats[];
   lastUpdated: Date;
 
-  answeredQuestions: { [id: string]: boolean };
-  correctQuestions:  { [id: string]: boolean };
-  incorrectQuestions:{ [id: string]: boolean };
+  answeredQuestions:  Record<string, boolean>;
+  correctQuestions:   Record<string, boolean>;
+  incorrectQuestions: Record<string, boolean>;
 
   quizHistory: QuizHistory[];
-  statsPerTopic: { [topic: string]: { done: number; correct: number; total: number } };
+  statsPerTopic: Record<string, { done: number; correct: number; total: number }>;
+  topicStats: TopicStats[];
 
   bestSuddenDeath?: number;     // record streak-quiz
-  unlockedBadges: string[];     // id dei badge sbloccati
+
+  unlockedBadges: string[];     // ids completi
 }
 
-/* ---------- Settings & Topic rimangono invariati ----------------- */
+/* ---------- Settings & Topic ------------------------------------- */
 export interface UserSettings {
   fontSize: 'small' | 'medium' | 'large';
   darkMode: boolean;
