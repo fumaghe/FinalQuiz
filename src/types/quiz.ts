@@ -15,6 +15,7 @@ export interface QuizSession {
   startTime: Date;
   endTime?: Date;
   score?: number;
+  timeTaken?: number;        // <— tempo impiegato in secondi (solo timed)
 }
 
 export interface AnsweredQuestion {
@@ -38,6 +39,7 @@ export interface QuizHistory {
   totalQuestions: number;
   correctAnswers: number;
   answeredQuestions: AnsweredQuestion[];
+  timeTaken?: number;        // <— tempo impiegato in secondi (solo timed)
 }
 
 export interface TopicStats {

@@ -1,3 +1,4 @@
+// src/components/StatsScreen.tsx
 import React, { useState } from 'react';
 import { useQuiz } from '../contexts/QuizContext';
 import {
@@ -5,9 +6,10 @@ import {
   TrendingUp,
   Target,
   Award,
-  ChevronDown,
-  Calendar,
   Clock,
+  Calendar,
+  ChevronDown,
+  Zap,
 } from 'lucide-react';
 
 import ProgressRing from './ProgressRing';
@@ -24,36 +26,45 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
+/* ------------------------------------------------------------------ */
+/* TYPES                                                              */
+/* ------------------------------------------------------------------ */
 interface StatsScreenProps {
   onNavigate: (screen: string, params?: any) => void;
 }
 
+/* ------------------------------------------------------------------ */
+/* COMPONENT                                                          */
+/* ------------------------------------------------------------------ */
 const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
   const { state } = useQuiz();
   const { userStats, topics } = state;
 
+  /* -------------------------------------------------------------- */
+  /* STATE (tabs e periodo chart)                                   */
+  /* -------------------------------------------------------------- */
   const [activeTab, setActiveTab] = useState<'general' | 'topics' | 'history'>(
     'general'
   );
   const [chartPeriod, setChartPeriod] = useState<7 | 30 | 50>(7);
 
   /* -------------------------------------------------------------- */
-  /* UTILS                                                          */
+  /* UTILITIES                                                      */
   /* -------------------------------------------------------------- */
+  /* 1. Dati per il grafico (ultimi N quiz, qualsiasi tipo) -------- */
   const getChartData = () =>
-    userStats.quizHistory.slice(-chartPeriod).map((quiz, i) => ({
-      quiz: `Q${i + 1}`,
-      accuracy: Math.round(quiz.score),
-      date: quiz.timestamp,
-    }));
+    userStats.quizHistory
+      .slice(-chartPeriod)
+      .map((quiz, i) => ({
+        quiz: `Q${i + 1}`,
+        accuracy: Math.round(quiz.score),
+        date: quiz.timestamp,
+        type: quiz.quizType,
+      }));
 
+  /* 2. Badge dinamici -------------------------------------------- */
   const getBadges = () => {
-    const badges: {
-      icon: string;
-      title: string;
-      description: string;
-      color: string;
-    }[] = [];
+    const badges: { icon: string; title: string; description: string; color: string }[] = [];
 
     /* Serie di successi */
     if (userStats.currentStreak >= 5) {
@@ -65,15 +76,27 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
       });
     }
 
+    /* Badge “Speed Runner” – miglior tempo < 300 s */
+    const bestTimed = userStats.quizHistory
+      .filter((q) => q.quizType === 'timed' && q.timeTaken != null)
+      .sort((a, b) => (a.timeTaken! - b.timeTaken!))[0];
+    if (bestTimed && bestTimed.timeTaken! <= 300) {
+      badges.push({
+        icon: '⚡',
+        title: 'Speed Runner',
+        description: `Quiz a tempo in ${Math.floor(bestTimed.timeTaken! / 60)}m ${bestTimed.timeTaken! % 60}s`,
+        color: 'from-purple-500 to-indigo-500',
+      });
+    }
+
     /* Per-topic */
     Object.entries(userStats.statsPerTopic).forEach(([topic, stats]) => {
-      const accuracy =
-        stats.done > 0 ? (stats.correct / stats.done) * 100 : 0;
-      if (accuracy >= 80 && stats.done >= 5) {
+      const acc = stats.done > 0 ? (stats.correct / stats.done) * 100 : 0;
+      if (acc >= 80 && stats.done >= 5) {
         badges.push({
           icon: '⭐',
           title: 'Esperto',
-          description: `${Math.round(accuracy)}% su ${topic}`,
+          description: `${Math.round(acc)}% su ${topic}`,
           color: 'from-yellow-400 to-orange-400',
         });
       }
@@ -92,22 +115,22 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
     return badges.slice(0, 3);
   };
 
-  const getGeneralQuizHistory = () =>
+  /* 3. Storico quiz (generale + timed, ultimi 10) ----------------- */
+  const getRecentQuizHistory = () =>
     userStats.quizHistory
-      .filter((q) => q.quizType === 'general')
+      .filter((q) => q.quizType === 'general' || q.quizType === 'timed')
       .slice(-10)
       .reverse()
       .map((q) => ({
         ...q,
-        date: new Date(q.timestamp).toLocaleDateString('it-IT'),
+        dateLabel: new Date(q.timestamp).toLocaleDateString('it-IT'),
       }));
 
+  /* 4. Stats per topic ------------------------------------------- */
   const topicStats = Object.entries(userStats.statsPerTopic)
     .map(([name, stats]) => {
       const topic = topics.find((t) => t.name === name);
-      const accuracy =
-        stats.done > 0 ? (stats.correct / stats.done) * 100 : 0;
-
+      const accuracy = stats.done > 0 ? (stats.correct / stats.done) * 100 : 0;
       return {
         topic: name,
         displayName: topic?.name || name,
@@ -121,9 +144,10 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
     .filter((s) => s.totalAttempts > 0)
     .sort((a, b) => b.accuracy - a.accuracy);
 
-  const chartData = getChartData();
-  const badges = getBadges();
-  const generalQuizHistory = getGeneralQuizHistory();
+  /* Derivati UI --------------------------------------------------- */
+  const chartData        = getChartData();
+  const badges           = getBadges();
+  const recentQuizHistory = getRecentQuizHistory();
 
   const perfColor = (acc: number) =>
     acc >= 80 ? '#34C759' : acc >= 60 ? '#FF9F0A' : '#FF3B30';
@@ -132,6 +156,11 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
 
   const handleQuizHistoryTap = (q: any) =>
     onNavigate('review', { quizHistory: q });
+
+  /* Miglior tempo per card generale ------------------------------ */
+  const bestTimed = userStats.quizHistory
+    .filter((q) => q.quizType === 'timed' && q.timeTaken != null)
+    .sort((a, b) => a.timeTaken! - b.timeTaken!)[0];
 
   /* -------------------------------------------------------------- */
   /* RENDER                                                         */
@@ -197,9 +226,7 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
                     <span className="text-lg">{b.icon}</span>
                     <div className="flex-1 min-w-0">
                       <p className="font-semibold text-sm truncate">{b.title}</p>
-                      <p className="text-xs opacity-90 truncate">
-                        {b.description}
-                      </p>
+                      <p className="text-xs opacity-90 truncate">{b.description}</p>
                     </div>
                   </div>
                 </div>
@@ -210,11 +237,11 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
       </header>
 
       {/* ---------------------------------------------------------- */}
-      {/* MAIN CONTENT (max-width)                                  */}
+      {/* MAIN CONTENT                                              */}
       {/* ---------------------------------------------------------- */}
       <div className="px-4 sm:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6 pb-20 max-w-screen-lg mx-auto">
         {/* ======================================================== */}
-        {/* TAB:  GENERALE                                           */}
+        {/* TAB GENERALE                                             */}
         {/* ======================================================== */}
         {activeTab === 'general' && (
           <>
@@ -243,9 +270,24 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
                   Precisione media
                 </p>
               </div>
+
+              {/* Card Miglior Tempo (solo se esiste) */}
+              {bestTimed && (
+                <div className="apple-card p-4 sm:p-6 text-center col-span-2 sm:col-span-1">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-red-100 rounded-apple flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                    <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-red-600" />
+                  </div>
+                  <p className="text-xl sm:text-2xl font-bold">
+                    {Math.floor(bestTimed.timeTaken! / 60)}m {bestTimed.timeTaken! % 60}s
+                  </p>
+                  <p className="text-xs sm:text-sm text-apple-secondary">
+                    Miglior tempo
+                  </p>
+                </div>
+              )}
             </div>
 
-            {/* CHART – ora responsive con aspect 2 e overflow nascosto */}
+            {/* CHART */}
             {chartData.length > 0 && (
               <div className="apple-card p-4 sm:p-6 overflow-hidden">
                 <div className="flex items-center justify-between mb-4">
@@ -268,7 +310,6 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
                   </div>
                 </div>
 
-                {/* ResponsiveContainer ora con aspect invece di height fissa */}
                 <ChartContainer config={{}}>
                   <ResponsiveContainer width="100%" aspect={2}>
                     <BarChart
@@ -278,11 +319,7 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
                       <XAxis dataKey="quiz" tick={{ fontSize: 10 }} />
                       <YAxis domain={[0, 100]} tick={{ fontSize: 10 }} />
                       <ChartTooltip content={<ChartTooltipContent />} />
-                      <Bar
-                        dataKey="accuracy"
-                        fill="#007AFF"
-                        radius={[2, 2, 0, 0]}
-                      />
+                      <Bar dataKey="accuracy" fill="#007AFF" radius={[2, 2, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </ChartContainer>
@@ -312,8 +349,7 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
                 </ProgressRing>
               </div>
               <p className="text-sm text-apple-secondary">
-                {userStats.correctAnswers} risposte corrette su{' '}
-                {userStats.totalQuestions}
+                {userStats.correctAnswers} risposte corrette su {userStats.totalQuestions}
               </p>
             </div>
 
@@ -324,12 +360,9 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
                   <Award className="w-5 h-5 sm:w-6 sm:h-6 text-apple-yellow" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-base sm:text-lg font-medium">
-                    Serie di successi
-                  </h3>
+                  <h3 className="text-base sm:text-lg font-medium">Serie di successi</h3>
                   <p className="text-xs sm:text-sm text-apple-secondary">
-                    Streak attuale: {userStats.currentStreak} | Record:{' '}
-                    {userStats.bestStreak}
+                    Streak attuale: {userStats.currentStreak} | Record: {userStats.bestStreak}
                   </p>
                 </div>
                 <p className="text-lg sm:text-xl font-bold text-apple-yellow flex-shrink-0">
@@ -341,7 +374,7 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
         )}
 
         {/* ======================================================== */}
-        {/* TAB:  TOPICS                                              */}
+        {/* TAB TOPICS                                               */}
         {/* ======================================================== */}
         {activeTab === 'topics' && (
           <>
@@ -362,9 +395,7 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
                         <h4 className="text-sm sm:text-base font-medium truncate">
                           {stat.displayName}
                         </h4>
-                        <span className="text-xs text-apple-secondary">
-                          #{idx + 1}
-                        </span>
+                        <span className="text-xs text-apple-secondary">#{idx + 1}</span>
                       </div>
 
                       <div className="w-full bg-apple-light rounded-full h-1.5 sm:h-2 mb-2">
@@ -379,8 +410,7 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
 
                       <div className="flex justify-between items-center">
                         <span className="text-xs text-apple-secondary">
-                          {stat.correctAnswers}/{stat.totalAttempts} corrette (
-                          {stat.totalQuestions} totali)
+                          {stat.correctAnswers}/{stat.totalAttempts} corrette ({stat.totalQuestions} totali)
                         </span>
                         <span
                           className="text-xs font-medium"
@@ -410,16 +440,16 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
         )}
 
         {/* ======================================================== */}
-        {/* TAB:  STORICO                                             */}
+        {/* TAB HISTORY                                              */}
         {/* ======================================================== */}
         {activeTab === 'history' && (
           <>
             <h3 className="text-base sm:text-lg font-medium mb-2">
-              Storico Quiz Generali
+              Storico Quiz recenti
             </h3>
 
-            {generalQuizHistory.length > 0 ? (
-              generalQuizHistory.map((quiz, idx) => (
+            {recentQuizHistory.length > 0 ? (
+              recentQuizHistory.map((quiz, idx) => (
                 <button
                   key={quiz.id}
                   onClick={() => handleQuizHistoryTap(quiz)}
@@ -428,21 +458,36 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3 flex-1 min-w-0">
                       <div className="w-8 h-8 sm:w-10 sm:h-10 bg-apple-blue/10 rounded-apple flex items-center justify-center flex-shrink-0">
-                        <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-apple-blue" />
+                        {quiz.quizType === 'timed' ? (
+                          <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-red-600" />
+                        ) : (
+                          <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-apple-blue" />
+                        )}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center space-x-2 mb-1">
                           <span className="text-sm sm:text-base font-medium">
-                            Quiz #{generalQuizHistory.length - idx}
+                            {quiz.quizType === 'timed'
+                              ? 'Timed Quiz'
+                              : `Quiz #${recentQuizHistory.length - idx}`}
                           </span>
                           <span className="text-xs text-apple-secondary">
-                            {quiz.date}
+                            {quiz.dateLabel}
                           </span>
                         </div>
                         <div className="flex items-center space-x-2 text-xs text-apple-secondary">
-                          <Clock className="w-3 h-3" />
-                          <span>
-                            {quiz.correctAnswers}/{quiz.totalQuestions} corrette
+                          {quiz.quizType === 'timed' && quiz.timeTaken != null && (
+                            <>
+                              <Clock className="w-3 h-3" />
+                              <span>
+                                {Math.floor(quiz.timeTaken / 60)}m {quiz.timeTaken % 60}s
+                              </span>
+                            </>
+                          )}
+                          <span className="flex items-center space-x-1">
+                            <span>
+                              {quiz.correctAnswers}/{quiz.totalQuestions} corrette
+                            </span>
                           </span>
                         </div>
                       </div>
@@ -465,7 +510,7 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
                   Nessun quiz completato
                 </h3>
                 <p className="text-xs sm:text-sm text-apple-secondary">
-                  Completa alcuni quiz generali per vedere lo storico
+                  Completa alcuni quiz per vedere lo storico
                 </p>
               </div>
             )}
