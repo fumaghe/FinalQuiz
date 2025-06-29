@@ -1,3 +1,4 @@
+// src/components/ResultsScreen.tsx
 import React from 'react';
 import {
   Trophy,
@@ -13,15 +14,15 @@ import { QuizHistory, QuizKind } from '../types/quiz';
 interface ResultsScreenProps {
   onNavigate: (screen: string, params?: any) => void;
 
-  /*  valori base (sempre presenti)  */
+  /** valori base */
   score: number;               // % corrette
   correctAnswers: number;
   totalQuestions: number;
 
-  /*  nuovi campi opzionali  */
-  quizType: QuizKind;          // 'general' | … | 'timed' | 'streak'
-  timeTaken?: number;          // solo timed (sec)
-  streakCount?: number;        // solo streak
+  /** props opzionali per le modalità avanzate */
+  quizType: QuizKind;          // 'general' | … | 'timed' | 'streak' | 'reverse'
+  timeTaken?: number;          // solo timed, in secondi
+  streakCount?: number;        // solo streak, numero di risposte corrette consecutive
   topicName?: string;
   quizHistory?: QuizHistory;
 }
@@ -42,7 +43,6 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
   /* ---------------------------------------------------------- */
   const perf = (() => {
     if (quizType === 'streak') {
-      /*  per lo streak ragioniamo sul numero  */
       return {
         emoji: '🔥',
         title: 'Game Over',
@@ -51,8 +51,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
         bgColor: 'bg-yellow-50',
       };
     }
-
-    /*  tutti gli altri (basato sulla % di accuratezza)          */
+    // tutte le altre basate sulla % di accuratezza
     if (score >= 90)
       return {
         emoji: '🏆',
@@ -90,32 +89,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
   /* HANDLERS                                                   */
   /* ---------------------------------------------------------- */
   const handleRetryQuiz = () => {
-    switch (quizType) {
-      case 'general':
-        onNavigate('quiz', { quizType: 'general' });
-        break;
-      case 'topic':
-        onNavigate('quiz', {
-          quizType: 'topic',
-          topicId: topicName?.toLowerCase(),
-          topicName,
-        });
-        break;
-      case 'timed':
-        onNavigate('quiz', { quizType: 'timed' });
-        break;
-      case 'streak':
-        onNavigate('quiz', { quizType: 'streak' });
-        break;
-      case 'reverse':
-        onNavigate('quiz', { quizType: 'reverse' });
-        break;
-      case 'forYou':
-        onNavigate('quiz', { quizType: 'forYou' });
-        break;
-      default:
-        break;
-    }
+    onNavigate('quiz', { quizType });
   };
 
   const handleReviewAnswers = () => {
@@ -125,16 +99,16 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
   /* ---------------------------------------------------------- */
   /* RENDER                                                     */
   /* ---------------------------------------------------------- */
-  const accuracy     = Math.round(score);
-  const errorCount   = totalQuestions - correctAnswers;
-  const timedLabel   =
+  const accuracy   = Math.round(score);
+  const errorCount = totalQuestions - correctAnswers;
+  const timedLabel =
     quizType === 'timed' && timeTaken != null
       ? `${Math.floor(timeTaken / 60)}m ${timeTaken % 60}s`
       : undefined;
 
   return (
     <div className="min-h-screen bg-apple-light flex flex-col">
-      {/* ==================== HEADER CARD ===================== */}
+      {/* ========== HEADER CARD ========== */}
       <div className="flex-1 flex flex-col items-center justify-center px-apple-2x py-12">
         {/* ICONA / MEDAGLIA */}
         <div
@@ -152,7 +126,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
           {perf.message}
         </p>
 
-        {/* ---------------- CARD PRINCIPALE ---------------- */}
+        {/* —— CARD PRINCIPALE —— */}
         <div className="apple-card p-8 w-full max-w-sm mb-8">
           <div className="text-center">
             {/* METRICA PRINCIPALE */}
@@ -184,7 +158,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
               )}
             </div>
 
-            {/* INFO AGGIUNTIVE (tempo ecc.) */}
+            {/* INFO AGGIUNTIVE */}
             <div className="pt-6 border-t border-apple-border space-y-2">
               {quizType === 'timed' && timedLabel && (
                 <p className="flex items-center justify-center text-caption">
@@ -193,6 +167,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
                   <span className="font-medium">{timedLabel}</span>
                 </p>
               )}
+
               <p className="text-caption text-apple-secondary">Quiz completato</p>
               <p className="text-body font-medium">
                 {quizType === 'general'
@@ -209,7 +184,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
           </div>
         </div>
 
-        {/* riepilogo errori  (solo per quiz tradizionali) */}
+        {/* ERROR SUMMARY (solo per quiz tradizionali e inverse) */}
         {quizType !== 'streak' && errorCount > 0 && (
           <div className="apple-card p-4 w-full max-w-sm mb-8">
             <div className="text-center">
@@ -229,7 +204,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
         )}
       </div>
 
-      {/* ==================== AZIONI  ====================== */}
+      {/* ========== AZIONI ========== */}
       <div className="px-apple-2x py-6 space-y-4">
         <button
           onClick={handleRetryQuiz}
@@ -266,7 +241,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
           <span>Torna alla Home</span>
         </button>
 
-        {/* Condivisione (opz.) */}
+        {/* Condivisione */}
         <button
           onClick={() => {
             if (navigator.share) {

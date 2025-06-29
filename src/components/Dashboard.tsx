@@ -7,6 +7,7 @@ import {
   User,
   Timer,
   Zap,
+  Award,
   BarChart,
   RotateCcw,
 } from 'lucide-react';
@@ -430,6 +431,13 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
           >
             <BarChart className="w-6 h-6 mb-1" />
             <span className="text-small">Statistiche</span>
+          </button>
+          <button
+            onClick={() => onNavigate('achievements')}
+            className="flex flex-col items-center p-2 text-apple-secondary hover:text-apple-blue transition-colors"
+          >
+            <Award className="w-6 h-6 mb-1"/>
+            <span className="text-small">Badge</span>
           </button>
         </div>
       </nav>

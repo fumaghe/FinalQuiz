@@ -1,14 +1,16 @@
+// src/pages/Index.tsx
 import React from 'react';
 import { useQuiz } from '../contexts/QuizContext';
 
-import SplashScreen from '../components/SplashScreen';
-import LoginScreen  from '../components/LoginScreen';
-import Dashboard    from '../components/Dashboard';
-import TopicsList   from '../components/TopicsList';
-import QuizScreen   from '../components/QuizScreen';
-import ResultsScreen from '../components/ResultsScreen';
-import StatsScreen  from '../components/StatsScreen';
-import ReviewScreen from '../components/ReviewScreen';
+import SplashScreen    from '../components/SplashScreen';
+import LoginScreen     from '../components/LoginScreen';
+import Dashboard       from '../components/Dashboard';
+import TopicsList      from '../components/TopicsList';
+import QuizScreen      from '../components/QuizScreen';
+import ResultsScreen   from '../components/ResultsScreen';
+import StatsScreen     from '../components/StatsScreen';
+import ReviewScreen    from '../components/ReviewScreen';
+import AchievementsScreen from '../components/AchievementsScreen'; // ← IMPORT
 
 /** Firma comune per la navigazione interna */
 type NavigateFn = (screen: string, params?: any) => void;
@@ -26,76 +28,70 @@ const Index: React.FC = () => {
     const { currentScreen, screenParams } = state;
 
     switch (currentScreen) {
-      /* Splash --------------------------------------------------- */
       case 'splash':
         return <SplashScreen onComplete={() => handleNavigate('login')} />;
 
-      /* Login ---------------------------------------------------- */
       case 'login':
-        return (
-          <LoginScreen
-            onLogin={() => handleNavigate('dashboard')}
-          />
-        );
+        return <LoginScreen onLogin={() => handleNavigate('dashboard')} />;
 
-      /* Dashboard ------------------------------------------------ */
       case 'dashboard':
         return <Dashboard onNavigate={handleNavigate} />;
 
-      /* Topics --------------------------------------------------- */
       case 'topics':
         return <TopicsList onNavigate={handleNavigate} />;
 
-      /* Quiz ----------------------------------------------------- */
       case 'quiz': {
-        /* accetta sia quizType che type per retro-compatibilità */
         const qt = screenParams?.quizType ?? screenParams?.type ?? 'general';
         return (
           <QuizScreen
+            onNavigate={handleNavigate}
             quizType={qt}
             {...screenParams}
-            onNavigate={handleNavigate}
           />
         );
       }
 
-      /* Results -------------------------------------------------- */
-      case 'results':
+      case 'results': {
+        const {
+          score,
+          correctAnswers,
+          totalQuestions,
+          quizType,
+          topicName,
+          quizHistory,
+          timeLeft,
+          streakCount,
+        } = screenParams;
         return (
           <ResultsScreen
-            score={screenParams?.score}
-            correctAnswers={screenParams?.correctAnswers}
-            totalQuestions={screenParams?.totalQuestions}
-            quizType={screenParams?.quizType ?? screenParams?.type}
-            {...screenParams}
             onNavigate={handleNavigate}
+            score={score}
+            correctAnswers={correctAnswers}
+            totalQuestions={totalQuestions}
+            quizType={quizType}
+            topicName={topicName}
+            quizHistory={quizHistory}
+            timeTaken={timeLeft}      // rinominiamo timeLeft → timeTaken
+            streakCount={streakCount}
           />
         );
+      }
 
-      /* Stats ---------------------------------------------------- */
       case 'stats':
         return <StatsScreen onNavigate={handleNavigate} />;
 
-      /* Review --------------------------------------------------- */
       case 'review':
-        return (
-          <ReviewScreen
-            params={screenParams}
-            onNavigate={handleNavigate}
-          />
-        );
+        return <ReviewScreen params={screenParams} onNavigate={handleNavigate} />;
 
-      /* Default -------------------------------------------------- */
+      case 'achievements': // ← QUI
+        return <AchievementsScreen onNavigate={handleNavigate} />;
+
       default:
         return <Dashboard onNavigate={handleNavigate} />;
     }
   };
 
-  return (
-    <div className="min-h-screen bg-apple-light">
-      {renderScreen()}
-    </div>
-  );
+  return <div className="min-h-screen bg-apple-light">{renderScreen()}</div>;
 };
 
 export default Index;

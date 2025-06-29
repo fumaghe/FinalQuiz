@@ -1,3 +1,6 @@
+/* ================================================================== */
+/*  QUIZ CONTEXT — state, reducer, provider                           */
+/* ================================================================== */
 import React, {
   createContext,
   useContext,
@@ -17,40 +20,35 @@ import { loadQuestionsFromFiles } from '../utils/questionLoader';
 /* ------------------------------------------------------------------ */
 /* STATE & ACTIONS                                                    */
 /* ------------------------------------------------------------------ */
-
 export interface QuizState {
-  /* Dati core ------------------------------------------------------ */
   questions:        Question[];
   topics:           Topic[];
   currentSession:   QuizSession | null;
   userStats:        UserStats;
   settings:         UserSettings;
   loading:          boolean;
-
-  /* Navigazione interna -------------------------------------------- */
-  currentScreen:    string;   // es. 'dashboard', 'quiz', ...
-  screenParams?:    any;      // parametri opzionali per la schermata
+  currentScreen:    string;
+  screenParams?:    any;
 }
 
 export type QuizAction =
-  | { type: 'SET_LOADING';       payload: boolean }
-  | { type: 'LOAD_QUESTIONS';    payload: Question[] }
-  | { type: 'LOAD_TOPICS';       payload: Topic[] }
-  | { type: 'START_QUIZ';        payload: QuizSession }
-  | { type: 'ANSWER_QUESTION';   payload: { index: number; answer: number } }
+  | { type: 'SET_LOADING';        payload: boolean }
+  | { type: 'LOAD_QUESTIONS';     payload: Question[] }
+  | { type: 'LOAD_TOPICS';        payload: Topic[] }
+  | { type: 'START_QUIZ';         payload: QuizSession }
+  | { type: 'ANSWER_QUESTION';    payload: { index: number; answer: number } }
   | { type: 'END_QUIZ' }
-  | { type: 'UPDATE_STATS';      payload: UserStats }
-  | { type: 'UPDATE_SETTINGS';   payload: UserSettings }
-  | { type: 'TOGGLE_FAVORITE';   payload: string }
-  | { type: 'SET_CURRENT_SCREEN';payload: { screen: string; params?: any } };
+  | { type: 'UPDATE_STATS';       payload: UserStats }
+  | { type: 'UPDATE_SETTINGS';    payload: UserSettings }
+  | { type: 'TOGGLE_FAVORITE';    payload: string }
+  | { type: 'SET_CURRENT_SCREEN'; payload: { screen: string; params?: any } };
 
 /* ------------------------------------------------------------------ */
 /* INITIAL STATE                                                      */
 /* ------------------------------------------------------------------ */
-
 const initialState: QuizState = {
-  questions:  [],
-  topics:     [],
+  questions: [],
+  topics:    [],
   currentSession: null,
   userStats: {
     totalQuizzes:      0,
@@ -66,29 +64,72 @@ const initialState: QuizState = {
     incorrectQuestions:{},
     quizHistory:       [],
     statsPerTopic:     {},
+    unlockedBadges:    [],               // 🆕
   },
   settings: {
-    fontSize:      'medium',
-    darkMode:      false,
-    reminders:     false,
-    reminderTime:  '18:00',
+    fontSize:    'medium',
+    darkMode:    false,
+    reminders:   false,
+    reminderTime:'18:00',
   },
   loading: true,
-
-  /* Navigazione ---------------------------------------------------- */
   currentScreen: 'splash',
   screenParams:  null,
 };
 
 /* ------------------------------------------------------------------ */
+/* BADGE ENGINE                                                       */
+/* ------------------------------------------------------------------ */
+function checkNewBadges(stats: UserStats): string[] {
+  const unlocked = stats.unlockedBadges ?? [];        //  ← fix
+  const has = (id: string) => unlocked.includes(id);
+  const list: string[] = [];
+
+  /* esempi di regole */
+  if (!has('first_try') && stats.correctAnswers >= 1) list.push('first_try');
+
+  if (
+    !has('cerebro') &&
+    stats.totalQuestions >= 100 &&
+    stats.overallAccuracy >= 90
+  )
+    list.push('cerebro');
+
+  if (!has('constant') && stats.currentStreak >= 7) list.push('constant');
+
+  if (!has('on_fire') && stats.bestStreak >= 5) list.push('on_fire');
+
+  const bestTimed = stats.quizHistory
+    .filter((q) => q.quizType === 'timed' && q.timeTaken != null)
+    .sort((a, b) => a.timeTaken! - b.timeTaken!)[0];
+  if (!has('speed_run') && bestTimed && bestTimed.timeTaken! < 300)
+    list.push('speed_run');
+
+  if (
+    !has('reverse_pro') &&
+    stats.quizHistory.some((q) => q.quizType === 'reverse' && q.score === 100)
+  )
+    list.push('reverse_pro');
+
+  [10, 20, 30].forEach((n) => {
+    const id = `streak_${n}`;
+    if (
+      !has(id) &&
+      stats.quizHistory.some(
+        (q) => q.quizType === 'streak' && (q.streakCount ?? 0) >= n,
+      )
+    )
+      list.push(id);
+  });
+
+  return list;
+}
+
+/* ------------------------------------------------------------------ */
 /* REDUCER                                                            */
 /* ------------------------------------------------------------------ */
-
 function quizReducer(state: QuizState, action: QuizAction): QuizState {
   switch (action.type) {
-    /* -------------------------------------------------------------- */
-    /* BOOT & DOMANDE                                                 */
-    /* -------------------------------------------------------------- */
     case 'SET_LOADING':
       return { ...state, loading: action.payload };
 
@@ -98,9 +139,6 @@ function quizReducer(state: QuizState, action: QuizAction): QuizState {
     case 'LOAD_TOPICS':
       return { ...state, topics: action.payload };
 
-    /* -------------------------------------------------------------- */
-    /* SESSIONE QUIZ                                                 */
-    /* -------------------------------------------------------------- */
     case 'START_QUIZ':
       return { ...state, currentSession: action.payload };
 
@@ -117,37 +155,36 @@ function quizReducer(state: QuizState, action: QuizAction): QuizState {
     case 'END_QUIZ':
       return { ...state, currentSession: null };
 
-    /* -------------------------------------------------------------- */
-    /* STATISTICHE & SETTINGS                                        */
-    /* -------------------------------------------------------------- */
-    case 'UPDATE_STATS':
-      return { ...state, userStats: action.payload };
+    case 'UPDATE_STATS': {
+      const incoming = action.payload;
+      const newBadgeIds = checkNewBadges(incoming);
+      const merged = Array.from(
+        new Set([...(incoming.unlockedBadges ?? []), ...newBadgeIds]), // fix
+      );
+      return {
+        ...state,
+        userStats: { ...incoming, unlockedBadges: merged },
+      };
+    }
 
     case 'UPDATE_SETTINGS':
       return { ...state, settings: action.payload };
 
-    /* -------------------------------------------------------------- */
-    /* TOPICS FAVORITI                                               */
-    /* -------------------------------------------------------------- */
     case 'TOGGLE_FAVORITE':
       return {
         ...state,
         topics: state.topics.map((t) =>
-          t.id === action.payload ? { ...t, isFavorite: !t.isFavorite } : t
+          t.id === action.payload ? { ...t, isFavorite: !t.isFavorite } : t,
         ),
       };
 
-    /* -------------------------------------------------------------- */
-    /* NAVIGAZIONE                                                   */
-    /* -------------------------------------------------------------- */
     case 'SET_CURRENT_SCREEN':
       return {
         ...state,
         currentScreen: action.payload.screen,
-        screenParams:  action.payload.params ?? null,
+        screenParams: action.payload.params ?? null,
       };
 
-    /* -------------------------------------------------------------- */
     default:
       return state;
   }
@@ -156,12 +193,13 @@ function quizReducer(state: QuizState, action: QuizAction): QuizState {
 /* ------------------------------------------------------------------ */
 /* CONTEXT + HOOK                                                     */
 /* ------------------------------------------------------------------ */
-
 const QuizContext = createContext<{
-  state:               QuizState;
-  dispatch:            React.Dispatch<QuizAction>;
-  resetAllQuestions:   () => void;
-  getFilteredQuestions:(type: 'all' | 'unanswered' | 'incorrect') => Question[];
+  state: QuizState;
+  dispatch: React.Dispatch<QuizAction>;
+  resetAllQuestions: () => void;
+  getFilteredQuestions: (
+    type: 'all' | 'unanswered' | 'incorrect',
+  ) => Question[];
 } | null>(null);
 
 export const useQuiz = () => {
@@ -173,102 +211,90 @@ export const useQuiz = () => {
 /* ------------------------------------------------------------------ */
 /* PROVIDER                                                           */
 /* ------------------------------------------------------------------ */
-
 export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [state, dispatch] = useReducer(quizReducer, initialState);
 
-  /* -------------------------------------------------------------- */
-  /* UTILS                                                          */
-  /* -------------------------------------------------------------- */
+  /* reset domande ------------------------------------------------ */
   const resetAllQuestions = () => {
     dispatch({
       type: 'UPDATE_STATS',
       payload: {
         ...state.userStats,
         answeredQuestions: {},
-        correctQuestions:  {},
-        incorrectQuestions:{},
-        statsPerTopic:     {},
-        lastUpdated:       new Date(),
+        correctQuestions: {},
+        incorrectQuestions: {},
+        statsPerTopic: {},
+        lastUpdated: new Date(),
       },
     });
   };
 
-  const getFilteredQuestions = (
-    type: 'all' | 'unanswered' | 'incorrect'
-  ) => {
+  /* helpers ------------------------------------------------------ */
+  const getFilteredQuestions = (type: 'all' | 'unanswered' | 'incorrect') => {
     switch (type) {
       case 'unanswered':
         return state.questions.filter(
-          (q) => !state.userStats.answeredQuestions[q.id]
+          (q) => !state.userStats.answeredQuestions[q.id],
         );
       case 'incorrect':
         return state.questions.filter(
-          (q) => state.userStats.incorrectQuestions[q.id]
+          (q) => state.userStats.incorrectQuestions[q.id],
         );
       default:
         return state.questions;
     }
   };
 
-  /* -------------------------------------------------------------- */
-  /* LOAD                       (localStorage + files)              */
-  /* -------------------------------------------------------------- */
+  /* boot: storage + file ---------------------------------------- */
   useEffect(() => {
-    const loadStoredData = () => {
+    const loadStored = () => {
       try {
-        /* Stats --------------------------------------------------- */
         const stats = localStorage.getItem('quizmaster_stats');
-        if (stats) {
-          const parsed = JSON.parse(stats);
-          dispatch({ type: 'UPDATE_STATS', payload: parsed });
-        }
+        if (stats)
+          dispatch({ type: 'UPDATE_STATS', payload: JSON.parse(stats) });
 
-        /* Settings ------------------------------------------------ */
         const settings = localStorage.getItem('quizmaster_settings');
-        if (settings) {
-          dispatch({ type: 'UPDATE_SETTINGS', payload: JSON.parse(settings) });
-        }
+        if (settings)
+          dispatch({
+            type: 'UPDATE_SETTINGS',
+            payload: JSON.parse(settings),
+          });
 
-        /* Topics -------------------------------------------------- */
-        const topics = localStorage.getItem('quizmaster_topics');
-        if (topics) {
-          dispatch({ type: 'LOAD_TOPICS', payload: JSON.parse(topics) });
-        }
-      } catch (err) {
-        console.error('Error loading stored data', err);
+        const storedTopics = localStorage.getItem('quizmaster_topics');
+        if (storedTopics)
+          dispatch({
+            type: 'LOAD_TOPICS',
+            payload: JSON.parse(storedTopics),
+          });
+      } catch (e) {
+        console.error('loadStorage', e);
       }
     };
 
     const loadQuestions = async () => {
       dispatch({ type: 'SET_LOADING', payload: true });
       try {
-        const questions = await loadQuestionsFromFiles();
-        dispatch({ type: 'LOAD_QUESTIONS', payload: questions });
+        const qs = await loadQuestionsFromFiles();
+        dispatch({ type: 'LOAD_QUESTIONS', payload: qs });
 
-        /* Genera topics al primo avvio --------------------------- */
         if (state.topics.length === 0) {
-          const topics = generateTopicsFromQuestions(questions);
-          dispatch({ type: 'LOAD_TOPICS', payload: topics });
-          localStorage.setItem('quizmaster_topics', JSON.stringify(topics));
+          const ts = generateTopicsFromQuestions(qs);
+          dispatch({ type: 'LOAD_TOPICS', payload: ts });
+          localStorage.setItem('quizmaster_topics', JSON.stringify(ts));
         }
-      } catch (err) {
-        console.error('Error loading questions', err);
       } finally {
         dispatch({ type: 'SET_LOADING', payload: false });
       }
     };
 
-    loadStoredData();
+    loadStored();
     loadQuestions();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  /* -------------------------------------------------------------- */
-  /* PERSISTENZA AUTOMATICA                                         */
-  /* -------------------------------------------------------------- */
+  /* persistence -------------------------------------------------- */
   useEffect(() => {
     if (state.userStats.totalQuizzes > 0)
       localStorage.setItem('quizmaster_stats', JSON.stringify(state.userStats));
@@ -283,9 +309,7 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({
       localStorage.setItem('quizmaster_topics', JSON.stringify(state.topics));
   }, [state.topics]);
 
-  /* -------------------------------------------------------------- */
-  /* RENDER                                                         */
-  /* -------------------------------------------------------------- */
+  /* render ------------------------------------------------------- */
   return (
     <QuizContext.Provider
       value={{ state, dispatch, resetAllQuestions, getFilteredQuestions }}
@@ -298,39 +322,35 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({
 /* ------------------------------------------------------------------ */
 /* HELPERS                                                            */
 /* ------------------------------------------------------------------ */
-
 function generateTopicsFromQuestions(questions: Question[]): Topic[] {
-  /* Costruisci una mappa Topic -> domande */
-  const map = new Map<string, { count: number; questions: Question[] }>();
+  const map = new Map<string, { count: number }>();
   questions.forEach((q) => {
-    if (!map.has(q.topic)) map.set(q.topic, { count: 0, questions: [] });
-    const t = map.get(q.topic)!;
-    t.count += 1;
-    t.questions.push(q);
+    if (!map.has(q.topic)) map.set(q.topic, { count: 0 });
+    map.get(q.topic)!.count += 1;
   });
 
   const icons: Record<string, string> = {
-    SQL:          '🗄️',
-    Statistica:   '📊',
-    Tableau:      '📈',
-    Databricks:   '⚡',
-    DataLake2:    '🏞️',
-    Git:          '🔧',
-    NoSQL:        '🍃',
-    PowerBI:      '📊',
-    Python:       '🐍',
-    R:            '📊',
-    ML:           '🤖',
+    SQL: '🗄️',
+    Statistica: '📊',
+    Tableau: '📈',
+    Databricks: '⚡',
+    DataLake2: '🏞️',
+    Git: '🔧',
+    NoSQL: '🍃',
+    PowerBI: '📊',
+    Python: '🐍',
+    R: '📊',
+    ML: '🤖',
     DeepLearning: '🧠',
   };
 
   return Array.from(map.entries()).map(([name, data]) => ({
-    id:             name.toLowerCase(),
+    id: name.toLowerCase(),
     name,
-    icon:           icons[name] || '📝',
-    description:    `${data.count} domande disponibili`,
+    icon: icons[name] || '📝',
+    description: `${data.count} domande disponibili`,
     totalQuestions: data.count,
-    completed:      0,
-    isFavorite:     false,
+    completed: 0,
+    isFavorite: false,
   }));
 }
