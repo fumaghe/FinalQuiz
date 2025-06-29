@@ -1,24 +1,75 @@
-
-import React, { useState } from 'react';
+// src/components/TopicsList.tsx
+import React, { useState, useMemo } from 'react';
 import { useQuiz } from '../contexts/QuizContext';
 import { Search, ArrowLeft, Heart } from 'lucide-react';
 
+/* ------------------------------------------------------------------ */
+/* TYPES                                                              */
+/* ------------------------------------------------------------------ */
 interface TopicsListProps {
   onNavigate: (screen: string, params?: any) => void;
 }
 
+/* ------------------------------------------------------------------ */
+/* COMPONENT                                                          */
+/* ------------------------------------------------------------------ */
 const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
   const { state, dispatch } = useQuiz();
   const { topics, userStats } = state;
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filter, setFilter] = useState<'all' | 'incomplete' | 'favorites'>('all');
 
-  const filteredTopics = topics.filter(topic => {
-    const matchesSearch = topic.name.toLowerCase().includes(searchQuery.toLowerCase());
-    
+  /* -------------------------------------------------------------- */
+  /* STATE FILTRI & SEARCH                                          */
+  /* -------------------------------------------------------------- */
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filter, setFilter] = useState<'all' | 'incomplete' | 'favorites'>(
+    'all',
+  );
+
+  /* -------------------------------------------------------------- */
+  /* AGGREGAZIONE STAT PER TOPIC  (tutte le modalità tranne reverse) */
+  /* -------------------------------------------------------------- */
+  const aggregatedStats = useMemo(() => {
+    const map: Record<string, { done: number; correct: number }> = {};
+
+    userStats.quizHistory
+      .filter((q) => q.quizType !== 'reverse')
+      .forEach((q) => {
+        (q.answeredQuestions ?? []).forEach((a) => {
+          if (!map[a.topic]) map[a.topic] = { done: 0, correct: 0 };
+          map[a.topic].done += 1;
+          if (a.isCorrect) map[a.topic].correct += 1;
+        });
+      });
+
+    return map;
+  }, [userStats.quizHistory]);
+
+  /* -------------------------------------------------------------- */
+  /* UTILS                                                          */
+  /* -------------------------------------------------------------- */
+  const getTopicStats = (topicName: string) => {
+    const st = aggregatedStats[topicName];
+    if (!st)
+      return { correctAnswers: 0, totalAnswered: 0, accuracy: 0 };
+
+    return {
+      correctAnswers: st.correct,
+      totalAnswered: st.done,
+      accuracy:
+        st.done > 0 ? Math.round((st.correct / st.done) * 100) : 0,
+    };
+  };
+
+  const filteredTopics = topics.filter((topic) => {
+    const matchesSearch = topic.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+
     switch (filter) {
-      case 'incomplete':
-        return matchesSearch && topic.completed < topic.totalQuestions;
+      case 'incomplete': {
+        const stats = getTopicStats(topic.name);
+        return matchesSearch && stats.correctAnswers < topic.totalQuestions;
+      }
       case 'favorites':
         return matchesSearch && topic.isFavorite;
       default:
@@ -26,36 +77,27 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
     }
   });
 
-  const getTopicStats = (topicName: string) => {
-    const stats = userStats.statsPerTopic[topicName];
-    if (stats) {
-      return {
-        correctAnswers: stats.correct || 0,
-        totalAnswered: stats.done || 0,
-        accuracy: stats.done > 0 ? Math.round((stats.correct / stats.done) * 100) : 0
-      };
-    }
-    return {
-      correctAnswers: 0,
-      totalAnswered: 0,
-      accuracy: 0
-    };
-  };
-
   const handleTopicSelect = (topic: any) => {
-    onNavigate('quiz', { type: 'topic', topicId: topic.id, topicName: topic.name });
+    onNavigate('quiz', {
+      type: 'topic',
+      topicId: topic.id,
+      topicName: topic.name,
+    });
   };
 
   const toggleFavorite = (topicId: string) => {
     dispatch({ type: 'TOGGLE_FAVORITE', payload: topicId });
   };
 
+  /* -------------------------------------------------------------- */
+  /* RENDER                                                         */
+  /* -------------------------------------------------------------- */
   return (
     <div className="min-h-screen bg-apple-light">
-      {/* Header */}
+      {/* ----------------- HEADER ----------------- */}
       <header className="bg-apple-card shadow-apple-card px-apple-2x py-4">
         <div className="flex items-center space-x-4 mb-4">
-          <button 
+          <button
             onClick={() => onNavigate('dashboard')}
             className="p-2 -ml-2 rounded-full hover:bg-apple-light transition-colors"
           >
@@ -66,7 +108,7 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
 
         {/* Search Bar */}
         <div className="relative mb-4">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-apple-secondary" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-apple-secondary" />
           <input
             type="text"
             placeholder="Cerca argomenti..."
@@ -81,18 +123,17 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
           {[
             { key: 'all', label: 'Tutti' },
             { key: 'incomplete', label: 'Da completare' },
-            { key: 'favorites', label: 'Preferiti' }
+            { key: 'favorites', label: 'Preferiti' },
           ].map((tab) => (
             <button
               key={tab.key}
               onClick={() => setFilter(tab.key as any)}
-              className={`
-                flex-1 py-2 px-4 rounded-lg text-caption font-medium transition-all
-                ${filter === tab.key 
-                  ? 'bg-apple-card text-apple-blue shadow-apple-card' 
-                  : 'text-apple-secondary hover:text-apple-text'
-                }
-              `}
+              className={`flex-1 py-2 px-4 rounded-lg text-caption font-medium transition-all
+                ${
+                  filter === tab.key
+                    ? 'bg-apple-card text-apple-blue shadow-apple-card'
+                    : 'text-apple-secondary hover:text-apple-text'
+                }`}
             >
               {tab.label}
             </button>
@@ -100,13 +141,14 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
         </div>
       </header>
 
-      {/* Topics List */}
+      {/* ----------------- LISTA ARGOMENTI ----------------- */}
       <div className="px-apple-2x py-4 space-y-3 pb-20">
         {filteredTopics.map((topic) => {
           const stats = getTopicStats(topic.name);
-          const progress = topic.totalQuestions > 0 
-            ? (stats.correctAnswers / topic.totalQuestions) * 100 
-            : 0;
+          const progress =
+            topic.totalQuestions > 0
+              ? (stats.correctAnswers / topic.totalQuestions) * 100
+              : 0;
 
           return (
             <div
@@ -114,15 +156,17 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
               className="apple-card p-4 hover:bg-gray-50 transition-colors"
             >
               <div className="flex items-center space-x-4">
-                {/* Topic Icon */}
+                {/* Icona */}
                 <div className="w-12 h-12 bg-apple-blue/10 rounded-apple flex items-center justify-center flex-shrink-0">
                   <span className="text-2xl">{topic.icon}</span>
                 </div>
 
-                {/* Topic Info */}
+                {/* Dati topic */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center space-x-2 mb-1">
-                    <h3 className="text-h3 font-medium truncate">{topic.name}</h3>
+                    <h3 className="text-h3 font-medium truncate">
+                      {topic.name}
+                    </h3>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -130,21 +174,23 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
                       }}
                       className="p-1 rounded-full hover:bg-apple-light transition-colors"
                     >
-                      <Heart 
+                      <Heart
                         className={`w-4 h-4 ${
-                          topic.isFavorite ? 'text-apple-red fill-current' : 'text-apple-secondary'
-                        }`} 
+                          topic.isFavorite
+                            ? 'text-apple-red fill-current'
+                            : 'text-apple-secondary'
+                        }`}
                       />
                     </button>
                   </div>
-                  
+
                   <p className="text-caption text-apple-secondary mb-2">
                     {topic.description}
                   </p>
 
-                  {/* Progress Bar */}
+                  {/* Progress bar */}
                   <div className="w-full bg-apple-light rounded-full h-2 mb-2">
-                    <div 
+                    <div
                       className="bg-apple-green h-2 rounded-full transition-all duration-300"
                       style={{ width: `${Math.min(progress, 100)}%` }}
                     />
@@ -162,7 +208,7 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
                   </div>
                 </div>
 
-                {/* Action Button */}
+                {/* Bottone */}
                 <button
                   onClick={() => handleTopicSelect(topic)}
                   className="px-6 py-2 bg-apple-blue text-white rounded-apple text-caption font-medium apple-button"

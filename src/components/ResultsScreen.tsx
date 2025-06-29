@@ -1,14 +1,27 @@
-
 import React from 'react';
-import { Trophy, RotateCcw, Home, Share, Eye } from 'lucide-react';
-import { QuizHistory } from '../types/quiz';
+import {
+  Trophy,
+  RotateCcw,
+  Home,
+  Share,
+  Eye,
+  Clock,
+  Zap,
+} from 'lucide-react';
+import { QuizHistory, QuizKind } from '../types/quiz';
 
 interface ResultsScreenProps {
   onNavigate: (screen: string, params?: any) => void;
-  score: number;
+
+  /*  valori base (sempre presenti)  */
+  score: number;               // % corrette
   correctAnswers: number;
   totalQuestions: number;
-  quizType: 'general' | 'topic';
+
+  /*  nuovi campi opzionali  */
+  quizType: QuizKind;          // 'general' | … | 'timed' | 'streak'
+  timeTaken?: number;          // solo timed (sec)
+  streakCount?: number;        // solo streak
   topicName?: string;
   quizHistory?: QuizHistory;
 }
@@ -20,115 +33,189 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
   totalQuestions,
   quizType,
   topicName,
-  quizHistory
+  quizHistory,
+  timeTaken,
+  streakCount,
 }) => {
-  const getPerformanceData = () => {
-    if (score >= 90) {
+  /* ---------------------------------------------------------- */
+  /* PERFORMANCE LOOK-AND-FEEL                                  */
+  /* ---------------------------------------------------------- */
+  const perf = (() => {
+    if (quizType === 'streak') {
+      /*  per lo streak ragioniamo sul numero  */
+      return {
+        emoji: '🔥',
+        title: 'Game Over',
+        message: `Hai totalizzato ${streakCount} risposte corrette di fila!`,
+        color: '#FF9F0A',
+        bgColor: 'bg-yellow-50',
+      };
+    }
+
+    /*  tutti gli altri (basato sulla % di accuratezza)          */
+    if (score >= 90)
       return {
         emoji: '🏆',
         title: 'Eccellente!',
         message: 'Risultato straordinario!',
         color: '#34C759',
-        bgColor: 'bg-green-50'
+        bgColor: 'bg-green-50',
       };
-    } else if (score >= 75) {
+    if (score >= 75)
       return {
         emoji: '🎉',
         title: 'Ottimo lavoro!',
         message: 'Risultato molto buono!',
         color: '#007AFF',
-        bgColor: 'bg-blue-50'
+        bgColor: 'bg-blue-50',
       };
-    } else if (score >= 60) {
+    if (score >= 60)
       return {
         emoji: '👍',
         title: 'Buon risultato!',
         message: 'Puoi fare ancora meglio!',
         color: '#FF9F0A',
-        bgColor: 'bg-yellow-50'
+        bgColor: 'bg-yellow-50',
       };
-    } else {
-      return {
-        emoji: '💪',
-        title: 'Continua così!',
-        message: 'Ogni errore è una lezione!',
-        color: '#FF3B30',
-        bgColor: 'bg-red-50'
-      };
-    }
-  };
+    return {
+      emoji: '💪',
+      title: 'Continua così!',
+      message: 'Ogni errore è una lezione!',
+      color: '#FF3B30',
+      bgColor: 'bg-red-50',
+    };
+  })();
 
-  const performance = getPerformanceData();
-  const accuracy = Math.round(score);
-  const errorCount = totalQuestions - correctAnswers;
-
+  /* ---------------------------------------------------------- */
+  /* HANDLERS                                                   */
+  /* ---------------------------------------------------------- */
   const handleRetryQuiz = () => {
-    if (quizType === 'general') {
-      onNavigate('quiz', { type: 'general' });
-    } else {
-      onNavigate('quiz', { type: 'topic', topicId: topicName?.toLowerCase(), topicName });
+    switch (quizType) {
+      case 'general':
+        onNavigate('quiz', { quizType: 'general' });
+        break;
+      case 'topic':
+        onNavigate('quiz', {
+          quizType: 'topic',
+          topicId: topicName?.toLowerCase(),
+          topicName,
+        });
+        break;
+      case 'timed':
+        onNavigate('quiz', { quizType: 'timed' });
+        break;
+      case 'streak':
+        onNavigate('quiz', { quizType: 'streak' });
+        break;
+      case 'reverse':
+        onNavigate('quiz', { quizType: 'reverse' });
+        break;
+      case 'forYou':
+        onNavigate('quiz', { quizType: 'forYou' });
+        break;
+      default:
+        break;
     }
   };
 
   const handleReviewAnswers = () => {
-    if (quizHistory) {
-      onNavigate('review', { quizHistory });
-    }
+    if (quizHistory) onNavigate('review', { quizHistory });
   };
+
+  /* ---------------------------------------------------------- */
+  /* RENDER                                                     */
+  /* ---------------------------------------------------------- */
+  const accuracy     = Math.round(score);
+  const errorCount   = totalQuestions - correctAnswers;
+  const timedLabel   =
+    quizType === 'timed' && timeTaken != null
+      ? `${Math.floor(timeTaken / 60)}m ${timeTaken % 60}s`
+      : undefined;
 
   return (
     <div className="min-h-screen bg-apple-light flex flex-col">
-      {/* Results Content */}
+      {/* ==================== HEADER CARD ===================== */}
       <div className="flex-1 flex flex-col items-center justify-center px-apple-2x py-12">
-        {/* Performance Icon */}
-        <div 
-          className={`w-24 h-24 rounded-full flex items-center justify-center mb-6 ${performance.bgColor}`}
-          style={{ backgroundColor: `${performance.color}20` }}
+        {/* ICONA / MEDAGLIA */}
+        <div
+          className={`w-24 h-24 rounded-full flex items-center justify-center mb-6 ${perf.bgColor}`}
+          style={{ backgroundColor: `${perf.color}20` }}
         >
-          <span className="text-5xl">{performance.emoji}</span>
+          <span className="text-5xl">{perf.emoji}</span>
         </div>
 
-        {/* Title and Message */}
+        {/* TITOLO & MSG */}
         <h1 className="text-h1 font-bold text-apple-text mb-2 text-center">
-          {performance.title}
+          {perf.title}
         </h1>
         <p className="text-body text-apple-secondary mb-8 text-center">
-          {performance.message}
+          {perf.message}
         </p>
 
-        {/* Score Card */}
+        {/* ---------------- CARD PRINCIPALE ---------------- */}
         <div className="apple-card p-8 w-full max-w-sm mb-8">
           <div className="text-center">
+            {/* METRICA PRINCIPALE */}
             <div className="mb-6">
-              <p 
-                className="text-6xl font-bold mb-2"
-                style={{ color: performance.color }}
-              >
-                {accuracy}%
-              </p>
-              <p className="text-body text-apple-secondary">
-                {correctAnswers} su {totalQuestions} corrette
-              </p>
+              {quizType === 'streak' ? (
+                <>
+                  <p
+                    className="text-6xl font-bold mb-2"
+                    style={{ color: perf.color }}
+                  >
+                    {streakCount}
+                  </p>
+                  <p className="text-body text-apple-secondary">
+                    risposte corrette consecutive
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p
+                    className="text-6xl font-bold mb-2"
+                    style={{ color: perf.color }}
+                  >
+                    {accuracy}%
+                  </p>
+                  <p className="text-body text-apple-secondary">
+                    {correctAnswers} su {totalQuestions} corrette
+                  </p>
+                </>
+              )}
             </div>
 
-            {/* Quiz Info */}
-            <div className="pt-6 border-t border-apple-border">
-              <p className="text-caption text-apple-secondary mb-1">
-                Quiz completato
-              </p>
+            {/* INFO AGGIUNTIVE (tempo ecc.) */}
+            <div className="pt-6 border-t border-apple-border space-y-2">
+              {quizType === 'timed' && timedLabel && (
+                <p className="flex items-center justify-center text-caption">
+                  <Clock className="w-4 h-4 mr-1" />
+                  Tempo impiegato:&nbsp;
+                  <span className="font-medium">{timedLabel}</span>
+                </p>
+              )}
+              <p className="text-caption text-apple-secondary">Quiz completato</p>
               <p className="text-body font-medium">
-                {quizType === 'general' ? 'Quiz Generale' : topicName}
+                {quizType === 'general'
+                  ? 'Quiz Generale'
+                  : quizType === 'timed'
+                  ? 'Sfida a Tempo'
+                  : quizType === 'streak'
+                  ? 'Streak Quiz'
+                  : quizType === 'reverse'
+                  ? 'Quiz Inverso'
+                  : topicName}
               </p>
             </div>
           </div>
         </div>
 
-        {/* Error Summary */}
-        {errorCount > 0 && (
+        {/* riepilogo errori  (solo per quiz tradizionali) */}
+        {quizType !== 'streak' && errorCount > 0 && (
           <div className="apple-card p-4 w-full max-w-sm mb-8">
             <div className="text-center">
               <p className="text-caption text-apple-secondary mb-2">
-                {errorCount} {errorCount === 1 ? 'errore da' : 'errori da'} rivedere
+                {errorCount}{' '}
+                {errorCount === 1 ? 'errore da' : 'errori da'} rivedere
               </p>
               <button
                 onClick={handleReviewAnswers}
@@ -140,31 +227,16 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
             </div>
           </div>
         )}
-
-        {/* Encouragement Message */}
-        <div className="apple-card p-4 w-full max-w-sm mb-8">
-          <div className="text-center">
-            {score >= 75 ? (
-              <p className="text-caption text-apple-secondary">
-                🌟 Continua così! La costanza è la chiave del successo.
-              </p>
-            ) : (
-              <p className="text-caption text-apple-secondary">
-                📚 Non scoraggiarti! Riprova per migliorare il tuo punteggio.
-              </p>
-            )}
-          </div>
-        </div>
       </div>
 
-      {/* Action Buttons */}
+      {/* ==================== AZIONI  ====================== */}
       <div className="px-apple-2x py-6 space-y-4">
         <button
           onClick={handleRetryQuiz}
           className="w-full apple-button-primary flex items-center justify-center space-x-2"
         >
           <RotateCcw className="w-5 h-5" />
-          <span>Riprova Quiz</span>
+          <span>Riprova</span>
         </button>
 
         <div className="grid grid-cols-2 gap-4">
@@ -194,13 +266,17 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
           <span>Torna alla Home</span>
         </button>
 
+        {/* Condivisione (opz.) */}
         <button
           onClick={() => {
             if (navigator.share) {
               navigator.share({
                 title: 'QuizMaster - I miei risultati',
-                text: `Ho appena completato un quiz su QuizMaster con un punteggio del ${accuracy}%! 🎯`,
-                url: window.location.href
+                text:
+                  quizType === 'streak'
+                    ? `Ho ottenuto una streak di ${streakCount} risposte corrette su QuizMaster! 💥`
+                    : `Ho completato un quiz con il ${accuracy}% di accuratezza! 🎯`,
+                url: window.location.href,
               });
             }
           }}

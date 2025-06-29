@@ -7,15 +7,27 @@ export interface Question {
   topic: string;
 }
 
+/* ===== NUOVI TIPI QUIZ ========================================== */
+export type QuizKind =
+  | 'general'
+  | 'topic'
+  | 'custom'    // ← aggiungi qui
+  | 'forYou'
+  | 'timed'
+  | 'streak'
+  | 'reverse';
+
 export interface QuizSession {
   id: string;
+  quizType: QuizKind;
   questions: Question[];
   currentIndex: number;
   answers: (number | null)[];
   startTime: Date;
   endTime?: Date;
   score?: number;
-  timeTaken?: number;        // <— tempo impiegato in secondi (solo timed)
+  timeTaken?: number;    // timed
+  streakCount?: number;  // streak
 }
 
 export interface AnsweredQuestion {
@@ -32,17 +44,19 @@ export interface AnsweredQuestion {
 
 export interface QuizHistory {
   id: string;
-  quizType: 'general' | 'topic' | 'forYou' | 'timed';
+  quizType: QuizKind;
   topicName?: string;
   timestamp: Date;
-  score: number;
+  score: number;              // per streak ==> % corrette (utile per grafico)
   totalQuestions: number;
-  correctAnswers: number;
+  correctAnswers: number;     // per streak = streakCount
   answeredQuestions: AnsweredQuestion[];
-  timeTaken?: number;        // <— tempo impiegato in secondi (solo timed)
+  timeTaken?: number;         // timed
+  streakCount?: number;       // streak
 }
 
 export interface TopicStats {
+  /* … invariato … */
   topic: string;
   totalQuestions: number;
   correctAnswers: number;
@@ -62,11 +76,16 @@ export interface UserStats {
   bestStreak: number;
   topicStats: TopicStats[];
   lastUpdated: Date;
-  answeredQuestions: { [questionId: string]: boolean };
-  correctQuestions: { [questionId: string]: boolean };
-  incorrectQuestions: { [questionId: string]: boolean };
+
+  answeredQuestions: { [id: string]: boolean };
+  correctQuestions:  { [id: string]: boolean };
+  incorrectQuestions:{ [id: string]: boolean };
+
   quizHistory: QuizHistory[];
   statsPerTopic: { [topic: string]: { done: number; correct: number; total: number } };
+
+  /* ------ NUOVO RECORD STREAK QUIZ ------------------------------ */
+  bestSuddenDeath?: number;
 }
 
 export interface UserSettings {

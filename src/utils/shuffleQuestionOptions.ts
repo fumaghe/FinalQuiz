@@ -1,8 +1,11 @@
 import { Question } from '../types/quiz';
 
+// ✅ Esportiamo il tipo
 export interface ShuffledQuestion extends Question {
   shuffledOptions: string[];
   optionMapping: number[];
+  reverseCorrectIndex?: number;    // per reverse
+  originalQuestion?: Question;     // per sostituzione
 }
 
 export const shuffleQuestionOptions = (question: Question): ShuffledQuestion => {
