@@ -31,7 +31,7 @@ export interface AnsweredQuestion {
 
 export interface QuizHistory {
   id: string;
-  quizType: 'general' | 'topic' | 'forYou';
+  quizType: 'general' | 'topic' | 'forYou' | 'timed';
   topicName?: string;
   timestamp: Date;
   score: number;

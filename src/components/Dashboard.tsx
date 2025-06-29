@@ -6,6 +6,7 @@ import {
   Shuffle,
   Folder,
   User,
+  Timer,
   BarChart,
   RotateCcw
 } from 'lucide-react';
@@ -29,20 +30,28 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
   const { state, resetAllQuestions, getFilteredQuestions } = useQuiz();
   const { userStats, topics } = state;
 
-  const totalTopics = topics.length;
+  /* -------------------------------------------------------------- */
+  /* Statistiche base                                               */
+  /* -------------------------------------------------------------- */
+  const totalTopics     = topics.length;
   const completedTopics = topics.filter(t => {
-    const topicStats = userStats.statsPerTopic[t.name];
-    return topicStats && topicStats.done > 0;
+    const ts = userStats.statsPerTopic[t.name];
+    return ts && ts.done > 0;
   }).length;
-  const overallProgress = totalTopics > 0 ? (completedTopics / totalTopics) * 100 : 0;
+  const overallProgress =
+    totalTopics > 0 ? (completedTopics / totalTopics) * 100 : 0;
 
-  const unansweredQuestions = getFilteredQuestions('unanswered');
-  const hasUnansweredQuestions = unansweredQuestions.length > 0;
+  const unanswered    = getFilteredQuestions('unanswered');
+  const hasUnanswered = unanswered.length > 0;
 
-  const handleResetQuestions = () => {
-    resetAllQuestions();
-  };
+  /* -------------------------------------------------------------- */
+  /* Reset domande                                                  */
+  /* -------------------------------------------------------------- */
+  const handleResetQuestions = () => resetAllQuestions();
 
+  /* -------------------------------------------------------------- */
+  /* RENDER                                                         */
+  /* -------------------------------------------------------------- */
   return (
     <div className="min-h-screen bg-apple-light">
       {/* Header */}
@@ -53,14 +62,15 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
           </div>
           <div>
             <h2 className="text-h2 font-semibold">Ciao, Studente!</h2>
-            <p className="text-caption text-apple-secondary">Pronto per nuove sfide?</p>
+            <p className="text-caption text-apple-secondary">
+              Pronto per nuove sfide?
+            </p>
           </div>
         </div>
-        <button 
+        <button
           onClick={() => onNavigate('settings')}
           className="p-2 rounded-full hover:bg-apple-light transition-colors"
-        >
-        </button>
+        />
       </header>
 
       <div className="px-apple-2x py-6 space-y-8 pb-24">
@@ -69,12 +79,18 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
           <h3 className="text-h3 font-medium mb-4">Le tue statistiche</h3>
           <div className="grid grid-cols-3 gap-4">
             <div className="apple-card p-4 text-center">
-              <ProgressRing progress={userStats.overallAccuracy} size={60} color="#34C759">
+              <ProgressRing
+                progress={userStats.overallAccuracy}
+                size={60}
+                color="#34C759"
+              >
                 <span className="text-caption font-medium text-apple-text">
                   {Math.round(userStats.overallAccuracy)}%
                 </span>
               </ProgressRing>
-              <p className="text-small text-apple-secondary mt-2">Precisione</p>
+              <p className="text-small text-apple-secondary mt-2">
+                Precisione
+              </p>
             </div>
 
             <div className="apple-card p-4 text-center">
@@ -83,11 +99,17 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                   {completedTopics}/{totalTopics}
                 </span>
               </ProgressRing>
-              <p className="text-small text-apple-secondary mt-2">Argomenti</p>
+              <p className="text-small text-apple-secondary mt-2">
+                Argomenti
+              </p>
             </div>
 
             <div className="apple-card p-4 text-center">
-              <ProgressRing progress={Math.min((userStats.currentStreak / 10) * 100, 100)} size={60} color="#FF9F0A">
+              <ProgressRing
+                progress={Math.min((userStats.currentStreak / 10) * 100, 100)}
+                size={60}
+                color="#FF9F0A"
+              >
                 <span className="text-caption font-medium text-apple-text">
                   {userStats.currentStreak}
                 </span>
@@ -100,10 +122,11 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
         {/* Quick Actions */}
         <section>
           <h3 className="text-h3 font-medium mb-4">Inizia a studiare</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Quiz Generale */}
             <button
               onClick={() => onNavigate('quiz', { quizType: 'general' })}
-              disabled={!hasUnansweredQuestions}
+              disabled={!hasUnanswered}
               className="apple-card p-4 sm:p-6 text-left hover:bg-gray-50 transition-colors apple-button group disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <div className="flex items-center space-x-3 mb-3">
@@ -111,14 +134,19 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                   <Shuffle className="w-5 h-5 sm:w-6 sm:h-6 text-apple-blue" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-body sm:text-h3 font-medium">Quiz Generale</h4>
+                  <h4 className="text-body sm:text-h3 font-medium">
+                    Quiz Generale
+                  </h4>
                   <p className="text-small text-apple-secondary">
-                    {hasUnansweredQuestions ? `${unansweredQuestions.length} domande disponibili` : 'Tutte le domande completate'}
+                    {hasUnanswered
+                      ? `${unanswered.length} domande disponibili`
+                      : 'Tutte le domande completate'}
                   </p>
                 </div>
               </div>
             </button>
 
+            {/* Per Argomento */}
             <button
               onClick={() => onNavigate('topics')}
               className="apple-card p-4 sm:p-6 text-left hover:bg-gray-50 transition-colors apple-button group"
@@ -128,12 +156,17 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                   <Folder className="w-5 h-5 sm:w-6 sm:h-6 text-apple-green" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-body sm:text-h3 font-medium">Per Argomento</h4>
-                  <p className="text-small text-apple-secondary">{totalTopics} argomenti</p>
+                  <h4 className="text-body sm:text-h3 font-medium">
+                    Per Argomento
+                  </h4>
+                  <p className="text-small text-apple-secondary">
+                    {totalTopics} argomenti
+                  </p>
                 </div>
               </div>
             </button>
 
+            {/* Quiz per Te */}
             <button
               onClick={() => onNavigate('quiz', { quizType: 'forYou' })}
               className="apple-card p-4 sm:p-6 text-left hover:bg-gray-50 transition-colors apple-button group border-2 border-amber-400"
@@ -143,11 +176,94 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                   <User className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-body sm:text-h3 font-medium">Quiz per Te</h4>
-                  <p className="text-small text-apple-secondary">30 domande ponderate secondo la tua precisione</p>
+                  <h4 className="text-body sm:text-h3 font-medium">
+                    Quiz per Te
+                  </h4>
+                  <p className="text-small text-apple-secondary">
+                    30 domande ponderate secondo la tua precisione
+                  </p>
                 </div>
               </div>
             </button>
+
+            {/* Sfida a Tempo con pop-up */}
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <button
+                  className="apple-card p-4 sm:p-6 text-left hover:bg-gray-50 transition-colors apple-button group"
+                >
+                  <div className="flex items-center space-x-3 mb-3">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-red-100 rounded-apple flex items-center justify-center">
+                      <Timer className="w-5 h-5 sm:w-6 sm:h-6 text-red-600" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-body sm:text-h3 font-medium">
+                        Sfida a Tempo
+                      </h4>
+                      <p className="text-small text-apple-secondary">
+                        10&nbsp;min • penalità&nbsp;-10&nbsp;s
+                      </p>
+                    </div>
+                  </div>
+                </button>
+              </AlertDialogTrigger>
+
+              <AlertDialogContent className="max-w-md">
+                <AlertDialogHeader>
+                  <AlertDialogTitle className="text-2xl font-extrabold text-amber-500 flex items-center space-x-2">
+                    <span>⏱️</span>
+                    <span>Sfida a Tempo</span>
+                  </AlertDialogTitle>
+                </AlertDialogHeader>
+
+                <AlertDialogDescription asChild>
+                  <ul className="mt-4 space-y-3 text-left">
+                    <li className="flex items-start">
+                      <span className="mr-2 text-xl">🕒</span>
+                      <span>
+                        Tempo totale: <strong className="text-blue-600">6 minuti</strong>
+                      </span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="mr-2 text-xl">❌</span>
+                      <span>
+                        Risposta errata: <strong className="text-red-600">−10 secondi</strong>
+                      </span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="mr-2 text-xl">🔥</span>
+                      <span>
+                        <strong className="text-green-600">+3</strong> corrette di fila → <strong className="text-green-600">+10 s</strong>
+                      </span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="mr-2 text-xl">💥</span>
+                      <span>
+                        <strong className="text-purple-600">+5</strong> corrette → <strong className="text-purple-600">Modalità Furia</strong> (0 penalità per 3 domande)
+                      </span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="mr-2 text-xl">🏁</span>
+                      <span>
+                        Il quiz termina al termine del tempo o alla <strong className="text-indigo-600">30ª domanda</strong>
+                      </span>
+                    </li>
+                  </ul>
+                </AlertDialogDescription>
+
+                <AlertDialogFooter className="mt-6">
+                  <AlertDialogCancel className="text-gray-500 hover:text-gray-800">
+                    Chiudi
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() => onNavigate('quiz', { quizType: 'timed' })}
+                    className="ml-2 bg-amber-500 hover:bg-amber-600 text-white"
+                  >
+                    🚀 Inizia ora!
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         </section>
 
@@ -156,7 +272,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
           <section>
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-h3 font-medium">Attività recente</h3>
-              <button 
+              <button
                 onClick={() => onNavigate('stats')}
                 className="text-caption text-apple-blue font-medium"
               >
@@ -167,11 +283,17 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-body font-medium">Quiz completati</p>
-                  <p className="text-caption text-apple-secondary">{userStats.totalQuizzes} quiz totali</p>
+                  <p className="text-caption text-apple-secondary">
+                    {userStats.totalQuizzes} quiz totali
+                  </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-h3 font-semibold text-apple-blue">{userStats.correctAnswers}</p>
-                  <p className="text-caption text-apple-secondary">risposte corrette</p>
+                  <p className="text-h3 font-semibold text-apple-blue">
+                    {userStats.correctAnswers}
+                  </p>
+                  <p className="text-caption text-apple-secondary">
+                    risposte corrette
+                  </p>
                 </div>
               </div>
             </div>
@@ -188,8 +310,12 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                     <RotateCcw className="w-5 h-5 text-red-600" />
                   </div>
                   <div>
-                    <h4 className="text-body font-medium text-red-700">Resetta domande completate</h4>
-                    <p className="text-small text-red-600">Ricomincia da zero con tutte le domande</p>
+                    <h4 className="text-body font-medium text-red-700">
+                      Resetta domande completate
+                    </h4>
+                    <p className="text-small text-red-600">
+                      Ricomincia da zero con tutte le domande
+                    </p>
                   </div>
                 </button>
               </AlertDialogTrigger>
@@ -197,12 +323,17 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                 <AlertDialogHeader>
                   <AlertDialogTitle>Conferma reset</AlertDialogTitle>
                   <AlertDialogDescription>
-                    Sei sicuro di voler resettare tutte le domande completate? Questa azione non può essere annullata e perderai tutti i progressi attuali.
+                    Sei sicuro di voler resettare tutte le domande completate?
+                    Questa azione non può essere annullata e perderai tutti i
+                    progressi attuali.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Annulla</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleResetQuestions} className="bg-red-600 hover:bg-red-700">
+                  <AlertDialogAction
+                    onClick={handleResetQuestions}
+                    className="bg-red-600 hover:bg-red-700"
+                  >
                     Resetta tutto
                   </AlertDialogAction>
                 </AlertDialogFooter>
@@ -219,7 +350,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             <div className="w-6 h-6 mb-1">🏠</div>
             <span className="text-small font-medium">Home</span>
           </button>
-          <button 
+          <button
             onClick={() => onNavigate('stats')}
             className="flex flex-col items-center p-2 text-apple-secondary hover:text-apple-blue transition-colors"
           >

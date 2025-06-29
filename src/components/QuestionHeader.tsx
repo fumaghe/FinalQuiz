@@ -2,7 +2,7 @@ import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 
 interface QuestionHeaderProps {
-  quizType: 'general' | 'topic' | 'custom' | 'forYou';
+  quizType: 'general' | 'topic' | 'custom' | 'forYou' | 'timed';
   title?: string;
   topicName?: string;
   currentIndex: number;

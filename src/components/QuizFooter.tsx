@@ -2,7 +2,7 @@ import React from 'react';
 import { SkipForward } from 'lucide-react';
 
 interface QuizFooterProps {
-  quizType: 'general' | 'topic' | 'custom' | 'forYou';
+  quizType: 'general' | 'topic' | 'custom' | 'forYou' | 'timed';
   isAnswered: boolean;
   onSkip?: () => void;
   onConfirm?: () => void;
