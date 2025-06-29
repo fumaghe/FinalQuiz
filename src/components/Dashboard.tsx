@@ -1,7 +1,14 @@
+// src/components/Dashboard.tsx
 import React from 'react';
 import { useQuiz } from '../contexts/QuizContext';
 import ProgressRing from './ProgressRing';
-import { Shuffle, Folder, User, BarChart, RotateCcw } from 'lucide-react';
+import {
+  Shuffle,
+  Folder,
+  User,
+  BarChart,
+  RotateCcw
+} from 'lucide-react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,7 +18,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
+  AlertDialogTrigger
 } from './ui/alert-dialog';
 
 interface DashboardProps {
@@ -69,7 +76,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
               </ProgressRing>
               <p className="text-small text-apple-secondary mt-2">Precisione</p>
             </div>
-            
+
             <div className="apple-card p-4 text-center">
               <ProgressRing progress={overallProgress} size={60} color="#007AFF">
                 <span className="text-caption font-medium text-apple-text">
@@ -78,7 +85,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
               </ProgressRing>
               <p className="text-small text-apple-secondary mt-2">Argomenti</p>
             </div>
-            
+
             <div className="apple-card p-4 text-center">
               <ProgressRing progress={Math.min((userStats.currentStreak / 10) * 100, 100)} size={60} color="#FF9F0A">
                 <span className="text-caption font-medium text-apple-text">
@@ -93,14 +100,14 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
         {/* Quick Actions */}
         <section>
           <h3 className="text-h3 font-medium mb-4">Inizia a studiare</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <button
               onClick={() => onNavigate('quiz', { quizType: 'general' })}
               disabled={!hasUnansweredQuestions}
               className="apple-card p-4 sm:p-6 text-left hover:bg-gray-50 transition-colors apple-button group disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <div className="flex items-center space-x-3 mb-3">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-apple-blue/10 rounded-apple flex items-center justify-center group-active:scale-95 transition-transform">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-apple-blue/10 rounded-apple flex items-center justify-center">
                   <Shuffle className="w-5 h-5 sm:w-6 sm:h-6 text-apple-blue" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -117,12 +124,27 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
               className="apple-card p-4 sm:p-6 text-left hover:bg-gray-50 transition-colors apple-button group"
             >
               <div className="flex items-center space-x-3 mb-3">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-apple-green/10 rounded-apple flex items-center justify-center group-active:scale-95 transition-transform">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-apple-green/10 rounded-apple flex items-center justify-center">
                   <Folder className="w-5 h-5 sm:w-6 sm:h-6 text-apple-green" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="text-body sm:text-h3 font-medium">Per Argomento</h4>
                   <p className="text-small text-apple-secondary">{totalTopics} argomenti</p>
+                </div>
+              </div>
+            </button>
+
+            <button
+              onClick={() => onNavigate('quiz', { quizType: 'forYou' })}
+              className="apple-card p-4 sm:p-6 text-left hover:bg-gray-50 transition-colors apple-button group border-2 border-amber-400"
+            >
+              <div className="flex items-center space-x-3 mb-3">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-amber-200/10 rounded-apple flex items-center justify-center">
+                  <User className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h4 className="text-body sm:text-h3 font-medium">Quiz per Te</h4>
+                  <p className="text-small text-apple-secondary">30 domande ponderate secondo la tua precisione</p>
                 </div>
               </div>
             </button>
