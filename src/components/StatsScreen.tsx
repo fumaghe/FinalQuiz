@@ -148,6 +148,10 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
     .filter((q) => q.quizType === 'timed' && q.timeTaken != null)
     .sort((a, b) => a.timeTaken! - b.timeTaken!)[0];
 
+  const bestMargin = userStats.quizHistory
+    .filter((q) => q.quizType === 'timed' && q.timeLeft != null)
+    .sort((a, b) => b.timeLeft! - a.timeLeft!)[0];
+
   /* -------------------------------------------------------------- */
   /* RENDER                                                         */
   /* -------------------------------------------------------------- */
@@ -196,7 +200,7 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
         {activeTab === 'general' && (
           <>
             {/* KPI */}
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div className="apple-card p-4 sm:p-6 text-center">
                 <div className="w-10 h-10 bg-apple-blue/10 rounded-apple flex items-center justify-center mx-auto mb-2">
                   <TrendingUp className="w-5 h-5 text-apple-blue" />
@@ -223,16 +227,28 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
 
               {/* best timed */}
               {bestTimed && (
-                <div className="apple-card p-4 sm:p-6 text-center col-span-2 sm:col-span-1">
+                <div className="apple-card p-4 sm:p-6 text-center">
                   <div className="w-10 h-10 bg-red-100 rounded-apple flex items-center justify-center mx-auto mb-2">
                     <Zap className="w-5 h-5 text-red-600" />
                   </div>
                   <p className="text-xl sm:text-2xl font-bold">
-                    {Math.floor(bestTimed.timeTaken! / 60)}m{' '}
-                    {bestTimed.timeTaken! % 60}s
+                    {Math.floor(bestTimed.timeTaken! / 60)}m {bestTimed.timeTaken! % 60}s
                   </p>
                   <p className="text-xs sm:text-sm text-apple-secondary">
                     Miglior tempo
+                  </p>
+                </div>
+              )}
+              {bestMargin && (
+                <div className="apple-card p-4 sm:p-6 text-center">
+                  <div className="w-10 h-10 bg-green-100 rounded-apple flex items-center justify-center mx-auto mb-2">
+                    <Clock className="w-5 h-5 text-green-600" />
+                  </div>
+                  <p className="text-xl sm:text-2xl font-bold">
+                    {Math.floor(bestMargin.timeLeft! / 60)}m {bestMargin.timeLeft! % 60}s
+                  </p>
+                  <p className="text-xs sm:text-sm text-apple-secondary">
+                    Miglior margine
                   </p>
                 </div>
               )}
@@ -477,15 +493,18 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
                           </span>
                         </div>
                         <div className="flex items-center space-x-2 text-xs text-apple-secondary">
-                          {quiz.quizType === 'timed' && quiz.timeTaken != null && (
-                            <>
-                              <Clock className="w-3 h-3" />
-                              <span>
-                                {Math.floor(quiz.timeTaken / 60)}m{' '}
-                                {quiz.timeTaken % 60}s
-                              </span>
-                            </>
-                          )}
+                        {quiz.quizType === 'timed' && (
+                          <div className="flex items-center space-x-3 text-xs text-apple-secondary">
+                            <Clock className="w-3 h-3" />
+                            <span>
+                              Impiegato: {Math.floor(quiz.timeTaken! / 60)}m {quiz.timeTaken! % 60}s
+                            </span>
+                            <Clock className="w-3 h-3 rotate-180" />
+                            <span>
+                              Rimasto: {Math.floor(quiz.timeLeft! / 60)}m {quiz.timeLeft! % 60}s
+                            </span>
+                          </div>
+                        )}
                           {quiz.quizType === 'streak' && (
                             <>
                               <Zap className="w-3 h-3" />

@@ -10,6 +10,7 @@ import {
   UserSettings,
   Topic,
   BadgeLevel,
+  QuizHistory,
 } from '../types/quiz';
 import { loadQuestionsFromFiles } from '../utils/questionLoader';
 
@@ -68,25 +69,35 @@ const highestTier = (val: number, thr: number[]) =>
 const sec = (d: string | number | Date) => new Date(d).getTime() / 1000;
 const dur = (s: any) =>
   s.durationSec ?? (s.startTime && s.endTime ? sec(s.endTime) - sec(s.startTime) : Infinity);
-const corr = (s: any) => s.correctCount ?? 0;
+const corr = (s: any) => (s.correctCount ?? s.correctAnswers ?? 0);
 
 /* ------------------------------------------------------------------ */
 /*  BADGE CONFIG (global/combo/speed)                                  */
 /* ------------------------------------------------------------------ */
 const GLOBAL_COUNTERS = [
-  { id: 'quiz_rookie', thresholds: [10, 25, 50, 100], src: (s: UserStats) => s.totalQuizzes },
-  { id: 'quiz_hero', thresholds: [200, 300, 500, 750], src: (s: UserStats) => s.totalQuizzes },
-  { id: 'quiz_legend', thresholds: [1000, 1500, 2000, 2500], src: (s: UserStats) => s.totalQuizzes },
-  { id: 'on_fire', thresholds: [10, 20, 35, 50], src: (s: UserStats) => s.bestStreak },
-  { id: 'blazing', thresholds: [25, 40, 60, 80], src: (s: UserStats) => s.bestStreak },
-  { id: 'inferno', thresholds: [50, 75, 100, 150], src: (s: UserStats) => s.bestStreak },
+  { id: 'quiz_rookie', thresholds: [5, 15, 30, 35], src: (s: UserStats) => s.totalQuizzes },
+  { id: 'quiz_hero',   thresholds: [40, 50, 70, 85], src: (s: UserStats) => s.totalQuizzes },
+  { id: 'quiz_legend', thresholds: [90, 120, 150, 200], src: (s: UserStats) => s.totalQuizzes },
+  {
+    id: 'on_fire',
+    thresholds: [5, 10, 15, 20],
+    src: (s: UserStats) =>
+      Math.max(...(s.quizHistory ?? []).map(q => q.streakCount ?? 0), 0),
+  },
+  {
+    id: 'blazing',
+    thresholds: [30, 35, 40, 45],
+    src: (s: UserStats) =>
+      Math.max(...(s.quizHistory ?? []).map(q => q.streakCount ?? 0), 0),
+  },
+  {
+    id: 'inferno',
+    thresholds: [50, 60, 70, 75],
+    src: (s: UserStats) =>
+      Math.max(...(s.quizHistory ?? []).map(q => q.streakCount ?? 0), 0),
+  },
 ];
 
-const ACC_BADGES = [
-  { id: 'sharp_eye', thresholds: [100, 200, 400, 600], acc: 70 },
-  { id: 'sniper', thresholds: [250, 400, 600, 800], acc: 85 },
-  { id: 'cerebro', thresholds: [500, 700, 900, 1200], acc: 90 },
-];
 
 const SPEED_BADGES = [
   { id: 'speed_run', thresholds: [300, 240, 180, 120] },
@@ -95,8 +106,7 @@ const SPEED_BADGES = [
 ];
 
 const MARATHON = [200, 300, 400, 500];
-const FLASH_Q = [30, 50, 75, 100];
-const FLASH_T = [600, 900, 1200, 1500];
+
 
 const COMBO_3 = [50, 100, 150, 200];
 const COMBOS: Record<string, string[]> = {
@@ -116,33 +126,35 @@ const ALL_ROUNDER = [1, 2, 3, 5];
 /*  BADGE ENGINE                                                       */
 /* ------------------------------------------------------------------ */
 function computeAllBadges(stats: UserStats): string[] {
-  /* ⚠️ Pulisci eventuali badge salvati in precedenza */
   (stats as any).unlockedBadges = [];
 
-  /* ---------- 1 · Normalizza + merge duplicati --------------------- */
+  /* ---------- 1 · Estrarre ultima risposta per domanda ---------- */
+  const lastByQ = new Map<string, { topic: string; isCorrect: boolean }>();
+  (stats.quizHistory ?? []).forEach(hist => {
+    (hist.answeredQuestions ?? []).forEach(a => {
+      lastByQ.set(a.questionId, {
+        topic: norm(a.topic),
+        isCorrect: a.isCorrect,
+      });
+    });
+  });
+
+  /* ---------- 2 · Aggregare contatori per topic ------------------ */
   const topicCounters: Record<string, { done: number; correct: number }> = {};
-
-  Object.entries(stats.statsPerTopic ?? {}).forEach(([raw, v]: any) => {
-    const canon = norm(raw);                       // es. "Tableau" → "tableau"
-    const done  = v.done    ?? v.total          ?? 0;
-    const corr  = v.correct ?? v.correctAnswers ?? 0;
-
-    if (!topicCounters[canon]) {
-      topicCounters[canon] = { done, correct: corr };
-    } else {
-      topicCounters[canon].done    = Math.max(topicCounters[canon].done,    done);
-      topicCounters[canon].correct = Math.max(topicCounters[canon].correct, corr);
-    }
+  lastByQ.forEach(({ topic, isCorrect }) => {
+    if (!topicCounters[topic]) topicCounters[topic] = { done: 0, correct: 0 };
+    topicCounters[topic].done += 1;
+    if (isCorrect) topicCounters[topic].correct += 1;
   });
 
   const unlocked: string[] = [];
   const topicLevel: Record<string, BadgeLevel | null> = {};
 
-  /* ---------- 2 · Topic progress & precision ----------------------- */
+  /* ---------- 3 · Topic progress & precision -------------------- */
   Object.entries(topicCounters).forEach(([t, v]) => {
-    const thr  = TOPIC_THRESHOLDS[t] ?? [25, 50, 75, 100];
+    // 3.1 · Progressione quantitativa
+    const thr = TOPIC_THRESHOLDS[t] ?? [25, 50, 75, 100];
     const tier = highestTier(v.correct, thr);
-
     if (tier) {
       unlocked.push(`tp_${badgeId(t)}_${tier}`);
       topicLevel[t] = tier;
@@ -150,54 +162,94 @@ function computeAllBadges(stats: UserStats): string[] {
       topicLevel[t] = null;
     }
 
+    // 3.2 · Precisione percentuale: bronze 60, silver 75, gold 85, amethyst 100
+    const PRECISION_THRESHOLDS = [60, 75, 85, 100];
     const pct = v.done ? (v.correct / v.done) * 100 : 0;
-    LEVELS_ASC.forEach((lvl, i) => {
-      if (v.done >= 1 && pct >= 70 + 10 * i) {
-        unlocked.push(`pp_${badgeId(t)}_${lvl}`);
+    PRECISION_THRESHOLDS.forEach((minPct, i) => {
+      if (v.done >= 1 && pct >= minPct) {
+        unlocked.push(`pp_${badgeId(t)}_${LEVELS_ASC[i]}`);
       }
     });
   });
 
-  /* ---------- 3 · Global counters & accuracy ----------------------- */
+  /* ---------- 4 · Global counters & accuracy -------------------- */
   GLOBAL_COUNTERS.forEach(cfg => {
     const lvl = highestTier(cfg.src(stats), cfg.thresholds);
     if (lvl) unlocked.push(`${cfg.id}_${lvl}`);
   });
 
-  ACC_BADGES.forEach(cfg => {
-    for (let i = 3; i >= 0; i--) {
-      if (
-        stats.totalQuestions >= cfg.thresholds[i] &&
-        stats.overallAccuracy >= cfg.acc + i * 2.5
-      ) {
-        unlocked.push(`${cfg.id}_${LEVELS_ASC[i]}`);
-        break;
+  const quiz80Count = (stats.quizHistory ?? [])
+    .filter(q => q.score >= 80)
+    .length;
+
+  const ACC_QUIZ_THRESH: Record<string, number[]> = {
+    sharp_eye: [5,  15,  30,  35],
+    sniper:    [40, 50,  70,  85],
+    cerebro:   [90, 120, 150, 200],
+  };
+
+  Object.entries(ACC_QUIZ_THRESH).forEach(([id, thresholds]) => {
+    const lvl = highestTier(quiz80Count, thresholds);
+    if (lvl) unlocked.push(`${id}_${lvl}`);
+  });
+
+  /* ---------- 5 · Speed / session -------------------------------- */
+  // filtriamo solo i quiz timed con timeTaken e timeLeft
+  const timedEntriesAll = (stats.quizHistory ?? [])
+    .filter(
+      (q): q is QuizHistory & { timeTaken: number; timeLeft: number } =>
+        q.quizType === 'timed' && q.timeTaken != null && q.timeLeft != null
+    );
+
+  // imponiamo il minimo di risposte corrette
+  const MIN_CORRECT = 18;
+  const timedEntries = timedEntriesAll.filter(s => corr(s) >= MIN_CORRECT);
+
+  if (timedEntries.length > 0) {
+    const fastest = Math.min(...timedEntries.map(q => q.timeTaken));
+    const maxLeft = Math.max(...timedEntries.map(q => q.timeLeft));
+
+    // 5.1 · Speed Runner (timeTaken, soglie ampie: 7→4 min)
+    const SPEED_RUN_THRESH = [420, 360, 300, 240]; // in sec
+    const refSR = SPEED_RUN_THRESH[SPEED_RUN_THRESH.length - 1];
+    const lvlSR = highestTier(
+      refSR - fastest,
+      SPEED_RUN_THRESH.map(t => refSR - t)
+    );
+    if (lvlSR) unlocked.push(`speed_run_${lvlSR}`);
+
+    // 5.2 · Warp Drive (timeTaken, soglie ristrette: 5→2 min)
+    const WARP_THRESH = [300, 240, 180, 120]; // in sec
+    const refW = WARP_THRESH[WARP_THRESH.length - 1];
+    const lvlW = highestTier(
+      refW - fastest,
+      WARP_THRESH.map(t => refW - t)
+    );
+    if (lvlW) unlocked.push(`warp_${lvlW}`);
+
+    // 5.3 · Speed Demon (timeLeft, soglie ristrette: 2→45 s)
+    const SD_THRESH = [120, 90, 60, 45]; // in sec
+    const refSD = SD_THRESH[SD_THRESH.length - 1];
+    const lvlSD = highestTier(
+      maxLeft - refSD,
+      SD_THRESH.map(t => maxLeft - t)
+    );
+    if (lvlSD) unlocked.push(`speed_demon_${lvlSD}`);
+
+    // 5.4 · Flash Learner (timeLeft, soglie ampie: 2→8 min)
+    const FLASH_T = [120, 150, 300, 480]; // in sec
+    timedEntries.forEach(s => {
+      for (let i = 3; i >= 0; i--) {
+        if (s.timeLeft >= FLASH_T[i]) {
+          unlocked.push(`flash_${LEVELS_ASC[i]}`);
+          break;
+        }
       }
-    }
-  });
+    });
+  }
 
-  /* ---------- 4 · Speed / session ---------------------------------- */
-  const fastest = Math.min(...(stats.quizHistory ?? []).map(dur), Infinity);
-  SPEED_BADGES.forEach(sb => {
-    const ref = sb.thresholds.at(-1)!;
-    const lvl = highestTier(ref - fastest, sb.thresholds.map(t => ref - t));
-    if (lvl) unlocked.push(`${sb.id}_${lvl}`);
-  });
 
-  const bestInSession = Math.max(...(stats.quizHistory ?? []).map(corr), 0);
-  const marLvl = highestTier(bestInSession, MARATHON);
-  if (marLvl) unlocked.push(`marathon_${marLvl}`);
-
-  (stats.quizHistory ?? []).forEach(s => {
-    for (let i = 3; i >= 0; i--) {
-      if (corr(s) >= FLASH_Q[i] && dur(s) <= FLASH_T[i]) {
-        unlocked.push(`flash_${LEVELS_ASC[i]}`);
-        break;
-      }
-    }
-  });
-
-  /* ---------- 5 · Combo / polyglot / omni-ecc. ---------------------- */
+  /* ---------- 6 · Combo / polyglot / omni ecc. ------------------- */
   Object.entries(COMBOS).forEach(([id, list]) => {
     const sum = list.reduce((tot, t) => tot + (topicCounters[t]?.correct ?? 0), 0);
     const lvl = highestTier(sum, COMBO_3);
@@ -232,9 +284,10 @@ function computeAllBadges(stats: UserStats): string[] {
   const arLvl = highestTier(minQuiz, ALL_ROUNDER);
   if (arLvl) unlocked.push(`all_rounder_${arLvl}`);
 
+  /* ---------- 7 · Easter Egg ------------------------------------ */
   if ((stats as any).foundEasterEgg) unlocked.push('easter_ghost');
 
-  /* ---------- 6 · Dedup & return ----------------------------------- */
+  /* ---------- 8 · Dedup & return ------------------------------- */
   return [...new Set(unlocked)];
 }
 

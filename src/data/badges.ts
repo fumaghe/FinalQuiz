@@ -79,8 +79,7 @@ const topicProgressBadges = TOPICS.flatMap(t =>
     'topic_progress',
     t.thresholds,
     (thr, lvl) =>
-      `Hai risposto correttamente ad almeno ${thr} domande nel topic “${t.label}”. ` +
-      `Badge ${LEVEL_SUFFIX[lvl]}.`,
+      `Hai risposto correttamente ad almeno ${thr} domande nel topic “${t.label}”. Badge ${LEVEL_SUFFIX[lvl]}.`,
   ),
 );
 
@@ -90,12 +89,10 @@ const topicPrecisionBadges = TOPICS.flatMap(t =>
     t.emoji,
     `${t.label} Sharpshooter`,
     'topic_precision',
-    [25, 50, 75, 100],
-    (_, lvl) => {
-      const minPct = 70 + 10 * LEVELS.indexOf(lvl);
-      return `Mantieni una precisione ≥${minPct}% nel topic “${t.label}”. ` +
-             `Badge ${LEVEL_SUFFIX[lvl]}.`;
-    },
+    // Nuovi threshold per precisione: 60%, 75%, 85%, 100%
+    [60, 75, 85, 100],
+    (thr, lvl) =>
+      `Mantieni una precisione ≥${thr}% nel topic “${t.label}”. Badge ${LEVEL_SUFFIX[lvl]}.`,
   ),
 );
 
@@ -103,21 +100,17 @@ const topicPrecisionBadges = TOPICS.flatMap(t =>
 /*  GLOBAL BADGES (counters & streaks)                                */
 /* ------------------------------------------------------------------ */
 const globalCfg = [
-  { id: 'quiz_rookie', emoji: '🎯', name: 'Quiz Rookie', thresholds: [10, 25, 50, 100] },
-  { id: 'quiz_hero',   emoji: '🏆', name: 'Quiz Hero',   thresholds: [200, 300, 500, 750] },
-  { id: 'quiz_legend', emoji: '👑', name: 'Quiz Legend', thresholds: [1000, 1500, 2000, 2500] },
+  { id: 'quiz_rookie', emoji: '🎯', name: 'Quiz Rookie', thresholds: [5, 15, 30, 35] },
+  { id: 'quiz_hero',   emoji: '🏆', name: 'Quiz Hero',   thresholds: [40, 50, 70, 85] },
+  { id: 'quiz_legend', emoji: '👑', name: 'Quiz Legend', thresholds: [90, 120, 150, 200] },
 
-  { id: 'on_fire', emoji: '🔥', name: 'On Fire',   thresholds: [10, 20, 35, 50] },
-  { id: 'blazing', emoji: '⚔️', name: 'Blazing',   thresholds: [25, 40, 60, 80] },
-  { id: 'inferno', emoji: '🔥🔥', name: 'Inferno', thresholds: [50, 75, 100, 150] },
+  { id: 'on_fire',  emoji: '🔥',   name: 'On Fire',  thresholds: [5, 10, 15, 20] },
+  { id: 'blazing',  emoji: '⚔️',  name: 'Blazing',   thresholds: [30, 35, 40, 45] },
+  { id: 'inferno',  emoji: '🔥🔥', name: 'Inferno',   thresholds: [50, 60, 70, 75] },
 
-  { id: 'sharp_eye', emoji: '👍', name: 'Sharp Eye', thresholds: [100, 200, 400, 600] },
-  { id: 'sniper',    emoji: '🎯', name: 'Sniper',    thresholds: [250, 400, 600, 800] },
-  { id: 'cerebro',   emoji: '🧠', name: 'Cerebro',   thresholds: [500, 700, 900, 1200] },
-
-  { id: 'speed_run', emoji: '⏱️', name: 'Speed Runner', thresholds: ['<5 min', '<4 min', '<3 min', '<2 min'] },
-  { id: 'warp',      emoji: '🚀', name: 'Warp Drive',   thresholds: ['<7 min', '<6 min', '<5 min', '<4 min'] },
-
+  { id: 'sharp_eye', emoji: '👍', name: 'Sharp Eye', thresholds: [5,  15, 30, 35] },
+  { id: 'sniper',    emoji: '🎯', name: 'Sniper',    thresholds: [40, 50, 70, 85] },
+  { id: 'cerebro',   emoji: '🧠', name: 'Cerebro',   thresholds: [90, 120,150,200] },
   { id: 'perfect5',  emoji: '💎',  name: 'Perfect 5',  thresholds: [5, 10, 20, 40] },
   { id: 'perfect20', emoji: '💎💎',name: 'Perfect 20', thresholds: [20, 30, 50, 75] },
 
@@ -127,6 +120,34 @@ const globalCfg = [
   { id: 'retry',  emoji: '💪', name: 'Never Give Up', thresholds: ['max 3', 'max 2', 'max 1', 'perfect after fail'] },
 ];
 
+const GLOBAL_DESC: Record<string, (thr: number | string, lvl: BadgeLevel) => string> = {
+  quiz_rookie:  (thr, lvl) => `Completa almeno ${thr} quiz per ottenere il badge ${LEVEL_SUFFIX[lvl]}.`,
+  quiz_hero:    (thr, lvl) => `Supera ${thr} quiz completati per sbloccare il badge ${LEVEL_SUFFIX[lvl]}.`,
+  quiz_legend:  (thr, lvl) => `Porta a ${thr} il conteggio dei quiz completati per ricevere il badge ${LEVEL_SUFFIX[lvl]}.`,
+
+  // streak-quiz basati su risposte consecutive
+  on_fire:      (thr, lvl) => `Completa un quiz di tipo “Streak” con almeno ${thr} risposte corrette consecutive per ottenere il badge ${LEVEL_SUFFIX[lvl]}.`,
+  blazing:      (thr, lvl) => `Raggiungi ${thr} risposte corrette di fila in un quiz Streak per guadagnare il badge ${LEVEL_SUFFIX[lvl]}.`,
+  inferno:      (thr, lvl) => `Realizza almeno ${thr} risposte corrette consecutive in un quiz Streak per il badge ${LEVEL_SUFFIX[lvl]}.`,
+
+  // quiz ≥80% (accuracy badges)
+  sharp_eye:    (thr, lvl) => `Ottieni ${thr} quiz con punteggio ≥80% per ottenere il badge ${LEVEL_SUFFIX[lvl]}.`,
+  sniper:       (thr, lvl) => `Completa ${thr} quiz con score ≥80% per raggiungere il badge ${LEVEL_SUFFIX[lvl]}.`,
+  cerebro:      (thr, lvl) => `Raggiungi ${thr} quiz con performance ≥80% per il badge ${LEVEL_SUFFIX[lvl]}.`,
+
+  // perfect quizzes
+  perfect5:     (thr, lvl) => `Realizza ${thr} quiz “Perfetto 5” (5 risposte corrette) per il badge ${LEVEL_SUFFIX[lvl]}.`,
+  perfect20:    (thr, lvl) => `Completa ${thr} quiz “Perfetto 20” (20 risposte corrette) per ottenere il badge ${LEVEL_SUFFIX[lvl]}.`,
+
+  // streak giornaliero
+  week:         (thr, lvl) => `Completa almeno un quiz al giorno per ${thr} consecutivi per ricevere il badge ${LEVEL_SUFFIX[lvl]}.`,
+  morning:      (thr, lvl) => `Fai almeno un quiz prima delle 6:00 per ${thr} giorni di fila e ottieni il badge ${LEVEL_SUFFIX[lvl]}.`,
+  night:        (thr, lvl) => `Completa almeno un quiz dopo le 22:00 per ${thr} giorni di seguito per il badge ${LEVEL_SUFFIX[lvl]}.`,
+
+  // retry
+  retry:        (thr, lvl) => `Supera un quiz con al massimo ${thr} retry per sbloccare il badge ${LEVEL_SUFFIX[lvl]}.`,
+};
+
 const globalBadges: Badge[] = globalCfg.flatMap(cfg =>
   makeTier(
     cfg.id,
@@ -134,9 +155,10 @@ const globalBadges: Badge[] = globalCfg.flatMap(cfg =>
     cfg.name,
     'global',
     cfg.thresholds,
-    (thr, lvl) =>
-      `Raggiungi ${thr} in totale per ottenere il badge ${LEVEL_SUFFIX[lvl]}.` +
-      ` Soglia cumulativa per tutte le sessioni di quiz.`,
+    // usa la descrizione personalizzata o un fallback generico
+    GLOBAL_DESC[cfg.id] ??
+      ((thr, lvl) =>
+        `Raggiungi ${thr} per ottenere il badge ${LEVEL_SUFFIX[lvl]}.`),
   ),
 );
 
@@ -249,10 +271,26 @@ const comboBadges: Badge[] = [
 /* ------------------------------------------------------------------ */
 /*  SPEED & MARATHON                                                  */
 /* ------------------------------------------------------------------ */
+const SPEED_DESC: Record<string, (thr: number | string, lvl: BadgeLevel) => string> = {
+  speed_run:  (thr, lvl) =>
+    `Finisci un quiz in meno di ${String(thr).replace('<', '')} per ottenere il badge ${LEVEL_SUFFIX[lvl]}.`,
+  warp:       (thr, lvl) =>
+    `Finisci un quiz in meno di ${String(thr).replace('<', '')} per ottenere il badge ${LEVEL_SUFFIX[lvl]}.`,
+  speed_demon: (thr, lvl) =>
+    `Conserva almeno ${String(thr).replace('>', '')} di tempo rimanente per conquistare il badge ${LEVEL_SUFFIX[lvl]}.`,
+  flash:      (thr, lvl) =>
+    `Conserva almeno ${String(thr).replace('>', '')} di tempo rimanente per conquistare il badge ${LEVEL_SUFFIX[lvl]}.`,
+};
+
 const speedCfg = [
-  { id: 'speed_demon', emoji: '🏁', name: 'Speed Demon', thresholds: ['< 2 min', '< 90 s', '< 60 s', '< 45 s'] },
-  { id: 'marathon',    emoji: '🏃', name: 'Marathon Brain', thresholds: [200, 300, 400, 500] },
-  { id: 'flash',       emoji: '⚡', name: 'Flash Learner', thresholds: ['30/10 min', '50/15', '75/20', '100/25'] },
+  // timeTaken più ampio
+  { id: 'speed_run',   emoji: '⏱️', name: 'Speed Runner',  thresholds: ['<7 min', '<6 min', '<5 min', '<4 min'] },
+  // timeTaken più ristretto
+  { id: 'warp',        emoji: '🚀', name: 'Warp Drive',    thresholds: ['<5 min', '<4 min', '<3 min', '<2 min'] },
+  // timeLeft più ristretto
+  { id: 'speed_demon', emoji: '🏁', name: 'Speed Demon',   thresholds: ['>30 sec', '>50 sec', '>75 sec', '>100 sec'] },
+  // timeLeft più ampio
+  { id: 'flash', emoji: '⚡', name: 'Flash Learner', thresholds: ['>2 min', '>2.5 min', '>5 min', '>8 min'] },
 ];
 
 const speedBadges: Badge[] = speedCfg.flatMap(cfg =>
@@ -262,15 +300,9 @@ const speedBadges: Badge[] = speedCfg.flatMap(cfg =>
     cfg.name,
     'speed',
     cfg.thresholds,
-    (thr, lvl) =>
-      typeof thr === 'string'
-        ? `Completa un quiz in meno di ${thr.replace('<', '')}.` +
-          ` Livello ${LEVEL_SUFFIX[lvl]}.`
-        : `Rispondi correttamente a ${thr} domande in una sessione.` +
-          ` Ottieni ${LEVEL_SUFFIX[lvl]}.`,
+    SPEED_DESC[cfg.id],
   ),
 );
-
 /* ------------------------------------------------------------------ */
 /*  QUIZ-TYPE BADGES                                                  */
 /* ------------------------------------------------------------------ */

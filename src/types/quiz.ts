@@ -57,7 +57,8 @@ export interface QuizHistory {
   totalQuestions: number;
   correctAnswers: number;     // per streak = streakCount
   answeredQuestions: AnsweredQuestion[];
-  timeTaken?: number;         // timed
+  timeTaken?: number;  
+  timeLeft?: number;       // timed
   streakCount?: number;       // streak
 }
 

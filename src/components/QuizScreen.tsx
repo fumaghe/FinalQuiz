@@ -110,7 +110,7 @@ function accumulateTopicStats(
 /* ------------------------------------------------------------------ */
 /* CONFIG MODALITÀ TEMPO                                              */
 /* ------------------------------------------------------------------ */
-const TOTAL_TIME = 360;
+const TOTAL_TIME = 600;
 const PENALTY    = 10;
 const BONUS_3    = 10;
 const FURY_COUNT = 3;
@@ -342,6 +342,7 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
       correctAnswers: correctCount,
       answeredQuestions: answeredArr,
       timeTaken: isTimed ? TOTAL_TIME - timeLeft : undefined,
+      timeLeft: isTimed ? timeLeft : undefined,
       streakCount: isStreak ? correctCount : undefined,
     };
 
