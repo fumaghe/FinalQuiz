@@ -23,6 +23,10 @@ import { useDebounceValue } from 'usehooks-ts';
 import { useQuiz } from '../contexts/QuizContext';
 import { ALL_BADGES, LEVELS } from '../data/badges';
 import { Badge } from '../types/quiz';
+import bronzePng   from '../assets/bronze.png';
+import silverPng   from '../assets/silver.png';
+import goldPng     from '../assets/gold.png';
+import amethystPng from '../assets/amethyst.png';
 
 /* ------------------------------------------------------------------ */
 /*  TIPI                                                               */
@@ -58,10 +62,10 @@ const LEVEL_COLOR: Record<Level, string> = {
 };
 
 const LEVEL_IMG: Record<Level, string> = {
-  bronze:   '/images/bronze.png',
-  silver:   '/images/silver.png',
-  gold:     '/images/gold.png',
-  amethyst: '/images/amethyst.png',
+  bronze:   bronzePng,
+  silver:   silverPng,
+  gold:     goldPng,
+  amethyst: amethystPng,
 };
 
 /** sfondo progress ring via conic-gradient */
