@@ -7,6 +7,7 @@ import React, {
   useState,
   useCallback,
   Fragment,
+  useRef,     
   useEffect,
 } from 'react';
 import {
@@ -82,7 +83,38 @@ const AchievementsScreen: React.FC<Props> = ({ onNavigate }) => {
     state: {
       userStats: { unlockedBadges },
     },
+    dispatch, 
   } = useQuiz();
+  
+
+    // ——————————————— SEQUENZA SEGRETA ————————————————
+  const secret = Array.from('andreailmigliore');
+  const posRef = useRef(0);
+
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      // solo quando sei nella schermata badge
+      // (qui controlla il currentScreen o comunque la presenza di AchievementsScreen)
+      // se usi state.currentScreen, sostituisci con il tuo flag di “schermata badge”
+      // altrimenti, essendo dentro questo componente, va bene così:
+
+      const key = e.key.toLowerCase();
+      const expected = secret[posRef.current];
+
+      if (key === expected) {
+        posRef.current += 1;
+        if (posRef.current === secret.length) {
+          dispatch({ type: 'FOUND_EASTER_EGG' });
+          posRef.current = 0;
+        }
+      } else {
+        posRef.current = key === secret[0] ? 1 : 0;
+      }
+    }
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [dispatch]);
 
   /* --------------------------- conteggi -------------------------- */
   const totalBadges = ALL_BADGES.length;
@@ -111,17 +143,29 @@ const AchievementsScreen: React.FC<Props> = ({ onNavigate }) => {
   /* ---------------- calcolo miglior livello sbloccato ------------ */
   const highestUnlocked = useMemo(() => {
     const map = new Map<string, Level>();
-    unlockedBadges.forEach(id => {
-      const idx = id.lastIndexOf('_');
-      const baseId = id.slice(0, idx);
-      const lvl = id.slice(idx + 1) as Level;
+
+    unlockedBadges.forEach(unlockedId => {
+      // eccezione per l’Easter Egg
+      if (unlockedId === 'easter_ghost') {
+        map.set('easter_ghost', 'amethyst');
+        return;
+      }
+
+      // per tutti gli altri badge, prendo baseId e level da ALL_BADGES
+      const badgeDef = ALL_BADGES.find(b => b.id === unlockedId);
+      if (!badgeDef) return;
+
+      const { baseId, level } = badgeDef as { baseId: string; level: Level };
+      const current = map.get(baseId);
+
       if (
-        !map.has(baseId) ||
-        LEVEL_ORDER.indexOf(lvl) > LEVEL_ORDER.indexOf(map.get(baseId)!)
+        !current ||
+        LEVEL_ORDER.indexOf(level) > LEVEL_ORDER.indexOf(current)
       ) {
-        map.set(baseId, lvl);
+        map.set(baseId, level);
       }
     });
+
     return map;
   }, [unlockedBadges]);
 
@@ -229,7 +273,11 @@ const AchievementsScreen: React.FC<Props> = ({ onNavigate }) => {
             )}
 
             {/* emoji */}
-            <span className="absolute inset-0 grid place-content-center text-6xl ">
+            <span className="absolute inset-0 grid place-content-center 
+                          text-4xl  
+                          sm:text-5xl 
+                          md:text-6xl 
+                          lg:text-7xl ">
               {base.emoji}
             </span>
 
@@ -271,7 +319,7 @@ const AchievementsScreen: React.FC<Props> = ({ onNavigate }) => {
             <div>
               <h1 className="text-xl font-bold">🏆 I Miei Badge & Traguardi</h1>
               <p className="text-sm text-apple-secondary flex flex-wrap items-center gap-1">
-                Scopri i badge che hai sbloccato e quelli ancora da conquistare
+                
                 <span className="px-2 py-0.5 rounded-full bg-apple-muted text-apple-primary text-xs font-semibold">
                   {unlockedCount}/{totalBadges}
                 </span>
@@ -302,7 +350,7 @@ const AchievementsScreen: React.FC<Props> = ({ onNavigate }) => {
             </div>
 
             {/* search */}
-            <div className="relative flex-1 sm:max-w-xs">
+            <div className="relative flex-1 sm:max-w-xs justify-end">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-apple-secondary" />
               <input
                 type="text"

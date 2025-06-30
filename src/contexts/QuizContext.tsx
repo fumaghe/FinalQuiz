@@ -308,6 +308,58 @@ function computeAllBadges(stats: UserStats): string[] {
   return [...new Set(unlocked)];
 }
 
+/** Mappa livello badge → punti */
+const BADGE_POINTS: Record<BadgeLevel, number> = {
+  bronze:   5,
+  silver:  10,
+  gold:    15,
+  amethyst:25,
+};
+
+const QUIZ_TYPE_MULT: Record<string, number> = {
+  general: 1.3,
+  topic:   1.1,
+  forYou:  1.5,
+  timed:   1.7,
+  streak:  1.3,
+  reverse: 1.15,
+};
+
+function computeCupPoints(stats: UserStats): number {
+  let sum = 0;
+
+  // 1) punti “base” per ogni quiz
+  stats.quizHistory?.forEach(q => {
+    let basePts = 0;
+
+    // risposte corrette / errate
+    q.answeredQuestions?.forEach(ans => {
+      basePts += ans.isCorrect ? 10 : -5;
+    });
+
+    // bonus modalità "timed"
+    if (q.quizType === 'timed' && q.timeLeft != null) {
+      basePts += Math.floor(q.timeLeft / 10);
+    }
+    // bonus modalità "streak"
+    if (q.quizType === 'streak' && q.streakCount != null) {
+      basePts += Math.floor(q.streakCount / 5);
+    }
+
+    // applica moltiplicatore
+    const mult = QUIZ_TYPE_MULT[q.quizType] ?? 1.0;
+    sum += Math.round(basePts * mult);
+  });
+
+  // 2) punti da badge (identico a prima)
+  stats.unlockedBadges?.forEach(bid => {
+    const lvl = bid.split('_').pop() as BadgeLevel;
+    sum += BADGE_POINTS[lvl] || 0;
+  });
+
+  return sum;
+}
+
 /* ------------------------------------------------------------------ */
 /*  STATE / REDUCER / CONTEXT                                         */
 /* ------------------------------------------------------------------ */
@@ -332,7 +384,8 @@ export type QuizAction =
   | { type: 'UPDATE_STATS'; payload: UserStats }
   | { type: 'UPDATE_SETTINGS'; payload: UserSettings }
   | { type: 'TOGGLE_FAVORITE'; payload: string }
-  | { type: 'SET_CURRENT_SCREEN'; payload: { screen: string; params?: any } };
+  | { type: 'SET_CURRENT_SCREEN'; payload: { screen: string; params?: any } }
+  | { type: 'FOUND_EASTER_EGG' }; 
 
 const initialState: QuizState = {
   questions: [],
@@ -353,6 +406,8 @@ const initialState: QuizState = {
     statsPerTopic: {},
     topicStats: [],
     unlockedBadges: [],
+    cupPoints: 0,
+    foundEasterEgg: false,
   },
   settings: {
     fontSize: 'medium',
@@ -369,48 +424,87 @@ function quizReducer(state: QuizState, action: QuizAction): QuizState {
   switch (action.type) {
     case 'SET_LOADING':
       return { ...state, loading: action.payload };
+
     case 'LOAD_QUESTIONS':
       return { ...state, questions: action.payload };
+
     case 'LOAD_TOPICS':
       return { ...state, topics: action.payload };
+
     case 'START_QUIZ':
       return { ...state, currentSession: action.payload };
+
     case 'ANSWER_QUESTION': {
       if (!state.currentSession) return state;
       const answers = [...state.currentSession.answers];
       answers[action.payload.index] = action.payload.answer;
-      return { ...state, currentSession: { ...state.currentSession, answers } };
+      return {
+        ...state,
+        currentSession: { ...state.currentSession, answers },
+      };
     }
+
     case 'END_QUIZ':
       return { ...state, currentSession: null };
-    case 'UPDATE_STATS':
+
+    case 'UPDATE_STATS': {
+      // 1) calcolo badge sbloccati
+      const statsWithBadges: UserStats = {
+        ...action.payload,
+        unlockedBadges: computeAllBadges(action.payload),
+      };
+      // 2) calcolo Cup Points
+      const cupPts = computeCupPoints(statsWithBadges);
+
       return {
         ...state,
         userStats: {
-          ...action.payload,
-          unlockedBadges: computeAllBadges(action.payload),
+          ...statsWithBadges,
+          cupPoints: cupPts,
         },
       };
+    }
+    case 'FOUND_EASTER_EGG': {
+      // 1) aggiorno la flag
+      const updatedStats: UserStats = {
+        ...state.userStats,
+        foundEasterEgg: true,
+      };
+      // 2) ricalcolo subito badge e cupPoints
+      const unlocked = computeAllBadges(updatedStats);
+      const cupPts = computeCupPoints({ ...updatedStats, unlockedBadges: unlocked });
+
+      return {
+        ...state,
+        userStats: {
+          ...updatedStats,
+          unlockedBadges: unlocked,
+          cupPoints: cupPts,
+        },
+      };
+    };
     case 'UPDATE_SETTINGS':
       return { ...state, settings: action.payload };
+
     case 'TOGGLE_FAVORITE':
       return {
         ...state,
         topics: state.topics.map(t =>
-          t.id === action.payload ? { ...t, isFavorite: !t.isFavorite } : t,
+          t.id === action.payload ? { ...t, isFavorite: !t.isFavorite } : t
         ),
       };
+
     case 'SET_CURRENT_SCREEN':
       return {
         ...state,
         currentScreen: action.payload.screen,
         screenParams: action.payload.params ?? null,
       };
+
     default:
       return state;
   }
 }
-
 /* ------------------------------------------------------------------ */
 // CONTEXT & PROVIDER
 /* ------------------------------------------------------------------ */
@@ -435,10 +529,7 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
       type: 'UPDATE_STATS',
       payload: {
         ...state.userStats,
-        answeredQuestions: {},
-        correctQuestions: {},
-        incorrectQuestions: {},
-        statsPerTopic: {},
+        answeredQuestions: {}, // ← questo resetta la disponibilità delle domande
         lastUpdated: new Date(),
       },
     });

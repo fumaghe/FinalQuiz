@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {
+  useMemo
+} from 'react';
 import { useQuiz } from '../contexts/QuizContext';
 import ProgressRing from './ProgressRing';
 import {
@@ -30,12 +32,41 @@ interface DashboardProps {
   onNavigate: (screen: string, params?: any) => void;
 }
 
+
+const QUIZ_TYPE_MULT: Record<string, number> = {
+  general: 1.3,
+  topic:   1.1,
+  forYou:  1.5,
+  timed:   1.7,
+  streak:  1.3,
+  reverse: 1.15,
+};
 /* ------------------------------------------------------------------ */
 /* COMPONENT                                                          */
 /* ------------------------------------------------------------------ */
 const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
   const { state, resetAllQuestions, getFilteredQuestions } = useQuiz();
   const { userStats, topics } = state;
+
+  // Calcola il delta dell’ultimo quiz
+  const lastDelta = useMemo(() => {
+    const history = userStats.quizHistory ?? [];
+    if (history.length === 0) return 0;
+    const last = history[history.length - 1];
+
+    let pts = 0;
+    last.answeredQuestions?.forEach(ans => {
+      pts += ans.isCorrect ? 10 : -5;
+    });
+    if (last.quizType === 'timed' && last.timeLeft != null) {
+      pts += Math.floor(last.timeLeft / 10);
+    }
+    if (last.quizType === 'streak' && last.streakCount != null) {
+      pts += Math.floor(last.streakCount / 5);
+    }
+    const mult = QUIZ_TYPE_MULT[last.quizType] ?? 1.0;
+    return Math.round(pts * mult);
+  }, [userStats.quizHistory]);
 
   /* -------------------------------------------------------------- */
   /* Statistiche base                                               */
@@ -76,10 +107,26 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             </p>
           </div>
         </div>
-        <button
-          onClick={() => onNavigate('settings')}
-          className="p-2 rounded-full hover:bg-apple-light transition-colors"
-        />
+        {/* ---- nuova area cupPoints + settings ---- */}
+        <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-1">
+            <span className="text-lg">🏆</span>
+            <span className="text-body font-medium">
+              {userStats.cupPoints}
+            </span>
+            <span
+              className={`text-sm font-medium ${
+                lastDelta >= 0 ? 'text-green-600' : 'text-red-600'
+              }`}
+            >
+              {lastDelta >= 0 ? `+${lastDelta}` : lastDelta}
+            </span>
+          </div>
+          <button
+            onClick={() => onNavigate('settings')}
+            className="p-2 rounded-full hover:bg-apple-light transition-colors"
+          />
+        </div>
       </header>
 
       {/* ---------------------------------------------------------- */}

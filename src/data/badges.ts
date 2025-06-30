@@ -111,13 +111,6 @@ const globalCfg = [
   { id: 'sharp_eye', emoji: '👍', name: 'Sharp Eye', thresholds: [5,  15, 30, 35] },
   { id: 'sniper',    emoji: '🎯', name: 'Sniper',    thresholds: [40, 50, 70, 85] },
   { id: 'cerebro',   emoji: '🧠', name: 'Cerebro',   thresholds: [90, 120,150,200] },
-  { id: 'perfect5',  emoji: '💎',  name: 'Perfect 5',  thresholds: [5, 10, 20, 40] },
-  { id: 'perfect20', emoji: '💎💎',name: 'Perfect 20', thresholds: [20, 30, 50, 75] },
-
-  { id: 'week',   emoji: '📅', name: 'Week-Streaker', thresholds: ['7 gg', '14 gg', '30 gg', '52 settimane'] },
-  { id: 'morning',emoji: '🌅', name: 'Early Bird',    thresholds: [3, 7, 15, 30] },
-  { id: 'night',  emoji: '🌙', name: 'Night Owl',     thresholds: [3, 7, 15, 30] },
-  { id: 'retry',  emoji: '💪', name: 'Never Give Up', thresholds: ['max 3', 'max 2', 'max 1', 'perfect after fail'] },
 ];
 
 const GLOBAL_DESC: Record<string, (thr: number | string, lvl: BadgeLevel) => string> = {
@@ -135,17 +128,6 @@ const GLOBAL_DESC: Record<string, (thr: number | string, lvl: BadgeLevel) => str
   sniper:       (thr, lvl) => `Completa ${thr} quiz con score ≥80% per raggiungere il badge ${LEVEL_SUFFIX[lvl]}.`,
   cerebro:      (thr, lvl) => `Raggiungi ${thr} quiz con performance ≥80% per il badge ${LEVEL_SUFFIX[lvl]}.`,
 
-  // perfect quizzes
-  perfect5:     (thr, lvl) => `Realizza ${thr} quiz “Perfetto 5” (5 risposte corrette) per il badge ${LEVEL_SUFFIX[lvl]}.`,
-  perfect20:    (thr, lvl) => `Completa ${thr} quiz “Perfetto 20” (20 risposte corrette) per ottenere il badge ${LEVEL_SUFFIX[lvl]}.`,
-
-  // streak giornaliero
-  week:         (thr, lvl) => `Completa almeno un quiz al giorno per ${thr} consecutivi per ricevere il badge ${LEVEL_SUFFIX[lvl]}.`,
-  morning:      (thr, lvl) => `Fai almeno un quiz prima delle 6:00 per ${thr} giorni di fila e ottieni il badge ${LEVEL_SUFFIX[lvl]}.`,
-  night:        (thr, lvl) => `Completa almeno un quiz dopo le 22:00 per ${thr} giorni di seguito per il badge ${LEVEL_SUFFIX[lvl]}.`,
-
-  // retry
-  retry:        (thr, lvl) => `Supera un quiz con al massimo ${thr} retry per sbloccare il badge ${LEVEL_SUFFIX[lvl]}.`,
 };
 
 const globalBadges: Badge[] = globalCfg.flatMap(cfg =>
@@ -329,7 +311,7 @@ const easterEgg: Badge = {
   id: 'easter_ghost',
   baseId: 'easter_ghost',
   emoji: '👻',
-  name: 'Easter Mind (Ametista)',
+  name: 'Easter Mind',
   description: 'Hai scovato un badge segreto esplorando tutte le funzionalità! Continua così!',
   rarity: 'legendary',
   level: 'amethyst',

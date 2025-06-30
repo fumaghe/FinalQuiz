@@ -121,7 +121,9 @@ export interface UserStats {
 
   bestSuddenDeath?: number;     // record streak-quiz
 
-  unlockedBadges: string[];     // ids completi
+  unlockedBadges: string[];
+  cupPoints: number;     // ids completi
+  foundEasterEgg: boolean,
 }
 
 /* ---------- Settings & Topic ------------------------------------- */

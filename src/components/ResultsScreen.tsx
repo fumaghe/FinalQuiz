@@ -1,5 +1,5 @@
 // src/components/ResultsScreen.tsx
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   Trophy,
   RotateCcw,
@@ -7,7 +7,6 @@ import {
   Share,
   Eye,
   Clock,
-  Zap,
 } from 'lucide-react';
 import { QuizHistory, QuizKind } from '../types/quiz';
 
@@ -39,6 +38,39 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
   streakCount,
 }) => {
   /* ---------------------------------------------------------- */
+  /* CALCOLO COPPE GUADAGNATE/ PERSI                            */
+  /* ---------------------------------------------------------- */
+  const QUIZ_TYPE_MULT: Record<string, number> = {
+    general: 1.3,
+    topic:   1.1,
+    forYou:  1.5,
+    timed:   1.7,
+    streak:  1.3,
+    reverse: 1.15,
+  };
+
+  const cupDelta = useMemo(() => {
+    if (!quizHistory) return 0;
+
+    let pts = 0;
+    // 1) risposte: +10 / −5
+    quizHistory.answeredQuestions?.forEach(ans => {
+      pts += ans.isCorrect ? 10 : -5;
+    });
+    // 2) bonus timed
+    if (quizType === 'timed' && quizHistory.timeLeft != null) {
+      pts += Math.floor(quizHistory.timeLeft / 10);
+    }
+    // 3) bonus streak
+    if (quizType === 'streak' && quizHistory.streakCount != null) {
+      pts += Math.floor(quizHistory.streakCount / 5);
+    }
+    // 4) applica moltiplicatore
+    const mult = QUIZ_TYPE_MULT[quizType] ?? 1.0;
+    return Math.round(pts * mult);
+  }, [quizHistory, quizType]);
+
+  /* ---------------------------------------------------------- */
   /* PERFORMANCE LOOK-AND-FEEL                                  */
   /* ---------------------------------------------------------- */
   const perf = (() => {
@@ -51,7 +83,6 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
         bgColor: 'bg-yellow-50',
       };
     }
-    // tutte le altre basate sulla % di accuratezza
     if (score >= 90)
       return {
         emoji: '🏆',
@@ -88,10 +119,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
   /* ---------------------------------------------------------- */
   /* HANDLERS                                                   */
   /* ---------------------------------------------------------- */
-  const handleRetryQuiz = () => {
-    onNavigate('quiz', { quizType });
-  };
-
+  const handleRetryQuiz = () => onNavigate('quiz', { quizType });
   const handleReviewAnswers = () => {
     if (quizHistory) onNavigate('review', { quizHistory });
   };
@@ -117,7 +145,6 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
         >
           <span className="text-5xl">{perf.emoji}</span>
         </div>
-
         {/* TITOLO & MSG */}
         <h1 className="text-h1 font-bold text-apple-text mb-2 text-center">
           {perf.title}
@@ -127,7 +154,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
         </p>
 
         {/* —— CARD PRINCIPALE —— */}
-        <div className="apple-card p-8 w-full max-w-sm mb-8">
+        <div className="apple-card p-8 w-full max-w-sm mb-6">
           <div className="text-center">
             {/* METRICA PRINCIPALE */}
             <div className="mb-6">
@@ -167,7 +194,6 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
                   <span className="font-medium">{timedLabel}</span>
                 </p>
               )}
-
               <p className="text-caption text-apple-secondary">Quiz completato</p>
               <p className="text-body font-medium">
                 {quizType === 'general'
@@ -182,6 +208,14 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
               </p>
             </div>
           </div>
+        </div>
+
+        {/* COPPE OTTENUTE / PERSE */}
+        <div className="apple-card p-4 w-full max-w-sm mb-8 flex items-center justify-center space-x-2">
+          <Trophy className={`w-6 h-6 ${cupDelta >= 0 ? 'text-green-600' : 'text-red-600'}`} />
+          <span className="text-body font-medium">
+            {cupDelta >= 0 ? `+${cupDelta}` : cupDelta} coppe
+          </span>
         </div>
 
         {/* ERROR SUMMARY (solo per quiz tradizionali e inverse) */}

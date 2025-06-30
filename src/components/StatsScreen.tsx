@@ -12,6 +12,7 @@ import {
   Zap,
   Activity,
   Circle,
+  Trophy,            // 👈 nuovo
 } from 'lucide-react';
 
 import ProgressRing from './ProgressRing';
@@ -30,7 +31,6 @@ import {
   Legend,
 } from 'recharts';
 
-
 /* ------------------------------------------------------------------ */
 /* TYPES                                                              */
 /* ------------------------------------------------------------------ */
@@ -48,6 +48,34 @@ const COLOR_MAP: Record<string, string> = {
   timed: '#FF3B30',
   streak: '#FF9F0A',
   reverse: '#8E44AD',
+};
+
+/* ------------------------------------------------------------------ */
+/* UTILITY: CALCOLO CUP DELTA                                         */
+/* ------------------------------------------------------------------ */
+const QUIZ_TYPE_MULT: Record<string, number> = {
+  general: 1.3,
+  topic:   1.1,
+  forYou:  1.5,
+  timed:   1.7,
+  streak:  1.3,
+  reverse: 1.15,
+};
+
+const computeCupDelta = (q: any /* QuizHistory */) => {
+  let pts = 0;
+  q.answeredQuestions?.forEach((a: any) => {
+    pts += a.isCorrect ? 10 : -5;
+  });
+  if (q.quizType === 'timed' && q.timeLeft != null) {
+    pts += Math.floor(q.timeLeft / 10);
+  }
+  if (q.quizType === 'streak' && q.streakCount != null) {
+    pts += Math.floor(q.streakCount / 5);
+  }
+  // applica moltiplicatore
+  const mult = QUIZ_TYPE_MULT[q.quizType] ?? 1.0;
+  return Math.round(pts * mult);
 };
 
 /* ------------------------------------------------------------------ */
@@ -87,8 +115,8 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
       { topic: string; isCorrect: boolean }
     >();
 
-    userStats.quizHistory.forEach(hist => {
-      (hist.answeredQuestions ?? []).forEach(a => {
+    userStats.quizHistory.forEach((hist: any) => {
+      (hist.answeredQuestions ?? []).forEach((a: any) => {
         lastByQ.set(a.questionId, {
           topic: norm(a.topic),          // 👈 canonico!
           isCorrect: a.isCorrect,
@@ -107,7 +135,7 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
     /** mapping finale */
     return Object.entries(agg)
       .map(([topicId, data]) => {
-        const topicObj = topics.find(t => t.id === topicId);
+        const topicObj = topics.find((t: any) => t.id === topicId);
 
         const accuracy = (data.correct / data.done) * 100;
         return {
@@ -121,6 +149,7 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
       })
       .sort((a, b) => b.accuracy - a.accuracy);
   }, [topics, userStats.quizHistory]);
+
   /* -------------------------------------------------------------- */
   /* RECENT QUIZ HISTORY (15)                                       */
   /* -------------------------------------------------------------- */
@@ -129,9 +158,10 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
       userStats.quizHistory
         .slice(-15)
         .reverse()
-        .map((q) => ({
+        .map((q: any) => ({
           ...q,
           dateLabel: new Date(q.timestamp).toLocaleDateString('it-IT'),
+          cupDelta: q.cupDelta ?? computeCupDelta(q),  // 👈 assicura il campo
         })),
     [userStats.quizHistory],
   );
@@ -145,12 +175,12 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
     v >= 80 ? 'Eccellente' : v >= 60 ? 'Buono' : 'Da migliorare';
 
   const bestTimed = userStats.quizHistory
-    .filter((q) => q.quizType === 'timed' && q.timeTaken != null)
-    .sort((a, b) => a.timeTaken! - b.timeTaken!)[0];
+    .filter((q: any) => q.quizType === 'timed' && q.timeTaken != null)
+    .sort((a: any, b: any) => a.timeTaken! - b.timeTaken!)[0];
 
   const bestMargin = userStats.quizHistory
-    .filter((q) => q.quizType === 'timed' && q.timeLeft != null)
-    .sort((a, b) => b.timeLeft! - a.timeLeft!)[0];
+    .filter((q: any) => q.quizType === 'timed' && q.timeLeft != null)
+    .sort((a: any, b: any) => b.timeLeft! - a.timeLeft!)[0];
 
   /* -------------------------------------------------------------- */
   /* RENDER                                                         */
@@ -465,6 +495,7 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
                   className="w-full apple-card p-3 sm:p-4 text-left hover:bg-apple-light/50 transition-colors"
                 >
                   <div className="flex items-center justify-between">
+                    {/* blocco sinistro */}
                     <div className="flex items-center space-x-3 flex-1 min-w-0">
                       <div className="w-8 h-8 bg-apple-blue/10 rounded-apple flex items-center justify-center">
                         {quiz.quizType === 'timed' ? (
@@ -492,19 +523,19 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
                             {quiz.dateLabel}
                           </span>
                         </div>
-                        <div className="flex items-center space-x-2 text-xs text-apple-secondary">
-                        {quiz.quizType === 'timed' && (
-                          <div className="flex items-center space-x-3 text-xs text-apple-secondary">
-                            <Clock className="w-3 h-3" />
-                            <span>
-                              Impiegato: {Math.floor(quiz.timeTaken! / 60)}m {quiz.timeTaken! % 60}s
-                            </span>
-                            <Clock className="w-3 h-3 rotate-180" />
-                            <span>
-                              Rimasto: {Math.floor(quiz.timeLeft! / 60)}m {quiz.timeLeft! % 60}s
-                            </span>
-                          </div>
-                        )}
+                        <div className="flex items-center space-x-2 text-xs text-apple-secondary flex-wrap">
+                          {quiz.quizType === 'timed' && (
+                            <div className="flex items-center space-x-3">
+                              <Clock className="w-3 h-3" />
+                              <span>
+                                Impiegato: {Math.floor(quiz.timeTaken! / 60)}m {quiz.timeTaken! % 60}s
+                              </span>
+                              <Clock className="w-3 h-3 rotate-180" />
+                              <span>
+                                Rimasto: {Math.floor(quiz.timeLeft! / 60)}m {quiz.timeLeft! % 60}s
+                              </span>
+                            </div>
+                          )}
                           {quiz.quizType === 'streak' && (
                             <>
                               <Zap className="w-3 h-3" />
@@ -517,12 +548,31 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
                         </div>
                       </div>
                     </div>
-                    <span
-                      className="text-base sm:text-lg font-bold flex-shrink-0"
-                      style={{ color: perfColor(quiz.score) }}
-                    >
-                      {Math.round(quiz.score)}%
-                    </span>
+
+                    {/* blocco destro: coppe + accuracy */}
+                    <div className="flex items-center space-x-4 flex-shrink-0">
+                      {/* COPPE DELTA */}
+                      <div className="flex items-center space-x-1">
+                        <Trophy
+                          className={`w-3 h-3 ${quiz.cupDelta >= 0 ? 'text-green-600' : 'text-red-600'}`}
+                        />
+                        <span
+                          className={`text-xs font-medium ${
+                            quiz.cupDelta >= 0 ? 'text-green-600' : 'text-red-600'
+                          }`}
+                        >
+                          {quiz.cupDelta >= 0 ? `+${quiz.cupDelta}` : quiz.cupDelta}
+                        </span>
+                      </div>
+
+                      {/* ACCURACY */}
+                      <span
+                        className="text-base sm:text-lg font-bold"
+                        style={{ color: perfColor(quiz.score) }}
+                      >
+                        {Math.round(quiz.score)}%
+                      </span>
+                    </div>
                   </div>
                 </button>
               ))
