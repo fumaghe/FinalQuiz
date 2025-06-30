@@ -1,11 +1,12 @@
 // src/components/QuizScreen.tsx
 import React, { useState, useEffect, useRef } from 'react';
-import { useQuiz } from '../contexts/QuizContext';
+import { useQuiz, norm } from '../contexts/QuizContext';
 import {
   Question,
   QuizSession,
   AnsweredQuestion,
   QuizHistory,
+  UserStats,
 } from '../types/quiz';
 import {
   shuffleQuestionOptions,
@@ -19,32 +20,103 @@ import { QuizFooter } from './QuizFooter';
 import { TimerDisplay } from './TimerDisplay';
 
 /* ------------------------------------------------------------------ */
-/* HELPERS (per Quiz Inversi)                                         */
+/* HELPERS                                                            */
 /* ------------------------------------------------------------------ */
+
+/** Opzioni per i quiz “inverse” */
 function buildReverseOptions(
   base: Question,
-  pool: Question[]
+  pool: Question[],
 ): { options: string[]; correctIndex: number } {
   const distractors = pool
-    .filter((q) => q.id !== base.id && q.correct !== undefined)
+    .filter(q => q.id !== base.id && q.correct !== undefined)
     .sort(() => Math.random() - 0.5)
     .slice(0, 3)
-    .map((q) => q.question);
+    .map(q => q.question);
 
   const all = [...distractors, base.question].sort(() => Math.random() - 0.5);
   return { options: all, correctIndex: all.indexOf(base.question) };
+}
+
+/**
+ * Aggiorna answered / correct / incorrect / statsPerTopic tenendo conto
+ * SOLO dell’esito più recente per ciascuna domanda.
+ */
+function accumulateTopicStats(
+  answeredArr: AnsweredQuestion[],
+  userStats:   UserStats,
+  allQuestions: Question[],
+) {
+  const updatedAnswered  = { ...userStats.answeredQuestions };
+  const updatedCorrect   = { ...userStats.correctQuestions };
+  const updatedIncorrect = { ...userStats.incorrectQuestions };
+  const updatedStatsTop  = { ...userStats.statsPerTopic };
+
+  answeredArr.forEach(a => {
+    const canon = norm(a.topic);
+
+    // 👀 LOG 1 — situazione pre-update
+    console.log('[BEFORE]', canon, {
+      done:              updatedStatsTop[canon]?.done,
+      correct:           updatedStatsTop[canon]?.correct,
+      correctAnswers:    (updatedStatsTop[canon] as any)?.correctAnswers,
+      wasCorrect:        !!updatedCorrect[a.questionId],
+      userAnswerCorrect: a.isCorrect,
+    });
+
+    /* init topic counter se non c’è */
+    if (!updatedStatsTop[canon]) {
+      const tot = allQuestions.filter(q => norm(q.topic) === canon).length;
+      updatedStatsTop[canon] = { done: 0, correct: 0, total: tot } as any;
+      (updatedStatsTop[canon] as any).correctAnswers = 0;   // <— inizio coerente
+    }
+
+    const wasCorrect = !!updatedCorrect[a.questionId];
+
+    /* done cresce solo la prima volta che vediamo la domanda */
+    if (!updatedAnswered[a.questionId]) {
+      updatedStatsTop[canon].done += 1;
+    }
+    updatedAnswered[a.questionId] = true;
+
+    /* -------- transizioni di stato -------- */
+    if (a.isCorrect) {
+      if (!wasCorrect) {
+        updatedStatsTop[canon].correct += 1;
+      }
+      (updatedStatsTop[canon] as any).correctAnswers = updatedStatsTop[canon].correct;
+
+      updatedCorrect[a.questionId] = true;
+      delete updatedIncorrect[a.questionId];
+    } else {
+      if (wasCorrect) {
+        updatedStatsTop[canon].correct -= 1;
+      }
+      (updatedStatsTop[canon] as any).correctAnswers = updatedStatsTop[canon].correct;
+
+      updatedIncorrect[a.questionId] = true;
+      delete updatedCorrect[a.questionId];
+    }
+    console.log('[AFTER]', canon, {
+      done:              updatedStatsTop[canon].done,
+      correct:           updatedStatsTop[canon].correct,
+      correctAnswers:    (updatedStatsTop[canon] as any).correctAnswers,
+    });
+  });
+
+  return { updatedAnswered, updatedCorrect, updatedIncorrect, updatedStatsTop };
 }
 
 /* ------------------------------------------------------------------ */
 /* CONFIG MODALITÀ TEMPO                                              */
 /* ------------------------------------------------------------------ */
 const TOTAL_TIME = 360;
-const PENALTY = 10;
-const BONUS_3 = 10;
+const PENALTY    = 10;
+const BONUS_3    = 10;
 const FURY_COUNT = 3;
 
 /* ------------------------------------------------------------------ */
-/* PROPS                                                              */
+/* PROPS & COMPONENT                                                  */
 /* ------------------------------------------------------------------ */
 interface QuizScreenProps {
   onNavigate: (screen: string, params?: any) => void;
@@ -71,24 +143,24 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
   title,
 }) => {
   /* ------------------------------------------------------------------ */
-  /* ⏺  Context e stato                                                 */
+  /* CONTEXT & STATE                                                    */
   /* ------------------------------------------------------------------ */
   const { state, dispatch } = useQuiz();
   const { questions, currentSession, topics, userStats } = state;
 
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
-  const [showFeedback, setShowFeedback] = useState(false);
+  const [showFeedback, setShowFeedback]   = useState(false);
   const [showExplanation, setShowExplanation] = useState(true);
   const [shuffledQuestions, setShuffledQuestions] = useState<
     ShuffledQuestion[]
   >([]);
 
-  const isTimed = quizType === 'timed';
-  const isStreak = quizType === 'streak';
+  const isTimed   = quizType === 'timed';
+  const isStreak  = quizType === 'streak';
   const isReverse = quizType === 'reverse';
 
-  const [timeLeft, setTimeLeft] = useState<number>(TOTAL_TIME);
-  const [streak, setStreak] = useState<number>(0);
+  const [timeLeft,      setTimeLeft]      = useState<number>(TOTAL_TIME);
+  const [streak,        setStreak]        = useState<number>(0);
   const [furyRemaining, setFuryRemaining] = useState<number>(0);
   const timerRef = useRef<NodeJS.Timeout>();
 
@@ -104,7 +176,7 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
     if (!isTimed || !currentSession) return;
     clearInterval(timerRef.current!);
     timerRef.current = setInterval(() => {
-      setTimeLeft((t) => {
+      setTimeLeft(t => {
         if (t <= 1) {
           clearInterval(timerRef.current!);
           finishQuiz();
@@ -143,7 +215,7 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
     const q = currentSession.questions[currentSession.currentIndex].question;
     window.open(
       `https://www.google.com/search?q=${encodeURIComponent(q)}`,
-      '_blank'
+      '_blank',
     );
   };
 
@@ -153,64 +225,48 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
   const savePartialTopic = () => {
     if (!currentSession) return;
 
-    const answeredCount = currentSession.answers.filter(
-      (a) => a !== null && a !== -1
-    ).length;
-    if (answeredCount === 0) return;
-
-    let correctCount = 0;
-    const updatedAnswered = { ...userStats.answeredQuestions };
-    const updatedCorrect = { ...userStats.correctQuestions };
-    const updatedIncorrect = { ...userStats.incorrectQuestions };
-    const updatedStatsTop = { ...userStats.statsPerTopic };
     const answeredArr: AnsweredQuestion[] = [];
-
     currentSession.answers.forEach((ans, idx) => {
       if (ans === null || ans === -1) return;
       const q = currentSession.questions[idx];
-      const ok = ans === q.correct;
       answeredArr.push({
-        questionId: q.id,
-        question: q.question,
-        options: q.options,
-        userAnswer: ans,
-        correctAnswer: q.correct,
-        isCorrect: ok,
-        timestamp: new Date(),
-        topic: q.topic,
-        explanation: q.explanation,
+        questionId:      q.id,
+        question:        q.question,
+        options:         q.options,
+        userAnswer:      ans,
+        correctAnswer:   q.correct,
+        isCorrect:       ans === q.correct,
+        timestamp:       new Date(),
+        topic:           q.topic,
+        explanation:     q.explanation,
       });
-
-      updatedAnswered[q.id] = true;
-      if (ok) {
-        correctCount++;
-        updatedCorrect[q.id] = true;
-        delete updatedIncorrect[q.id];
-      } else {
-        updatedIncorrect[q.id] = true;
-      }
-
-      if (!updatedStatsTop[q.topic]) {
-        const tQs = questions.filter((qq) => qq.topic === q.topic);
-        updatedStatsTop[q.topic] = {
-          done: 0,
-          correct: 0,
-          total: tQs.length,
-        };
-      }
-      if (!userStats.answeredQuestions[q.id]) updatedStatsTop[q.topic].done++;
-      if (ok && !userStats.correctQuestions[q.id])
-        updatedStatsTop[q.topic].correct++;
     });
+    if (answeredArr.length === 0) return;
+
+    const {
+      updatedAnswered,
+      updatedCorrect,
+      updatedIncorrect,
+      updatedStatsTop,
+    } = accumulateTopicStats(answeredArr, userStats, questions);
+
+    const correctDelta = answeredArr.filter(a => a.isCorrect).reduce((d,a)=>{
+      const wasCorrect = !!userStats.correctQuestions[a.questionId];
+      return wasCorrect ? d : d + 1;
+    },0) - answeredArr.filter(a => !a.isCorrect).reduce((d,a)=>{
+      const wasCorrect = !!userStats.correctQuestions[a.questionId];
+      return wasCorrect ? d + 1 : d;
+    },0);
 
     const quizHistoryEntry: QuizHistory = {
-      id: `${currentSession.id}_partial`,
-      quizType: 'topic',
-      topicName: title || topicName,
-      timestamp: new Date(),
-      score: (correctCount / answeredCount) * 100,
-      totalQuestions: answeredCount,
-      correctAnswers: correctCount,
+      id:           `${currentSession.id}_partial`,
+      quizType:     'topic',
+      topicName:    title || topicName,
+      timestamp:    new Date(),
+      score:        (answeredArr.filter(a=>a.isCorrect).length /
+                    answeredArr.length) * 100,
+      totalQuestions: answeredArr.length,
+      correctAnswers: answeredArr.filter(a=>a.isCorrect).length,
       answeredQuestions: answeredArr,
     };
 
@@ -218,22 +274,111 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
       type: 'UPDATE_STATS',
       payload: {
         ...userStats,
-        totalQuestions: userStats.totalQuestions + answeredCount,
-        correctAnswers: userStats.correctAnswers + correctCount,
+        totalQuestions: userStats.totalQuestions + answeredArr.length,
+        correctAnswers: userStats.correctAnswers + correctDelta,
         overallAccuracy:
-          ((userStats.correctAnswers + correctCount) /
-            (userStats.totalQuestions + answeredCount)) *
-          100,
+          ((userStats.correctAnswers + correctDelta) /
+            (userStats.totalQuestions + answeredArr.length)) * 100,
         lastUpdated: new Date(),
         quizHistory: [...userStats.quizHistory, quizHistoryEntry],
         answeredQuestions: updatedAnswered,
-        correctQuestions: updatedCorrect,
-        incorrectQuestions: updatedIncorrect,
-        statsPerTopic: updatedStatsTop,
+        correctQuestions:  updatedCorrect,
+        incorrectQuestions:updatedIncorrect,
+        statsPerTopic:     updatedStatsTop,
       },
     });
   };
 
+  /* ------------------------------------------------------------------ */
+  /* finishQuiz (usa la stessa logica)                                  */
+  /* ------------------------------------------------------------------ */
+  const finishQuiz = () => {
+    clearInterval(timerRef.current!);
+    if (!currentSession) return;
+
+    /* Costruiamo array risposte dell’intero quiz */
+    const answeredArr: AnsweredQuestion[] = [];
+    let correctCount = 0;
+    currentSession.answers.forEach((ans, idx) => {
+      if (ans === null || ans === -1) return;
+      const q = currentSession.questions[idx];
+      const ok = ans === q.correct;
+      if (ok) correctCount++;
+      answeredArr.push({
+        questionId:    q.id,
+        question:      q.question,
+        options:       q.options,
+        userAnswer:    ans,
+        correctAnswer: q.correct,
+        isCorrect:     ok,
+        timestamp:     new Date(),
+        topic:         q.topic,
+        explanation:   q.explanation,
+      });
+    });
+
+    const {
+      updatedAnswered,
+      updatedCorrect,
+      updatedIncorrect,
+      updatedStatsTop,
+    } = accumulateTopicStats(answeredArr, userStats, questions);
+
+    /* Delta per overallAccuracy / correctAnswers */
+    const correctDelta = answeredArr.reduce((delta, a) => {
+      const wasCorrect = !!userStats.correctQuestions[a.questionId];
+      return a.isCorrect
+        ? wasCorrect ? delta : delta + 1            // diventa giusta
+        : wasCorrect ? delta - 1 : delta;           // diventa sbagliata
+    }, 0);
+
+    const historyEntry: QuizHistory = {
+      id: currentSession.id,
+      quizType,
+      topicName: title || topicName,
+      timestamp: new Date(),
+      score: correctCount / currentSession.questions.length * 100,
+      totalQuestions: currentSession.questions.length,
+      correctAnswers: correctCount,
+      answeredQuestions: answeredArr,
+      timeTaken: isTimed ? TOTAL_TIME - timeLeft : undefined,
+      streakCount: isStreak ? correctCount : undefined,
+    };
+
+    dispatch({
+      type: 'UPDATE_STATS',
+      payload: {
+        ...userStats,
+        totalQuizzes:   userStats.totalQuizzes + 1,
+        totalQuestions: userStats.totalQuestions + currentSession.questions.length,
+        correctAnswers: userStats.correctAnswers + correctDelta,
+        overallAccuracy:
+          ((userStats.correctAnswers + correctDelta) /
+            (userStats.totalQuestions + currentSession.questions.length)) * 100,
+        lastUpdated: new Date(),
+        quizHistory: [...userStats.quizHistory, historyEntry],
+        bestSuddenDeath: isStreak
+          ? Math.max(userStats.bestSuddenDeath || 0, correctCount)
+          : userStats.bestSuddenDeath,
+        answeredQuestions: updatedAnswered,
+        correctQuestions:  updatedCorrect,
+        incorrectQuestions:updatedIncorrect,
+        statsPerTopic:     updatedStatsTop,
+      },
+    });
+    dispatch({ type: 'END_QUIZ' });
+
+    onNavigate('results', {
+      score: historyEntry.score,
+      correctAnswers: correctCount,
+      totalQuestions: currentSession.questions.length,
+      quizType,
+      topicName,
+      quizHistory: historyEntry,
+      timeLeft,
+      streakCount: isStreak ? correctCount : undefined,
+    });
+  };
   /* ------------------------------------------------------------------ */
   /* ↩️  Back                                                           */
   /* ------------------------------------------------------------------ */
@@ -243,6 +388,7 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
     dispatch({ type: 'END_QUIZ' });
     onNavigate(quizType === 'topic' ? 'topics' : 'dashboard');
   };
+
 
   /* ------------------------------------------------------------------ */
   /* 🚀  startNewQuiz                                                   */
@@ -577,84 +723,6 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
     } else {
       window.alert('Nessuna altra domanda disponibile per questo argomento.');
     }
-  };
-
-  /* ------------------------------------------------------------------ */
-  /* 🏁  finishQuiz                                                     */
-  /* ------------------------------------------------------------------ */
-  const finishQuiz = () => {
-    clearInterval(timerRef.current!); // stop timer
-    if (!currentSession) return;
-
-    /* ---- raccolta risultati (come tua versione) ------------------- */
-    const answered: AnsweredQuestion[] = [];
-    let correctCount = 0;
-    currentSession.answers.forEach((ans, idx) => {
-      const q = currentSession.questions[idx];
-      const ok = ans === q.correct;
-      if (ans !== null && ans !== -1) {
-        if (ok) correctCount++;
-        answered.push({
-          questionId: q.id,
-          question: q.question,
-          options: q.options,
-          userAnswer: ans,
-          correctAnswer: q.correct,
-          isCorrect: ok,
-          timestamp: new Date(),
-          topic: q.topic,
-          explanation: q.explanation,
-        });
-      }
-    });
-    const score =
-      (correctCount / currentSession.questions.length) * 100;
-
-    const historyEntry: QuizHistory = {
-      id: currentSession.id,
-      quizType,
-      topicName: title || topicName,
-      timestamp: new Date(),
-      score,
-      totalQuestions: currentSession.questions.length,
-      correctAnswers: correctCount,
-      answeredQuestions: answered,
-      timeTaken: isTimed ? TOTAL_TIME - timeLeft : undefined,
-      streakCount: isStreak ? correctCount : undefined,
-    };
-
-    /* ---- aggiorna stats utente (semplificato) --------------------- */
-    dispatch({
-      type: 'UPDATE_STATS',
-      payload: {
-        ...userStats,
-        totalQuizzes: userStats.totalQuizzes + 1,
-        totalQuestions:
-          userStats.totalQuestions + currentSession.questions.length,
-        correctAnswers: userStats.correctAnswers + correctCount,
-        overallAccuracy:
-          ((userStats.correctAnswers + correctCount) /
-            (userStats.totalQuestions + currentSession.questions.length)) *
-          100,
-        lastUpdated: new Date(),
-        quizHistory: [...userStats.quizHistory, historyEntry],
-        bestSuddenDeath: isStreak
-          ? Math.max(userStats.bestSuddenDeath || 0, correctCount)
-          : userStats.bestSuddenDeath,
-      },
-    });
-    dispatch({ type: 'END_QUIZ' });
-
-    onNavigate('results', {
-      score,
-      correctAnswers: correctCount,
-      totalQuestions: currentSession.questions.length,
-      quizType,
-      topicName,
-      quizHistory: historyEntry,
-      timeLeft,
-      streakCount: isStreak ? correctCount : undefined,
-    });
   };
 
   /* ------------------------------------------------------------------ */

@@ -1,7 +1,7 @@
-// src/components/TopicsList.tsx
 import React, { useState, useMemo } from 'react';
-import { useQuiz } from '../contexts/QuizContext';
 import { Search, ArrowLeft, Heart } from 'lucide-react';
+
+import { useQuiz, norm } from '../contexts/QuizContext';   //  ← norm !
 
 /* ------------------------------------------------------------------ */
 /* TYPES                                                              */
@@ -26,7 +26,7 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
   );
 
   /* -------------------------------------------------------------- */
-  /* AGGREGAZIONE STAT PER TOPIC  (tutte le modalità tranne reverse) */
+  /* AGGREGAZIONE STAT UNIQUE (tutte le modalità tranne reverse)     */
   /* -------------------------------------------------------------- */
   const aggregatedStats = useMemo(() => {
     const lastAttempt = new Map<
@@ -35,11 +35,11 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
     >();
 
     userStats.quizHistory
-      .filter((q) => q.quizType !== 'reverse')
-      .forEach((quiz) => {
-        (quiz.answeredQuestions ?? []).forEach((a) => {
+      .filter(q => q.quizType !== 'reverse')
+      .forEach(quiz => {
+        (quiz.answeredQuestions ?? []).forEach(a => {
           lastAttempt.set(a.questionId, {
-            topic: a.topic.replace(/\s+/g, '').toLowerCase(), // canonico
+            topic: norm(a.topic),               // 🎯 sempre canonico
             isCorrect: a.isCorrect,
           });
         });
@@ -54,11 +54,12 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
 
     return agg;
   }, [userStats.quizHistory]);
+
   /* -------------------------------------------------------------- */
   /* UTILS                                                          */
   /* -------------------------------------------------------------- */
   const getTopicStats = (rawTopic: string) => {
-    const key = rawTopic.replace(/\s+/g, '').toLowerCase();   // canonico
+    const key = norm(rawTopic);                 // 🎯 stessa regola
     const st = aggregatedStats[key];
     if (!st) return { correctAnswers: 0, totalAnswered: 0, accuracy: 0 };
 
@@ -69,7 +70,7 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
     };
   };
 
-  const filteredTopics = topics.filter((topic) => {
+  const filteredTopics = topics.filter(topic => {
     const matchesSearch = topic.name
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
@@ -103,7 +104,7 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
   /* -------------------------------------------------------------- */
   return (
     <div className="min-h-screen bg-apple-light">
-      {/* ----------------- HEADER ----------------- */}
+      {/* ---------- HEADER ---------- */}
       <header className="bg-apple-card shadow-apple-card px-apple-2x py-4">
         <div className="flex items-center space-x-4 mb-4">
           <button
@@ -115,34 +116,33 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
           <h1 className="text-h2 font-semibold">Argomenti</h1>
         </div>
 
-        {/* Search Bar */}
+        {/* Search */}
         <div className="relative mb-4">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-apple-secondary" />
           <input
             type="text"
-            placeholder="Cerca argomenti..."
+            placeholder="Cerca argomenti…"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={e => setSearchQuery(e.target.value)}
             className="w-full pl-10 pr-4 py-3 apple-input"
           />
         </div>
 
-        {/* Filter Tabs */}
+        {/* Tabs */}
         <div className="flex space-x-1 bg-apple-light rounded-apple p-1">
           {[
             { key: 'all', label: 'Tutti' },
             { key: 'incomplete', label: 'Da completare' },
             { key: 'favorites', label: 'Preferiti' },
-          ].map((tab) => (
+          ].map(tab => (
             <button
               key={tab.key}
               onClick={() => setFilter(tab.key as any)}
-              className={`flex-1 py-2 px-4 rounded-lg text-caption font-medium transition-all
-                ${
-                  filter === tab.key
-                    ? 'bg-apple-card text-apple-blue shadow-apple-card'
-                    : 'text-apple-secondary hover:text-apple-text'
-                }`}
+              className={`flex-1 py-2 px-4 rounded-lg text-caption font-medium transition-all ${
+                filter === tab.key
+                  ? 'bg-apple-card text-apple-blue shadow-apple-card'
+                  : 'text-apple-secondary hover:text-apple-text'
+              }`}
             >
               {tab.label}
             </button>
@@ -150,9 +150,9 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
         </div>
       </header>
 
-      {/* ----------------- LISTA ARGOMENTI ----------------- */}
+      {/* ---------- LISTA ---------- */}
       <div className="px-apple-2x py-4 space-y-3 pb-20">
-        {filteredTopics.map((topic) => {
+        {filteredTopics.map(topic => {
           const stats = getTopicStats(topic.name);
           const progress =
             topic.totalQuestions > 0
@@ -170,14 +170,12 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
                   <span className="text-2xl">{topic.icon}</span>
                 </div>
 
-                {/* Dati topic */}
+                {/* Dati */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center space-x-2 mb-1">
-                    <h3 className="text-h3 font-medium truncate">
-                      {topic.name}
-                    </h3>
+                    <h3 className="text-h3 font-medium truncate">{topic.name}</h3>
                     <button
-                      onClick={(e) => {
+                      onClick={e => {
                         e.stopPropagation();
                         toggleFavorite(topic.id);
                       }}

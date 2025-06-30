@@ -1,6 +1,6 @@
 // src/components/StatsScreen.tsx
 import React, { useState, useMemo } from 'react';
-import { useQuiz } from '../contexts/QuizContext';
+import { useQuiz, norm } from '../contexts/QuizContext';
 import {
   ArrowLeft,
   TrendingUp,
@@ -29,6 +29,7 @@ import {
   Cell,
   Legend,
 } from 'recharts';
+
 
 /* ------------------------------------------------------------------ */
 /* TYPES                                                              */
@@ -80,39 +81,41 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
   /* TOPIC STAT (tutte le modalità, tranne reverse)                 */
   /* -------------------------------------------------------------- */
   const topicStats = useMemo(() => {
-    /**  ultimo tentativo valido per ogni domanda  */
-    const lastAttemptByQ = new Map<
+    /** ultimo esito per domanda */
+    const lastByQ = new Map<
       string,
       { topic: string; isCorrect: boolean }
     >();
 
-    /* attraversiamo lo storico in ordine cronologico
-      (gli overwrite garantiscono che rimanga l'ULTIMO esito)        */
-    userStats.quizHistory.forEach((hist) => {
-      (hist.answeredQuestions ?? []).forEach((a) => {
-        lastAttemptByQ.set(a.questionId, { topic: a.topic, isCorrect: a.isCorrect });
+    userStats.quizHistory.forEach(hist => {
+      (hist.answeredQuestions ?? []).forEach(a => {
+        lastByQ.set(a.questionId, {
+          topic: norm(a.topic),          // 👈 canonico!
+          isCorrect: a.isCorrect,
+        });
       });
     });
 
-    /**  aggregazione per topic  */
+    /** aggregazione */
     const agg: Record<string, { done: number; correct: number }> = {};
-    lastAttemptByQ.forEach(({ topic, isCorrect }) => {
+    lastByQ.forEach(({ topic, isCorrect }) => {
       if (!agg[topic]) agg[topic] = { done: 0, correct: 0 };
       agg[topic].done += 1;
       if (isCorrect) agg[topic].correct += 1;
     });
 
-    /**  mapping finale ordinato per accuratezza  */
+    /** mapping finale */
     return Object.entries(agg)
-      .map(([topicName, data]) => {
-        const topic = topics.find((t) => t.name === topicName);
+      .map(([topicId, data]) => {
+        const topicObj = topics.find(t => t.id === topicId);
+
         const accuracy = (data.correct / data.done) * 100;
         return {
-          topic: topicName,
-          displayName: topic?.name || topicName,
-          icon: topic?.icon || '📝',
-          totalAttempts: data.done,      // domande UNICHE viste
-          correctAnswers: data.correct,  // di cui corrette
+          topic: topicId,
+          displayName: topicObj?.name ?? topicId,
+          icon: topicObj?.icon ?? '📝',
+          totalAttempts: data.done,
+          correctAnswers: data.correct,
           accuracy,
         };
       })

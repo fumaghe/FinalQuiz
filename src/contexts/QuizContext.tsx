@@ -24,7 +24,9 @@ const TOPIC_ALIAS: Record<string, string> = {
   lake: 'datalake2',
   dl: 'deeplearning',
 };
-const norm = (id: string) => TOPIC_ALIAS[id] ?? id.toLowerCase();
+
+/** normalizza qualsiasi id/label di topic in uno slug canonico */
+export const norm = (id: string) => TOPIC_ALIAS[id] ?? id.toLowerCase();
 
 const BADGE_ALIAS: Record<string, string> = {
   databricks: 'spark',
@@ -113,35 +115,49 @@ const ALL_ROUNDER = [1, 2, 3, 5];
 /*  BADGE ENGINE                                                       */
 /* ------------------------------------------------------------------ */
 function computeAllBadges(stats: UserStats): string[] {
-  const unlocked: string[] = [];
+  /* ⚠️ Pulisci eventuali badge salvati in precedenza */
+  (stats as any).unlockedBadges = [];
 
-  /* Topic counters */
+  /* ---------- 1 · Normalizza + merge duplicati --------------------- */
   const topicCounters: Record<string, { done: number; correct: number }> = {};
+
   Object.entries(stats.statsPerTopic ?? {}).forEach(([raw, v]: any) => {
-    const t = norm(raw);
-    topicCounters[t] = {
-      done: v.done ?? v.total ?? 0,
-      correct: v.correct ?? v.correctAnswers ?? 0,
-    };
+    const canon = norm(raw);                       // es. "Tableau" → "tableau"
+    const done  = v.done    ?? v.total          ?? 0;
+    const corr  = v.correct ?? v.correctAnswers ?? 0;
+
+    if (!topicCounters[canon]) {
+      topicCounters[canon] = { done, correct: corr };
+    } else {
+      topicCounters[canon].done    = Math.max(topicCounters[canon].done,    done);
+      topicCounters[canon].correct = Math.max(topicCounters[canon].correct, corr);
+    }
   });
 
-  /* Progress & precision */
+  const unlocked: string[] = [];
   const topicLevel: Record<string, BadgeLevel | null> = {};
+
+  /* ---------- 2 · Topic progress & precision ----------------------- */
   Object.entries(topicCounters).forEach(([t, v]) => {
-    const thr = TOPIC_THRESHOLDS[t] ?? [25, 50, 75, 100];
-    const prog = highestTier(v.correct, thr);
-    if (prog) {
-      unlocked.push(`tp_${badgeId(t)}_${prog}`);
-      topicLevel[t] = prog;
-    } else topicLevel[t] = null;
+    const thr  = TOPIC_THRESHOLDS[t] ?? [25, 50, 75, 100];
+    const tier = highestTier(v.correct, thr);
+
+    if (tier) {
+      unlocked.push(`tp_${badgeId(t)}_${tier}`);
+      topicLevel[t] = tier;
+    } else {
+      topicLevel[t] = null;
+    }
 
     const pct = v.done ? (v.correct / v.done) * 100 : 0;
     LEVELS_ASC.forEach((lvl, i) => {
-      if (v.done >= 1 && pct >= 70 + 10 * i) unlocked.push(`pp_${badgeId(t)}_${lvl}`);
+      if (v.done >= 1 && pct >= 70 + 10 * i) {
+        unlocked.push(`pp_${badgeId(t)}_${lvl}`);
+      }
     });
   });
 
-  /* Global counters */
+  /* ---------- 3 · Global counters & accuracy ----------------------- */
   GLOBAL_COUNTERS.forEach(cfg => {
     const lvl = highestTier(cfg.src(stats), cfg.thresholds);
     if (lvl) unlocked.push(`${cfg.id}_${lvl}`);
@@ -149,14 +165,17 @@ function computeAllBadges(stats: UserStats): string[] {
 
   ACC_BADGES.forEach(cfg => {
     for (let i = 3; i >= 0; i--) {
-      if (stats.totalQuestions >= cfg.thresholds[i] && stats.overallAccuracy >= cfg.acc + i * 2.5) {
+      if (
+        stats.totalQuestions >= cfg.thresholds[i] &&
+        stats.overallAccuracy >= cfg.acc + i * 2.5
+      ) {
         unlocked.push(`${cfg.id}_${LEVELS_ASC[i]}`);
         break;
       }
     }
   });
 
-  /* Speed / session */
+  /* ---------- 4 · Speed / session ---------------------------------- */
   const fastest = Math.min(...(stats.quizHistory ?? []).map(dur), Infinity);
   SPEED_BADGES.forEach(sb => {
     const ref = sb.thresholds.at(-1)!;
@@ -169,49 +188,52 @@ function computeAllBadges(stats: UserStats): string[] {
   if (marLvl) unlocked.push(`marathon_${marLvl}`);
 
   (stats.quizHistory ?? []).forEach(s => {
-    for (let i = 3; i >= 0; i--)
+    for (let i = 3; i >= 0; i--) {
       if (corr(s) >= FLASH_Q[i] && dur(s) <= FLASH_T[i]) {
         unlocked.push(`flash_${LEVELS_ASC[i]}`);
         break;
       }
+    }
   });
 
-  /* Combo */
+  /* ---------- 5 · Combo / polyglot / omni-ecc. ---------------------- */
   Object.entries(COMBOS).forEach(([id, list]) => {
     const sum = list.reduce((tot, t) => tot + (topicCounters[t]?.correct ?? 0), 0);
     const lvl = highestTier(sum, COMBO_3);
     if (lvl) unlocked.push(`${id}_${lvl}`);
   });
 
-  /* Language Duelist */
-  const [a, b] = LANGUAGE_DUELIST.pair;
-  if (topicLevel[a] && topicLevel[a] === topicLevel[b])
-    unlocked.push(`${LANGUAGE_DUELIST.baseId}_${topicLevel[a]}`);
+  const [la, lb] = LANGUAGE_DUELIST.pair;
+  if (topicLevel[la] && topicLevel[la] === topicLevel[lb]) {
+    unlocked.push(`${LANGUAGE_DUELIST.baseId}_${topicLevel[la]}`);
+  }
 
-  /* Polyglot & omniscient */
   LEVELS_ASC.forEach((lv, i) => {
     const cnt = Object.values(topicLevel).filter(x => x && idxOf(x) >= i).length;
     if (cnt >= POLYGLOT_MIN[i]) unlocked.push(`polyglot_${lv}`);
 
-    const omniCnt = Object.values(topicCounters).filter(c => c.correct >= OMNI_THRESH[i]).length;
+    const omniCnt = Object.values(topicCounters).filter(
+      c => c.correct >= OMNI_THRESH[i]
+    ).length;
     if (omniCnt >= OMNI_CNT[i]) unlocked.push(`omniscient_${lv}`);
   });
 
-  /* All-rounder */
   const quizPerTopic: Record<string, number> = {};
   (stats.quizHistory ?? []).forEach((qs: any) =>
     new Set((qs as any).topics ?? []).forEach((raw: string) => {
       const t = norm(raw);
       quizPerTopic[t] = (quizPerTopic[t] ?? 0) + 1;
-    }),
+    })
   );
-  const minQuiz = Math.min(...Object.keys(TOPIC_THRESHOLDS).map(t => quizPerTopic[t] ?? 0));
+  const minQuiz = Math.min(
+    ...Object.keys(TOPIC_THRESHOLDS).map(t => quizPerTopic[t] ?? 0)
+  );
   const arLvl = highestTier(minQuiz, ALL_ROUNDER);
   if (arLvl) unlocked.push(`all_rounder_${arLvl}`);
 
-  /* Easter egg */
   if ((stats as any).foundEasterEgg) unlocked.push('easter_ghost');
 
+  /* ---------- 6 · Dedup & return ----------------------------------- */
   return [...new Set(unlocked)];
 }
 
@@ -360,21 +382,50 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
   /* bootstrap: storage + question load */
   useEffect(() => {
     try {
+      /* ---------- STATS ---------- */
       const rawStats = localStorage.getItem('quizmaster_stats');
-      if (rawStats) dispatch({ type: 'UPDATE_STATS', payload: JSON.parse(rawStats) });
+      if (rawStats) {
+        const stats = JSON.parse(rawStats);
+
+        /* ⚙️ MIGRA correct / correctAnswers -------------------- */
+        Object.values(stats.statsPerTopic ?? {}).forEach((t: any) => {
+          if (t.correct === undefined && t.correctAnswers !== undefined) {
+            t.correct = t.correctAnswers;
+          }
+          if (t.correctAnswers === undefined && t.correct !== undefined) {
+            t.correctAnswers = t.correct;
+          }
+        });
+        /* ------------------------------------------------------- */
+
+        // 👀 LOG 1 — conteggio per topic PRIMA del dispatch
+        console.log('[BOOT] statsPerTopic from storage:', stats.statsPerTopic);
+
+        dispatch({ type: 'UPDATE_STATS', payload: stats });
+      }
+
+      /* ---------- SETTINGS ---------- */
       const rawSet = localStorage.getItem('quizmaster_settings');
-      if (rawSet) dispatch({ type: 'UPDATE_SETTINGS', payload: JSON.parse(rawSet) });
+      if (rawSet) {
+        dispatch({ type: 'UPDATE_SETTINGS', payload: JSON.parse(rawSet) });
+      }
+
+      /* ---------- TOPICS ---------- */
       const rawTop = localStorage.getItem('quizmaster_topics');
-      if (rawTop) dispatch({ type: 'LOAD_TOPICS', payload: JSON.parse(rawTop) });
+      if (rawTop) {
+        dispatch({ type: 'LOAD_TOPICS', payload: JSON.parse(rawTop) });
+      }
     } catch (e) {
       console.error(e);
     }
 
+    /* carica file domande */
     (async () => {
       dispatch({ type: 'SET_LOADING', payload: true });
       try {
         const qs = await loadQuestionsFromFiles();
         dispatch({ type: 'LOAD_QUESTIONS', payload: qs });
+
         if (state.topics.length === 0) {
           const ts = generateTopicsFromQuestions(qs);
           dispatch({ type: 'LOAD_TOPICS', payload: ts });
@@ -386,6 +437,8 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+
 
   /* persistence */
   useEffect(() => {
@@ -403,20 +456,6 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [state.topics]);
 
   /* ---------- NEW: auto-refresh badge list on every stats change ---- */
-  useEffect(() => {
-    const fresh = computeAllBadges(state.userStats);
-    const current = state.userStats.unlockedBadges;
-    const same =
-      fresh.length === current.length && fresh.every((b, i) => b === current[i]);
-
-    if (!same) {
-      dispatch({
-        type: 'UPDATE_STATS',
-        payload: { ...state.userStats, unlockedBadges: fresh },
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.userStats]);
 
   /* periodic refresh (e.g. parallel tabs) */
   useEffect(() => {
