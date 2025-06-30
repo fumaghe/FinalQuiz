@@ -744,7 +744,7 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
   /* ------------------------------------------------------------------ */
   const currentQ = currentSession.questions[currentSession.currentIndex];
   const shuffledQ = shuffledQuestions[currentSession.currentIndex];
-  const topicInfo = topics.find((t) => t.name === currentQ.topic);
+  const topicInfo = topics.find(t => t.id === norm(currentQ.topic));
   const isCorrect =
     showFeedback &&
     shuffledQ.optionMapping[selectedAnswer!] === currentQ.correct;

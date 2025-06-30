@@ -26,7 +26,8 @@ const TOPIC_ALIAS: Record<string, string> = {
 };
 
 /** normalizza qualsiasi id/label di topic in uno slug canonico */
-export const norm = (id: string) => TOPIC_ALIAS[id] ?? id.toLowerCase();
+export const norm = (raw: string) =>
+  (TOPIC_ALIAS[raw.trim().toLowerCase()] ?? raw.trim().toLowerCase());
 
 const BADGE_ALIAS: Record<string, string> = {
   databricks: 'spark',

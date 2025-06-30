@@ -58,8 +58,8 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
   /* -------------------------------------------------------------- */
   /* UTILS                                                          */
   /* -------------------------------------------------------------- */
-  const getTopicStats = (rawTopic: string) => {
-    const key = norm(rawTopic);                 // 🎯 stessa regola
+  const getTopicStats = (topicId: string) => {
+      const key = norm(topicId);               // 🎯 stessa regola
     const st = aggregatedStats[key];
     if (!st) return { correctAnswers: 0, totalAnswered: 0, accuracy: 0 };
 
@@ -77,7 +77,7 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
 
     switch (filter) {
       case 'incomplete': {
-        const stats = getTopicStats(topic.name);
+        const stats = getTopicStats(topic.id);
         return matchesSearch && stats.correctAnswers < topic.totalQuestions;
       }
       case 'favorites':
@@ -153,7 +153,7 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
       {/* ---------- LISTA ---------- */}
       <div className="px-apple-2x py-4 space-y-3 pb-20">
         {filteredTopics.map(topic => {
-          const stats = getTopicStats(topic.name);
+          const stats = getTopicStats(topic.id);
           const progress =
             topic.totalQuestions > 0
               ? (stats.correctAnswers / topic.totalQuestions) * 100
