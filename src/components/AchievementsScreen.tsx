@@ -1,4 +1,3 @@
-// src/components/AchievementsScreen.tsx
 import React, {
   useMemo,
   useState,
@@ -13,13 +12,6 @@ import {
 } from 'lucide-react';
 import { Dialog, Transition } from '@headlessui/react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip as ReTooltip,
-  ResponsiveContainer,
-} from 'recharts';
 import { useDebounceValue } from 'usehooks-ts';
 
 import { useQuiz } from '../contexts/QuizContext';
@@ -103,25 +95,6 @@ const AchievementsScreen: React.FC<Props> = ({ onNavigate }) => {
     });
     return map;
   }, [unlockedBadges]);
-
-  /* ---------------- counts per livello (per donut) -------------- */
-  const donutData = useMemo(() => {
-    const totalPerLevel: Record<BadgeLevel, number> = {
-      bronze: 0,
-      silver: 0,
-      gold: 0,
-      amethyst: 0,
-    };
-    highestUnlocked.forEach(lvl => (totalPerLevel[lvl] += 1));
-    return LEVELS.map(l => ({
-      name: LEVEL_LABEL[l],
-      value: totalPerLevel[l],
-      color: LEVEL_COLOR[l],
-    }));
-  }, [highestUnlocked]);
-
-  const totalUnlocked = unlockedBadges.length;
-  const totalBadges = ALL_BADGES.length;
 
   /* ---------------- grouping per categoria ----------------------- */
   const grouped = useMemo(() => {
@@ -246,26 +219,12 @@ const AchievementsScreen: React.FC<Props> = ({ onNavigate }) => {
             🏆 Badge&nbsp;&amp;&nbsp;Obiettivi
           </h1>
 
-          {/* filtro unlocked/locked */}
-          {(['all', 'unlocked', 'locked'] as const).map(v => (
-            <button
-              key={v}
-              onClick={() => setViewFilter(v)}
-              className={`px-2.5 py-1 rounded-lg text-sm transition
-                ${
-                  viewFilter === v
-                    ? 'bg-apple-blue text-white'
-                    : 'bg-apple-card text-apple-secondary hover:bg-apple-muted/40'
-                }`}
-            >
-              {v === 'all' ? 'Tutti' : v === 'unlocked' ? 'Sbloccati' : 'Da sbloccare'}
-            </button>
-          ))}
         </div>
 
-        {/* second row: chip livelli + search */}
-        <div className="mt-3 flex flex-wrap items-center gap-2">
-          <div className="flex gap-1">
+        {/* second row: chip livelli + search (responsive) */}
+        <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+          {/* chip livelli */}
+          <div className="flex flex-wrap gap-1">
             {(['all', ...LEVELS] as const).map(l => (
               <button
                 key={l}
@@ -281,8 +240,8 @@ const AchievementsScreen: React.FC<Props> = ({ onNavigate }) => {
             ))}
           </div>
 
-          {/* search */}
-          <div className="relative flex-1 max-w-sm ml-auto">
+          {/* search bar */}
+          <div className="relative flex-1 sm:max-w-sm">
             <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-apple-secondary" />
             <input
               type="text"
@@ -301,7 +260,6 @@ const AchievementsScreen: React.FC<Props> = ({ onNavigate }) => {
             )}
           </div>
         </div>
-
       </header>
 
       {/* ---------------- GRID SECTIONS ---------------------------- */}

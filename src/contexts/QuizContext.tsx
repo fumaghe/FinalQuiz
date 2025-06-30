@@ -402,7 +402,23 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
       localStorage.setItem('quizmaster_topics', JSON.stringify(state.topics));
   }, [state.topics]);
 
-  /* badge refresh */
+  /* ---------- NEW: auto-refresh badge list on every stats change ---- */
+  useEffect(() => {
+    const fresh = computeAllBadges(state.userStats);
+    const current = state.userStats.unlockedBadges;
+    const same =
+      fresh.length === current.length && fresh.every((b, i) => b === current[i]);
+
+    if (!same) {
+      dispatch({
+        type: 'UPDATE_STATS',
+        payload: { ...state.userStats, unlockedBadges: fresh },
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.userStats]);
+
+  /* periodic refresh (e.g. parallel tabs) */
   useEffect(() => {
     const int = setInterval(() => {
       const raw = localStorage.getItem('quizmaster_stats');

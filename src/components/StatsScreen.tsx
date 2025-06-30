@@ -79,36 +79,45 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
   /* -------------------------------------------------------------- */
   /* TOPIC STAT (tutte le modalità, tranne reverse)                 */
   /* -------------------------------------------------------------- */
-const topicStats = useMemo(() => {
-  const map: Record<string, { done: number; correct: number }> = {};
+  const topicStats = useMemo(() => {
+    /**  ultimo tentativo valido per ogni domanda  */
+    const lastAttemptByQ = new Map<
+      string,
+      { topic: string; isCorrect: boolean }
+    >();
 
-  userStats.quizHistory
-    .filter((q) => q.quizType !== 'reverse')
-    .forEach((hist) => {
-      /* 💡  FIX: se answeredQuestions è undefined usiamo array vuoto */
+    /* attraversiamo lo storico in ordine cronologico
+      (gli overwrite garantiscono che rimanga l'ULTIMO esito)        */
+    userStats.quizHistory.forEach((hist) => {
       (hist.answeredQuestions ?? []).forEach((a) => {
-        if (!map[a.topic]) map[a.topic] = { done: 0, correct: 0 };
-        map[a.topic].done += 1;
-        if (a.isCorrect) map[a.topic].correct += 1;
+        lastAttemptByQ.set(a.questionId, { topic: a.topic, isCorrect: a.isCorrect });
       });
     });
 
-  return Object.entries(map)
-    .map(([topicName, data]) => {
-      const topic = topics.find((t) => t.name === topicName);
-      const accuracy =
-        data.done > 0 ? (data.correct / data.done) * 100 : 0;
-      return {
-        topic: topicName,
-        displayName: topic?.name || topicName,
-        icon: topic?.icon || '📝',
-        totalAttempts: data.done,
-        correctAnswers: data.correct,
-        accuracy,
-      };
-    })
-    .sort((a, b) => b.accuracy - a.accuracy);
-}, [topics, userStats.quizHistory]);
+    /**  aggregazione per topic  */
+    const agg: Record<string, { done: number; correct: number }> = {};
+    lastAttemptByQ.forEach(({ topic, isCorrect }) => {
+      if (!agg[topic]) agg[topic] = { done: 0, correct: 0 };
+      agg[topic].done += 1;
+      if (isCorrect) agg[topic].correct += 1;
+    });
+
+    /**  mapping finale ordinato per accuratezza  */
+    return Object.entries(agg)
+      .map(([topicName, data]) => {
+        const topic = topics.find((t) => t.name === topicName);
+        const accuracy = (data.correct / data.done) * 100;
+        return {
+          topic: topicName,
+          displayName: topic?.name || topicName,
+          icon: topic?.icon || '📝',
+          totalAttempts: data.done,      // domande UNICHE viste
+          correctAnswers: data.correct,  // di cui corrette
+          accuracy,
+        };
+      })
+      .sort((a, b) => b.accuracy - a.accuracy);
+  }, [topics, userStats.quizHistory]);
   /* -------------------------------------------------------------- */
   /* RECENT QUIZ HISTORY (15)                                       */
   /* -------------------------------------------------------------- */

@@ -317,12 +317,16 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
 
       quizQuestions = chosen.slice(0, 30);
     } else if (quizType === 'topic' && topicId) {
+      /* ❶ tutte le domande del topic scelto                           */
       const topicQs = questions.filter(
-        (q) => q.topic.toLowerCase() === topicId.toLowerCase()
+        (q) => q.topic.toLowerCase() === topicId.toLowerCase(),
       );
-      quizQuestions = topicQs.filter(
-        (q) => !userStats.correctQuestions[q.id]
-      );
+
+      /* ❷ scartiamo SOLO quelle già risposte correttamente             */
+      const pool = topicQs.filter((q) => !userStats.correctQuestions[q.id]);
+
+      /* ❸ shuffle + take all (pool può essere < 30)                    */
+      quizQuestions = [...pool].sort(() => Math.random() - 0.5);
     } else if (quizType === 'custom' && questionIds) {
       quizQuestions = questions.filter((q) => questionIds.includes(q.id));
     } else if (quizType === 'forYou') {

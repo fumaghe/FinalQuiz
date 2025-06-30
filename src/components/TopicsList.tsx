@@ -29,34 +29,43 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
   /* AGGREGAZIONE STAT PER TOPIC  (tutte le modalità tranne reverse) */
   /* -------------------------------------------------------------- */
   const aggregatedStats = useMemo(() => {
-    const map: Record<string, { done: number; correct: number }> = {};
+    const lastAttempt = new Map<
+      string,
+      { topic: string; isCorrect: boolean }
+    >();
 
     userStats.quizHistory
       .filter((q) => q.quizType !== 'reverse')
-      .forEach((q) => {
-        (q.answeredQuestions ?? []).forEach((a) => {
-          if (!map[a.topic]) map[a.topic] = { done: 0, correct: 0 };
-          map[a.topic].done += 1;
-          if (a.isCorrect) map[a.topic].correct += 1;
+      .forEach((quiz) => {
+        (quiz.answeredQuestions ?? []).forEach((a) => {
+          lastAttempt.set(a.questionId, {
+            topic: a.topic.replace(/\s+/g, '').toLowerCase(), // canonico
+            isCorrect: a.isCorrect,
+          });
         });
       });
 
-    return map;
-  }, [userStats.quizHistory]);
+    const agg: Record<string, { done: number; correct: number }> = {};
+    lastAttempt.forEach(({ topic, isCorrect }) => {
+      if (!agg[topic]) agg[topic] = { done: 0, correct: 0 };
+      agg[topic].done += 1;
+      if (isCorrect) agg[topic].correct += 1;
+    });
 
+    return agg;
+  }, [userStats.quizHistory]);
   /* -------------------------------------------------------------- */
   /* UTILS                                                          */
   /* -------------------------------------------------------------- */
-  const getTopicStats = (topicName: string) => {
-    const st = aggregatedStats[topicName];
-    if (!st)
-      return { correctAnswers: 0, totalAnswered: 0, accuracy: 0 };
+  const getTopicStats = (rawTopic: string) => {
+    const key = rawTopic.replace(/\s+/g, '').toLowerCase();   // canonico
+    const st = aggregatedStats[key];
+    if (!st) return { correctAnswers: 0, totalAnswered: 0, accuracy: 0 };
 
     return {
       correctAnswers: st.correct,
       totalAnswered: st.done,
-      accuracy:
-        st.done > 0 ? Math.round((st.correct / st.done) * 100) : 0,
+      accuracy: Math.round((st.correct / st.done) * 100),
     };
   };
 

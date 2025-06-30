@@ -48,7 +48,10 @@ export async function loadQuestionsFromFiles(): Promise<Question[]> {
 /* -------------------------------------------------------------- */
 /* Parser                                                          */
 /* -------------------------------------------------------------- */
-function parseQuestionsFromText(src: string, topic: string): Question[] {
+function parseQuestionsFromText(src: string, rawTopic: string): Question[] {
+  /* topic canonico: es. SQL → sql,  “PowerBI” → powerbi, …        */
+  const topic = rawTopic.replace(/\s+/g, '').toLowerCase();
+
   const out: Question[] = [];
   const blocks = src
     .split(/\r?\n\s*\r?\n+/)
@@ -81,12 +84,12 @@ function parseQuestionsFromText(src: string, topic: string): Question[] {
       : '';
 
     out.push({
-      id: `${topic.toLowerCase()}_${i + 1}`,
+      id: `${topic}_${i + 1}`,       // id stabile & canonico
       question: questionText,
       options,
       correct,
       explanation,
-      topic,
+      topic,                         // <- **canonico!**
     });
   });
 
