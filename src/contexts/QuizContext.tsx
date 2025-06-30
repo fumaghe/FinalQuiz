@@ -118,9 +118,9 @@ const COMBOS: Record<string, string[]> = {
 
 const LANGUAGE_DUELIST = { baseId: 'language_duelist', pair: ['python', 'r'] };
 const POLYGLOT_MIN = [5, 6, 7, 8];
-const OMNI_THRESH = [50, 75, 100, 150];
+const OMNI_THRESH = [50, 50, 50, 50];
 const OMNI_CNT = [8, 9, 10, 12];
-const ALL_ROUNDER = [1, 2, 3, 5];
+const ALL_ROUNDER = [5, 10, 20, 40];
 
 /* ------------------------------------------------------------------ */
 /*  BADGE ENGINE                                                       */
@@ -248,6 +248,25 @@ function computeAllBadges(stats: UserStats): string[] {
     });
   }
 
+  /* ---------- 6 · Quiz-Type Badges ------------------------------- */
+  const TYPE_BADGES: Array<{
+    id: string;
+    quizType: 'general' | 'topic' | 'forYou' | 'timed' | 'streak' | 'reverse';
+    thresholds: number[];
+  }> = [
+    { id: 'general_run',  quizType: 'general', thresholds: [5, 15, 30, 60] },
+    { id: 'topic_tunnel', quizType: 'topic',   thresholds: [3, 10, 25, 50] },
+    { id: 'for_you',      quizType: 'forYou',  thresholds: [5, 10, 25, 40] },
+    { id: 'time_crusher', quizType: 'timed',   thresholds: [5, 10, 25, 40] },
+    { id: 'streak_surv',  quizType: 'streak',  thresholds: [5, 10, 20, 40] },
+    { id: 'reverse_mast', quizType: 'reverse', thresholds: [5, 10, 20, 40] },
+  ];
+
+  TYPE_BADGES.forEach(({ id, quizType, thresholds }) => {
+    const count = (stats.quizHistory ?? []).filter(q => q.quizType === quizType).length;
+    const lvl = highestTier(count, thresholds);
+    if (lvl) unlocked.push(`${id}_${lvl}`);
+  });
 
   /* ---------- 6 · Combo / polyglot / omni ecc. ------------------- */
   Object.entries(COMBOS).forEach(([id, list]) => {
@@ -271,18 +290,16 @@ function computeAllBadges(stats: UserStats): string[] {
     if (omniCnt >= OMNI_CNT[i]) unlocked.push(`omniscient_${lv}`);
   });
 
-  const quizPerTopic: Record<string, number> = {};
-  (stats.quizHistory ?? []).forEach((qs: any) =>
-    new Set((qs as any).topics ?? []).forEach((raw: string) => {
-      const t = norm(raw);
-      quizPerTopic[t] = (quizPerTopic[t] ?? 0) + 1;
-    })
+  const attemptedTopics = Object.keys(topicCounters).filter(
+    t => (topicCounters[t]?.done ?? 0) > 0
   );
-  const minQuiz = Math.min(
-    ...Object.keys(TOPIC_THRESHOLDS).map(t => quizPerTopic[t] ?? 0)
-  );
-  const arLvl = highestTier(minQuiz, ALL_ROUNDER);
-  if (arLvl) unlocked.push(`all_rounder_${arLvl}`);
+  if (attemptedTopics.length > 0) {
+    const minCorrectAll = Math.min(
+      ...attemptedTopics.map(t => topicCounters[t].correct)
+    );
+    const arLvl = highestTier(minCorrectAll, ALL_ROUNDER);
+    if (arLvl) unlocked.push(`all_rounder_${arLvl}`);
+}
 
   /* ---------- 7 · Easter Egg ------------------------------------ */
   if ((stats as any).foundEasterEgg) unlocked.push('easter_ghost');

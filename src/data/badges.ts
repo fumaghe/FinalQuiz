@@ -231,7 +231,7 @@ const comboBadges: Badge[] = [
     '🌌',
     'Omniscient',
     'combo',
-    ['8 topic con ≥50 risposte corrette', '9 topic con ≥75 risposte', '10 topic con ≥100 risposte', '12 topic con ≥150 risposte'],
+    ['8 topic con ≥50 risposte corrette', '9 topic con ≥50 risposte', '10 topic con ≥50 risposte', '11 topic con ≥50 risposte'],
     (thr, lvl) =>
       `Raggiungi ${thr} correttamente.` +
       ` Badge ${LEVEL_SUFFIX[lvl]}.`,
@@ -241,10 +241,14 @@ const comboBadges: Badge[] = [
     '🧩',
     'All-Rounder',
     'combo',
-    ['1 quiz completato in ogni topic', '2 quiz in ogni topic', '3 quiz in ogni topic', '5 quiz in ogni topic'],
+    [
+      '≥5 risposte corrette in ogni topic',
+      '≥10 risposte corrette in ogni topic',
+      '≥20 risposte corrette in ogni topic',
+      '≥40 risposte corrette in ogni topic',
+    ],
     (thr, lvl) =>
-      `Completa ${thr}.` +
-      ` Livello ${LEVEL_SUFFIX[lvl]}.`,
+      `Rispondi correttamente ad almeno ${thr} in ogni topic per ottenere il badge ${LEVEL_SUFFIX[lvl]}.`,
   ),
   ...makeTier(
     'data_conqueror',
@@ -255,16 +259,6 @@ const comboBadges: Badge[] = [
     (thr, lvl) =>
       `Conquista ${thr} in tutti i topic.` +
       ` Badge ${LEVEL_SUFFIX[lvl]}.`,
-  ),
-  ...makeTier(
-    'data_emperor',
-    '👑👑',
-    'Data Emperor',
-    'combo',
-    ['12 topic al livello Gold', '12 topic al livello Amethyst', '12 topic Amethyst + stella', 'Tutti i topic Amethyst top'],
-    (thr, lvl) =>
-      `Diventa imperatore dei dati: ${thr}.` +
-      ` Livello ${LEVEL_SUFFIX[lvl]}.`,
   ),
 ];
 
@@ -312,7 +306,7 @@ const typeCfg = [
   { id: 'for_you',      emoji: '❤️', name: 'For-You Fanatic', thresholds: [3, 10, 25, 50] },
   { id: 'time_crusher', emoji: '⏱️', name: 'Time Crusher', thresholds: [3, 10, 25, 50] },
   { id: 'streak_surv',  emoji: '🔄', name: 'Streak Survivor', thresholds: [5, 10, 20, 40] },
-  { id: 'reverse_mast', emoji: '🔁', name: 'Reverse Master', thresholds: ['≥70 %', '≥80 %', '≥90 %', '100 %'] },
+  { id: 'reverse_mast', emoji: '🔁', name: 'Reverse Master', thresholds: [5, 10, 20, 40] },
 ];
 
 const quizTypeBadges: Badge[] = typeCfg.flatMap(cfg =>
