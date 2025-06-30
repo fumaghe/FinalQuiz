@@ -425,18 +425,18 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
     /* === Altri tipi (generale, topic, custom, forYou) =============== */
     else if (quizType === 'general') {
       const quotaPerTopic: Record<string, number> = {
-        SQL: 3,
-        Statistica: 3,
-        Tableau: 2,
-        Databricks: 2,
-        DataLake2: 1,
-        Git: 1,
-        NoSQL: 3,
-        PowerBI: 3,
-        Python: 4,
-        R: 2,
-        ML: 3,
-        DeepLearning: 3,
+        sql: 3,
+        statistica: 3,
+        tableau: 2,
+        databricks: 2,
+        datalake2: 1,
+        git: 1,
+        nosql: 3,
+        powerbi: 3,
+        python: 4,
+        r: 2,
+        ml: 3,
+        deeplearning: 3,
       };
       const unanswered = questions.filter(
         (q) => !userStats.correctQuestions[q.id]
@@ -445,8 +445,9 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
       const used = new Set<string>();
 
       Object.entries(quotaPerTopic).forEach(([topic, qty]) => {
+        const canon = norm(topic); 
         const pool = unanswered.filter(
-          (q) => q.topic === topic && !used.has(q.id)
+          (q) => norm(q.topic) === canon && !used.has(q.id)
         );
         const pick = [...pool].sort(() => Math.random() - 0.5).slice(0, qty);
         pick.forEach((q) => used.add(q.id));
@@ -464,8 +465,9 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
       quizQuestions = chosen.slice(0, 30);
     } else if (quizType === 'topic' && topicId) {
       /* ❶ tutte le domande del topic scelto                           */
+      const canonId = norm(topicId);
       const topicQs = questions.filter(
-        (q) => q.topic.toLowerCase() === topicId.toLowerCase(),
+        (q) => norm(q.topic) === canonId
       );
 
       /* ❷ scartiamo SOLO quelle già risposte correttamente             */
