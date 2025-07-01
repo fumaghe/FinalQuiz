@@ -463,7 +463,9 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
         chosen.push(...filler);
       }
 
-      quizQuestions = chosen.slice(0, 30);
+      quizQuestions = [...chosen]               // copia
+        .sort(() => Math.random() - 0.5)        // shuffle
+        .slice(0, 30);                          // mantieni le prime 30
     } else if (quizType === 'topic' && topicId) {
       /* ❶ tutte le domande del topic scelto                           */
       const canonId = norm(topicId);

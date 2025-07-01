@@ -24,7 +24,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from './ui/alert-dialog';
-
+import CupPointsPopup from './CupPointsPopup';
 /* ------------------------------------------------------------------ */
 /* PROPS                                                              */
 /* ------------------------------------------------------------------ */
@@ -109,23 +109,15 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
         </div>
         {/* ---- nuova area cupPoints + settings ---- */}
         <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-1">
-            <span className="text-lg">🏆</span>
-            <span className="text-body font-medium">
-              {userStats.cupPoints}
-            </span>
-            <span
-              className={`text-sm font-medium ${
-                lastDelta >= 0 ? 'text-green-600' : 'text-red-600'
-              }`}
-            >
-              {lastDelta >= 0 ? `+${lastDelta}` : lastDelta}
-            </span>
-          </div>
+          {/* 🏆 Cup Points con popup esplicativo */}
+          <CupPointsPopup points={userStats.cupPoints} delta={lastDelta} />
+
+          {/* pulsante impostazioni */}
           <button
             onClick={() => onNavigate('settings')}
             className="p-2 rounded-full hover:bg-apple-light transition-colors"
-          />
+          >
+          </button>
         </div>
       </header>
 

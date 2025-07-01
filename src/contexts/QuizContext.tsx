@@ -310,10 +310,10 @@ function computeAllBadges(stats: UserStats): string[] {
 
 /** Mappa livello badge → punti */
 const BADGE_POINTS: Record<BadgeLevel, number> = {
-  bronze:   5,
-  silver:  10,
-  gold:    15,
-  amethyst:25,
+  bronze:   25,
+  silver:  40,
+  gold:    70,
+  amethyst:120,
 };
 
 const QUIZ_TYPE_MULT: Record<string, number> = {
@@ -343,7 +343,7 @@ function computeCupPoints(stats: UserStats): number {
     }
     // bonus modalità "streak"
     if (q.quizType === 'streak' && q.streakCount != null) {
-      basePts += Math.floor(q.streakCount / 5);
+      basePts += Math.floor(q.streakCount / 5) * 15;
     }
 
     // applica moltiplicatore
