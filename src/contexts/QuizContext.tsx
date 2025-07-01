@@ -532,7 +532,10 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
       type: 'UPDATE_STATS',
       payload: {
         ...state.userStats,
-        answeredQuestions: {}, // ← questo resetta la disponibilità delle domande
+        answeredQuestions: {},
+        correctQuestions: {},
+        incorrectQuestions: {},
+        statsPerTopic: {},
         lastUpdated: new Date(),
       },
     });
