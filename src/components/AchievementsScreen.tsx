@@ -237,7 +237,6 @@ const AchievementsScreen: React.FC<Props> = ({ onNavigate }) => {
         base.name.toLowerCase().includes(debouncedSearch.toLowerCase());
       if (!showLevel || !showSearch) return null;
 
-      /* card ---------------------------------------------------------------- */
       return (
         <motion.button
           key={baseId}
@@ -253,19 +252,23 @@ const AchievementsScreen: React.FC<Props> = ({ onNavigate }) => {
             })
           }
           className="relative flex flex-col items-center gap-3 p-4 rounded-2xl bg-white shadow 
-                     hover:ring-1 hover:ring-apple-blue/30 transition
-                     sm:w-full"
+                    hover:ring-1 hover:ring-apple-blue/30 transition sm:w-full"
           style={{
             filter: isUnlocked ? 'none' : 'grayscale(1)',
             opacity: isUnlocked ? 1 : 0.3,
           }}
         >
           {/* illustrazione di livello */}
-          <div className="w-full aspect-square relative">
+          <div className="relative">
             <img
               src={LEVEL_IMG[userLvl ?? 'bronze']}
               alt={`${LEVEL_LABEL[userLvl ?? 'bronze']} illustration`}
-              className="object-contain object-center w-full h-full rounded-full"
+              className="
+                object-contain object-center rounded-full
+                w-24 h-24        /* base = misura desktop attuale */
+                md:w-28 md:h-28  /* ≥768px */
+                lg:w-32 lg:h-32  /* ≥1024px */
+              "
             />
 
             {/* ring di progresso */}
@@ -277,11 +280,14 @@ const AchievementsScreen: React.FC<Props> = ({ onNavigate }) => {
             )}
 
             {/* emoji */}
-            <span className="absolute inset-0 grid place-content-center 
-                          text-4xl  
-                          sm:text-5xl 
-                          md:text-6xl 
-                          lg:text-7xl ">
+            <span
+              className="
+                absolute inset-0 grid place-content-center
+                text-3xl         /* base = misura desktop attuale */
+                md:text-6xl      /* ≥768px */
+                lg:text-6xl      /* ≥1024px */
+              "
+            >
               {base.emoji}
             </span>
 
@@ -292,7 +298,13 @@ const AchievementsScreen: React.FC<Props> = ({ onNavigate }) => {
           </div>
 
           {/* nome badge */}
-          <p className="text-center font-semibold text-[18px] leading-tight line-clamp-2">
+          <p className="
+              text-center font-semibold
+              text-xs        /* ~12px su mobile */
+              sm:text-[18px] /* 18px da sm in su */
+              leading-tight
+              line-clamp-2
+            ">
             {base.name}
           </p>
         </motion.button>

@@ -352,9 +352,12 @@ function computeCupPoints(stats: UserStats): number {
   });
 
   // 2) punti da badge (identico a prima)
-  stats.unlockedBadges?.forEach(bid => {
-    const lvl = bid.split('_').pop() as BadgeLevel;
-    sum += BADGE_POINTS[lvl] || 0;
+  stats.unlockedBadges?.forEach(badgeId => {
+    // badgeId ad esempio: "tp_sql_bronze", "pp_python_gold", "quiz_hero_silver", ecc.
+    const level = badgeId.split('_').pop() as BadgeLevel;
+    // recupera i punti dal mapping
+    const pts = BADGE_POINTS[level] ?? 0;
+    sum += pts;
   });
 
   return sum;
