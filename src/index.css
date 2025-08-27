@@ -89,7 +89,7 @@
   
   /* ITSAR-style card */
   .its-card {
-    @apply bg-its-card rounded-its shadow-its-card;
+    @apply bg-its-card rounded-its shadow-its-card border border-red-200;
   }
 }
 
