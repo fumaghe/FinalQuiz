@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import { useQuiz } from '../contexts/QuizContext';
 import ProgressRing from './ProgressRing';
+import DailyQuizSection from './DailyQuizSection';
 import {
   Shuffle,
   Folder,
@@ -12,6 +13,7 @@ import {
   Award,
   BarChart,
   RotateCcw,
+  FileText,
 } from 'lucide-react';
 import {
   AlertDialog,
@@ -45,7 +47,7 @@ const QUIZ_TYPE_MULT: Record<string, number> = {
 /* COMPONENT                                                          */
 /* ------------------------------------------------------------------ */
 const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
-  const { state, resetAllQuestions, getFilteredQuestions } = useQuiz();
+  const { state, resetAllQuestions, getFilteredQuestions, getTopicsForCourse } = useQuiz();
   const { userStats, topics } = state;
 
   // Calcola il delta dell’ultimo quiz
@@ -69,10 +71,11 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
   }, [userStats.quizHistory]);
 
   /* -------------------------------------------------------------- */
-  /* Statistiche base                                               */
+  /* Statistiche base filtrate per corso                           */
   /* -------------------------------------------------------------- */
-  const totalTopics     = topics.length;
-  const completedTopics = topics.filter((t) => {
+  const courseTopics = getTopicsForCourse ? getTopicsForCourse() : topics;
+  const totalTopics     = courseTopics.length;
+  const completedTopics = courseTopics.filter((t) => {
     const ts = userStats.statsPerTopic[t.name];
     return ts && ts.done > 0;
   }).length;
@@ -100,25 +103,27 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
           <img
             src="/ITSAR.png"
             alt="Logo ITS Angelo Rizzoli"
-            className="w-10 h-10"
+            className="w-16 h-12"
           />
           <div>
-            <h2 className="text-h2 font-semibold">Ciao, Studente!</h2>
+            <h2 className="text-h2 font-semibold">Ciao, {state.user?.fullName || 'Studente'}!</h2>
             <p className="text-caption text-its-secondary">
-              Pronto per nuove sfide?
+              {state.user?.courseName ? `Corso: ${state.user.courseName}` : 'Pronto per nuove sfide?'}
             </p>
           </div>
         </div>
         {/* ---- nuova area cupPoints + settings ---- */}
+        {/* --- nuova area cup points + profilo --- */}
         <div className="flex items-center space-x-4">
           {/* 🏆 Cup Points con popup esplicativo */}
           <CupPointsPopup points={userStats.cupPoints} delta={lastDelta} />
 
-          {/* pulsante impostazioni */}
+          {/* pulsante profilo */}
           <button
-            onClick={() => onNavigate('settings')}
-            className="p-2 rounded-full hover:bg-its-light transition-colors"
+            onClick={() => onNavigate('profile')}
+            className="p-2 rounded-its hover:bg-red-50 transition-colors group"
           >
+            <User className="w-5 h-5 text-its-red group-hover:scale-110 transition-transform" />
           </button>
         </div>
       </header>
@@ -163,6 +168,9 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             </div>
           </div>
         </section>
+
+        {/* ------------------- QUIZ DEL GIORNO ------------------- */}
+        <DailyQuizSection onNavigate={onNavigate} />
 
         {/* ------------------- QUICK-ACTIONS ---------------------- */}
         <section>
@@ -417,6 +425,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
           </section>
         )}
 
+
         {/* ------------------- RESET BUTTON ---------------------- */}
         {Object.keys(userStats.answeredQuestions).length > 0 && (
           <section>
@@ -464,21 +473,28 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
         <div className="flex justify-around py-2">
           <button className="flex flex-col items-center p-2 text-its-red">
             <div className="w-6 h-6 mb-1">🏠</div>
-            <span className="text-small font-medium">Home</span>
+            <span className="text-xs sm:text-small font-medium">Home</span>
           </button>
           <button
             onClick={() => onNavigate('stats')}
             className="flex flex-col items-center p-2 text-its-secondary hover:text-its-red transition-colors"
           >
             <BarChart className="w-6 h-6 mb-1" />
-            <span className="text-small">Statistiche</span>
+            <span className="text-xs sm:text-small">Statistiche</span>
+          </button>
+          <button
+            onClick={() => onNavigate('questionnaires')}
+            className="flex flex-col items-center p-2 text-its-secondary hover:text-its-red transition-colors"
+          >
+            <FileText className="w-6 h-6 mb-1"/>
+            <span className="text-xs sm:text-small">Questionari</span>
           </button>
           <button
             onClick={() => onNavigate('achievements')}
             className="flex flex-col items-center p-2 text-its-secondary hover:text-its-red transition-colors"
           >
             <Award className="w-6 h-6 mb-1"/>
-            <span className="text-small">Badge</span>
+            <span className="text-xs sm:text-small">Badge</span>
           </button>
         </div>
       </nav>

@@ -366,6 +366,22 @@ function computeCupPoints(stats: UserStats): number {
 /* ------------------------------------------------------------------ */
 /*  STATE / REDUCER / CONTEXT                                         */
 /* ------------------------------------------------------------------ */
+interface User {
+  id: string;
+  username: string;
+  fullName: string;
+  email: string;
+  selectedCourse: string;
+  courseName: string;
+}
+
+interface Course {
+  id: string;
+  name: string;
+  description: string;
+  topics: string[];
+}
+
 export interface QuizState {
   questions: Question[];
   topics: Topic[];
@@ -375,6 +391,9 @@ export interface QuizState {
   loading: boolean;
   currentScreen: string;
   screenParams?: any;
+  user: User | null;
+  courses: Course[];
+  isAuthenticated: boolean;
 }
 
 export type QuizAction =
@@ -388,7 +407,51 @@ export type QuizAction =
   | { type: 'UPDATE_SETTINGS'; payload: UserSettings }
   | { type: 'TOGGLE_FAVORITE'; payload: string }
   | { type: 'SET_CURRENT_SCREEN'; payload: { screen: string; params?: any } }
-  | { type: 'FOUND_EASTER_EGG' }; 
+  | { type: 'FOUND_EASTER_EGG' }
+  | { type: 'LOGIN'; payload: User }
+  | { type: 'LOGOUT' }
+  | { type: 'SELECT_COURSE'; payload: string }
+  | { type: 'UPDATE_USER'; payload: Partial<User> }
+  | { type: 'LOAD_COURSES'; payload: Course[] };
+
+const AVAILABLE_COURSES: Course[] = [
+  {
+    id: 'data-science',
+    name: 'Data Science & Analytics',
+    description: 'Machine Learning, Python, R, Statistica',
+    topics: ['python', 'r', 'ml', 'statistica', 'deeplearning']
+  },
+  {
+    id: 'database-admin',
+    name: 'Database Administrator',
+    description: 'SQL, NoSQL, Git, Data Management',
+    topics: ['sql', 'nosql', 'git', 'datalake2']
+  },
+  {
+    id: 'business-intelligence',
+    name: 'Business Intelligence',
+    description: 'PowerBI, Tableau, SQL, Statistica',
+    topics: ['powerbi', 'tableau', 'sql', 'statistica']
+  },
+  {
+    id: 'cloud-engineer',
+    name: 'Cloud Data Engineer',
+    description: 'Databricks, NoSQL, Python, Data Lake',
+    topics: ['databricks', 'nosql', 'python', 'datalake2']
+  },
+  {
+    id: 'full-stack-data',
+    name: 'Full Stack Data Developer',
+    description: 'Python, SQL, Git, Machine Learning',
+    topics: ['python', 'sql', 'git', 'ml']
+  },
+  {
+    id: 'ai-specialist',
+    name: 'AI & Deep Learning Specialist',
+    description: 'Deep Learning, Python, ML, Statistica',
+    topics: ['deeplearning', 'python', 'ml', 'statistica']
+  }
+];
 
 const initialState: QuizState = {
   questions: [],
@@ -421,6 +484,9 @@ const initialState: QuizState = {
   loading: true,
   currentScreen: 'splash',
   screenParams: null,
+  user: null,
+  courses: AVAILABLE_COURSES,
+  isAuthenticated: false,
 };
 
 function quizReducer(state: QuizState, action: QuizAction): QuizState {
@@ -504,6 +570,55 @@ function quizReducer(state: QuizState, action: QuizAction): QuizState {
         screenParams: action.payload.params ?? null,
       };
 
+    case 'LOGIN':
+      // Don't save to localStorage automatically on login - this might be a restore from localStorage
+      return {
+        ...state,
+        user: action.payload,
+        isAuthenticated: true,
+        currentScreen: action.payload.selectedCourse ? 'dashboard' : 'course-selection',
+      };
+
+    case 'LOGOUT':
+      // Remove user from localStorage
+      localStorage.removeItem('quizmaster_user');
+      
+      return {
+        ...state,
+        user: null,
+        isAuthenticated: false,
+        currentScreen: 'login',
+      };
+
+    case 'SELECT_COURSE': {
+      const course = state.courses.find(c => c.id === action.payload);
+      const updatedUser = state.user ? {
+        ...state.user,
+        selectedCourse: action.payload,
+        courseName: course?.name || '',
+      } : null;
+      
+      // Save to localStorage
+      if (updatedUser) {
+        localStorage.setItem('quizmaster_user', JSON.stringify(updatedUser));
+      }
+      
+      return {
+        ...state,
+        user: updatedUser,
+        currentScreen: 'dashboard',
+      };
+    }
+
+    case 'UPDATE_USER':
+      return {
+        ...state,
+        user: state.user ? { ...state.user, ...action.payload } : null,
+      };
+
+    case 'LOAD_COURSES':
+      return { ...state, courses: action.payload };
+
     default:
       return state;
   }
@@ -516,6 +631,8 @@ const QuizContext = createContext<{
   dispatch: React.Dispatch<QuizAction>;
   resetAllQuestions: () => void;
   getFilteredQuestions: (t: 'all' | 'unanswered' | 'incorrect') => Question[];
+  getQuestionsForCourse: () => Question[];
+  getTopicsForCourse: () => Topic[];
 } | null>(null);
 
 export const useQuiz = () => {
@@ -540,16 +657,54 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
       },
     });
 
-  const getFilteredQuestions = (t: 'all' | 'unanswered' | 'incorrect') =>
-    t === 'unanswered'
-      ? state.questions.filter(q => !state.userStats.answeredQuestions[q.id])
+  // **filtro per course**
+  const getQuestionsForCourse = () => {
+    if (!state.user?.selectedCourse) return state.questions;
+    
+    const selectedCourse = state.courses.find(c => c.id === state.user?.selectedCourse);
+    if (!selectedCourse) return state.questions;
+    
+    return state.questions.filter(q => 
+      selectedCourse.topics.some(topic => 
+        norm(q.topic) === norm(topic)
+      )
+    );
+  };
+
+  const getTopicsForCourse = () => {
+    if (!state.user?.selectedCourse) return state.topics;
+    
+    const selectedCourse = state.courses.find(c => c.id === state.user?.selectedCourse);
+    if (!selectedCourse) return state.topics;
+    
+    return state.topics.filter(topic => 
+      selectedCourse.topics.some(courseTopicId => 
+        norm(topic.id) === norm(courseTopicId)
+      )
+    );
+  };
+
+  const getFilteredQuestions = (t: 'all' | 'unanswered' | 'incorrect') => {
+    const courseQuestions = getQuestionsForCourse();
+    
+    return t === 'unanswered'
+      ? courseQuestions.filter(q => !state.userStats.answeredQuestions[q.id])
       : t === 'incorrect'
-      ? state.questions.filter(q => state.userStats.incorrectQuestions[q.id])
-      : state.questions;
+      ? courseQuestions.filter(q => state.userStats.incorrectQuestions[q.id])
+      : courseQuestions;
+  };
 
   /* bootstrap: storage + question load */
   useEffect(() => {
     try {
+      /* ---------- USER ---------- */
+      const rawUser = localStorage.getItem('quizmaster_user');
+      if (rawUser) {
+        const user = JSON.parse(rawUser);
+        // Use a special action to avoid saving to localStorage again
+        dispatch({ type: 'LOGIN', payload: user });
+      }
+
       /* ---------- STATS ---------- */
       const rawStats = localStorage.getItem('quizmaster_stats');
       if (rawStats) {
@@ -635,7 +790,7 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [dispatch]);
 
   return (
-    <QuizContext.Provider value={{ state, dispatch, resetAllQuestions, getFilteredQuestions }}>
+    <QuizContext.Provider value={{ state, dispatch, resetAllQuestions, getFilteredQuestions, getQuestionsForCourse, getTopicsForCourse }}>
       {children}
     </QuizContext.Provider>
   );
@@ -676,3 +831,8 @@ function generateTopicsFromQuestions(qs: Question[]): Topic[] {
     isFavorite: false,
   }));
 }
+
+export default QuizProvider;
+
+// Export types for use in other components
+export type { User, Course };

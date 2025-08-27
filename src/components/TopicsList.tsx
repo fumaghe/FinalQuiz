@@ -14,8 +14,11 @@ interface TopicsListProps {
 /* COMPONENT                                                          */
 /* ------------------------------------------------------------------ */
 const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
-  const { state, dispatch } = useQuiz();
-  const { topics, userStats } = state;
+  const { state, dispatch, getTopicsForCourse } = useQuiz();
+  const { userStats } = state;
+  
+  // Usa solo i topic del corso selezionato
+  const topics = getTopicsForCourse();
 
   /* -------------------------------------------------------------- */
   /* STATE FILTRI & SEARCH                                          */
@@ -104,54 +107,69 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
   /* -------------------------------------------------------------- */
   return (
     <div className="min-h-screen bg-its-light">
-      {/* ---------- HEADER ---------- */}
-      <header className="bg-its-card shadow-its-card px-its-2x py-4">
-        <div className="flex items-center space-x-4 mb-4">
-          <button
-            onClick={() => onNavigate('dashboard')}
-            className="p-2 -ml-2 rounded-full hover:bg-its-light transition-colors"
-          >
-            <ArrowLeft className="w-6 h-6 text-its-red" />
-          </button>
-          <h1 className="text-h2 font-semibold">Argomenti</h1>
-        </div>
-
-        {/* Search */}
-        <div className="relative mb-4">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-its-secondary" />
-          <input
-            type="text"
-            placeholder="Cerca argomenti…"
-            value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 its-input"
-          />
-        </div>
-
-        {/* Tabs */}
-        <div className="flex space-x-1 bg-its-light rounded-its p-1">
-          {[
-            { key: 'all', label: 'Tutti' },
-            { key: 'incomplete', label: 'Da completare' },
-            { key: 'favorites', label: 'Preferiti' },
-          ].map(tab => (
+      {/* Header */}
+      <header>
+        <div className="bg-gradient-to-r from-its-red to-its-red-dark px-6 py-4">
+          <div className="flex items-center space-x-3">
             <button
-              key={tab.key}
-              onClick={() => setFilter(tab.key as any)}
-              className={`flex-1 py-2 px-4 rounded-lg text-caption font-medium transition-all ${
-                filter === tab.key
-                  ? 'bg-its-card text-its-red shadow-its-card'
-                  : 'text-its-secondary hover:text-its-text'
-              }`}
+              onClick={() => onNavigate('dashboard')}
+              className="p-2 rounded-its bg-white/20 hover:bg-white/30 transition-colors"
             >
-              {tab.label}
+              <ArrowLeft className="w-5 h-5 text-white" />
             </button>
-          ))}
+            <img
+              src="/ITSAR.png"
+              alt="Logo ITS Angelo Rizzoli"
+              className="w-16 h-12"
+            />
+            <div>
+              <h1 className="text-h2 font-bold text-white">Argomenti</h1>
+              <p className="text-body text-white/90">
+                {state.user?.courseName ? `Corso: ${state.user.courseName}` : 'Seleziona un argomento per iniziare'}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Search & Filters */}
+        <div className="px-6 py-4 space-y-4">
+          {/* Search */}
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-its-secondary" />
+            <input
+              type="text"
+              placeholder="Cerca argomenti…"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-3 its-input"
+            />
+          </div>
+
+          {/* Tabs */}
+          <div className="flex space-x-1 bg-its-light rounded-its p-1">
+            {[
+              { key: 'all', label: 'Tutti' },
+              { key: 'incomplete', label: 'Da completare' },
+              { key: 'favorites', label: 'Preferiti' },
+            ].map(tab => (
+              <button
+                key={tab.key}
+                onClick={() => setFilter(tab.key as any)}
+                className={`flex-1 py-2 px-4 rounded-lg text-caption font-medium transition-all ${
+                  filter === tab.key
+                    ? 'bg-its-card text-its-red shadow-its-card'
+                    : 'text-its-secondary hover:text-its-text'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
       </header>
 
-      {/* ---------- LISTA ---------- */}
-      <div className="px-its-2x py-4 space-y-3 pb-20">
+      {/* Lista Argomenti */}
+      <div className="px-6 py-4 space-y-3 pb-20">
         {filteredTopics.map(topic => {
           const stats = getTopicStats(topic.id);
           const progress =

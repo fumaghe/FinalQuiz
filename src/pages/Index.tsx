@@ -4,13 +4,19 @@ import { useQuiz } from '../contexts/QuizContext';
 
 import SplashScreen    from '../components/SplashScreen';
 import LoginScreen     from '../components/LoginScreen';
+import CourseSelectionScreen from '../components/CourseSelectionScreen';
+import ProfileScreen   from '../components/ProfileScreen';
 import Dashboard       from '../components/Dashboard';
 import TopicsList      from '../components/TopicsList';
 import QuizScreen      from '../components/QuizScreen';
 import ResultsScreen   from '../components/ResultsScreen';
 import StatsScreen     from '../components/StatsScreen';
 import ReviewScreen    from '../components/ReviewScreen';
-import AchievementsScreen from '../components/AchievementsScreen'; // ← IMPORT
+import AchievementsScreen from '../components/AchievementsScreen';
+import DailyQuizScreen from '../components/DailyQuizScreen';
+import DailyQuizHistoryScreen from '../components/DailyQuizHistoryScreen';
+import QuestionnaireScreen from '../components/QuestionnaireScreen';
+import QuestionnaireListScreen from '../components/QuestionnaireListScreen';
 
 /** Firma comune per la navigazione interna */
 type NavigateFn = (screen: string, params?: any) => void;
@@ -32,10 +38,32 @@ const Index: React.FC = () => {
         return <SplashScreen onComplete={() => handleNavigate('login')} />;
 
       case 'login':
-        return <LoginScreen onLogin={() => handleNavigate('dashboard')} />;
+        return !state.isAuthenticated ? (
+          <LoginScreen onLogin={() => handleNavigate('dashboard')} />
+        ) : (
+          handleNavigate('dashboard'), null
+        );
+
+      case 'course-selection':
+        return state.isAuthenticated && !state.user?.selectedCourse ? (
+          <CourseSelectionScreen onNavigate={handleNavigate} />
+        ) : (
+          handleNavigate('dashboard'), null
+        );
 
       case 'dashboard':
-        return <Dashboard onNavigate={handleNavigate} />;
+        return state.isAuthenticated ? (
+          <Dashboard onNavigate={handleNavigate} />
+        ) : (
+          handleNavigate('login'), null
+        );
+
+      case 'profile':
+        return state.isAuthenticated ? (
+          <ProfileScreen onNavigate={handleNavigate} />
+        ) : (
+          handleNavigate('login'), null
+        );
 
       case 'topics':
         return <TopicsList onNavigate={handleNavigate} />;
@@ -85,6 +113,41 @@ const Index: React.FC = () => {
 
       case 'achievements': // ← QUI
         return <AchievementsScreen onNavigate={handleNavigate} />;
+
+      case 'questionnaires':
+        return state.isAuthenticated ? (
+          <QuestionnaireListScreen onNavigate={handleNavigate} />
+        ) : (
+          handleNavigate('login'), null
+        );
+
+      case 'daily-quiz':
+        return state.isAuthenticated ? (
+          <DailyQuizScreen 
+            onNavigate={handleNavigate} 
+            date={screenParams?.date || new Date().toISOString().split('T')[0]} 
+          />
+        ) : (
+          handleNavigate('login'), null
+        );
+
+      case 'daily-quiz-history':
+        return state.isAuthenticated ? (
+          <DailyQuizHistoryScreen onNavigate={handleNavigate} />
+        ) : (
+          handleNavigate('login'), null
+        );
+
+      case 'questionnaire':
+        return state.isAuthenticated ? (
+          <QuestionnaireScreen 
+            onNavigate={handleNavigate}
+            topicId={screenParams?.topicId || ''}
+            type={screenParams?.type || 'teacher'}
+          />
+        ) : (
+          handleNavigate('login'), null
+        );
 
       default:
         return <Dashboard onNavigate={handleNavigate} />;

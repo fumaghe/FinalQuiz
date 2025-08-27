@@ -1,0 +1,800 @@
+
+Quale componente di Power BI consente di ospitare report on-premises?
+A) Power BI Desktop
+B) Power BI Service
+C) Power BI Embedded
+D) Power BI Report Server
+Risposta Corretta: D
+Spiegazione: Power BI Report Server è la soluzione on-premises disponibile tramite Power BI Premium, che permette di ospitare report internamente.
+
+Quale edizione di Power BI offre funzionalità di collaborazione online come servizio SaaS?
+A) Power BI Desktop
+B) Power BI Service
+C) Power BI Pro
+D) Power BI Mobile
+Risposta Corretta: C
+Spiegazione: Power BI Pro è la licenza che abilita la collaborazione, la condivisione e l’uso di workspace sulla piattaforma Power BI Service.
+
+Quale applicazione Power BI installi sul tuo PC per creare report?
+A) Power BI Service
+B) Power BI Desktop
+C) Power BI Mobile
+D) Power BI Embedded
+Risposta Corretta: B
+Spiegazione: Power BI Desktop è l’applicazione Windows per sviluppo di report e modellazione dati.
+
+Quale requisito è necessario per connettersi a fonti MS Access o MS SQL Server da Power BI Desktop?
+A) Non serve nulla
+B) Access e SQL Server devono essere installati sul PC
+C) Devi avere una licenza Pro
+D) Serve installare Power BI Gateway
+Risposta Corretta: B
+Spiegazione: Per usare i connettori nativi MS Access e SQL Server, i rispettivi software devono essere installati localmente.
+
+In Power Query, quale comando del ribbon usi per unire più tabelle con la stessa struttura in una nuova query?
+A) Merge Queries
+B) Append Queries
+C) Combine Files
+D) Group By
+Risposta Corretta: B
+Spiegazione: “Append Queries as New” accoda più tabelle in una nuova query senza sovrascrivere le originali.
+
+In Power Query, quale comando del ribbon usi per unire relazionando tabelle con chiavi diverse?
+A) Merge Queries
+B) Append Queries
+C) Join Tables
+D) Combine Files
+Risposta Corretta: A
+Spiegazione: “Merge Queries as New” crea una nuova query basata sulla join tra tabelle in base a uno o più campi chiave.
+
+Quale simbolo in M indica l’inizio della sezione delle definizioni?
+A) in
+B) let
+C) =
+D) #
+Risposta Corretta: B
+Spiegazione: In Power Query M, la sezione let contiene le operazioni da eseguire, seguita da in che indica il risultato finale.
+
+In Power Query M, quale carattere separa gli argomenti di una funzione?
+A) Punto e virgola (;)
+B) Virgola (,)
+C) Spazio
+D) Due punti (:)
+Risposta Corretta: B
+Spiegazione: Gli argomenti delle funzioni M sono separati da virgole.
+
+In Power Query M, quale notazione si usa per indicare un valore di data-ora?
+A) #date()
+B) #datetime()
+C) #datezone()
+D) #duration()
+Risposta Corretta: B
+Spiegazione: #datetime(YYYY,MM,DD,hh,mm,ss) crea un valore data-ora; #date è solo data, #datetimezone include fuso orario.
+
+In Power Query M, l’espressione #duration(1,0,0,0) restituisce:
+A) 1 giorno
+B) 1 ora
+C) 1 minuto
+D) 1 secondo
+Risposta Corretta: A
+Spiegazione: #duration(days, hours, minutes, seconds): con 1,0,0,0 si crea una durata di 1 giorno.
+
+Le formule M sono:
+A) Case-insensitive
+B) Case-sensitive
+C) Dipendenti dall’ora locale
+D) Sempre in inglese
+Risposta Corretta: B
+Spiegazione: Power Query M è case-sensitive: maiuscole/minuscole fanno differenza.
+
+Dove trovi l’Editor Avanzato per scrivere manualmente M in Power Query?
+A) Home > Transform Data
+B) Home > Advanced Editor
+C) View > Advanced Editor
+D) File > Options
+Risposta Corretta: B
+Spiegazione: L’Editor Avanzato si trova nella scheda Home del Power Query Editor.
+
+In Power BI, un “Measure” in DAX è creato:
+A) In Power Query
+B) In Modeling > New Measure
+C) Nel ribbon Visualizations
+D) Con Append Queries
+Risposta Corretta: B
+Spiegazione: Le misure DAX si definiscono tramite “Modeling > New Measure” e non in Power Query.
+
+Qual è il contesto riga (row context) in DAX?
+A) Il filtro applicato a una tabella
+B) Il contesto della riga corrente in funzioni iteratrici
+C) La selezione di visualizzazione
+D) Il contesto di sicurezza
+Risposta Corretta: B
+Spiegazione: Il contesto riga si applica quando DAX valuta espressioni riga per riga, ad es. in SUMX.
+
+Qual è il contesto filtro (filter context) in DAX?
+A) La selezione di colonne
+B) Il contesto di una misura
+C) I filtri derivanti da slicer, visualizzazioni o funzioni
+D) Il contesto riga
+Risposta Corretta: C
+Spiegazione: Il contesto filtro è l’insieme di filtri applicati da slicer, visual, page, report o da funzioni DAX.
+
+Quale funzione DAX consente di alterare il contesto filtro di un’espressione?
+A) FILTER()
+B) CALCULATE()
+C) SUM()
+D) ALL()
+Risposta Corretta: B
+Spiegazione: CALCULATE(<expression>, <filters>) ricalcola l’espressione nel contesto filtro modificato.
+
+Quale funzione DAX restituisce BLANK() se il denominatore è zero?
+A) DIVIDE()
+B) QUOTIENT()
+C) SUMX()
+D) AVERAGE()
+Risposta Corretta: A
+Spiegazione: DIVIDE(<numerator>, <denominator>, [<alternate>]) gestisce divide-by-zero restituendo BLANK o valore alternativo.
+
+Quale funzione restituisce i dati del trimestre precedente?
+A) PREVIOUSYEAR()
+B) NEXTQUARTER()
+C) PREVIOUSQUARTER()
+D) SAMEPERIODLASTYEAR()
+Risposta Corretta: C
+Spiegazione: PREVIOUSQUARTER(<dates>) restituisce la tabella delle date del trimestre precedente.
+
+Quale funzione DAX calcola il totale cumulato da inizio anno?
+A) TOTALYTD()
+B) CUMULATIVE()
+C) YEARTD()
+D) YTD()
+Risposta Corretta: A
+Spiegazione: TOTALYTD(<expression>, <dates>[, <filter>]) somma i valori da inizio anno fino alla data corrente.
+
+Qual è il primo passo per creare un titolo dinamico basato su DAX?
+A) Formattazione condizionale
+B) Creare un campo calcolato DAX di tipo stringa
+C) Aggiungere una slicer
+D) Pubblicare il report
+Risposta Corretta: B
+Spiegazione: Serve prima creare una misura o colonna calcolata in DAX di tipo stringa contenente il titolo dinamico.
+
+In Power BI Desktop, per applicare un titolo dinamico a un oggetto visivo si usa:
+A) Visualizations > Title > fx
+B) Home > Format > Title
+C) Modelling > Title
+D) View > Title
+Risposta Corretta: A
+Spiegazione: Nella sezione Title del formato, il pulsante “fx” abilita la formattazione condizionale basata su un campo.
+
+Qual è il terzo passaggio per un titolo dinamico dopo aver creato e selezionato il campo?
+A) Aggiungere un bookmark
+B) Aggiungere un filtro alla pagina per alimentare il titolo
+C) Aggiungere una slicer
+D) Pubblicare il report
+Risposta Corretta: B
+Spiegazione: Se necessario, si aggiunge un filtro alla pagina per aggiornare il campo DAX che alimenta il titolo.
+
+Quale tipo di filtro si applica a tutte le pagine di un report?
+A) Visual level
+B) Page level
+C) Report level
+D) Drill-through
+Risposta Corretta: C
+Spiegazione: I report-level filters influenzano tutti i visual e tutte le pagine del report.
+
+Quale tipo di filtro si applica solo a un singolo visual?
+A) Visual level
+B) Page level
+C) Report level
+D) Drill-through
+Risposta Corretta: A
+Spiegazione: I visual-level filters agiscono solo sull’oggetto visivo selezionato.
+
+Quale funzionalità permette di esplorare dettagli da un visual a un’altra pagina?
+A) Slicer
+B) Drill-through
+C) Bookmark
+D) Tooltip
+Risposta Corretta: B
+Spiegazione: Il drill-through consente di cliccare un valore e passare a una pagina di dettaglio filtrata.
+
+Quale oggetto si usa per filtrare su valori in modo interattivo direttamente sulla pagina?
+A) Card
+B) Slicer
+C) KPI
+D) Matrix
+Risposta Corretta: B
+Spiegazione: Uno Slicer è un filtro visivo che permette di selezionare interattivamente i valori.
+
+Per visualizzare la distribuzione di punteggi in range di 10 punti si usa:
+A) Line chart
+B) Histogram
+C) Scatter plot
+D) Pie chart
+Risposta Corretta: B
+Spiegazione: Un histogram raggruppa i dati in bin di dimensione specificata per mostrare la distribuzione.
+
+In Power BI, per definire un bin custom di valori numerici si:
+A) Crea una misura
+B) Usa “New group” su un campo numerico
+C) Applica un filtro
+D) Usa conditional formatting
+Risposta Corretta: B
+Spiegazione: “New group” o “Bins” sui campi numerici permette di definire manualmente la dimensione dei bin.
+
+Quale visual in Power BI mostra una piccola linea di tendenza in una cella di una tabella?
+A) KPI
+B) Sparkline
+C) Card
+D) Gauge
+Risposta Corretta: B
+Spiegazione: Le sparklines sono piccoli grafici a linee all’interno di tabelle o matrici per mostrare trend.
+
+Quale tipo di grafico useresti per monitorare una serie di dati nel tempo?
+A) Histogram
+B) Line chart
+C) Pie chart
+D) Waterfall
+Risposta Corretta: B
+Spiegazione: Il grafico a linee è ideale per mostrare l’andamento di una misura nel tempo.
+
+Quale grafico è più adatto per confrontare due misure come vendite medie e profitti medi?
+A) Column chart
+B) Scatter plot
+C) Line chart
+D) Matrix
+Risposta Corretta: B
+Spiegazione: Lo scatter plot mostra la relazione tra due misure usando due assi.
+
+Come modifichi la forma di un marker in uno scatter plot solo per una categoria?
+A) Conditional formatting
+B) Drill-through
+C) Selezioni di marker shape per categoria
+D) Dynamic titles
+Risposta Corretta: C
+Spiegazione: In Format > Shapes si può specificare quale forma usare per ogni categoria.
+
+Quale visual mostra i totali ma non i subtotali in una struttura tabellare?
+A) Table
+B) Matrix
+C) Card
+D) Slicer
+Risposta Corretta: A
+Spiegazione: La visual Table mostra il Grand Total, mentre la Matrix permette anche i subtotali.
+
+Quale feature cambia il colore di una card quando un valore è inferiore a un obiettivo?
+A) Conditional formatting
+B) Drill-through
+C) Grouping
+D) Bookmarks
+Risposta Corretta: A
+Spiegazione: La formattazione condizionale sui dati permette di colorare in rosso se sotto target.
+
+Dove si trova il pulsante per accedere all’Editor di Power Query?
+A) Home > Transform Data
+B) Home > Edit Queries
+C) View > Power Query
+D) File > Options
+Risposta Corretta: A
+Spiegazione: Su Power BI Desktop il pulsante “Transform Data” apre Power Query Editor.
+
+Quale modalità di licenza è necessaria per pubblicare contenuti su Power BI Service?
+A) Power BI Desktop gratuito
+B) Power BI Pro o Premium per utente
+C) Power BI Embedded
+D) Power BI Mobile
+Risposta Corretta: B
+Spiegazione: Servono almeno licenze Pro o Premium per utente per pubblicare e condividere report online.
+
+Quale prodotto Power BI consente di incorporare visual in applicazioni esterne?
+A) Power BI Service
+B) Power BI Embedded
+C) Power BI Pro
+D) Power BI Desktop
+Risposta Corretta: B
+Spiegazione: Power BI Embedded è pensato per l’embedding di report e dashboard in applicazioni.
+
+Quale oggetto di Power BI non supporta i titoli basati su espressioni?
+A) Card
+B) Line chart
+C) Oggetti Python/R
+D) Scatter plot
+Risposta Corretta: C
+Spiegazione: I visual Python/R non supportano la formattazione condizionale dei titoli.
+
+Come reagisce DIVIDE(5,0,1) in DAX?
+A) Errore
+B) 5
+C) 1
+D) BLANK()
+Risposta Corretta: C
+Spiegazione: Con terzo argomento alternateResult, DIVIDE(5,0,1) restituisce 1 invece di BLANK.
+
+In DAX, quale funzione restituisce i dati dell’anno precedente?
+A) PREVIOUSYEAR()
+B) SAMEPERIODLASTYEAR()
+C) TOTALPREVYEAR()
+D) LASTYEAR()
+Risposta Corretta: B
+Spiegazione: SAMEPERIODLASTYEAR(<dates>) restituisce l’insieme date corrispondenti all’anno precedente.
+
+Quale funzione M crea un elenco di valori?
+A) record()
+B) table()
+C) { … }
+D) [ … ]
+Risposta Corretta: C
+Spiegazione: In M, le liste si definiscono con le parentesi graffe { "a", "b" }.
+
+Quale sintassi M definisce un record?
+A) { Field1=1 }
+B) [ Field1=1 ]
+C) < Field1=1 >
+D) ( Field1=1 )
+Risposta Corretta: B
+Spiegazione: I record in M si scrivono con parentesi quadre [ Name="Roma" ].
+
+Quale oggetto M rappresenta una tabella?
+A) List
+B) Record
+C) Table
+D) Set
+Risposta Corretta: C
+Spiegazione: Le tabelle M sono strutture di tipo Table create da query o con funzioni specifiche.
+
+Il separatore decimale in Power Query M è:
+A) Virgola (,)
+B) Punto (.)
+C) Due punti (:)
+D) Punto e virgola (;)
+Risposta Corretta: B
+Spiegazione: In M il separatore decimale è sempre il punto.
+
+Quale operazione di Power BI consente di unire dati eterogenei da più file Excel?
+A) Merge Queries
+B) Append Queries
+C) Combine Files
+D) Group By
+Risposta Corretta: C
+Spiegazione: “Combine Files” in Power BI consente di importare e accodare automaticamente più file dallo stesso folder.
+
+Quale visual Power BI si usa per esplorare pattern di raggruppamento non supervisionato?
+A) Decomposition Tree
+B) Key Influencers
+C) Clustering (in Tableau)
+D) Custom Visual
+Risposta Corretta: B
+Spiegazione: Il visual Key Influencers (in Service) identifica i fattori che influenzano maggiormente una misura. (nota: se non disponibile, usi Decomposition Tree)
+
+Quale opzione di pubblicazione crea un’app dedicata per gli utenti in Power BI Service?
+A) Publish to web
+B) Create app
+C) Share report
+D) Export to PDF
+Risposta Corretta: B
+Spiegazione: “Create app” raggruppa report e dashboard per distribuirli come pacchetto agli utenti.
+
+Quale funzionalità permette di programmare l’aggiornamento dei dati in Power BI Service?
+A) Dataflow
+B) Scheduled refresh
+C) Incremental refresh
+D) On-demand refresh
+Risposta Corretta: B
+Spiegazione: Il “Scheduled refresh” in Service stabilisce orari per ricaricare i dataset.
+
+Quale impostazione DAX permette di ignorare i filtri su una tabella?
+A) ALL()
+B) FILTER()
+C) REMOVEFILTERS()
+D) IGNORE()
+Risposta Corretta: A
+Spiegazione: ALL(Table) rimuove tutti i filtri applicati su quella tabella.
+
+In Power BI Desktop, per visualizzare i subtotali in un matrix visual devi:
+A) Abilitare “Show subtotals”
+B) Usare una table
+C) Aggiungere un measure
+D) Creare un bin
+Risposta Corretta: A
+Spiegazione: Nelle opzioni di formato della Matrix si attiva “Subtotals” per mostrare i subtotali per raggruppamento.
+
+Quale modalità di storage carica tutti i dati in memoria locale del report?
+A) DirectQuery
+B) Live Connection
+C) Import
+D) Composite
+Risposta Corretta: C
+Spiegazione: In modalità Import i dati vengono copiati in memoria nel modello, garantendo performance elevate ma richiedendo spazio.
+
+In quale modalità i dati rimangono nella fonte esterna e ogni visual esegue query in tempo reale?
+A) Import
+B) DirectQuery
+C) Dual
+D) Live/DirectQuery
+Risposta Corretta: B
+Spiegazione: DirectQuery non importa i dati, ma esegue query dirette alla fonte per ogni visual.
+
+Quale combinazione di storage consente di mescolare dati importati e query dirette?
+A) Import + Live
+B) Composite
+C) Dual il modello
+D) Hybrid
+Risposta Corretta: B
+Spiegazione: Composite models permettono di avere tabelle in Import e altre in DirectQuery nello stesso modello.
+
+Quale componente serve per rinfrescare dataset on-premises in DirectQuery?
+A) Power BI Desktop
+B) Data Gateway
+C) Power BI Gateway – Personal
+D) Power BI Gateway – Enterprise
+Risposta Corretta: D
+Spiegazione: Il Gateway Enterprise (standard) è richiesto per rinfrescare dataset DirectQuery e Import in ambienti aziendali.
+
+Quale feature consente di incrementare solo i dati nuovi o modificati in un import?
+A) Scheduled Refresh
+B) Incremental Refresh
+C) Dataflow
+D) Data Refresh
+Risposta Corretta: B
+Spiegazione: L’Incremental Refresh carica periodi recenti e mantiene quelli storici senza ricaricarli.
+
+Quale elemento definisci per abilitare l’incremental refresh su una tabella?
+A) RangeStart/RangeEnd parameters
+B) Date hierarchy
+C) Custom column
+D) Time intelligence
+Risposta Corretta: A
+Spiegazione: I parametri RangeStart e RangeEnd identificano l’intervallo di date da rinfrescare.
+
+Quale linguaggio viene usato per trasformazioni in Power Query?
+A) DAX
+B) M
+C) SQL
+D) R
+Risposta Corretta: B
+Spiegazione: Il motore Power Query utilizza il linguaggio M per le query di preparazione dati.
+
+Quale ambiente consente di creare Dataflow self-service?
+A) Power BI Desktop
+B) Power BI Service
+C) Power BI Report Server
+D) Power BI Mobile
+Risposta Corretta: B
+Spiegazione: I Dataflows si definiscono nel Power BI Service per creare entità riutilizzabili.
+
+Quale formato DAX restituisce un array di singoli valori per ogni riga di una tabella?
+A) CALCULATETABLE
+B) SUMMARIZE
+C) VALUES
+D) ALLEXCEPT
+Risposta Corretta: C
+Spiegazione: VALUES(table[column]) restituisce tabelle con i valori unici di column.
+
+Quale funzione DAX crea una tabella di tutti i valori di una colonna ignorando i filtri?
+A) ALL
+B) ALLSELECTED
+C) DISTINCT
+D) REMOVEFILTERS
+Risposta Corretta: A
+Spiegazione: ALL(table[column]) restituisce tutti i valori ignorando il contesto filtro.
+
+Quale funzione DAX restituisce una tabella filtrata sulla base di una espressione booleana?
+A) FILTER
+B) CALCULATE
+C) IF
+D) SWITCH
+Risposta Corretta: A
+Spiegazione: FILTER(table, condition) restituisce la parte di table in cui condition è TRUE.
+
+Che cosa fa la funzione RELATED in DAX?
+A) Aggrega valori correlati
+B) Ricava un valore da una tabella correlata
+C) Crea una relazione tra tabelle
+D) Filtra i dati
+Risposta Corretta: B
+Spiegazione: RELATED(column) recupera il valore di una colonna in una tabella collegata tramite relazione uno-a-molti.
+
+Quale funzione DAX consente di sommare iterativamente ogni riga di una tabella?
+A) SUM
+B) SUMX
+C) ADDCOLUMNS
+D) GENERATE
+Risposta Corretta: B
+Spiegazione: SUMX(table, expression) valuta expression per ogni riga e somma i risultati.
+
+Quale funzione DAX restituisce una singola riga con tutti i valori di una tabella?
+A) VALUES
+B) LOOKUPVALUE
+C) TOPN con 1 e ALL
+D) FIRSTNONBLANK
+Risposta Corretta: C
+Spiegazione: TOPN(1, ALL(table), sortExpr) restituisce la prima riga ordinata secondo sortExpr.
+
+Quale funzione DAX trova un valore in tabella basandosi su due colonne di ricerca?
+A) LOOKUPVALUE
+B) FILTER
+C) RELATED
+D) FIND
+Risposta Corretta: A
+Spiegazione: LOOKUPVALUE(result_column, search_column1, search_value1, search_column2, search_value2).
+
+Quale funzione DAX calcola percentuale di contributo?
+A) DIVIDE(SUM(...), CALCULATE(SUM(...), ALL()))
+B) SUMX(...)/SUM(...)*100
+C) CALCULATE(PERCENTILEX.INC(...))
+D) RATIO()
+Risposta Corretta: A
+Spiegazione: La divisione tra somma corrente e somma globale (scegliendo ALL()) restituisce il contributo percentuale.
+
+Come imposti la sicurezza a livello di riga (RLS) statica in Power BI Desktop?
+A) Modelling → Manage roles
+B) Home → Security → Row-level
+C) Data → Roles
+D) Report → Security
+Risposta Corretta: A
+Spiegazione: In Modelling > Manage roles definisci i ruoli e le espressioni DAX di filtro.
+
+Quale DAX si usa per filtri dinamici in RLS basati sull’utente corrente?
+A) USERNAME() or USERPRINCIPALNAME()
+B) GETUSER()
+C) CURRENTUSER()
+D) LOGIN()
+Risposta Corretta: A
+Spiegazione: USERPRINCIPALNAME() restituisce l’account Azure AD dell’utente loggato.
+
+Quale oggetto ti mostra come vengono applicati i ruoli RLS?
+A) View as Roles
+B) Test roles
+C) Simulation
+D) Security view
+Risposta Corretta: A
+Spiegazione: “View as Roles” permette di simulare la vista del report per un determinato ruolo.
+
+Come esegui l’unione di due dataset con chiavi diverse in Power BI Desktop?
+A) Append Queries
+B) Merge Queries
+C) Combine Files
+D) Union Tables
+Risposta Corretta: B
+Spiegazione: Il merge in Power Query permette di unire due query con join basato su chiavi.
+
+Quale visual permette di mostrare una gerarchia in colonna espandibile?
+A) Matrix
+B) Table
+C) Clustered bar chart
+D) Decomposition tree
+Risposta Corretta: A
+Spiegazione: La Matrix supporta drill-down e mostra subtotali e livelli di gerarchia.
+
+Quale visual standard non supporta il drill-up nativamente?
+A) Matrix
+B) Hierarchy slicer
+C) Line chart
+D) Bar chart
+Risposta Corretta: C
+Spiegazione: Un line chart non consente di esplorare gerarchie multiple; serve un visual personalizzato o la Matrix.
+
+Quale visual personalizzato offre un diagramma di Sankey?
+A) Microsoft Sankey diagram
+B) Network chart
+C) Sankey Flow Chart by xViz
+D) Org chart
+Risposta Corretta: C
+Spiegazione: Esistono custom visuals su AppSource come “Sankey Flow Chart by xViz”.
+
+Quale grafico è più adatto per mostrare composizione percentuale nel tempo?
+A) Pie chart
+B) Stacked area chart
+C) Clustered column chart
+D) Waterfall chart
+Risposta Corretta: B
+Spiegazione: Lo stacked area chart mostra come cambia la composizione percentuale delle categorie nel tempo.
+
+Quale controllo permette di sincronizzare slicer tra più pagine?
+A) Sync slicers pane
+B) Filter sync
+C) Bookmark sync
+D) Page union
+Risposta Corretta: A
+Spiegazione: Il pannello “Sync slicers” consente di applicare uno slicer su più pagine.
+
+Quale elemento utilizzi per salvare lo stato corrente di filtri e selezioni?
+A) Bookmark
+B) Snapshot
+C) Save
+D) Template
+Risposta Corretta: A
+Spiegazione: Un bookmark memorizza selezioni, filtri, e stato dei visual per poi essere richiamato o usato in un pulsante.
+
+Quale opzione di Dynamic Visuals consente di cambiare misura al volo?
+A) Field parameters
+B) What-if parameters
+C) Parameter table
+D) Data category
+Risposta Corretta: A
+Spiegazione: I field parameters permettono di creare un selettore per scegliere dinamicamente colonne o misure.
+
+Quale funzione DAX genera una tabella di date necessaria per time intelligence?
+A) CALENDAR
+B) DATEADD
+C) DATESINPERIOD
+D) GENERATETABLE
+Risposta Corretta: A
+Spiegazione: CALENDAR(start_date, end_date) crea una tabella di date sequenziali.
+
+Quale funzione DAX restituisce l’anno di una data?
+A) YEAR()
+B) DATEPART()
+C) GETYEAR()
+D) DATEYEAR()
+Risposta Corretta: A
+Spiegazione: YEAR(date) estrae l’anno dalla data.
+
+Quale proprietà di una colonna viene impostata in Modelling per indicare che contiene dati geografici?
+A) Data category
+B) Data type
+C) Format
+D) Default summarization
+Risposta Corretta: A
+Spiegazione: La Data category (e.g. State, Country, Postal Code) permette di abilitare le mappe.
+
+Quale tema personalizzato in Power BI si basa su un file JSON?
+A) Custom report theme
+B) Custom layout
+C) Corporate template
+D) Theme pack
+Risposta Corretta: A
+Spiegazione: I report theme si caricano via JSON definendo colori, font, stili.
+
+Quale linguaggio puoi usare per creare visual Python in Power BI Desktop?
+A) R
+B) Python
+C) M
+D) DAX
+Risposta Corretta: B
+Spiegazione: Il visual Python consente di inserire script Python per creare grafici custom.
+
+Quale opzione abilita l’uso di script R e Python in Power BI Desktop?
+A) File → Options and settings → Options → Python scripting / R scripting
+B) View → Enable scripting
+C) Modeling → Script options
+D) Data → Script languages
+Risposta Corretta: A
+Spiegazione: Nelle Options puoi configurare i percorsi degli interpreti R e Python.
+
+Quale visual built-in permette di mostrare un KPI con freccia di variazione?
+A) Gauge
+B) Card
+C) KPI
+D) Ribbon chart
+Risposta Corretta: C
+Spiegazione: Il visual KPI visualizza una misura di valore attuale, target, e la variazione in percentuale.
+
+Quale visual custom consente di creare una mappa a punti su mappa geospaziale?
+A) ArcGIS Maps for Power BI
+B) Bing Maps
+C) Mapbox Visual
+D) All of the above
+Risposta Corretta: D
+Spiegazione: ArcGIS, Mapbox, e Bing sono opzioni per mappe avanzate in Power BI.
+
+Come si abilita il supporto per script R in Power BI Service?
+A) Non è supportato
+B) Attivando Power BI Premium
+C) Configurando personal gateway
+D) Solo in modalità Import
+Risposta Corretta: B
+Spiegazione: I R visuals vengono renderizzati nel service solo se il workspace è su capacità Premium.
+
+Quale impostazione di sicurezza limita l’uso di script Python/ R in Service?
+A) Tenant settings → Python scripting
+B) Workspace settings → Enable R visuals
+C) Row-level security
+D) Data protection policies
+Risposta Corretta: A
+Spiegazione: Nei Tenant settings puoi disabilitare Python/R scripting per il tenant.
+
+Quale visual built-in mostra la gerarchia di raggruppamento degli attributi?
+A) Decomposition Tree
+B) Key Influencers
+C) Matrix
+D) Drill Down Tree
+Risposta Corretta: A
+Spiegazione: Il Decomposition Tree permette di esplorare i dati a livelli di attributi.
+
+Quale visual AI mostra fattori che influenzano maggiormente un risultato?
+A) Key Influencers
+B) Decomposition Tree
+C) Q&A visual
+D) Insights pane
+Risposta Corretta: A
+Spiegazione: Il Key Influencers usa modelli statistici per evidenziare drivers di una misura.
+
+Quale strumento consente di creare modelli di Azure ML direttamente in Power BI?
+A) AI Insights
+B) Cognitive Services
+C) AutoML
+D) Azure ML visual
+Risposta Corretta: A
+Spiegazione: AI Insights integra modelli di Cognitive Services e Azure ML in Power BI.
+
+Quale opzione in Power BI Service permette di esportare dati sottostanti di un visual?
+A) Export to Excel
+B) Export data
+C) Download CSV
+D) All of the above
+Risposta Corretta: D
+Spiegazione: Si può esportare in .xlsx o .csv via menu visual in Service.
+
+Quale modalità di connessione supporta la creazione di KPI con refresh in tempo reale?
+A) Import
+B) DirectQuery
+C) Live
+D) B e C
+Risposta Corretta: D
+Spiegazione: Sia DirectQuery sia Live Connection forniscono dati freschi ad ogni interrogazione.
+
+Quale feature permette di esplorare i dati naturali con linguaggio conversazionale?
+A) Q&A visual
+B) Slicer
+C) Bookmark
+D) Power Automate
+Risposta Corretta: A
+Spiegazione: Il Q&A visual risponde a domande in linguaggio naturale e genera automaticamente un visual.
+
+Quale controllo Power BI inserisci per far scorrere valori di un campo data come animazione?
+A) Play Axis custom visual
+B) Play chart
+C) Time slicer
+D) Play Axis
+Risposta Corretta: D
+Spiegazione: Il custom visual “Play Axis” aggiunge un autoplay dei valori di un asse.
+
+Quale API REST si usa per automatizzare refresh di dataset?
+A) /refreshes
+B) /datasets/{id}/refreshes
+C) /dataflows
+D) /actions
+Risposta Corretta: B
+Spiegazione: L’endpoint POST https://api.powerbi.com/v1.0/myorg/datasets/{datasetId}/refreshes avvia un refresh.
+
+Quale strumento esterno è consigliato per editing avanzato di modelli Tabular?
+A) DAX Studio
+B) Tabular Editor
+C) SQL Server Management Studio
+D) Visual Studio
+Risposta Corretta: B
+Spiegazione: Tabular Editor permette editing di livello Tabular semplificato per Power BI.
+
+Quale strumento utilizzeresti per analizzare performance DAX e query SQL emesse?
+A) Performance Analyzer
+B) DAX Studio
+C) Query Diagnostics
+D) All of the above
+Risposta Corretta: D
+Spiegazione: Performance Analyzer nel Desktop, DAX Studio e Query Diagnostics nei più recenti aggiornamenti forniscono diagnosi di performance.
+
+Quale opzione di publish permette di salvare una copia del report come .pbix?
+A) File → Save as
+B) Download report
+C) Export → Power BI file
+D) Save to Power BI service
+Risposta Corretta: B
+Spiegazione: In Power BI Service si può “Download report (PBIX)” se l’amministratore lo consente.
+
+Quale impostazione di pagina imposta l’orientamento di stampa su orizzontale?
+A) View → Page view → Custom
+B) File → Print setup
+C) File → Page setup
+D) Home → Page orientation
+Risposta Corretta: C
+Spiegazione: In File → Page setup si sceglie l’orientamento per la stampa o PDF.
+
+Quale feature consente di eseguire un’azione Power Automate direttamente da un visual?
+A) Button visual con action type Power Automate
+B) Bookmark
+C) Drill-through
+D) Action on data point
+Risposta Corretta: A
+Spiegazione: Il Button visual supporta Power Automate action per innescare flow esterni.

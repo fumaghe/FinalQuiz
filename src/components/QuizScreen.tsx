@@ -145,8 +145,11 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
   /* ------------------------------------------------------------------ */
   /* CONTEXT & STATE                                                    */
   /* ------------------------------------------------------------------ */
-  const { state, dispatch } = useQuiz();
-  const { questions, currentSession, topics, userStats } = state;
+  const { state, dispatch, getQuestionsForCourse } = useQuiz();
+  const { currentSession, topics, userStats } = state;
+
+  // **FILTRO QUESTIONS per CORSO**
+  const allQuestions = getQuestionsForCourse();
 
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showFeedback, setShowFeedback]   = useState(false);
@@ -248,7 +251,7 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
       updatedCorrect,
       updatedIncorrect,
       updatedStatsTop,
-    } = accumulateTopicStats(answeredArr, userStats, questions);
+    } = accumulateTopicStats(answeredArr, userStats, allQuestions);
 
     const correctDelta = answeredArr.filter(a => a.isCorrect).reduce((d,a)=>{
       const wasCorrect = !!userStats.correctQuestions[a.questionId];
@@ -322,7 +325,7 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
       updatedCorrect,
       updatedIncorrect,
       updatedStatsTop,
-    } = accumulateTopicStats(answeredArr, userStats, questions);
+    } = accumulateTopicStats(answeredArr, userStats, allQuestions);
 
     /* Delta per overallAccuracy / correctAnswers */
     const correctDelta = answeredArr.reduce((delta, a) => {
@@ -399,21 +402,21 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
 
     /* === Sfida a Tempo ============================================ */
     if (isTimed) {
-      quizQuestions = [...questions]
+      quizQuestions = [...allQuestions]
         .sort(() => Math.random() - 0.5)
         .slice(0, 30);
     }
 
     /* === Streak Quiz (1 domanda iniziale) ========================= */
     else if (isStreak) {
-      quizQuestions = [...questions].sort(() => Math.random() - 0.5).slice(0, 1);
+      quizQuestions = [...allQuestions].sort(() => Math.random() - 0.5).slice(0, 1);
     }
 
     /* === Quiz Inversi ============================================ */
     else if (isReverse) {
-      const base = [...questions].sort(() => Math.random() - 0.5).slice(0, 30);
+      const base = [...allQuestions].sort(() => Math.random() - 0.5).slice(0, 30);
       quizQuestions = base.map((q) => {
-        const { options, correctIndex } = buildReverseOptions(q, questions);
+        const { options, correctIndex } = buildReverseOptions(q, allQuestions);
         return {
           ...q,
           question: q.options[q.correct], // Mostro la risposta
@@ -439,7 +442,7 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
         ml: 3,
         deeplearning: 3,
       };
-      const unanswered = questions.filter(
+      const unanswered = allQuestions.filter(
         (q) => !userStats.correctQuestions[q.id]
       );
       const chosen: Question[] = [];
@@ -469,7 +472,7 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
     } else if (quizType === 'topic' && topicId) {
       /* ❶ tutte le domande del topic scelto                           */
       const canonId = norm(topicId);
-      const topicQs = questions.filter(
+      const topicQs = allQuestions.filter(
         (q) => norm(q.topic) === canonId
       );
 
@@ -479,7 +482,7 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
       /* ❸ shuffle + take all (pool può essere < 30)                    */
       quizQuestions = [...pool].sort(() => Math.random() - 0.5);
     } else if (quizType === 'custom' && questionIds) {
-      quizQuestions = questions.filter((q) => questionIds.includes(q.id));
+      quizQuestions = allQuestions.filter((q) => questionIds.includes(q.id));
     } else if (quizType === 'forYou') {
       const weights = Object.entries(userStats.statsPerTopic)
         .map(([topic, s]) => {
@@ -494,7 +497,7 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
       });
       const poolByTopic: Record<string, Question[]> = {};
       weights.forEach(
-        ({ topic }) => (poolByTopic[topic] = questions.filter((q) => q.topic === topic))
+        ({ topic }) => (poolByTopic[topic] = allQuestions.filter((q) => q.topic === topic))
       );
 
       const picked: Question[] = [];
@@ -512,7 +515,7 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
       }
       if (picked.length < 30) {
         picked.push(
-          ...questions.filter((q) => !usedIds.has(q.id)).slice(0, 30 - picked.length)
+          ...allQuestions.filter((q) => !usedIds.has(q.id)).slice(0, 30 - picked.length)
         );
       }
       quizQuestions = picked;
@@ -605,7 +608,7 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
       if (!wasCorrect) return; // non dovrebbe accadere (gestito sopra)
 
       const usedIds = new Set(currentSession.questions.map((q) => q.id));
-      const pool = questions.filter((q) => !usedIds.has(q.id));
+      const pool = allQuestions.filter((q) => !usedIds.has(q.id));
       if (pool.length === 0) {
         finishQuiz();
         return;
@@ -662,7 +665,7 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
 
     const currentQ = currentSession.questions[currentSession.currentIndex];
     const usedIds = new Set(currentSession.questions.map((q) => q.id));
-    const pool = questions.filter(
+    const pool = allQuestions.filter(
       (q) =>
         q.topic === currentQ.topic &&
         !userStats.correctQuestions[q.id] &&
