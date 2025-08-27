@@ -1,9 +1,9 @@
 {
-  "name": "vite_react_shadcn_ts",
+  "name": "itsapp",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://fumaghe.github.io/FinalQuiz/",
+  "homepage": "https://fumaghe.github.io/ITSApp/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

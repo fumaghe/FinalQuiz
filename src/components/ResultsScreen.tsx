@@ -96,8 +96,8 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
         emoji: '🎉',
         title: 'Ottimo lavoro!',
         message: 'Risultato molto buono!',
-        color: '#007AFF',
-        bgColor: 'bg-blue-50',
+        color: '#C01818',
+        bgColor: 'bg-red-50',
       };
     if (score >= 60)
       return {
@@ -135,9 +135,9 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
       : undefined;
 
   return (
-    <div className="min-h-screen bg-apple-light flex flex-col">
+    <div className="min-h-screen bg-its-light flex flex-col">
       {/* ========== HEADER CARD ========== */}
-      <div className="flex-1 flex flex-col items-center justify-center px-apple-2x py-12">
+      <div className="flex-1 flex flex-col items-center justify-center px-its-2x py-12">
         {/* ICONA / MEDAGLIA */}
         <div
           className={`w-24 h-24 rounded-full flex items-center justify-center mb-6 ${perf.bgColor}`}
@@ -146,15 +146,15 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
           <span className="text-5xl">{perf.emoji}</span>
         </div>
         {/* TITOLO & MSG */}
-        <h1 className="text-h1 font-bold text-apple-text mb-2 text-center">
+        <h1 className="text-h1 font-bold text-its-text mb-2 text-center">
           {perf.title}
         </h1>
-        <p className="text-body text-apple-secondary mb-8 text-center">
+        <p className="text-body text-its-secondary mb-8 text-center">
           {perf.message}
         </p>
 
         {/* —— CARD PRINCIPALE —— */}
-        <div className="apple-card p-8 w-full max-w-sm mb-6">
+        <div className="its-card p-8 w-full max-w-sm mb-6">
           <div className="text-center">
             {/* METRICA PRINCIPALE */}
             <div className="mb-6">
@@ -166,7 +166,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
                   >
                     {streakCount}
                   </p>
-                  <p className="text-body text-apple-secondary">
+                  <p className="text-body text-its-secondary">
                     risposte corrette consecutive
                   </p>
                 </>
@@ -178,7 +178,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
                   >
                     {accuracy}%
                   </p>
-                  <p className="text-body text-apple-secondary">
+                  <p className="text-body text-its-secondary">
                     {correctAnswers} su {totalQuestions} corrette
                   </p>
                 </>
@@ -186,7 +186,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
             </div>
 
             {/* INFO AGGIUNTIVE */}
-            <div className="pt-6 border-t border-apple-border space-y-2">
+            <div className="pt-6 border-t border-its-border space-y-2">
               {quizType === 'timed' && timedLabel && (
                 <p className="flex items-center justify-center text-caption">
                   <Clock className="w-4 h-4 mr-1" />
@@ -194,7 +194,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
                   <span className="font-medium">{timedLabel}</span>
                 </p>
               )}
-              <p className="text-caption text-apple-secondary">Quiz completato</p>
+              <p className="text-caption text-its-secondary">Quiz completato</p>
               <p className="text-body font-medium">
                 {quizType === 'general'
                   ? 'Quiz Generale'
@@ -211,7 +211,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
         </div>
 
         {/* COPPE OTTENUTE / PERSE */}
-        <div className="apple-card p-4 w-full max-w-sm mb-8 flex items-center justify-center space-x-2">
+        <div className="its-card p-4 w-full max-w-sm mb-8 flex items-center justify-center space-x-2">
           <Trophy className={`w-6 h-6 ${cupDelta >= 0 ? 'text-green-600' : 'text-red-600'}`} />
           <span className="text-body font-medium">
             {cupDelta >= 0 ? `+${cupDelta}` : cupDelta} coppe
@@ -220,15 +220,15 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
 
         {/* ERROR SUMMARY (solo per quiz tradizionali e inverse) */}
         {quizType !== 'streak' && errorCount > 0 && (
-          <div className="apple-card p-4 w-full max-w-sm mb-8">
+          <div className="its-card p-4 w-full max-w-sm mb-8">
             <div className="text-center">
-              <p className="text-caption text-apple-secondary mb-2">
+              <p className="text-caption text-its-secondary mb-2">
                 {errorCount}{' '}
                 {errorCount === 1 ? 'errore da' : 'errori da'} rivedere
               </p>
               <button
                 onClick={handleReviewAnswers}
-                className="text-apple-blue text-caption font-medium"
+                className="text-its-red text-caption font-medium"
                 disabled={!quizHistory}
               >
                 Rivedi nel dettaglio →
@@ -239,10 +239,10 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
       </div>
 
       {/* ========== AZIONI ========== */}
-      <div className="px-apple-2x py-6 space-y-4">
+      <div className="px-its-2x py-6 space-y-4">
         <button
           onClick={handleRetryQuiz}
-          className="w-full apple-button-primary flex items-center justify-center space-x-2"
+          className="w-full its-button-primary flex items-center justify-center space-x-2"
         >
           <RotateCcw className="w-5 h-5" />
           <span>Riprova</span>
@@ -252,7 +252,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
           <button
             onClick={handleReviewAnswers}
             disabled={!quizHistory}
-            className="apple-button-secondary flex items-center justify-center space-x-2 disabled:opacity-50"
+            className="its-button-secondary flex items-center justify-center space-x-2 disabled:opacity-50"
           >
             <Eye className="w-5 h-5" />
             <span>Rivedi</span>
@@ -260,7 +260,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
 
           <button
             onClick={() => onNavigate('stats')}
-            className="apple-button-secondary flex items-center justify-center space-x-2"
+            className="its-button-secondary flex items-center justify-center space-x-2"
           >
             <Trophy className="w-5 h-5" />
             <span>Statistiche</span>
@@ -269,7 +269,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
 
         <button
           onClick={() => onNavigate('dashboard')}
-          className="w-full flex items-center justify-center space-x-2 py-3 text-apple-blue font-medium"
+          className="w-full flex items-center justify-center space-x-2 py-3 text-its-red font-medium"
         >
           <Home className="w-5 h-5" />
           <span>Torna alla Home</span>
@@ -280,16 +280,16 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
           onClick={() => {
             if (navigator.share) {
               navigator.share({
-                title: 'QuizMaster - I miei risultati',
+                title: 'ITSApp - I miei risultati',
                 text:
                   quizType === 'streak'
-                    ? `Ho ottenuto una streak di ${streakCount} risposte corrette su QuizMaster! 💥`
-                    : `Ho completato un quiz con il ${accuracy}% di accuratezza! 🎯`,
+                    ? `Ho ottenuto una streak di ${streakCount} risposte corrette su ITSApp! 💥`
+                    : `Ho completato un quiz con il ${accuracy}% di accuratezza su ITSApp! 🎯`,
                 url: window.location.href,
               });
             }
           }}
-          className="w-full flex items-center justify-center space-x-2 py-3 text-apple-secondary"
+          className="w-full flex items-center justify-center space-x-2 py-3 text-its-secondary"
         >
           <Share className="w-5 h-5" />
           <span>Condividi Risultato</span>

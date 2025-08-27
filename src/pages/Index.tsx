@@ -91,7 +91,7 @@ const Index: React.FC = () => {
     }
   };
 
-  return <div className="min-h-screen bg-apple-light">{renderScreen()}</div>;
+  return <div className="min-h-screen bg-its-light">{renderScreen()}</div>;
 };
 
 export default Index;
