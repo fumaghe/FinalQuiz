@@ -186,30 +186,30 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
   /* RENDER                                                         */
   /* -------------------------------------------------------------- */
   return (
-    <div className="min-h-screen bg-apple-light overflow-x-hidden">
+    <div className="min-h-screen bg-its-light overflow-x-hidden">
       {/* ---------------------- HEADER --------------------------- */}
-      <header className="bg-apple-card shadow-apple-card px-4 sm:px-6 py-4 sticky top-0 z-10">
+      <header className="bg-its-card shadow-its-card px-4 sm:px-6 py-4 sticky top-0 z-10">
         <div className="flex items-center space-x-2 sm:space-x-4 mb-4">
           <button
             onClick={() => onNavigate('dashboard')}
-            className="p-2 -ml-2 rounded-full hover:bg-apple-light transition-colors"
+            className="p-2 -ml-2 rounded-full hover:bg-its-light transition-colors"
           >
-            <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6 text-apple-blue" />
+            <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6 text-its-red" />
           </button>
           <h1 className="flex-1 text-lg sm:text-xl font-semibold">Statistiche</h1>
         </div>
 
         {/* TABS */}
         <div className="flex justify-center mb-2">
-          <div className="flex space-x-1 bg-apple-light rounded-apple p-1">
+          <div className="flex space-x-1 bg-its-light rounded-its p-1">
             {(['general', 'topics', 'history'] as const).map((key) => (
               <button
                 key={key}
                 onClick={() => setActiveTab(key)}
                 className={`py-2 px-3 sm:px-4 rounded-lg text-xs sm:text-sm font-medium transition-all ${
                   activeTab === key
-                    ? 'bg-apple-card text-apple-blue shadow-apple-card'
-                    : 'text-apple-secondary hover:text-apple-text'
+                    ? 'bg-its-card text-its-red shadow-its-card'
+                    : 'text-its-secondary hover:text-its-text'
                 }`}
               >
                 {key === 'general'
@@ -231,53 +231,53 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
           <>
             {/* KPI */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-              <div className="apple-card p-4 sm:p-6 text-center">
-                <div className="w-10 h-10 bg-apple-blue/10 rounded-apple flex items-center justify-center mx-auto mb-2">
-                  <TrendingUp className="w-5 h-5 text-apple-blue" />
+              <div className="its-card p-4 sm:p-6 text-center">
+                <div className="w-10 h-10 bg-its-red/10 rounded-its flex items-center justify-center mx-auto mb-2">
+                  <TrendingUp className="w-5 h-5 text-its-red" />
                 </div>
                 <p className="text-xl sm:text-2xl font-bold">
                   {userStats.totalQuizzes}
                 </p>
-                <p className="text-xs sm:text-sm text-apple-secondary">
+                <p className="text-xs sm:text-sm text-its-secondary">
                   Quiz completati
                 </p>
               </div>
 
-              <div className="apple-card p-4 sm:p-6 text-center">
-                <div className="w-10 h-10 bg-apple-green/10 rounded-apple flex items-center justify-center mx-auto mb-2">
-                  <Target className="w-5 h-5 text-apple-green" />
+              <div className="its-card p-4 sm:p-6 text-center">
+                <div className="w-10 h-10 bg-its-green/10 rounded-its flex items-center justify-center mx-auto mb-2">
+                  <Target className="w-5 h-5 text-its-green" />
                 </div>
                 <p className="text-xl sm:text-2xl font-bold">
                   {Math.round(userStats.overallAccuracy)}%
                 </p>
-                <p className="text-xs sm:text-sm text-apple-secondary">
+                <p className="text-xs sm:text-sm text-its-secondary">
                   Precisione media
                 </p>
               </div>
 
               {/* best timed */}
               {bestTimed && (
-                <div className="apple-card p-4 sm:p-6 text-center">
-                  <div className="w-10 h-10 bg-red-100 rounded-apple flex items-center justify-center mx-auto mb-2">
+                <div className="its-card p-4 sm:p-6 text-center">
+                  <div className="w-10 h-10 bg-red-100 rounded-its flex items-center justify-center mx-auto mb-2">
                     <Zap className="w-5 h-5 text-red-600" />
                   </div>
                   <p className="text-xl sm:text-2xl font-bold">
                     {Math.floor(bestTimed.timeTaken! / 60)}m {bestTimed.timeTaken! % 60}s
                   </p>
-                  <p className="text-xs sm:text-sm text-apple-secondary">
+                  <p className="text-xs sm:text-sm text-its-secondary">
                     Miglior tempo
                   </p>
                 </div>
               )}
               {bestMargin && (
-                <div className="apple-card p-4 sm:p-6 text-center">
-                  <div className="w-10 h-10 bg-green-100 rounded-apple flex items-center justify-center mx-auto mb-2">
+                <div className="its-card p-4 sm:p-6 text-center">
+                  <div className="w-10 h-10 bg-green-100 rounded-its flex items-center justify-center mx-auto mb-2">
                     <Clock className="w-5 h-5 text-green-600" />
                   </div>
                   <p className="text-xl sm:text-2xl font-bold">
                     {Math.floor(bestMargin.timeLeft! / 60)}m {bestMargin.timeLeft! % 60}s
                   </p>
-                  <p className="text-xs sm:text-sm text-apple-secondary">
+                  <p className="text-xs sm:text-sm text-its-secondary">
                     Miglior margine
                   </p>
                 </div>
@@ -286,7 +286,7 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
 
             {/* CHART */}
             {chartData.length > 0 && (
-              <div className="apple-card p-4 sm:p-6 overflow-hidden">
+              <div className="its-card p-4 sm:p-6 overflow-hidden">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-base sm:text-lg font-medium">
                     Andamento Totale
@@ -297,13 +297,13 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
                       onChange={(e) =>
                         setChartPeriod(Number(e.target.value) as 7 | 30 | 50)
                       }
-                      className="appearance-none bg-apple-light border border-apple-border rounded-lg px-2 py-1 text-xs sm:text-sm pr-6"
+                      className="appearance-none bg-its-light border border-its-border rounded-lg px-2 py-1 text-xs sm:text-sm pr-6"
                     >
                       <option value={7}>Ultimi 7</option>
                       <option value={30}>Ultimi 30</option>
                       <option value={50}>Ultimi 50</option>
                     </select>
-                    <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-3 h-3 text-apple-secondary pointer-events-none" />
+                    <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-3 h-3 text-its-secondary pointer-events-none" />
                   </div>
                 </div>
 
@@ -331,7 +331,7 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
                         verticalAlign="top"
                         iconSize={10}
                         formatter={(val: string) => (
-                          <span className="text-xs sm:text-sm text-apple-secondary">
+                          <span className="text-xs sm:text-sm text-its-secondary">
                             {val}
                           </span>
                         )}
@@ -369,7 +369,7 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
             )}
 
             {/* PERFORMANCE RING */}
-            <div className="apple-card p-4 sm:p-6 text-center">
+            <div className="its-card p-4 sm:p-6 text-center">
               <h3 className="text-base sm:text-lg font-medium mb-4">
                 Performance Generale
               </h3>
@@ -384,34 +384,34 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
                     <p className="text-lg sm:text-xl font-bold">
                       {Math.round(userStats.overallAccuracy)}%
                     </p>
-                    <p className="text-xs text-apple-secondary">
+                    <p className="text-xs text-its-secondary">
                       {perfLabel(userStats.overallAccuracy)}
                     </p>
                   </div>
                 </ProgressRing>
               </div>
-              <p className="text-sm text-apple-secondary">
+              <p className="text-sm text-its-secondary">
                 {userStats.correctAnswers} risposte corrette su{' '}
                 {userStats.totalQuestions}
               </p>
             </div>
 
             {/* STREAK */}
-            <div className="apple-card p-4 sm:p-6">
+            <div className="its-card p-4 sm:p-6">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-apple-yellow/10 rounded-apple flex items-center justify-center">
-                  <Award className="w-5 h-5 text-apple-yellow" />
+                <div className="w-10 h-10 bg-its-yellow/10 rounded-its flex items-center justify-center">
+                  <Award className="w-5 h-5 text-its-yellow" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <h3 className="text-base sm:text-lg font-medium">
                     Serie di successi
                   </h3>
-                  <p className="text-xs sm:text-sm text-apple-secondary">
+                  <p className="text-xs sm:text-sm text-its-secondary">
                     Streak attuale: {userStats.currentStreak} | Record:{' '}
                     {userStats.bestStreak}
                   </p>
                 </div>
-                <p className="text-lg sm:text-xl font-bold text-apple-yellow flex-shrink-0">
+                <p className="text-lg sm:text-xl font-bold text-its-yellow flex-shrink-0">
                   {userStats.currentStreak}
                 </p>
               </div>
@@ -428,9 +428,9 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
 
             {topicStats.length > 0 ? (
               topicStats.map((stat, idx) => (
-                <div key={stat.topic} className="apple-card p-3 sm:p-4">
+                <div key={stat.topic} className="its-card p-3 sm:p-4">
                   <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-apple-blue/10 rounded-apple flex items-center justify-center">
+                    <div className="w-8 h-8 bg-its-red/10 rounded-its flex items-center justify-center">
                       <span>{stat.icon}</span>
                     </div>
 
@@ -439,12 +439,12 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
                         <h4 className="text-sm sm:text-base font-medium truncate">
                           {stat.displayName}
                         </h4>
-                        <span className="text-xs text-apple-secondary">
+                        <span className="text-xs text-its-secondary">
                           #{idx + 1}
                         </span>
                       </div>
 
-                      <div className="w-full bg-apple-light rounded-full h-1.5 mb-1">
+                      <div className="w-full bg-its-light rounded-full h-1.5 mb-1">
                         <div
                           className="h-1.5 rounded-full"
                           style={{
@@ -454,7 +454,7 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
                         />
                       </div>
 
-                      <div className="flex justify-between text-xs text-apple-secondary">
+                      <div className="flex justify-between text-xs text-its-secondary">
                         <span>
                           {stat.correctAnswers}/{stat.totalAttempts} corrette
                         </span>
@@ -471,8 +471,8 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
               ))
             ) : (
               <div className="text-center py-10">
-                <Award className="w-8 h-8 text-apple-secondary mx-auto mb-2" />
-                <p className="text-sm text-apple-secondary">
+                <Award className="w-8 h-8 text-its-secondary mx-auto mb-2" />
+                <p className="text-sm text-its-secondary">
                   Nessuna statistica disponibile
                 </p>
               </div>
@@ -492,12 +492,12 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
                 <button
                   key={quiz.id}
                   onClick={() => onNavigate('review', { quizHistory: quiz })}
-                  className="w-full apple-card p-3 sm:p-4 text-left hover:bg-apple-light/50 transition-colors"
+                  className="w-full its-card p-3 sm:p-4 text-left hover:bg-its-light/50 transition-colors"
                 >
                   <div className="flex items-center justify-between">
                     {/* blocco sinistro */}
                     <div className="flex items-center space-x-3 flex-1 min-w-0">
-                      <div className="w-8 h-8 bg-apple-blue/10 rounded-apple flex items-center justify-center">
+                      <div className="w-8 h-8 bg-its-red/10 rounded-its flex items-center justify-center">
                         {quiz.quizType === 'timed' ? (
                           <Clock className="w-4 h-4 text-red-600" />
                         ) : quiz.quizType === 'streak' ? (
@@ -505,7 +505,7 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
                         ) : quiz.quizType === 'reverse' ? (
                           <Circle className="w-4 h-4 text-purple-600 fill-purple-600" />
                         ) : (
-                          <Calendar className="w-4 h-4 text-apple-blue" />
+                          <Calendar className="w-4 h-4 text-its-red" />
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
@@ -519,11 +519,11 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
                               ? 'Quiz Inverso'
                               : `Quiz #${recentHistory.length - idx}`}
                           </span>
-                          <span className="text-xs text-apple-secondary">
+                          <span className="text-xs text-its-secondary">
                             {quiz.dateLabel}
                           </span>
                         </div>
-                        <div className="flex items-center space-x-2 text-xs text-apple-secondary flex-wrap">
+                        <div className="flex items-center space-x-2 text-xs text-its-secondary flex-wrap">
                           {quiz.quizType === 'timed' && (
                             <div className="flex items-center space-x-3">
                               <Clock className="w-3 h-3" />
@@ -578,8 +578,8 @@ const StatsScreen: React.FC<StatsScreenProps> = ({ onNavigate }) => {
               ))
             ) : (
               <div className="text-center py-10">
-                <Calendar className="w-8 h-8 text-apple-secondary mx-auto mb-2" />
-                <p className="text-sm text-apple-secondary">
+                <Calendar className="w-8 h-8 text-its-secondary mx-auto mb-2" />
+                <p className="text-sm text-its-secondary">
                   Nessun quiz completato
                 </p>
               </div>

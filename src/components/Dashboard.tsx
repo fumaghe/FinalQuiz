@@ -91,18 +91,20 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
   /* RENDER                                                         */
   /* -------------------------------------------------------------- */
   return (
-    <div className="min-h-screen bg-apple-light">
+    <div className="min-h-screen bg-its-light">
       {/* ---------------------------------------------------------- */}
       {/* HEADER                                                    */}
       {/* ---------------------------------------------------------- */}
-      <header className="bg-apple-card shadow-apple-card px-apple-2x py-4 flex items-center justify-between">
+      <header className="bg-its-card shadow-its-card px-its-2x py-4 flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-apple-blue rounded-full flex items-center justify-center">
-            <span className="text-white text-lg">🧠</span>
-          </div>
+          <img
+            src="/ITSAR.png"
+            alt="Logo ITS Angelo Rizzoli"
+            className="w-10 h-10"
+          />
           <div>
             <h2 className="text-h2 font-semibold">Ciao, Studente!</h2>
-            <p className="text-caption text-apple-secondary">
+            <p className="text-caption text-its-secondary">
               Pronto per nuove sfide?
             </p>
           </div>
@@ -115,7 +117,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
           {/* pulsante impostazioni */}
           <button
             onClick={() => onNavigate('settings')}
-            className="p-2 rounded-full hover:bg-apple-light transition-colors"
+            className="p-2 rounded-full hover:bg-its-light transition-colors"
           >
           </button>
         </div>
@@ -124,40 +126,40 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
       {/* ---------------------------------------------------------- */}
       {/* BODY                                                      */}
       {/* ---------------------------------------------------------- */}
-      <div className="px-apple-2x py-6 space-y-8 pb-24">
+      <div className="px-its-2x py-6 space-y-8 pb-24">
         {/* ------------------- QUICK-STATS ------------------------ */}
         <section>
           <h3 className="text-h3 font-medium mb-4">Le tue statistiche</h3>
           <div className="grid grid-cols-3 gap-4">
-            <div className="apple-card p-4 text-center">
+            <div className="its-card p-4 text-center">
               <ProgressRing progress={userStats.overallAccuracy} size={60} color="#34C759">
-                <span className="text-caption font-medium text-apple-text">
+                <span className="text-caption font-medium text-its-text">
                   {Math.round(userStats.overallAccuracy)}%
                 </span>
               </ProgressRing>
-              <p className="text-small text-apple-secondary mt-2">Precisione</p>
+              <p className="text-small text-its-secondary mt-2">Precisione</p>
             </div>
 
-            <div className="apple-card p-4 text-center">
+            <div className="its-card p-4 text-center">
               <ProgressRing progress={overallProgress} size={60} color="#007AFF">
-                <span className="text-caption font-medium text-apple-text">
+                <span className="text-caption font-medium text-its-text">
                   {completedTopics}/{totalTopics}
                 </span>
               </ProgressRing>
-              <p className="text-small text-apple-secondary mt-2">Argomenti</p>
+              <p className="text-small text-its-secondary mt-2">Argomenti</p>
             </div>
 
-            <div className="apple-card p-4 text-center">
+            <div className="its-card p-4 text-center">
               <ProgressRing
                 progress={Math.min((userStats.currentStreak / 10) * 100, 100)}
                 size={60}
                 color="#FF9F0A"
               >
-                <span className="text-caption font-medium text-apple-text">
+                <span className="text-caption font-medium text-its-text">
                   {userStats.currentStreak}
                 </span>
               </ProgressRing>
-              <p className="text-small text-apple-secondary mt-2">Streak</p>
+              <p className="text-small text-its-secondary mt-2">Streak</p>
             </div>
           </div>
         </section>
@@ -171,15 +173,15 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             <button
               onClick={() => onNavigate('quiz', { quizType: 'general' })}
               disabled={!hasUnanswered}
-              className="apple-card p-4 sm:p-6 text-left hover:bg-gray-50 transition-colors apple-button group disabled:opacity-50 disabled:cursor-not-allowed"
+              className="its-card p-4 sm:p-6 text-left hover:bg-gray-50 transition-colors its-button group disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <div className="flex items-center space-x-3 mb-3">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-apple-blue/10 rounded-apple flex items-center justify-center">
-                  <Shuffle className="w-5 h-5 sm:w-6 sm:h-6 text-apple-blue" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-its-red/10 rounded-its flex items-center justify-center">
+                  <Shuffle className="w-5 h-5 sm:w-6 sm:h-6 text-its-red" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="text-body sm:text-h3 font-medium">Quiz Generale</h4>
-                  <p className="text-small text-apple-secondary">
+                  <p className="text-small text-its-secondary">
                     {hasUnanswered
                       ? `${unanswered.length} domande disponibili`
                       : 'Tutte le domande completate'}
@@ -191,15 +193,15 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             {/* === PER ARGOMENTO ================================= */}
             <button
               onClick={() => onNavigate('topics')}
-              className="apple-card p-4 sm:p-6 text-left hover:bg-gray-50 transition-colors apple-button group"
+              className="its-card p-4 sm:p-6 text-left hover:bg-gray-50 transition-colors its-button group"
             >
               <div className="flex items-center space-x-3 mb-3">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-apple-green/10 rounded-apple flex items-center justify-center">
-                  <Folder className="w-5 h-5 sm:w-6 sm:h-6 text-apple-green" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-its-green/10 rounded-its flex items-center justify-center">
+                  <Folder className="w-5 h-5 sm:w-6 sm:h-6 text-its-green" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="text-body sm:text-h3 font-medium">Per Argomento</h4>
-                  <p className="text-small text-apple-secondary">{totalTopics} argomenti</p>
+                  <p className="text-small text-its-secondary">{totalTopics} argomenti</p>
                 </div>
               </div>
             </button>
@@ -207,15 +209,15 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             {/* === QUIZ PER TE ================================== */}
             <button
               onClick={() => onNavigate('quiz', { quizType: 'forYou' })}
-              className="apple-card p-4 sm:p-6 text-left hover:bg-gray-50 transition-colors apple-button group border-2 border-amber-400"
+              className="its-card p-4 sm:p-6 text-left hover:bg-gray-50 transition-colors its-button group border-2 border-amber-400"
             >
               <div className="flex items-center space-x-3 mb-3">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-amber-200/10 rounded-apple flex items-center justify-center">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-amber-200/10 rounded-its flex items-center justify-center">
                   <User className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="text-body sm:text-h3 font-medium">Quiz per Te</h4>
-                  <p className="text-small text-apple-secondary">
+                  <p className="text-small text-its-secondary">
                     30 domande ponderate secondo la tua precisione
                   </p>
                 </div>
@@ -225,14 +227,14 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             {/* === SFIDA A TEMPO (popup) ======================== */}
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <button className="apple-card p-4 sm:p-6 text-left hover:bg-gray-50 transition-colors apple-button group">
+                <button className="its-card p-4 sm:p-6 text-left hover:bg-gray-50 transition-colors its-button group">
                   <div className="flex items-center space-x-3 mb-3">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-red-100 rounded-apple flex items-center justify-center">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-red-100 rounded-its flex items-center justify-center">
                       <Timer className="w-5 h-5 sm:w-6 sm:h-6 text-red-600" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="text-body sm:text-h3 font-medium">Sfida a Tempo</h4>
-                      <p className="text-small text-apple-secondary">
+                      <p className="text-small text-its-secondary">
                         10&nbsp;min • penalità&nbsp;-10&nbsp;s
                       </p>
                     </div>
@@ -253,7 +255,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                     <li className="flex items-start">
                       <span className="mr-2 text-xl">🕒</span>
                       <span>
-                        Tempo totale: <strong className="text-blue-600">10 minuti</strong>
+                        Tempo totale: <strong className="text-its-red">10 minuti</strong>
                       </span>
                     </li>
                     <li className="flex items-start">
@@ -300,14 +302,14 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             {/* === STREAK QUIZ (popup) ========================== */}
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <button className="apple-card p-4 sm:p-6 text-left hover:bg-gray-50 transition-colors apple-button group">
+                <button className="its-card p-4 sm:p-6 text-left hover:bg-gray-50 transition-colors its-button group">
                   <div className="flex items-center space-x-3 mb-3">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-lime-100 rounded-apple flex items-center justify-center">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-lime-100 rounded-its flex items-center justify-center">
                       <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-lime-600" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="text-body sm:text-h3 font-medium">Streak Quiz</h4>
-                      <p className="text-small text-apple-secondary">Errore = game over</p>
+                      <p className="text-small text-its-secondary">Errore = game over</p>
                     </div>
                   </div>
                 </button>
@@ -343,14 +345,14 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             {/* === QUIZ INVERSI (popup) ========================= */}
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <button className="apple-card p-4 sm:p-6 text-left hover:bg-gray-50 transition-colors apple-button group">
+                <button className="its-card p-4 sm:p-6 text-left hover:bg-gray-50 transition-colors its-button group">
                   <div className="flex items-center space-x-3 mb-3">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-sky-100 rounded-apple flex items-center justify-center">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-sky-100 rounded-its flex items-center justify-center">
                       <Shuffle className="w-5 h-5 sm:w-6 sm:h-6 text-sky-600" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="text-body sm:text-h3 font-medium">Quiz Inversi</h4>
-                      <p className="text-small text-apple-secondary">Indovina la domanda!</p>
+                      <p className="text-small text-its-secondary">Indovina la domanda!</p>
                     </div>
                   </div>
                 </button>
@@ -391,24 +393,24 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
               <h3 className="text-h3 font-medium">Attività recente</h3>
               <button
                 onClick={() => onNavigate('stats')}
-                className="text-caption text-apple-blue font-medium"
+                className="text-caption text-its-red font-medium"
               >
                 Vedi tutto
               </button>
             </div>
-            <div className="apple-card p-4">
+            <div className="its-card p-4">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-body font-medium">Quiz completati</p>
-                  <p className="text-caption text-apple-secondary">
+                  <p className="text-caption text-its-secondary">
                     {userStats.totalQuizzes} quiz totali
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-h3 font-semibold text-apple-blue">
+                  <p className="text-h3 font-semibold text-its-red">
                     {userStats.correctAnswers}
                   </p>
-                  <p className="text-caption text-apple-secondary">risposte corrette</p>
+                  <p className="text-caption text-its-secondary">risposte corrette</p>
                 </div>
               </div>
             </div>
@@ -420,8 +422,8 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
           <section>
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <button className="w-full apple-card p-4 text-left hover:bg-red-50 transition-colors flex items-center space-x-3 border border-red-200">
-                  <div className="w-10 h-10 bg-red-100 rounded-apple flex items-center justify-center">
+                <button className="w-full its-card p-4 text-left hover:bg-red-50 transition-colors flex items-center space-x-3 border border-red-200">
+                  <div className="w-10 h-10 bg-red-100 rounded-its flex items-center justify-center">
                     <RotateCcw className="w-5 h-5 text-red-600" />
                   </div>
                   <div>
@@ -458,22 +460,22 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
       {/* ---------------------------------------------------------- */}
       {/* BOTTOM NAV                                                */}
       {/* ---------------------------------------------------------- */}
-      <nav className="fixed bottom-0 left-0 right-0	bg-apple-card border-t border-apple-border">
+      <nav className="fixed bottom-0 left-0 right-0	bg-its-card border-t border-its-border">
         <div className="flex justify-around py-2">
-          <button className="flex flex-col items-center p-2 text-apple-blue">
+          <button className="flex flex-col items-center p-2 text-its-red">
             <div className="w-6 h-6 mb-1">🏠</div>
             <span className="text-small font-medium">Home</span>
           </button>
           <button
             onClick={() => onNavigate('stats')}
-            className="flex flex-col items-center p-2 text-apple-secondary hover:text-apple-blue transition-colors"
+            className="flex flex-col items-center p-2 text-its-secondary hover:text-its-red transition-colors"
           >
             <BarChart className="w-6 h-6 mb-1" />
             <span className="text-small">Statistiche</span>
           </button>
           <button
             onClick={() => onNavigate('achievements')}
-            className="flex flex-col items-center p-2 text-apple-secondary hover:text-apple-blue transition-colors"
+            className="flex flex-col items-center p-2 text-its-secondary hover:text-its-red transition-colors"
           >
             <Award className="w-6 h-6 mb-1"/>
             <span className="text-small">Badge</span>

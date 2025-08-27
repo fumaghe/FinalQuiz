@@ -70,7 +70,7 @@ const LEVEL_IMG: Record<Level, string> = {
 
 /** sfondo progress ring via conic-gradient */
 const radialProgress = (pct: number, color: string) =>
-  `conic-gradient(${color} ${pct * 3.6}deg, theme('colors.apple-muted') ${pct *
+  `conic-gradient(${color} ${pct * 3.6}deg, theme('colors.its-muted') ${pct *
     3.6}deg)`;
 
 /* ------------------------------------------------------------------ */
@@ -252,7 +252,7 @@ const AchievementsScreen: React.FC<Props> = ({ onNavigate }) => {
             })
           }
           className="relative flex flex-col items-center gap-3 p-4 rounded-2xl bg-white shadow 
-                    hover:ring-1 hover:ring-apple-blue/30 transition sm:w-full"
+                    hover:ring-1 hover:ring-its-red/30 transition sm:w-full"
           style={{
             filter: isUnlocked ? 'none' : 'grayscale(1)',
             opacity: isUnlocked ? 1 : 0.3,
@@ -318,9 +318,9 @@ const AchievementsScreen: React.FC<Props> = ({ onNavigate }) => {
   /* ---------------------------------------------------------------- */
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-slate-50 to-slate-100 
-                    dark:from-apple-dark dark:via-apple-dark/80 dark:to-apple-dark text-apple-primary">
+                    dark:from-its-dark dark:via-its-dark/80 dark:to-its-dark text-its-text">
       {/* ---------------- HEADER ---------------------------------- */}
-      <header className="sticky top-0 z-40 bg-white/80 dark:bg-apple-dark/80 
+      <header className="sticky top-0 z-40 bg-white/80 dark:bg-its-dark/80 
                          backdrop-blur-md border-b border-slate-200 dark:border-slate-700">
         <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-4">
           {/* titolo + back */}
@@ -329,14 +329,14 @@ const AchievementsScreen: React.FC<Props> = ({ onNavigate }) => {
               onClick={() => onNavigate('dashboard')}
               className="p-2 -ml-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
             >
-              <ArrowLeft className="w-5 h-5 text-apple-blue" />
+              <ArrowLeft className="w-5 h-5 text-its-red" />
             </button>
 
             <div>
               <h1 className="text-xl font-bold">🏆 I Miei Badge & Traguardi</h1>
-              <p className="text-sm text-apple-secondary flex flex-wrap items-center gap-1">
+              <p className="text-sm text-its-secondary flex flex-wrap items-center gap-1">
                 
-                <span className="px-2 py-0.5 rounded-full bg-apple-muted text-apple-primary text-xs font-semibold">
+                <span className="px-2 py-0.5 rounded-full bg-its-muted text-its-text text-xs font-semibold">
                   {unlockedCount}/{totalBadges}
                 </span>
               </p>
@@ -354,8 +354,8 @@ const AchievementsScreen: React.FC<Props> = ({ onNavigate }) => {
                   className={`px-3 py-1 shrink-0 rounded-full text-xs font-medium border transition
                     ${
                       levelFilter === l
-                        ? 'bg-apple-blue text-white border-apple-blue shadow-sm'
-                        : 'border-apple-muted text-apple-secondary hover:bg-slate-100 dark:hover:bg-slate-800'
+                        ? 'bg-its-red text-white border-its-red shadow-sm'
+                        : 'border-its-muted text-its-secondary hover:bg-slate-100 dark:hover:bg-slate-800'
                     }`}
                 >
                   {l === 'all'
@@ -367,19 +367,19 @@ const AchievementsScreen: React.FC<Props> = ({ onNavigate }) => {
 
             {/* search */}
             <div className="relative flex-1 sm:max-w-xs justify-end">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-apple-secondary" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-its-secondary" />
               <input
                 type="text"
                 value={search}
                 onChange={e => setSearch(e.target.value)}
                 placeholder="Cerca per nome o categoria…"
-                className="w-full pl-9 pr-9 py-2 rounded-lg bg-white dark:bg-apple-card border 
-                           border-apple-muted placeholder:text-apple-secondary focus:outline-none
-                           focus:ring-2 focus:ring-apple-blue/50"
+                className="w-full pl-9 pr-9 py-2 rounded-lg bg-white dark:bg-its-card border 
+                           border-its-muted placeholder:text-its-secondary focus:outline-none
+                           focus:ring-2 focus:ring-its-red/50"
               />
               {search && (
                 <button
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-apple-secondary"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-its-secondary"
                   onClick={() => setSearch('')}
                 >
                   <X className="w-4 h-4" />
@@ -411,8 +411,8 @@ const AchievementsScreen: React.FC<Props> = ({ onNavigate }) => {
 
           return (
             <section key={cat} className="space-y-6">
-              <h2 className="text-lg font-semibold border-b border-apple-muted pb-1 sticky -top-0.5
-                             bg-white/70 dark:bg-apple-dark/70 backdrop-blur-md z-10">
+              <h2 className="text-lg font-semibold border-b border-its-muted pb-1 sticky -top-0.5
+                             bg-white/70 dark:bg-its-dark/70 backdrop-blur-md z-10">
                 {CAT_LABEL_IT[cat]}
               </h2>
 
@@ -461,7 +461,7 @@ const AchievementsScreen: React.FC<Props> = ({ onNavigate }) => {
               leaveFrom="opacity-100 translate-y-0 scale-100"
               leaveTo="opacity-0 translate-y-4 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-lg rounded-2xl bg-white dark:bg-apple-card p-8 sm:p-10 space-y-8 shadow-xl">
+              <Dialog.Panel className="w-full max-w-lg rounded-2xl bg-white dark:bg-its-card p-8 sm:p-10 space-y-8 shadow-xl">
                 {selected && activeModalLevel && (
                   <>
                     {/* header modal */}
@@ -469,14 +469,14 @@ const AchievementsScreen: React.FC<Props> = ({ onNavigate }) => {
                       <img
                         src={LEVEL_IMG[selected.userLvl ?? 'bronze']}
                         alt=""
-                        className="w-16 h-16 rounded-full ring-4 ring-white dark:ring-apple-dark"
+                        className="w-16 h-16 rounded-full ring-4 ring-white dark:ring-its-dark"
                       />
                       <div className="flex-1">
                         <Dialog.Title className="text-xl font-bold flex items-center gap-2">
                           {selected.levels[0].emoji}{' '}
                           {selected.levels[0].name}
                         </Dialog.Title>
-                        <p className="text-sm text-apple-secondary">
+                        <p className="text-sm text-its-secondary">
                           {
                             CAT_LABEL_IT[
                               selected.levels[0].category as Badge['category']
@@ -589,7 +589,7 @@ const AchievementsScreen: React.FC<Props> = ({ onNavigate }) => {
                               {LEVEL_LABEL[activeModalLevel]}
                             </p>
                             {/* barra orizzontale di appoggio */}
-                            <div className="w-full h-[10px] rounded-full bg-apple-muted overflow-hidden">
+                            <div className="w-full h-[10px] rounded-full bg-its-muted overflow-hidden">
                               <motion.div
                                 initial={{ width: 0 }}
                                 animate={{ width: `${pctLarge}%` }}
@@ -597,7 +597,7 @@ const AchievementsScreen: React.FC<Props> = ({ onNavigate }) => {
                                   duration: 0.4,
                                   ease: 'easeOut',
                                 }}
-                                className="h-full bg-apple-blue"
+                                className="h-full bg-its-red"
                               />
                             </div>
 
@@ -622,7 +622,7 @@ const AchievementsScreen: React.FC<Props> = ({ onNavigate }) => {
                     <div className="flex flex-col sm:flex-row sm:justify-end gap-3 pt-2">
                       <button
                         onClick={() => setSelected(null)}
-                        className="w-full sm:w-auto px-5 py-2 rounded-lg bg-apple-muted hover:bg-apple-muted/70 text-sm"
+                        className="w-full sm:w-auto px-5 py-2 rounded-lg bg-its-muted hover:bg-its-muted/70 text-sm"
                       >
                         Chiudi
                       </button>

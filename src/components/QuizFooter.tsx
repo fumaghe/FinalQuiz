@@ -25,7 +25,7 @@ export const QuizFooter: React.FC<QuizFooterProps> = ({
       <button
         onClick={onSkip}
         disabled={isAnswered}
-        className="flex items-center space-x-1 sm:space-x-2 text-apple-blue font-medium apple-button disabled:opacity-50 text-sm sm:text-base"
+        className="flex items-center space-x-1 sm:space-x-2 text-its-red font-medium its-button disabled:opacity-50 text-sm sm:text-base"
       >
         <SkipForward className="w-3 h-3 sm:w-4 sm:h-4" />
         <span>Salta</span>
@@ -35,14 +35,14 @@ export const QuizFooter: React.FC<QuizFooterProps> = ({
       <button
         onClick={onConfirm}
         disabled={!onConfirm}
-        className="px-4 sm:px-6 py-2 sm:py-3 apple-button-primary disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
+        className="px-4 sm:px-6 py-2 sm:py-3 its-button-primary disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
       >
         Conferma
       </button>
     ) : (
       <button
         onClick={onNext}
-        className="px-4 sm:px-6 py-2 sm:py-3 apple-button-primary text-sm sm:text-base"
+        className="px-4 sm:px-6 py-2 sm:py-3 its-button-primary text-sm sm:text-base"
       >
         {hasNext ? 'Prossima' : 'Termina'}
       </button>

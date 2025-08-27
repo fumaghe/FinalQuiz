@@ -103,33 +103,33 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
   /* RENDER                                                         */
   /* -------------------------------------------------------------- */
   return (
-    <div className="min-h-screen bg-apple-light">
+    <div className="min-h-screen bg-its-light">
       {/* ---------- HEADER ---------- */}
-      <header className="bg-apple-card shadow-apple-card px-apple-2x py-4">
+      <header className="bg-its-card shadow-its-card px-its-2x py-4">
         <div className="flex items-center space-x-4 mb-4">
           <button
             onClick={() => onNavigate('dashboard')}
-            className="p-2 -ml-2 rounded-full hover:bg-apple-light transition-colors"
+            className="p-2 -ml-2 rounded-full hover:bg-its-light transition-colors"
           >
-            <ArrowLeft className="w-6 h-6 text-apple-blue" />
+            <ArrowLeft className="w-6 h-6 text-its-red" />
           </button>
           <h1 className="text-h2 font-semibold">Argomenti</h1>
         </div>
 
         {/* Search */}
         <div className="relative mb-4">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-apple-secondary" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-its-secondary" />
           <input
             type="text"
             placeholder="Cerca argomenti…"
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 apple-input"
+            className="w-full pl-10 pr-4 py-3 its-input"
           />
         </div>
 
         {/* Tabs */}
-        <div className="flex space-x-1 bg-apple-light rounded-apple p-1">
+        <div className="flex space-x-1 bg-its-light rounded-its p-1">
           {[
             { key: 'all', label: 'Tutti' },
             { key: 'incomplete', label: 'Da completare' },
@@ -140,8 +140,8 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
               onClick={() => setFilter(tab.key as any)}
               className={`flex-1 py-2 px-4 rounded-lg text-caption font-medium transition-all ${
                 filter === tab.key
-                  ? 'bg-apple-card text-apple-blue shadow-apple-card'
-                  : 'text-apple-secondary hover:text-apple-text'
+                  ? 'bg-its-card text-its-red shadow-its-card'
+                  : 'text-its-secondary hover:text-its-text'
               }`}
             >
               {tab.label}
@@ -151,7 +151,7 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
       </header>
 
       {/* ---------- LISTA ---------- */}
-      <div className="px-apple-2x py-4 space-y-3 pb-20">
+      <div className="px-its-2x py-4 space-y-3 pb-20">
         {filteredTopics.map(topic => {
           const stats = getTopicStats(topic.id);
           const progress =
@@ -162,11 +162,11 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
           return (
             <div
               key={topic.id}
-              className="apple-card p-4 hover:bg-gray-50 transition-colors"
+              className="its-card p-4 hover:bg-gray-50 transition-colors"
             >
               <div className="flex items-center space-x-4">
                 {/* Icona */}
-                <div className="w-12 h-12 bg-apple-blue/10 rounded-apple flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-its-red/10 rounded-its flex items-center justify-center flex-shrink-0">
                   <span className="text-2xl">{topic.icon}</span>
                 </div>
 
@@ -179,36 +179,36 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
                         e.stopPropagation();
                         toggleFavorite(topic.id);
                       }}
-                      className="p-1 rounded-full hover:bg-apple-light transition-colors"
+                      className="p-1 rounded-full hover:bg-its-light transition-colors"
                     >
                       <Heart
                         className={`w-4 h-4 ${
                           topic.isFavorite
-                            ? 'text-apple-red fill-current'
-                            : 'text-apple-secondary'
+                            ? 'text-its-red-dark fill-current'
+                            : 'text-its-secondary'
                         }`}
                       />
                     </button>
                   </div>
 
-                  <p className="text-caption text-apple-secondary mb-2">
+                  <p className="text-caption text-its-secondary mb-2">
                     {topic.description}
                   </p>
 
                   {/* Progress bar */}
-                  <div className="w-full bg-apple-light rounded-full h-2 mb-2">
+                  <div className="w-full bg-its-light rounded-full h-2 mb-2">
                     <div
-                      className="bg-apple-green h-2 rounded-full transition-all duration-300"
+                      className="bg-its-green h-2 rounded-full transition-all duration-300"
                       style={{ width: `${Math.min(progress, 100)}%` }}
                     />
                   </div>
 
                   <div className="flex justify-between items-center">
-                    <span className="text-small text-apple-secondary">
+                    <span className="text-small text-its-secondary">
                       {stats.correctAnswers}/{topic.totalQuestions} completate
                     </span>
                     {stats.accuracy > 0 && (
-                      <span className="text-small font-medium text-apple-green">
+                      <span className="text-small font-medium text-its-green">
                         {stats.accuracy}% precisione
                       </span>
                     )}
@@ -218,7 +218,7 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
                 {/* Bottone */}
                 <button
                   onClick={() => handleTopicSelect(topic)}
-                  className="px-6 py-2 bg-apple-blue text-white rounded-apple text-caption font-medium apple-button"
+                  className="px-6 py-2 bg-its-red text-white rounded-its text-caption font-medium its-button"
                 >
                   Inizia
                 </button>
@@ -229,13 +229,13 @@ const TopicsList: React.FC<TopicsListProps> = ({ onNavigate }) => {
 
         {filteredTopics.length === 0 && (
           <div className="text-center py-12">
-            <div className="w-16 h-16 bg-apple-light rounded-full flex items-center justify-center mx-auto mb-4">
-              <Search className="w-8 h-8 text-apple-secondary" />
+            <div className="w-16 h-16 bg-its-light rounded-full flex items-center justify-center mx-auto mb-4">
+              <Search className="w-8 h-8 text-its-secondary" />
             </div>
-            <h3 className="text-h3 font-medium text-apple-text mb-2">
+            <h3 className="text-h3 font-medium text-its-text mb-2">
               Nessun argomento trovato
             </h3>
-            <p className="text-caption text-apple-secondary">
+            <p className="text-caption text-its-secondary">
               Prova a modificare i filtri di ricerca
             </p>
           </div>

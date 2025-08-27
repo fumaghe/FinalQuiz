@@ -735,10 +735,10 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
   /* ------------------------------------------------------------------ */
   if (!currentSession || shuffledQuestions.length === 0) {
     return (
-      <div className="min-h-screen bg-apple-light flex items-center justify-center">
+      <div className="min-h-screen bg-its-light flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-apple-blue border-t-transparent rounded-full animate-spin mb-4 mx-auto" />
-          <p className="text-body text-apple-secondary">Caricamento quiz...</p>
+          <div className="w-16 h-16 border-4 border-its-red border-t-transparent rounded-full animate-spin mb-4 mx-auto" />
+          <p className="text-body text-its-secondary">Caricamento quiz...</p>
         </div>
       </div>
     );
@@ -755,7 +755,7 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
     shuffledQ.optionMapping[selectedAnswer!] === currentQ.correct;
 
   return (
-    <div className="min-h-screen bg-apple-light flex flex-col overflow-x-hidden">
+    <div className="min-h-screen bg-its-light flex flex-col overflow-x-hidden">
       {/* Timer solo se timed */}
       {isTimed && (
         <TimerDisplay timeLeft={timeLeft} furyRemaining={furyRemaining} />
@@ -776,7 +776,7 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
           <span className="text-base sm:text-lg">
             {topicInfo?.icon || '📝'}
           </span>
-          <span className="text-xs sm:text-sm text-apple-secondary font-medium truncate">
+          <span className="text-xs sm:text-sm text-its-secondary font-medium truncate">
             {currentQ.topic}
           </span>
         </div>

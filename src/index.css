@@ -3,7 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Apple Design System Implementation */
+/* ITSAR Design System Implementation */
 
 @layer base {
   :root {
@@ -75,34 +75,34 @@
   }
 
   body {
-    @apply bg-apple-light text-apple-text font-sf-pro;
+    @apply bg-its-light text-its-text font-sans;
   }
-  
-  /* Apple-style button interactions */
-  .apple-button {
+
+  /* ITSAR-style button interactions */
+  .its-button {
     @apply transition-all duration-100 ease-out;
   }
   
-  .apple-button:active {
+  .its-button:active {
     @apply scale-95;
   }
   
-  /* Apple-style card */
-  .apple-card {
-    @apply bg-apple-card rounded-apple shadow-apple-card;
+  /* ITSAR-style card */
+  .its-card {
+    @apply bg-its-card rounded-its shadow-its-card;
   }
 }
 
 @layer components {
-  .apple-input {
-    @apply bg-apple-card border border-apple-border rounded-apple px-4 py-2 text-body focus:border-apple-blue focus:ring-1 focus:ring-apple-blue outline-none transition-colors;
+  .its-input {
+    @apply bg-its-card border border-its-border rounded-its px-4 py-2 text-body focus:border-its-red focus:ring-1 focus:ring-its-red outline-none transition-colors;
   }
-  
-  .apple-button-primary {
-    @apply bg-apple-blue text-white rounded-apple px-6 py-3 text-h3 font-medium shadow-apple apple-button hover:bg-blue-600;
+
+  .its-button-primary {
+    @apply bg-its-red text-white rounded-its px-6 py-3 text-h3 font-medium shadow-its its-button hover:bg-its-red-dark;
   }
-  
-  .apple-button-secondary {
-    @apply bg-apple-light text-apple-blue rounded-apple px-6 py-3 text-h3 font-medium apple-button hover:bg-gray-200;
+
+  .its-button-secondary {
+    @apply bg-its-light text-its-red rounded-its px-6 py-3 text-h3 font-medium its-button hover:bg-red-50;
   }
 }

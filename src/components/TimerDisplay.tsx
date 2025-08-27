@@ -17,7 +17,7 @@ export const TimerDisplay: React.FC<TimerDisplayProps> = ({ timeLeft, furyRemain
       className={`fixed top-4 right-4 z-20 px-3 py-1 rounded-full text-sm font-semibold
         ${inFury ? 'bg-orange-500 text-white animate-pulse'
                  : danger  ? 'bg-red-600 text-white'
-                           : 'bg-apple-blue text-white' }`}
+                           : 'bg-its-red text-white' }`}
     >
       {inFury ? '🔥 ' : ''}
       {format(timeLeft)}

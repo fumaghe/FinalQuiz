@@ -17,7 +17,7 @@ export const QuestionContent: React.FC<QuestionContentProps> = ({
 }) => {
   return (
     <div className="flex-1 px-4 sm:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6">
-      <div className="apple-card p-4 sm:p-6">
+      <div className="its-card p-4 sm:p-6">
         <div className="flex items-start justify-between gap-3 sm:gap-4">
           <h2 className="text-base sm:text-lg font-medium leading-relaxed flex-1">
             {question.question}
@@ -25,7 +25,7 @@ export const QuestionContent: React.FC<QuestionContentProps> = ({
           <div className="flex items-center space-x-1">
             <button
               onClick={onGoogleSearch}
-              className="flex-shrink-0 p-2 rounded-full hover:bg-apple-light transition-colors text-apple-secondary hover:text-apple-blue"
+              className="flex-shrink-0 p-2 rounded-full hover:bg-its-light transition-colors text-its-secondary hover:text-its-red"
               title="Cerca su Google"
             >
               <Globe className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -33,7 +33,7 @@ export const QuestionContent: React.FC<QuestionContentProps> = ({
             {showReplace && onReplace && (
               <button
                 onClick={onReplace}
-                className="flex-shrink-0 p-2 rounded-full hover:bg-apple-light transition-colors text-apple-secondary hover:text-apple-blue"
+                className="flex-shrink-0 p-2 rounded-full hover:bg-its-light transition-colors text-its-secondary hover:text-its-red"
                 title="Sostituisci domanda"
               >
                 <RefreshCw className="w-4 h-4 sm:w-5 sm:h-5" />

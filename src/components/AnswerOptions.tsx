@@ -23,20 +23,20 @@ export const AnswerOptions: React.FC<AnswerOptionsProps> = ({
     <div className="space-y-2 sm:space-y-3 px-4 sm:px-6">
       {shuffledQuestion.shuffledOptions.map((opt, idx) => {
         let btnStyle =
-          'w-full p-3 sm:p-4 rounded-apple border text-left transition-all apple-button ';
+          'w-full p-3 sm:p-4 rounded-its border text-left transition-all its-button ';
 
         if (showFeedback) {
           if (idx === correctIdx) {
-            btnStyle += 'bg-apple-green text-white border-apple-green ';
+            btnStyle += 'bg-its-green text-white border-its-green ';
           } else if (idx === selectedAnswer) {
-            btnStyle += 'bg-apple-red text-white border-apple-red ';
+            btnStyle += 'bg-its-red-dark text-white border-its-red-dark ';
           } else {
-            btnStyle += 'bg-apple-light border-apple-border text-apple-secondary ';
+            btnStyle += 'bg-its-light border-its-border text-its-secondary ';
           }
         } else if (selectedAnswer === idx) {
-          btnStyle += 'bg-apple-blue/10 border-apple-blue text-apple-blue ';
+          btnStyle += 'bg-its-red/10 border-its-red text-its-red ';
         } else {
-          btnStyle += 'bg-apple-card border-apple-border text-apple-text hover:bg-apple-light ';
+          btnStyle += 'bg-its-card border-its-border text-its-text hover:bg-its-light ';
         }
 
         return (
